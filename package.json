@@ -14,7 +14,7 @@
     "typescript",
     "portfolio"
   ],
-  "author": "Alain Galvan",
+  "author": "Alain Galvan <hi@alain.xyz>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/alaingalvan/alain.xyz/issues"
@@ -23,5 +23,8 @@
   "dependencies": {
     "ts-loader": "^0.9.5",
     "typescript": "^2.0.3"
+  },
+  "devDependencies": {
+    "yarn": "^0.16.1"
   }
 }
