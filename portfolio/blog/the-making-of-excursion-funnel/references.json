@@ -1,0 +1,62 @@
+{
+  "quilez2008-df": {
+    "title": "Modeling with Distance Functions",
+    "author": [
+      {
+        "name": "Quilez, Iñigo"
+      }
+    ],
+    "type": "article",
+    "year": "2008",
+    "link": [
+      {
+        "url": "http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm"
+      }
+    ]
+  },
+  "quilez2008-2t": {
+    "title": "Rendering Worlds with Two Triangles with raytracing on the GPU",
+    "author": [
+      {
+        "name": "Quilez, Iñigo"
+      }
+    ],
+    "type": "article",
+    "year": "2008",
+    "link": [
+      {
+        "url": "http://iquilezles.org/www/material/nvscene2008/rwwtt.pdf"
+      }
+    ]
+  },
+  "tatarchuk2012": {
+    "title": "Advanced Real-Time Rendering in 3D Graphics and Games",
+    "author": [
+      {
+        "name": "Tatarchuk, Natalya"
+      }
+    ],
+    "type": "article",
+    "year": "2012",
+    "link": [
+      {
+        "url": "http://developer.amd.com/wordpress/media/2012/10/Course_26_SIGGRAPH_2006.pdf"
+      }
+    ]
+  },
+  "russell2011": {
+    "title": "PBR Theory",
+    "author": [
+      {
+        "name": "Russell, Jeff"
+      }
+    ],
+    "type": "article",
+    "year": "2011",
+    "link": [
+      {
+        "url": "http://www.marmoset.co/toolbag/learn/pbr-theory"
+      }
+    ]
+  }
+}
