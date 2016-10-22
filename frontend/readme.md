@@ -2,7 +2,7 @@
 
 # ![Icon](assets/brand/icon.ico) [Alain.xyz](https://alain.xyz)
 
-![Release][release-img] [![License][isc-img]][isc-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
+![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 
 My personal website built on top of [TypeScript 2.0](http://www.typescriptlang.org/), [React 15.3](https://facebook.github.io/react/), [WebPack 2.1](https://webpack.github.io/), [PostCSS](https://github.com/postcss/postcss). Follow the development on [Trello](https://trello.com/b/CVu8yxlf/alain-xyz).
 
@@ -16,7 +16,7 @@ A few of the projects that influenced the design of this app were:
 - [TypeScript Samples Imageboard](https://github.com/Microsoft/TypeScriptSamples/tree/master/imageboard)
 - [ReactJS Essentials by Artemij Fedosejev](https://github.com/fedosejev/react-essentials)
 
-### App File Structure
+## App File Structure
 
 ```bash
 |- src/                 # App Source
@@ -60,9 +60,9 @@ I'm using PostCSS to take advantage of [CSS4 features with CSSNext](http://cssne
 [website-img]: assets/brand/website-screenshot.png
 [website-url]: https://alain.xyz
 [release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square
-[isc-img]: http://img.shields.io/:license-isc-blue.svg?style=flat-square
-[isc-url]: https://opensource.org/licenses/ISC
-[david-url]: https://david-dm.org/alaingalvan/alain.xyz-frontend
-[david-img]: https://david-dm.org/alaingalvan/alain.xyz-frontend.svg?style=flat-square
-[david-dev-url]: https://david-dm.org/alaingalvan/alain.xyz-frontend#info=devDependencies
-[david-dev-img]: https://david-dm.org/alaingalvan/alain.xyz-frontend/dev-status.svg?style=flat-square
+[license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square
+[license-url]: https://opensource.org/licenses/MIT
+[david-url]: https://david-dm.org/alaingalvan/alain.xyz?path=frontend
+[david-img]: https://david-dm.org/alaingalvan/alain.xyz.svg?path=frontend&style=flat-square
+[david-dev-url]: https://david-dm.org/alaingalvan/alain.xyz?path=frontend#info=devDependencies
+[david-dev-img]: https://david-dm.org/alaingalvan/alain.xyz/dev-status.svg?path=frontend&style=flat-square

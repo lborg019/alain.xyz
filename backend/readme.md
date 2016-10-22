@@ -1,6 +1,6 @@
 # [Alain.xyz](https://alain.xyz) Backend
 
-![Release][release-img] [![License][isc-img]][isc-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
+![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 
 An intelligent portfolio backend build on top of [Node 6.3](https://nodejs.org/en/), [TypeScript 2.0](http://www.typescriptlang.org/), [Express 4](https://expressjs.com/), and [MongoDB 3.2](http://mongodb.org/).
 
@@ -66,9 +66,9 @@ npm run production  # Start the app perpetually in production mode.
 
 [website-url]: https://alain.xyz
 [release-img]: https://img.shields.io/badge/release-0.3.0-4dbfcc.svg?style=flat-square
-[isc-img]: http://img.shields.io/:license-isc-blue.svg?style=flat-square
-[isc-url]: https://opensource.org/licenses/ISC
-[david-url]: https://david-dm.org/alaingalvan/alain.xyz-backend
-[david-img]: https://david-dm.org/alaingalvan/alain.xyz-backend.svg?style=flat-square
-[david-dev-url]: https://david-dm.org/alaingalvan/alain.xyz-backend#info=devDependencies
-[david-dev-img]: https://david-dm.org/alaingalvan/alain.xyz-backend/dev-status.svg?style=flat-square
+[license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square
+[license-url]: https://opensource.org/licenses/MIT
+[david-url]: https://david-dm.org/alaingalvan/alain.xyz?path=backend
+[david-img]: https://david-dm.org/alaingalvan/alain.xyz.svg?path=backend&style=flat-square
+[david-dev-url]: https://david-dm.org/alaingalvan/alain.xyz?path=backend#info=devDependencies
+[david-dev-img]: https://david-dm.org/alaingalvan/alain.xyz/dev-status.svg?path=frontend&style=flat-square
