@@ -19,7 +19,7 @@ let canvas = document.createElement('canvas');
 let gl = canvas.getContext('webgl');
 ```
 
-Note, that `canvas.getContext` has a number of other sigatures and takes in a few optional parameters.
+Note, that `canvas.getContext` has a number of other signatures and takes in a few optional parameters.
 
 ```ts
 interface HTMLCanvasElement extends HTMLElement {
@@ -53,10 +53,23 @@ So if you have experience with imperative APIs like Canvas or Game Maker Studio'
 
 Our eyes only have 3 kinds of receptors for colored light, red, green, and blue. The engineers of colored monitors designed the pixel around the premise of how our eyes would interpret them, but really, a pixel is 3 lights, and a color is a mix of those 3 lights. An **image** is a *grid of colors*, and a **movie** is a *list of images*.
 
+```glsl
+// Colors can be described as a 32 bit int, with 8 bits representing each channel.
+// The last channel being alpha.
+// red - green - blue - alpha
+uint purple = 0xff00ffff;
+
+// They could also be described as vectors in glsl:
+vec3 purplevec = vec3(1.0, 0.0, 1.0);
+```
+
 ### Rasterization
 
 There's two "worlds", the mathematical world of perfect quantities, and what the mediums we use to represent these quantities *can actually describe*, bound by the limitations of how many __bytes we can use to actually describe data__.
 
+**Rasterization** is the process of converting shapes described by complex vectors into an image. It's handled by your GPU
+
+**Bresenham's line algorithm** - An algorithm that creates a pixelated line from 2 points. This algorithm has been implemented in hardware by graphics cards as a way of creating triangles. A triangle is drawn as a series of lines sweeping down.
 
 ### Overlapping | Transparency, Depth, Effects
 
@@ -89,7 +102,7 @@ gl.enable(gl.BLEND);
 
 ### Blend Functions
 
-A **blend function** applies a function when two things render on top of each other, should they add, subtract, divide, mix? [Anders Riggelsen](http://www.andersriggelsen.dk/glblendfunc.php)
+A **blend function** applies a function when two things render on top of each other, should they add, subtract, divide, mix? [Anders Riggelsen](http://www.andersriggelsen.dk/glblendfunc.php) provided a great tool to experiment with every combination.
 
 
 ### Drawing triangles
@@ -100,8 +113,6 @@ WebGL provides a number of API calls to draw things, like triangles, lines and p
 gl.drawArrays
 gl.drawElements
 ```
-
-**Bresenham's line algorithm** - An algorithm that creates a pixelated line from 2 points. This algorithm has been implemented in hardware by graphics cards as a way of creating triangles. A triangle is drawn as a series of lines sweeping down.
 
 ### Render Targets | Frame, Stencil, & Render Buffers
 

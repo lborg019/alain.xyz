@@ -1,8 +1,4 @@
-# Working with 3rd Party Libraries in Unreal Engine 4
-
 [Eric Neibler](http://ericniebler.com/) on [Cppcast](http://cppcast.com/2015/12/eric-niebler/) described the current state of programming in C++ as being "stuck in the 60s", this system bound by concatination of text. C++ [Modules](http://kennykerr.ca/2015/12/03/getting-started-with-modules-in-c/) are coming to the standard make that less of a pain, but not everyone follows the standard.
-
-![Visual Studio Compiler Option Mess](images/vscompileroptions.png)
 
 The alternative of course is using your favorite IDE's compiler options and get lost inside the options, mess up somewhere and scratch your head and wonder why. Then there's tools like CMake which try their best to abstract things, but the fact is, [C++ build systems suck](https://www.youtube.com/watch?v=KPi0AuVpxLI).
 
@@ -28,7 +24,7 @@ So `Core.Build.cs` holds everything related to the building of the core module o
 
 Any Game you make in Unreal is also a module that simply builds off these core modules and plugins you make.
 
-```cpp
+```c++
 //YourGame.h
 #include "Engine.h"
 //and #include anything else.
@@ -36,7 +32,9 @@ Any Game you make in Unreal is also a module that simply builds off these core m
 //YourGame.cpp
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, NameOfModule, "Name of Module" );
 
+```
 
+```c#
 //YourGame.Build.cs
 using UnrealBuildTool;
 
@@ -82,9 +80,31 @@ public class NameOfModuleTarget : TargetRules
 }
 ```
 
-So you have 2 options:
+So you have 2 options, either modifying a plugin's build file, or your project's.
 
-1. Include your 3rd party library as a part of your game.
-2. Include your 3rd party library as a plugin the game depends on.
+## Modifying your Build File
 
-The second option looks easier for people to use.
+We were using portions of the Intel Realsense SDK for a project, so to use it with Unreal we did the following:
+
+```c#
+using System;
+using System.IO;
+using UnrealBuildTool;
+public class AeonSystem : ModuleRules
+{
+	public AeonSystem(TargetInfo Target)
+	{
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "RHI", "SkyboxShader", "ShaderCopyHelper"});
+        PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore"});
+
+        // Load IntelRealsense SDK Directly
+        string RealSenseDirectory = Environment.GetEnvironmentVariable("RSSDK_DIR");
+        string Platform = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "Win32";
+        // Here's the key:
+        PublicIncludePaths.AddRange(new string[] { RealSenseDirectory + "include", RealSenseDirectory + "sample\\common\\include" });
+        PublicAdditionalLibraries.Add(RealSenseDirectory + "lib\\" + Platform + "\\libpxc.lib");
+    }
+}
+```
+
+So simply adding `PublicAdditionalLibraries` to your build class to link your lib files, and `PublicIncludeFiles` for your headers is enough.
