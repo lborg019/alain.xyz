@@ -32,8 +32,7 @@
     "style-loader": "^0.13.1",
     "systemjs-webpack-plugin": "git+https://github.com/guybedford/systemjs-webpack-plugin.git",
     "ts-loader": "^0.9.5",
-    "typescript": "^2.0.3",
-    "webpack": "^2.1.0-beta.21"
+    "typescript": "^2.0.3"
   },
   "dependencies": {
     "@types/isomorphic-fetch": "0.0.31",
@@ -53,6 +52,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0-2",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "webpack": "2.1.0-beta.22"
   }
 }
