@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchSubapp } from '../store/actions';
 
-import Anime, {Easing} from 'react-anime';
+import Anime from 'react-anime';
 
 const styles = {
   articleContainer: {
@@ -57,14 +57,13 @@ export class Blog extends React.Component<any, any> {
   render() {
     return (
       <div style={styles.articleContainer}>
-      <Anime duration={1} easing="easeOutSine" translateX={1]>
-        <div style={styles.article}>
+      <div style={styles.article}>
           {
             this.props.portfolio
               .filter((post) => post.permalink.slice(0, 5) === '/blog')
-              .map((post, key) => <BlogPost key={key} {...post} />)}
+              .map((post, key) => <BlogPost key={key} {...post} />)
+          }
         </div>
-        </Anime>
       </div>);
   }
 }
