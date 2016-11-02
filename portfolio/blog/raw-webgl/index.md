@@ -102,7 +102,9 @@ gl.enable(gl.BLEND);
 
 ### Blend Functions
 
-A **blend function** applies a function when two things render on top of each other, should they add, subtract, divide, mix? [Anders Riggelsen](http://www.andersriggelsen.dk/glblendfunc.php) provided a great tool to experiment with every combination.
+A **blend function** applies a function when two things render on top of each other, should they add, subtract, divide, mix?
+
+It can get pretty hard to imagine, so [Anders Riggelsen](http://www.andersriggelsen.dk/glblendfunc.php) provided a great tool to experiment with every combination.
 
 
 ### Drawing triangles

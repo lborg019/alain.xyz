@@ -1,16 +1,107 @@
-The following are notes on Vulkan, the new graphics API by Khronos.
+Vulkan is a new low level API released febuary 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on thoroughput over latency.
 
-Vulkan is a low level API that offers explicit control over every aspect of allocation, memory management, and execution of graphics.
+## Instances
+
+Similar to the OpenGL context, a vulkan application begins when you create an instance. This instance must be loaded with some information about the program such as its name, engine, and minimum vulkan version, as well as **Layers** & **Extensions**.
+
+These layers/extensions are instance specific, and can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift`.
 
 ```cpp
-#include <obsidian.h>
+#include "vulkan.hpp"
 
-//so many possible constructs, what to do.
+void main() {
 
-// Design it around building growing structures.
-// It could be designed around the idea of paralell processing of instances that feature a render function.
-// Or it could be built
+  // Setup Default Extensions/Layers
+  // You should query for extensions first and build this list from your queries.
+  // The following should work on Windows systems.
+
+  std::vector<const char*> extensions = {
+    VK_KHR_SURFACE_EXTENSION_NAME,
+    VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
+    VK_EXT_DEBUG_REPORT_EXTENSION_NAME
+  };
+
+  std::vector<const char*> layers =
+  {
+    "VK_LAYER_LUNARG_standard_validation",
+    "VK_LAYER_RENDERDOC_Capture",
+    "VK_LAYER_VALVE_steam_overlay"
+  };
+
+  auto appInfo = vk::ApplicationInfo(
+    "MyApp",
+    VK_MAKE_VERSION(0, 1, 0),
+    "MyAppEngine",
+    VK_MAKE_VERSION(0, 1, 0),
+    VK_MAKE_VERSION(1, 0, 30)
+    );
+
+  auto instanceInfo = vk::InstanceCreateInfo();
+
+  instanceInfo.setPApplicationInfo(&appInfo);
+  instanceInfo.enabledExtensionCount = extensions.size();
+  instanceInfo.ppEnabledExtensionNames = extensions.data();
+  instanceInfo.enabledLayerCount = layers.size();
+  instanceInfo.ppEnabledLayerNames = layers.data();
+
+  auto instance = vk::createInstance(instanceInfo);
+
+}
 ```
+
+## Devices
+
+In vulkan, you have access to all enumerable devices that support it, and can query for information like their name, the number of heaps they support, their manufacturer, etc.
+
+```cpp
+// Initialize Devices
+auto physicalDevices = instance.enumeratePhysicalDevices();
+auto gpu = physicalDevices[0];
+
+// Init Device Extension/Validation layers
+std::vector<const char*> deviceExtensions =
+{
+  VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+  VK_EXT_DEBUG_MARKER_EXTENSION_NAME
+};
+
+std::vector<const char*> deviceValidationLayers =
+{
+  "VK_LAYER_LUNARG_standard_validation",
+  "VK_LAYER_RENDERDOC_Capture",
+  "VK_LAYER_VALVE_steam_overlay"
+};
+
+auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
+auto gpuFeatures = gpu.getFeatures();
+auto gpuQueueProps = gpu.getQueueFamilyProperties();
+
+std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos {};
+
+for (auto& queuefamily : gpuQueueProps) {
+  if (queuefamily.queueFlags & vk::QueueFlagBits::eGraphics) {
+    if (gpu.getWin32PresentationSupportKHR(graphicsQueueIndex) == VK_TRUE) {
+      queueCreateInfos.push_back( vk::DeviceQueueCreateInfo(vk::DeviceQueueCreateFlags(), queueGraphicsIndex, 1, &priority) );
+      break;
+    }
+  }
+  graphicsQueueIndex++;
+}
+
+auto deviceInfo = vk::DeviceCreateInfo();
+deviceInfo.enabledExtensionCount = deviceExtensions.size();
+deviceInfo.ppEnabledExtensionNames = deviceExtensions.data();
+deviceInfo.enabledLayerCount = deviceValidationLayers.size();
+deviceInfo.ppEnabledLayerNames = deviceValidationLayers.data();
+deviceInfo.pEnabledFeatures = &gpuFeatures;
+deviceInfo.queueCreateInfoCount = queueCreateInfos.size();
+deviceInfo.pQueueCreateInfos = queueCreateInfos.data();
+
+auto device = gpu.createDevice(deviceInfo);
+
+```
+
+Extensions are instance and device specific, with the extensions of an instance going down to the device.
 
 ## Program Execution
 

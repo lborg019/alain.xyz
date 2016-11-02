@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "setup:frontend": "cd frontend && yarn && cd ../",
+    "setup:backend": "cd frontend && yarn && cd ../",
+    "setup:portfolio": "cd frontend && yarn && cd ../",
     "test": "ava"
   },
   "repository": {
@@ -21,8 +24,8 @@
   },
   "homepage": "https://github.com/alaingalvan/alain.xyz#readme",
   "dependencies": {
-    "ts-loader": "^0.9.5",
-    "typescript": "^2.0.3"
+    "ts-loader": "^1.0.0",
+    "typescript": "^2.0.6"
   },
   "devDependencies": {
     "yarn": "^0.16.1"

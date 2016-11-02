@@ -21,8 +21,8 @@
   "dependencies": {
     "@types/katex": "0.0.29",
     "@types/mongodb": "^2.1.33",
-    "@types/node": "^6.0.45",
-    "@types/react": "^0.14.41",
+    "@types/node": "^6.0.46",
+    "@types/react": "^0.14.44",
     "@types/react-redux": "^4.4.32",
     "@types/react-router": "^2.0.38",
     "@types/redux": "^3.6.31",
@@ -30,10 +30,10 @@
     "id3js": "^1.1.3",
     "jspm": "^0.17.0-beta.28",
     "markademic": "^0.2.0",
-    "mongodb": "^2.2.10",
+    "mongodb": "^2.2.11",
     "plugin-typescript": "git+https://github.com/frankwallis/plugin-typescript.git",
-    "ts-loader": "^0.9.1",
-    "ts-node": "^1.5.2",
-    "typescript": "^2.0.3"
+    "ts-loader": "^1.0.0",
+    "ts-node": "^1.6.1",
+    "typescript": "^2.0.6"
   }
 }
