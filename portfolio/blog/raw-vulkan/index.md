@@ -1,10 +1,14 @@
 Vulkan is a new low level API released febuary 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on thoroughput over latency.
 
+We're going to walk through writing the simplest vulkan app possible, a program that creates an image, processes it with a shader, and saves it on the disk.
+
 ## Instances
 
-Similar to the OpenGL context, a vulkan application begins when you create an instance. This instance must be loaded with some information about the program such as its name, engine, and minimum vulkan version, as well as **Layers** & **Extensions**.
+Similar to the OpenGL context, a vulkan application begins when you create an instance. This instance must be loaded with some information about the program such as its name, engine, and minimum vulkan version, as well any extensions and layers you want to load.
 
-These layers/extensions are instance specific, and can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift`.
+**Extension** - Anything that adds extra functionality to Vulkan, such as support for Win32 windows, or enabling drawing onto a target.
+
+**Layer** - Middleware between existing vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
 
 ```cpp
 #include "vulkan.hpp"
@@ -49,7 +53,7 @@ void main() {
 }
 ```
 
-## Devices
+## Physical Devices
 
 In vulkan, you have access to all enumerable devices that support it, and can query for information like their name, the number of heaps they support, their manufacturer, etc.
 
@@ -57,7 +61,15 @@ In vulkan, you have access to all enumerable devices that support it, and can qu
 // Initialize Devices
 auto physicalDevices = instance.enumeratePhysicalDevices();
 auto gpu = physicalDevices[0];
+```
 
+## Virtual Devices
+
+You can then create a virtual device from a physical device handle. A virtual device can be loaded with its own extensions/layers, can be set to work with graphics, gpgpu computations, or handle sparce memory or memory transfers.
+
+A virtual device is your interface to the GPU, and allows you to allocate data and queue up tasks.
+
+```cpp
 // Init Device Extension/Validation layers
 std::vector<const char*> deviceExtensions =
 {
@@ -78,14 +90,27 @@ auto gpuQueueProps = gpu.getQueueFamilyProperties();
 
 std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos {};
 
-for (auto& queuefamily : gpuQueueProps) {
+float priority = 0.0;
+uint32 graphicsQueueIndex = 0;
+
+// Find the Graphics Queue (if it exists)
+for (auto& queuefamily : gpuQueueProps)
+{
   if (queuefamily.queueFlags & vk::QueueFlagBits::eGraphics) {
     if (gpu.getWin32PresentationSupportKHR(graphicsQueueIndex) == VK_TRUE) {
-      queueCreateInfos.push_back( vk::DeviceQueueCreateInfo(vk::DeviceQueueCreateFlags(), queueGraphicsIndex, 1, &priority) );
+      queueCreateInfos.push_back(
+        vk::DeviceQueueCreateInfo(
+          vk::DeviceQueueCreateFlags(),
+          graphicsQueueIndex, 1,
+          &priority
+          )
+        );
       break;
     }
   }
+
   graphicsQueueIndex++;
+
 }
 
 auto deviceInfo = vk::DeviceCreateInfo();
@@ -98,10 +123,27 @@ deviceInfo.queueCreateInfoCount = queueCreateInfos.size();
 deviceInfo.pQueueCreateInfos = queueCreateInfos.data();
 
 auto device = gpu.createDevice(deviceInfo);
-
 ```
 
-Extensions are instance and device specific, with the extensions of an instance going down to the device.
+## Device Queue
+
+Todo.
+
+## Pipeline Layouts
+
+Todo.
+
+## Pipeline State Objects
+
+Todo.
+
+## Shaders
+
+Todo.
+
+## Draw Calls
+
+
 
 ## Program Execution
 
@@ -127,12 +169,14 @@ A Vulkan program executes as follows:
 
 8. **Manage the changing of frames** via `vkAcuqireNextImageKHR`, execute the command buffers you're rendering with `vkQueueSubmit`, and display the image with `vkQueuePresentKHR`.
 
-## Example Frame function calls.
+## Frame Vulkan calls
 
-```
+There can be a lot that goes into rendering a single frame, the following is from Vulkan's Cube example:
+
+```bash
 |- Debug Frame
   |- Frame Start
-  |- Color Pass #1 (1 Targets)
+  |- Color Pass 1 (1 Targets)
       |- 7) vkCmdPipelineBarrier
       |- 8) vkCmdBeginRenderPass
       |- 9) vkCmdBindPipeline
@@ -140,10 +184,7 @@ A Vulkan program executes as follows:
       |- 11) vkCmdSetViewport
       |- 12) vkCmdSetScissor
       |- 13) vkCmdDraw(36, 1)
-      |- 14) vkCmdEndRenderPass(C = Store, D=Don't Care)
+      |- 14) vkCmdEndRenderPass(C = Store, D=Do not Care)
       |- 17) vkQueueSubmit(1)[0] vkBeginCommandBuffer(ID 172)
       |- 18) vkQueuePresentKHR()
 ```
-
-http://on-demand.gputechconf.com/siggraph/2015/video/SIG501-Piers-Daniell.html
-https://github.com/Overv/VulkanTutorial
