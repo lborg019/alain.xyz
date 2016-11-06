@@ -4,7 +4,7 @@ A primer into vulkan. This cross platform application simply starts Vulkan, crea
 
 ## Setup
 
-This project uses [Conan](http://conan.io) as a C++ package manager. Install conan, [review the conan docs](http://conanio.readthedocs.io/en/latest/integrations.html) if you're not on windows for setup on osx/linux, then type the following in a console:
+This project uses [Conan](http://conan.io) as a C++ package manager. Install conan, [review the conan docs](http://conanio.readthedocs.io/en/latest/integrations.html) for your IDE's integration, then type the following in a console:
 
 ```bash
 conan install
