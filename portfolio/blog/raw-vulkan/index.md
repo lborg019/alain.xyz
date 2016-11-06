@@ -4,6 +4,8 @@ We're going to walk through writing the simplest vulkan app possible, a program 
 
 ## Instances
 
+![Instance Diagram](assets/extensions-layers.svg)
+
 Similar to the OpenGL context, a vulkan application begins when you create an instance. This instance must be loaded with some information about the program such as its name, engine, and minimum vulkan version, as well any extensions and layers you want to load.
 
 **Extension** - Anything that adds extra functionality to Vulkan, such as support for Win32 windows, or enabling drawing onto a target.
@@ -11,49 +13,45 @@ Similar to the OpenGL context, a vulkan application begins when you create an in
 **Layer** - Middleware between existing vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
 
 ```cpp
-#include "vulkan.hpp"
+// Setup Default Extensions/Layers
+// You should query for extensions first and build this list from your queries.
+// The following should work on Windows systems.
 
-void main() {
+std::vector<const char*> extensions = {
+  VK_KHR_SURFACE_EXTENSION_NAME,
+  VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
+  VK_EXT_DEBUG_REPORT_EXTENSION_NAME
+};
 
-  // Setup Default Extensions/Layers
-  // You should query for extensions first and build this list from your queries.
-  // The following should work on Windows systems.
+std::vector<const char*> layers =
+{
+  "VK_LAYER_LUNARG_standard_validation",
+  "VK_LAYER_RENDERDOC_Capture",
+  "VK_LAYER_VALVE_steam_overlay"
+};
 
-  std::vector<const char*> extensions = {
-    VK_KHR_SURFACE_EXTENSION_NAME,
-    VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
-    VK_EXT_DEBUG_REPORT_EXTENSION_NAME
-  };
+auto appInfo = vk::ApplicationInfo(
+  "MyApp",
+  VK_MAKE_VERSION(0, 1, 0),
+  "MyAppEngine",
+  VK_MAKE_VERSION(0, 1, 0),
+  VK_MAKE_VERSION(1, 0, 30)
+  );
 
-  std::vector<const char*> layers =
-  {
-    "VK_LAYER_LUNARG_standard_validation",
-    "VK_LAYER_RENDERDOC_Capture",
-    "VK_LAYER_VALVE_steam_overlay"
-  };
+auto instanceInfo = vk::InstanceCreateInfo();
 
-  auto appInfo = vk::ApplicationInfo(
-    "MyApp",
-    VK_MAKE_VERSION(0, 1, 0),
-    "MyAppEngine",
-    VK_MAKE_VERSION(0, 1, 0),
-    VK_MAKE_VERSION(1, 0, 30)
-    );
+instanceInfo.setPApplicationInfo(&appInfo);
+instanceInfo.enabledExtensionCount = extensions.size();
+instanceInfo.ppEnabledExtensionNames = extensions.data();
+instanceInfo.enabledLayerCount = layers.size();
+instanceInfo.ppEnabledLayerNames = layers.data();
 
-  auto instanceInfo = vk::InstanceCreateInfo();
-
-  instanceInfo.setPApplicationInfo(&appInfo);
-  instanceInfo.enabledExtensionCount = extensions.size();
-  instanceInfo.ppEnabledExtensionNames = extensions.data();
-  instanceInfo.enabledLayerCount = layers.size();
-  instanceInfo.ppEnabledLayerNames = layers.data();
-
-  auto instance = vk::createInstance(instanceInfo);
-
-}
+auto instance = vk::createInstance(instanceInfo);
 ```
 
 ## Physical Devices
+
+![Instance Diagram](assets/hardware.svg)
 
 In vulkan, you have access to all enumerable devices that support it, and can query for information like their name, the number of heaps they support, their manufacturer, etc.
 
@@ -62,6 +60,8 @@ In vulkan, you have access to all enumerable devices that support it, and can qu
 auto physicalDevices = instance.enumeratePhysicalDevices();
 auto gpu = physicalDevices[0];
 ```
+
+> **Note** - Mulit-GPU processing isn't supported yet on Vulkan (unless 1.1.x is already out when you read this) so this would be useful for choosing the fastest device to use.
 
 ## Virtual Devices
 
@@ -135,15 +135,53 @@ Todo.
 
 ## Pipeline State Objects
 
-Todo.
+As much as GPUs are now programmable, they still have some static state that you as a developer need to manage when performing draw calls. These include:
+
+- **Color Blending** - The function that controls how two objects draw on top of each other.
+
+- **Depth Stencil** - A extra piece of information that describes depth information.
+
+- **Vertex Input** - The actual vertex data you'll be using in your shader.
+
+- **Shaders** - What shaders will be loaded in.
+
+And many more. These can even be cached! These particular draw calls are grouped such that in older graphics APIs, they would trigger shader recompilation.
+
+## Dynamic State Objects
+
+Any fast changes of state will happen in the dynamic state objects.
+
+## Descriptor Sets
+
+Descriptors are how you bind your pipelines, uniforms to your pipeline state objects.
 
 ## Shaders
 
-Todo.
+Shaders must be passed to Vulkan as SPIR-V binary, so any compiler that can make SPIR-V is allowed. 
 
-## Draw Calls
+## Render Pass
 
+For defered rendering solutions, Vulkan makes render passes first class.
 
+## Command Buffer
+
+A container of GPU commands.
+
+submit to command queue
+
+memory is allocated from a command pool
+
+multiple buffers can be made from the same poolo.
+
+start render pass, bind resournces, descripter sets vertex index buffers, pilepline state, modify fynamic state draw repeat, end render pass.
+
+different command buffer pools allow muti cpu command buffer recording
+
+using different descriptor pools allow multi-cpu-set allocations
+
+## Compute
+
+Shares resources with 3D.
 
 ## Program Execution
 

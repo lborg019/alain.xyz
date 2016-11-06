@@ -1,5 +1,9 @@
 {
   "nvidia-vulkan": {
+    "title": "Vulkan on Nvidia GPUs",
+    "author": "Piers Daniell",
+    "type": "video",
+    "year": "2015",
     "link": [
       {
         "url": "http://on-demand.gputechconf.com/siggraph/2015/video/SIG501-Piers-Daniell.html"
