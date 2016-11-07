@@ -73,43 +73,38 @@ A virtual device is your interface to the GPU, and allows you to allocate data a
 // Init Device Extension/Validation layers
 std::vector<const char*> deviceExtensions =
 {
-  VK_KHR_SWAPCHAIN_EXTENSION_NAME,
   VK_EXT_DEBUG_MARKER_EXTENSION_NAME
 };
 
 std::vector<const char*> deviceValidationLayers =
 {
-  "VK_LAYER_LUNARG_standard_validation",
-  "VK_LAYER_RENDERDOC_Capture",
-  "VK_LAYER_VALVE_steam_overlay"
+  "VK_LAYER_LUNARG_standard_validation"
 };
 
 auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
 auto gpuFeatures = gpu.getFeatures();
 auto gpuQueueProps = gpu.getQueueFamilyProperties();
 
-std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos {};
+auto queueCreateInfos = std::vector<vk::DeviceQueueCreateInfo>();
 
 float priority = 0.0;
-uint32 graphicsQueueIndex = 0;
+uint32_t graphicsFamilyIndex = 0;
 
-// Find the Graphics Queue (if it exists)
 for (auto& queuefamily : gpuQueueProps)
 {
   if (queuefamily.queueFlags & vk::QueueFlagBits::eGraphics) {
-    if (gpu.getWin32PresentationSupportKHR(graphicsQueueIndex) == VK_TRUE) {
-      queueCreateInfos.push_back(
-        vk::DeviceQueueCreateInfo(
-          vk::DeviceQueueCreateFlags(),
-          graphicsQueueIndex, 1,
-          &priority
-          )
-        );
-      break;
-    }
+    // Create a single graphics queue.
+    queueCreateInfos.push_back(
+      vk::DeviceQueueCreateInfo(
+        vk::DeviceQueueCreateFlags(),
+        graphicsFamilyIndex, 1,
+        &priority
+      )
+    );
+    break;
   }
 
-  graphicsQueueIndex++;
+  graphicsFamilyIndex++;
 
 }
 
@@ -125,7 +120,59 @@ deviceInfo.pQueueCreateInfos = queueCreateInfos.data();
 auto device = gpu.createDevice(deviceInfo);
 ```
 
-## Device Queue
+## Queue
+
+Once you have a virtual device, you can access the queues you requested when you created it:
+
+```cpp
+// We only allocated one queue earlier,
+//so there's only one available on index 0.
+auto graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
+```
+
+## Command Pool
+
+A command pool is a thread specific means of allocating command buffers. Any number of command buffers can be made from command pools, with you as the developer responsible for managing when and how they're created and what is loaded in each.
+
+```cpp
+auto commandPoolInfo = vk::CommandPoolCreateInfo(
+  vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),
+  graphicsFamilyIndex
+);
+auto commandPool = device.createCommandPool(commandPoolInfo);
+
+auto commandBuffers = device.allocateCommandBuffers(
+  vk::CommandBufferAllocateInfo(
+    commandPool,
+    vk::CommandBufferLevel::ePrimary,
+    1U
+  )
+);
+```
+
+## Command Buffer
+
+A container of GPU commands, this is where you would see commands similar to OpenGL's state commands:
+
+- setViewport
+- setSissor
+- blitImage
+
+A common pattern for building a command buffer is:
+
+1. Start Render Pass
+2. Bind Resources
+  i. Descriptor Sets
+  ii. Vertex and Index Buffers
+  iii. Pilepline State
+3. Modify Dynamic State
+4. Draw
+5. Repeat 2 Through 4 as Needed
+6. End Render Pass
+
+Different command buffer pools allow muti cpu command buffer recording, thus you could allocate a thread for each core on the CPU, and split rendering tasks across each core. This could be used to distribute rendering individual objects, differed rendering passes, physics calculations with compute buffers, etc.
+
+## Pipeline Cache
 
 Todo.
 
@@ -136,6 +183,8 @@ Todo.
 ## Pipeline State Objects
 
 As much as GPUs are now programmable, they still have some static state that you as a developer need to manage when performing draw calls. These include:
+
+### Graphics Pipeline
 
 - **Color Blending** - The function that controls how two objects draw on top of each other.
 
@@ -162,22 +211,6 @@ Shaders must be passed to Vulkan as SPIR-V binary, so any compiler that can make
 ## Render Pass
 
 For defered rendering solutions, Vulkan makes render passes first class.
-
-## Command Buffer
-
-A container of GPU commands.
-
-submit to command queue
-
-memory is allocated from a command pool
-
-multiple buffers can be made from the same poolo.
-
-start render pass, bind resournces, descripter sets vertex index buffers, pilepline state, modify fynamic state draw repeat, end render pass.
-
-different command buffer pools allow muti cpu command buffer recording
-
-using different descriptor pools allow multi-cpu-set allocations
 
 ## Compute
 

@@ -49,7 +49,7 @@ int main() {
 
 #pragma endregion
 
-#pragma region DeviceHandle
+#pragma region VirtualDevice
 	// Init Device Extension/Validation layers
 	std::vector<const char*> deviceExtensions =
 	{
@@ -58,19 +58,17 @@ int main() {
 
 	std::vector<const char*> deviceValidationLayers =
 	{
-		"VK_LAYER_LUNARG_standard_validation",
-		"VK_LAYER_RENDERDOC_Capture",
-		"VK_LAYER_VALVE_steam_overlay"
+		"VK_LAYER_LUNARG_standard_validation"
 	};
 
 	auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
 	auto gpuFeatures = gpu.getFeatures();
 	auto gpuQueueProps = gpu.getQueueFamilyProperties();
 
-	std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos{};
+	auto queueCreateInfos = std::vector<vk::DeviceQueueCreateInfo>();
 
 	float priority = 0.0;
-	uint32_t graphicsQueueIndex = 0;
+	uint32_t graphicsFamilyIndex = 0;
 
 	for (auto& queuefamily : gpuQueueProps)
 	{
@@ -79,14 +77,14 @@ int main() {
 			queueCreateInfos.push_back(
 				vk::DeviceQueueCreateInfo(
 					vk::DeviceQueueCreateFlags(),
-					graphicsQueueIndex, 1,
+					graphicsFamilyIndex, 1,
 					&priority
 				)
 			);
 			break;
 		}
 
-		graphicsQueueIndex++;
+		graphicsFamilyIndex++;
 
 	}
 
@@ -102,13 +100,66 @@ int main() {
 	auto device = gpu.createDevice(deviceInfo);
 #pragma endregion
 
-#pragma region Image
-	
+#pragma region Queue
+	auto graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
 #pragma endregion
 
-	auto graphicsQueue = device.getQueue(graphicsQueueIndex, 0);
-	auto renderPassInfo = vk::RenderPassCreateInfo();
-	auto renderPass = device.createRenderPass(renderPassInfo);
+#pragma region Image
+	auto commandPoolInfo = vk::CommandPoolCreateInfo(
+		vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),
+		graphicsFamilyIndex
+	);
+	auto commandPool = device.createCommandPool(commandPoolInfo);
 
+	auto commandBuffers = device.allocateCommandBuffers(
+		vk::CommandBufferAllocateInfo(
+			commandPool,
+			vk::CommandBufferLevel::ePrimary,
+			1U
+		)
+	);
+#pragma endregion
+
+#pragma region Commands
+
+	// Pipeline
+	auto pipelineCache = device.createPipelineCache(vk::PipelineCacheCreateInfo());
+	auto graphicsPipeline = device.createGraphicsPipeline(pipelineCache, vk::GraphicsPipelineCreateInfo());
+	auto pipelineLayout = device.createPipelineLayout(vk::PipelineLayoutCreateInfo());
+
+	// From here we can do common GL commands
+	commandBuffers[0].beginRenderPass(vk::RenderPassBeginInfo(
+	));
+	// Bind Descriptor Sets, these are attribute/uniform "descriptions"
+	commandBuffers[0].bindPipeline();
+	commandBuffers[0].bindDescriptorSets();
+	commandBuffers[0].setViewport();
+	commandBuffers[0].setScissor();
+	commandBuffers[0].draw();
+	commandBuffers[0].blitImage();
+	commandBuffers[0].endRenderPass();
+
+	// Create kernels to submit to the queue on a given render pass.
+	auto kernelPipelineStageFlags = vk::PipelineStageFlags::Flags(vk::PipelineStageFlagBits::eAllCommands);
+	auto kernel = vk::SubmitInfo(
+		0U,
+		nullptr,
+		&kernelPipelineStageFlags,
+		commandBuffers.size(),
+		commandBuffers.data(),
+		0U,
+		nullptr
+		);
+#pragma endregion
+
+	
+
+	std::vector<vk::SubmitInfo> kernels = {
+		kernel
+	};
+
+	graphicsQueue.submit(kernels, NULL);
+	commandBuffers[0].begin(vk::CommandBufferBeginInfo());
+	graphicsQueue.presentKHR(vk::PresentInfoKHR());
 	return 0;
 }
