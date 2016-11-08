@@ -1,0 +1,1 @@
+OpenGL is a low level graphics API designed as a state machine. The graphics driver manages and maintains the state of your application and you just have to change things like what shader you're using, what colors you're clearing the context with, etc.

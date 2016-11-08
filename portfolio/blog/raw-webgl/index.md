@@ -106,6 +106,23 @@ A **blend function** applies a function when two things render on top of each ot
 
 It can get pretty hard to imagine, so [Anders Riggelsen](http://www.andersriggelsen.dk/glblendfunc.php) provided a great tool to experiment with every combination.
 
+### Vertex Buffer Objects
+
+**Vertex Buffer Objects** (or VBOs for short), are a data structure that describes vertex data. You could lay out the data for a 3D model any way you want in binary.
+
+### Shaders
+
+```glsl
+void main() {
+
+}
+```
+
+```glsl
+void main() {
+
+}
+```
 
 ### Drawing triangles
 
@@ -115,47 +132,3 @@ WebGL provides a number of API calls to draw things, like triangles, lines and p
 gl.drawArrays
 gl.drawElements
 ```
-
-### Render Targets | Frame, Stencil, & Render Buffers
-
-Since there's more information than simply color data when you render a scene, you need to write that information to something different than a regular texture, you need a **frame buffer**.
-
-```javascript
-class RenderTarget {
-  public frameBuffer: WebGLFramebuffer;
-  public frameTexture: WebGLTexture;
-  constructor(gl: WebGLRenderingContext) {
-    // Create Frame Buffer
-    this.frameBuffer = gl.createFramebuffer();
-    gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
-
-    // Create Texture
-    this.frameTexture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, this.frameTexture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-    gl.generateMipmap(gl.TEXTURE_2D);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.canvas.width, gl.canvas.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-
-    // Create Render Buffer
-    var renderbuffer = gl.createRenderbuffer();
-    gl.bindRenderbuffer(gl.RENDERBUFFER, renderbuffer);
-    gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16,  gl.canvas.width, gl.canvas.width);
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.frameTexture, 0);
-
-    // Bind Frame Buffer to Render Buffer
-    gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, renderbuffer);
-
-    // Clear bindings
-    gl.bindTexture(gl.TEXTURE_2D, null);
-    gl.bindRenderbuffer(gl.RENDERBUFFER, null);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-  }
-}
-```
-
-## Appendix
-
-- [Bresenham's Line Algorithm](https://en.wikipedia.org/wiki/Bresenham's_line_algorithm)
-- [Graphics Programming talks Playlist](https://www.youtube.com/watch?v=GNO_CYUjMK8&list=PL-ZzkbB7kcKjoE3-q_-6eL49XRqqcWZeJ&index=4)
-- [LearningWebGL.com](http://learningwebgl.com/)

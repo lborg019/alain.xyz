@@ -1,21 +1,34 @@
 {
   "nvidia-vulkan": {
     "title": "Vulkan on Nvidia GPUs",
-    "author": "Piers Daniell",
+    "author": [{
+      "name": "Daniell, Piers"
+    }],
     "type": "video",
     "year": "2015",
-    "link": [
-      {
-        "url": "http://on-demand.gputechconf.com/siggraph/2015/video/SIG501-Piers-Daniell.html"
-      }
-    ]
+    "link": [{
+      "url": "http://on-demand.gputechconf.com/siggraph/2015/video/SIG501-Piers-Daniell.html"
+    }]
   },
   "sasha-vulkantutorial": {
     "type": "website",
-    "link": [
-      {
-        "url": "https://github.com/Overv/VulkanTutorial"
-      }
-    ]
+    "link": [{
+      "url": "https://github.com/Overv/VulkanTutorial"
+    }]
+  },
+  "vulkan30min": {
+    "type": "website",
+    "link": [{
+      "url": "https://renderdoc.org/vulkan-in-30-minutes.html"
+    }]
+  },
+  "portingsource2tovulkan": {
+    "title": "Porting Source 2 to Vulkan",
+    "author": [{
+      "name": "Ginsburg, Dan"
+    }],
+    "link": [{
+      "url": "http://nextgenapis.realtimerendering.com/presentations/6_Ginsburg_Source2.pdf"
+    }]
   }
 }
