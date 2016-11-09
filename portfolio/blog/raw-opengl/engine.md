@@ -1,0 +1,1 @@
+The most obvious benefit of choosing OpenGL as your primary graphics API for a game engine is the fact that OpenGL ES 2.0 is supported everywhere, Windows, Mac, Linux, iOS, Mac OS and many more.

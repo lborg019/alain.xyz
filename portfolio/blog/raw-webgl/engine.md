@@ -1,0 +1,1 @@
+Building a rendering engine in WebGL is a question of how to manage multiple sub-states represented as each mesh, material, texture, etc. 
