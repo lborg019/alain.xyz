@@ -12,13 +12,13 @@ To communicate with OpenGL you simply need to interface with the OpenGL driver v
 > **Call to Action** - build an OpenGL Bindings library for C++ 14 similar to [vulkan.hpp](https://github.com/KhronosGroup/Vulkan-Hpp) that maps directly to WebGL bindings for unified semantics. A lot of bindings have redundant `gl` in the names of all their functions:
 > ```cpp
 > //Current C++ with redunant `gl`
-> gl::glBindBuffer(...)
+> gl::glBindBuffer(...);
 >
 > // Ideal C++
-> gl::bindBuffer(...)
+> gl::bindBuffer(...);
 >
 > // JavaScript
-> gl.bindBuffer(...)
+> gl.bindBuffer(...);
 > ```
 
 You'll also need a way of generating windows.

@@ -12,28 +12,54 @@ Similar to the OpenGL context, a Vulkan application begins when you create an in
 
 **Layer** - Middleware between existing Vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
 
-> **Note** - You should query for the extensions supported on the system you're running Vulkan on before including them, for the sake of brevity I did not include those checks.
+You'll want to begin by determining which extensions/layers you want, compare that with which are available to you by Vulkan. Once that's done
 
 ```cpp
-std::vector<const char*> extensions =
+auto installedExtensions = vk::enumerateInstanceExtensionProperties();
+
+std::vector<const char*> wantedExtensions =
 {
-  VK_KHR_SURFACE_EXTENSION_NAME,
   VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
+  VK_KHR_SURFACE_EXTENSION_NAME,
   VK_KHR_WIN32_SURFACE_EXTENSION_NAME
 };
 
-std::vector<const char*> layers =
+auto extensions = std::vector<const char*>();
+
+for (auto &w : wantedExtensions) {
+  for (auto &i : installedExtensions) {
+    if (std::string(i.extensionName).compare(w) == 0) {
+      extensions.emplace_back(w);
+      break;
+    }
+  }
+}
+
+auto installedLayers = vk::enumerateInstanceLayerProperties();
+
+std::vector<const char*> wantedLayers =
 {
   "VK_LAYER_LUNARG_standard_validation",
   "VK_LAYER_RENDERDOC_Capture"
 };
+
+auto layers = std::vector<const char*>();
+
+for (auto &w : wantedLayers) {
+  for (auto &i : installedLayers) {
+    if (std::string(i.layerName).compare(w) == 0) {
+      layers.emplace_back(w);
+      break;
+    }
+  }
+}
 
 auto appInfo = vk::ApplicationInfo(
   "MyApp",
   VK_MAKE_VERSION(1, 0, 0),
   "MyAppEngine",
   VK_MAKE_VERSION(1, 0, 0),
-  VK_MAKE_VERSION(1, 0, 0)
+  VK_API_VERSION_1_0
 );
 
 auto instance = vk::createInstance(
@@ -71,18 +97,45 @@ You can then create a logical device from a physical device handle. A logical de
 A logical device is your interface to the GPU, and allows you to allocate data and queue up tasks.
 
 ```cpp
+auto gpuExtensions = gpu.enumerateDeviceExtensionProperties();
+
 // Init Device Extension/Validation layers
-std::vector<const char*> deviceExtensions =
+std::vector<const char*> wantedDeviceExtensions =
 {
   VK_KHR_SWAPCHAIN_EXTENSION_NAME,
   VK_EXT_DEBUG_MARKER_EXTENSION_NAME
 };
 
-std::vector<const char*> deviceValidationLayers =
+auto deviceExtensions = std::vector<const char*>();
+
+for (auto &w : wantedDeviceExtensions) {
+  for (auto &i : gpuExtensions) {
+    if (std::string(i.extensionName).compare(w) == 0) {
+      deviceExtensions.emplace_back(w);
+      break;
+    }
+  }
+}
+
+auto gpuLayers = gpu.enumerateDeviceLayerProperties();
+
+std::vector<const char*> wantedDeviceValidationLayers =
 {
   "VK_LAYER_LUNARG_standard_validation",
   "VK_LAYER_RENDERDOC_Capture"
 };
+
+auto deviceValidationLayers = std::vector<const char*>();
+
+for (auto &w : wantedLayers) {
+  for (auto &i : installedLayers) {
+    if (std::string(i.layerName).compare(w) == 0) {
+      layers.emplace_back(w);
+      break;
+    }
+  }
+}
+
 
 auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
 auto gpuFeatures = gpu.getFeatures();
@@ -99,7 +152,8 @@ for (auto& queuefamily : gpuQueueProps)
     queueCreateInfos.push_back(
       vk::DeviceQueueCreateInfo(
         vk::DeviceQueueCreateFlags(),
-        graphicsFamilyIndex, 1,
+        graphicsFamilyIndex,
+        1,
         &priority
       )
     );
@@ -277,9 +331,24 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
   SetFocus(window);
 ```
 
-From there:
+From there we can create our Win32 surface.
 
 ```cpp
+// Screen Size
+auto surfaceSize = vk::Extent2D(width, height);
+auto renderArea = vk::Rect2D(vk::Offset2D(), surfaceSize);
+auto viewport = vk::Viewport(0, 0, width, height, 0, 1.0f);
+
+std::vector<vk::Viewport> viewports =
+{
+  viewport
+};
+
+std::vector<vk::Rect2D> scissors =
+{
+  renderArea
+};
+
 // Setup Surface
 auto surfaceSize = vk::Extent2D(width, height);
 auto surfaceInfo = vk::Win32SurfaceCreateInfoKHR(vk::Win32SurfaceCreateFlagsKHR(), hInstance, window);
@@ -509,6 +578,7 @@ auto renderpass = device.createRenderPass(
   )
 );
 ```
+
 ## Descriptor Pool
 
 ## Queue
