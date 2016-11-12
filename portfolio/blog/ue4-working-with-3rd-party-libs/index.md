@@ -90,18 +90,29 @@ We were using portions of the Intel Realsense SDK for a project, so to use it wi
 using System;
 using System.IO;
 using UnrealBuildTool;
-public class AeonSystem : ModuleRules
-{
-	public AeonSystem(TargetInfo Target)
-	{
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "RHI", "SkyboxShader", "ShaderCopyHelper"});
-        PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore"});
+public class AeonSystem: ModuleRules {
+    public AeonSystem(TargetInfo Target) {
+        PublicDependencyModuleNames.AddRange(new string[] {
+            "Core",
+            "CoreUObject",
+            "Engine",
+            "InputCore",
+            "RHI",
+            "SkyboxShader",
+            "ShaderCopyHelper"
+        });
+        PrivateDependencyModuleNames.AddRange(new string[] {
+            "Slate",
+            "SlateCore"
+        });
 
         // Load IntelRealsense SDK Directly
         string RealSenseDirectory = Environment.GetEnvironmentVariable("RSSDK_DIR");
         string Platform = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "Win32";
         // Here's the key:
-        PublicIncludePaths.AddRange(new string[] { RealSenseDirectory + "include", RealSenseDirectory + "sample\\common\\include" });
+        PublicIncludePaths.AddRange(new string[] {
+            RealSenseDirectory + "include", RealSenseDirectory + "sample\\common\\include"
+        });
         PublicAdditionalLibraries.Add(RealSenseDirectory + "lib\\" + Platform + "\\libpxc.lib");
     }
 }

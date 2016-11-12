@@ -18,6 +18,9 @@
   },
   "vulkan30min": {
     "type": "website",
+    "author": [{
+      "name": "Karlsson, Baldur"
+    }],
     "link": [{
       "url": "https://renderdoc.org/vulkan-in-30-minutes.html"
     }]
@@ -29,6 +32,14 @@
     }],
     "link": [{
       "url": "http://nextgenapis.realtimerendering.com/presentations/6_Ginsburg_Source2.pdf"
+    }]
+  },
+  "vulkananddoom": {
+    "author": [{
+      "name": "Lottes, Timothy"
+    }],
+    "link": [{
+      "url": "http://gpuopen.com/vulkan-and-doom/"
     }]
   }
 }

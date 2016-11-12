@@ -1,6 +1,6 @@
-Vulkan is a new low level API released febuary 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on thoroughput over latency.
+Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on throughput over latency.
 
-> I've prepared a [demo](http://github.com/alaingalvan/raw-vulkan-app), inside you'll find platform specific instructions on how to build it. For the sake of brevity I've avoided including some things like listening to window events, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+I've prepared a [demo](http://github.com/alaingalvan/raw-vulkan-app), inside you'll find platform specific instructions on how to build it. For the sake of brevity I've avoided including some things like listening to window events, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
 ## Instances
 
@@ -12,16 +12,14 @@ Similar to the OpenGL context, a Vulkan application begins when you create an in
 
 **Layer** - Middleware between existing Vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
 
-```cpp
-// Setup Default Extensions/Layers
-// You should query for extensions first and build this list from your queries.
-// The following should work on Windows systems.
+> **Note** - You should query for the extensions supported on the system you're running Vulkan on before including them, for the sake of brevity I did not include those checks.
 
+```cpp
 std::vector<const char*> extensions =
 {
   VK_KHR_SURFACE_EXTENSION_NAME,
-  VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
-  VK_EXT_DEBUG_REPORT_EXTENSION_NAME
+  VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
+  VK_KHR_WIN32_SURFACE_EXTENSION_NAME
 };
 
 std::vector<const char*> layers =
@@ -32,21 +30,22 @@ std::vector<const char*> layers =
 
 auto appInfo = vk::ApplicationInfo(
   "MyApp",
-  VK_MAKE_VERSION(0, 1, 0),
+  VK_MAKE_VERSION(1, 0, 0),
   "MyAppEngine",
-  VK_MAKE_VERSION(0, 1, 0),
-  VK_MAKE_VERSION(1, 0, 30)
-  );
+  VK_MAKE_VERSION(1, 0, 0),
+  VK_MAKE_VERSION(1, 0, 0)
+);
 
-auto instanceInfo = vk::InstanceCreateInfo();
-
-instanceInfo.setPApplicationInfo(&appInfo);
-instanceInfo.enabledExtensionCount = extensions.size();
-instanceInfo.ppEnabledExtensionNames = extensions.data();
-instanceInfo.enabledLayerCount = layers.size();
-instanceInfo.ppEnabledLayerNames = layers.data();
-
-auto instance = vk::createInstance(instanceInfo);
+auto instance = vk::createInstance(
+  vk::InstanceCreateInfo(
+    vk::InstanceCreateFlags(),
+    &appInfo,
+    layers.size(),
+    layers.data(),
+    extensions.size(),
+    extensions.data()
+  )
+);
 ```
 
 ## Physical Devices
@@ -67,7 +66,7 @@ auto gpu = physicalDevices[0];
 
 ![Logical Devices](assets/logical-device.svg)
 
-You can then create a logical device from a physical device handle. A logical device can be loaded with its own extensions/layers, can be set to work with graphics, gpgpu computations, handle sparce memory and/or memory transfers.
+You can then create a logical device from a physical device handle. A logical device can be loaded with its own extensions/layers, can be set to work with graphics, gpgpu computations, handle sparse memory and/or memory transfers by creating queues for that device.
 
 A logical device is your interface to the GPU, and allows you to allocate data and queue up tasks.
 
@@ -89,10 +88,9 @@ auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
 auto gpuFeatures = gpu.getFeatures();
 auto gpuQueueProps = gpu.getQueueFamilyProperties();
 
-auto queueCreateInfos = std::vector<vk::DeviceQueueCreateInfo>();
-
 float priority = 0.0;
 uint32_t graphicsFamilyIndex = 0;
+auto queueCreateInfos = std::vector<vk::DeviceQueueCreateInfo>();
 
 for (auto& queuefamily : gpuQueueProps)
 {
@@ -112,16 +110,18 @@ for (auto& queuefamily : gpuQueueProps)
 
 }
 
-auto deviceInfo = vk::DeviceCreateInfo();
-deviceInfo.enabledExtensionCount = deviceExtensions.size();
-deviceInfo.ppEnabledExtensionNames = deviceExtensions.data();
-deviceInfo.enabledLayerCount = deviceValidationLayers.size();
-deviceInfo.ppEnabledLayerNames = deviceValidationLayers.data();
-deviceInfo.pEnabledFeatures = &gpuFeatures;
-deviceInfo.queueCreateInfoCount = queueCreateInfos.size();
-deviceInfo.pQueueCreateInfos = queueCreateInfos.data();
-
-auto device = gpu.createDevice(deviceInfo);
+auto device = gpu.createDevice(
+  vk::DeviceCreateInfo(
+    vk::DeviceCreateFlags(),
+    queueCreateInfos.size(),
+    queueCreateInfos.data(),
+    deviceValidationLayers.size(),
+    deviceValidationLayers.data(),
+    deviceExtensions.size(),
+    deviceExtensions.data(),
+    &gpuFeatures
+  )
+);
 ```
 
 ## Window Surface Interface
@@ -160,16 +160,16 @@ If you want to support multiple platforms, then you'll need to use OS specific p
 
 You'll need to keep in mind things like window size, canvas size (supersampling), DPI and retina support, nested windows, window management and spawning multiple windows.
 
-> **Call to Action** - Make a Vulkan library that makes cross platform Vulkan super easy. You can target problems such as how each OS has their own main function, each OS has their own Windowing abstraction, how to manage each and let users access their OS specific handles if needed.
+> **Call to Action** - Make a Vulkan library that makes cross platform Vulkan super easy. You can target problems such as how each OS has their own main function, each OS has their own Windowing abstraction, how to manage each and let users access their OS specific handles if needed. One possibility is to add Vulkan support to [SFML](https://github.com/SFML/SFML).
 
 ### Win32 Surfaces
 
-A Windows surface is created when you include the `VK_KHR_win32_surface` extension to Vulkan, declare `VK_USE_PLATFORM_WIN32_KHR`, and include `windows.h` in your project.
+A Win32 surface is created when you include the `VK_KHR_win32_surface` extension to Vulkan, declare `VK_USE_PLATFORM_WIN32_KHR`, and include `windows.h` in your project.
 
 Creating windows on [Windows is well documented on MSDN](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632680(v=vs.85).aspx), so refer there for any more questions.
 
 ```cpp
-VULKAN_HPP_TYPESAFE_CONVERSION
+#define VULKAN_HPP_TYPESAFE_CONVERSION
 #define USE_SWAPCHAIN_EXTENSIONS
 #define VK_USE_PLATFORM_WIN32_KHR
 #define __INT32_TYPE__
@@ -275,34 +275,38 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
   ShowWindow(window, SW_SHOW);
   SetForegroundWindow(window);
   SetFocus(window);
+```
 
-  // Setup Surface
-  auto surfaceSize = vk::Extent2D(width, height);
-  auto surfaceInfo = vk::Win32SurfaceCreateInfoKHR(vk::Win32SurfaceCreateFlagsKHR(), hInstance, window);
-  auto vkSurfaceInfo = surfaceInfo.operator const VkWin32SurfaceCreateInfoKHR &();
+From there:
 
-  auto surface = vk::SurfaceKHR();
-  auto createwin32surface = vkCreateWin32SurfaceKHR(instance, &vkSurfaceInfo, NULL, &surface.operator VkSurfaceKHR);
-  assert(createwin32surface == VK_SUCCESS);
+```cpp
+// Setup Surface
+auto surfaceSize = vk::Extent2D(width, height);
+auto surfaceInfo = vk::Win32SurfaceCreateInfoKHR(vk::Win32SurfaceCreateFlagsKHR(), hInstance, window);
+auto vkSurfaceInfo = surfaceInfo.operator const VkWin32SurfaceCreateInfoKHR &();
 
-  // Get surface information
+auto surface = vk::SurfaceKHR();
+auto createwin32surface = vkCreateWin32SurfaceKHR(instance, &vkSurfaceInfo, NULL, &surface.operator VkSurfaceKHR);
+assert(createwin32surface == VK_SUCCESS);
 
-  auto surfaceCapabilities = gpu.getSurfaceCapabilitiesKHR(surface);
-  auto surfaceFormats = gpu.getSurfaceFormatsKHR(surface);
-  auto surfacePresentModes = gpu.getSurfacePresentModesKHR(surface);
+// Get surface information
 
-  // Check to see if we can display rgb colors.
-  vk::Format colorFormat;
-  vk::ColorSpaceKHR colorSpace;
+auto surfaceCapabilities = gpu.getSurfaceCapabilitiesKHR(surface);
+auto surfaceFormats = gpu.getSurfaceFormatsKHR(surface);
+auto surfacePresentModes = gpu.getSurfacePresentModesKHR(surface);
 
-  if (surfaceFormats.size() == 1 && surfaceFormats[0].format == vk::Format::eUndefined)
-    colorFormat = vk::Format::eB8G8R8A8Unorm;
-  else
-    colorFormat = surfaceFormats[0].format;
+// Check to see if we can display rgb colors.
+vk::Format colorFormat;
+vk::ColorSpaceKHR colorSpace;
 
-  colorSpace = surfaceFormats[0].colorSpace;
+if (surfaceFormats.size() == 1 && surfaceFormats[0].format == vk::Format::eUndefined)
+  colorFormat = vk::Format::eB8G8R8A8Unorm;
+else
+  colorFormat = surfaceFormats[0].format;
 
-  // ...
+colorSpace = surfaceFormats[0].colorSpace;
+
+// ...
 }
 ```
 
@@ -352,7 +356,17 @@ swapchainCreateInfo.presentMode = presentMode;
 
 auto swapchain = device.createSwapchainKHR(swapchainCreateInfo);
 auto swapchainImages = device.getSwapchainImagesKHR(swapchain);
+```
 
+## View Structures
+
+A view in Vulkan is an adapter that lets you interface between GPU data structures.
+
+## Frame Buffers
+
+A frame buffer in VUlkan is a container of Image Views.
+
+```cpp
 // Lets group these images into a custom struct:
 
 struct SwapChainBuffer {
@@ -430,7 +444,7 @@ For defered rendering solutions, Vulkan makes render passes first class, letting
 
 - **Subpass** - A phase of rendering within a render pass, that reads and writes a subset of the attachments.
 
-- **Subpass Dependency** - an execution or memory dependency between different subpasses. This would be for example, the `sampler2D` that you would access in a post-processing system that is waterfalled down the chain of effects.
+- **Subpass Dependency** - an execution or memory dependency between different subpasses. This would be for example, the `sampler2D` that you would access in a post-processing system that is waterfalled down the chain of effects. This list also determines the order that subpasses are used.
 
 ```cpp
 // Describe grouped data that the render pass expects to read/write to
@@ -530,9 +544,9 @@ auto commandBuffers = device.allocateCommandBuffers(
 );
 ```
 
+You should try to have the minimum number of command buffers possible in your application.
+
 > One possible setup could be taking a flat collection of renderable objects (like a scene), distributing it across as many threads as the computer's CPU allows, allocating a command buffer for each object, creating a pipeline for each object, and finishing by sending a ending buffer to start up the process.
->
-> **Call to Action**: What's the ideal size of a command buffer to allow for both programmibility, not lag the GPU with too many requests, and keep the GPU always busy with new work?
 
 We'll come back to the command buffers we made here later in our app.
 
@@ -574,7 +588,13 @@ Any fast changes of state will happen in the dynamic state objects.
 
 ### Descriptor Sets
 
-**Descriptor Sets** store the resources bound to the minding points in a shader. It connects the binding points of different shaders with the buffers and images used for those bindings.
+**Descriptor Sets** store the resources bound to the minding points in a shader. It connects the binding points of a shader with the buffers and images used for those bindings.
+
+In React Fiber there's the idea of a frequently updated view and a not frequently updated view. Unreal Engine 4 shares this with two global uniform families for frequently (called variable parameters) and not frequently (constant parameters) updated uniforms. Descriptor Sets are where you would make this distinction in Vulkan.
+
+```cpp
+
+```
 
 ### Shaders
 
