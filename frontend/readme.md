@@ -57,7 +57,7 @@ I'm using PostCSS to take advantage of [CSS4 features with CSSNext](http://cssne
 - [LocalFont.com](http://www.localfont.com/) for making it easy to set up custom fonts.
 - [IcoMoon.io](https://icomoon.io/) - For providing the icon svgs.
 
-[website-img]: assets/brand/website-screenshot.png
+[website-img]: assets/brand/website-screenshot.jpg
 [website-url]: https://alain.xyz
 [release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square
 [license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square
