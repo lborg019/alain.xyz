@@ -2,7 +2,7 @@
 
 ![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 
-An intelligent portfolio backend build on top of [Node 6.3](https://nodejs.org/en/), [TypeScript 2.0](http://www.typescriptlang.org/), [Express 4](https://expressjs.com/), and [MongoDB 3.2](http://mongodb.org/).
+An intelligent portfolio backend build on top of [Node 7](https://nodejs.org/en/), [TypeScript 2.0](http://www.typescriptlang.org/), [Express 4](https://expressjs.com/), and [MongoDB 3.2](http://mongodb.org/).
 
 Give it a repository of portfolio items and a few functions to describe what to do with those items, and it will populate a database for an *SPA* or *Web Service*.
 
