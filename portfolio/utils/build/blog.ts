@@ -100,9 +100,6 @@ async function askQuestions(file: string) {
       answers[question.key] = answer;
     });
 
-  console.log(answers);
-  console.log('');
-
   return answers;
 }
 
@@ -110,7 +107,7 @@ async function askQuestions(file: string) {
  * Write a given set of answers to the database.
  */
 async function writeToDb(file: string, answers: IPortfolioItem) {
-  await database.then((db) => {
+  await database.then(async (db) => {
 
     var portfolioCollection = db.collection('portfolio');
     var filesCollection = db.collection('files');
@@ -137,10 +134,15 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     for (var sf of staticFiles) {
       var filePermalink = path.join(entry.permalink, path.relative(lastPath, sf)).replace(/\\/g, '/');
 
-      filesCollection.update({ file: sf }, { file: sf, permalink: filePermalink }, { upsert: true });
+      await filesCollection.update({ file: sf }, { file: sf, permalink: filePermalink }, { upsert: true })
+      .then(r => console.log(`Updated file ${sf}.`))
+      .catch(e => console.log(e));
+
     }
 
-    portfolioCollection.update({ file }, entry, { upsert: true });
+    await portfolioCollection.update({ file }, entry, { upsert: true })
+    .then(r => console.log(`Added ${answers.title} to the Database`))
+    .catch(e => console.log(e));
   });
 }
 
@@ -165,8 +167,8 @@ function clean() {
         }
       });
 
-    cleanFiles(files);
-    cleanFiles(posts);
+    await cleanFiles(files);
+    await cleanFiles(posts);
 
   });
 }
