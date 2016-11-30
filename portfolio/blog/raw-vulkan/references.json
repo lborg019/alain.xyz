@@ -1,5 +1,5 @@
 {
-  "nvidia-vulkan": {
+  "vulkanonnvidia": {
     "title": "Vulkan on Nvidia GPUs",
     "author": [{
       "name": "Daniell, Piers"
@@ -10,14 +10,14 @@
       "url": "http://on-demand.gputechconf.com/siggraph/2015/video/SIG501-Piers-Daniell.html"
     }]
   },
-  "sasha-vulkantutorial": {
+  "vulkantutorial": {
     "type": "website",
     "link": [{
       "url": "https://github.com/Overv/VulkanTutorial"
     }]
   },
-  "vulkan30min": {
-    "type": "website",
+  "vulkanin30min": {
+    "type": "article",
     "author": [{
       "name": "Karlsson, Baldur"
     }],
@@ -27,6 +27,7 @@
   },
   "portingsource2tovulkan": {
     "title": "Porting Source 2 to Vulkan",
+    "type": "article",
     "author": [{
       "name": "Ginsburg, Dan"
     }],
@@ -35,11 +36,23 @@
     }]
   },
   "vulkananddoom": {
+    "title": "Vulkan and Doom",
     "author": [{
       "name": "Lottes, Timothy"
     }],
     "link": [{
       "url": "http://gpuopen.com/vulkan-and-doom/"
     }]
+  },
+  "vulkanhpp": {
+    "title": "Vulkan-Hpp",
+    "author": [{
+      "name": "Markus Tavenrath"
+      }],
+    "link": [
+      {
+        "url": "https://www.khronos.org/assets/uploads/developers/library/2016-vulkan-devu-seoul/4-Vulkan-HPP.pdf"
+      }
+    ]
   }
 }

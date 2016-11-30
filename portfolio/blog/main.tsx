@@ -41,6 +41,7 @@ const styles = {
 export default class BlogPost extends React.Component<any, any> {
 
   render() {
+
     if (!this.props.config)
       return null;
 

@@ -1,6 +1,40 @@
 Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on throughput over latency.
 
-I've prepared a [demo](http://github.com/alaingalvan/raw-vulkan-app), inside you'll find platform specific instructions on how to build it. For the sake of brevity I've avoided including some things like listening to window events, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+I've prepared a [demo](http://github.com/alaingalvan/raw-vulkan-app), inside you'll find platform specific instructions on how to build it. For the sake of brevity I've avoided including some things like listening to window events, cross platform compilation, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+
+## Overview
+
+In this application we will need to do the following:
+
+1. Create a **Vulkan Instance** to access inner functions of the Vulkan API.
+
+2. Pick the best **Physical Device** from every device that supports Vulkan on your machine.
+
+3. Create a **Logical Device** from your physical device to interface with more Vulkan
+
+4. Create **OS Window** using OS specific APIs.
+
+5. Create a **Surface** from your window to serve as the OS interface for Vulkan.
+
+6. Create a primary **Render Pass** to be used in your swapchain and surface.
+
+7. Create a **Swapchain** from your logical device.
+
+8. Create a set of **FrameBuffers** for each image in your swapchain.
+
+9. Create **Synchronization** primatives like semaphores and fences.
+
+10. Create a **Command Pool** from your logical device.
+
+11. Create a **Vertex Buffer** and **Index Buffer** for your geometry.
+
+12. Compile and load **SPIR-V** shader binary.
+
+13. Create a **Graphics Pipeline** to represent the entire state of the Graphics Pipeline for that triangle.
+
+14. Create **Commands** for each command buffer to set the GPU's state.
+
+15. Use an **Update Loop** to switch between different frames in your swapchain.
 
 ## Instances
 
@@ -178,6 +212,16 @@ auto device = gpu.createDevice(
 );
 ```
 
+## Queue
+
+Once you have a virtual device, you can access the queues you requested when you created it:
+
+```cpp
+// We only allocated one queue earlier,
+//so there's only one available on index 0.
+auto graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
+```
+
 ## Window Surface Interface
 
 Each OS has their own specific window generation system. Vulkan 1.0 currently supports Windows, Android, and Linux windows out of the box, with plans for iOS and Mac OS in the future.
@@ -223,22 +267,18 @@ A Win32 surface is created when you include the `VK_KHR_win32_surface` extension
 Creating windows on [Windows is well documented on MSDN](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632680(v=vs.85).aspx), so refer there for any more questions.
 
 ```cpp
+#ifdef _MSC_VER
+#    pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+#endif
+#define VK_USE_PLATFORM_WIN32_KHR
+#include "windows.h"
+
 #define VULKAN_HPP_TYPESAFE_CONVERSION
 #define USE_SWAPCHAIN_EXTENSIONS
-#define VK_USE_PLATFORM_WIN32_KHR
-#define __INT32_TYPE__
 
-#include "windows.h"
 #include "vulkan.hpp"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-  // Event Listener Logic Here.
-
-  return 0;
-}
-
-int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
+int main()
 {
   // Setup Instance
 
@@ -249,86 +289,79 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
   // Setup Window
 
   std::string title = "MyVulkanApp";
-  std::string name = "MyVulkanApp";
-  uint32_t width = 1280;
-  uint32_t height = 720;
+	std::string name = "MyVulkanApp";
+	uint32_t width = 1280;
+	uint32_t height = 720;
+	auto hInstance = GetModuleHandle(0);
 
-  // Attach Console
+	WNDCLASSEX wndClass;
+	wndClass.cbSize = sizeof(WNDCLASSEX);
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;
+	wndClass.lpfnWndProc = [](HWND h, UINT m, WPARAM w, LPARAM l)->LRESULT
+	{
+		if (m == WM_CLOSE)
+			PostQuitMessage(0);
+		else
+			return DefWindowProc(h, m, w, l);
+		return 0;
+	};
+	wndClass.cbClsExtra = 0;
+	wndClass.cbWndExtra = 0;
+	wndClass.hInstance = hInstance;
+	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wndClass.lpszMenuName = NULL;
+	wndClass.lpszClassName = name.c_str();
+	wndClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
 
-  AllocConsole();
-  AttachConsole(GetCurrentProcessId());
+	if (!RegisterClassEx(&wndClass)) {
+		fflush(stdout);
+		exit(1);
+	}
 
-  FILE *stream;
-  freopen_s(&stream, "CONOUT$", "w+", stdout);
-  SetConsoleTitle(TEXT(title.c_str()));
+	DWORD dwExStyle;
+	DWORD dwStyle;
 
-  WNDCLASSEX wndClass;
+	dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
+	dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 
-  wndClass.cbSize = sizeof(WNDCLASSEX);
-  wndClass.style = CS_HREDRAW | CS_VREDRAW;
-  wndClass.lpfnWndProc = WndProc;
-  wndClass.cbClsExtra = 0;
-  wndClass.cbWndExtra = 0;
-  wndClass.hInstance = hInstance;
-  wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-  wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-  wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-  wndClass.lpszMenuName = NULL;
-  wndClass.lpszClassName = name.c_str();
-  wndClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
+	RECT windowRect;
+	windowRect.left = 0L;
+	windowRect.top = 0L;
+	windowRect.right = (long)width;
+	windowRect.bottom = (long)height;
 
-  if (!RegisterClassEx(&wndClass))
-  {
-    fflush(stdout);
-    exit(1);
-  }
+	AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
 
-  int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-  int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+	auto window = CreateWindowEx(0,
+		name.c_str(),
+		title.c_str(),
+		dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+		0,
+		0,
+		windowRect.right - windowRect.left,
+		windowRect.bottom - windowRect.top,
+		NULL,
+		NULL,
+		hInstance,
+		NULL);
 
-  DWORD dwExStyle;
-  DWORD dwStyle;
+	// Center on screen
+	uint32_t x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
+	uint32_t y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
+	SetWindowPos(window, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
 
-  dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-  dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+	if (!window) {
+		printf("Could not create window!\n");
+		fflush(stdout);
+		exit(1);
+	}
 
-  RECT windowRect;
-  windowRect.left = 0L;
-  windowRect.top = 0L;
-  windowRect.right = (long)width;
-  windowRect.bottom = (long)height;
-
-  AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
-
-  std::string windowTitle = "WindowTItle";
-  auto window = CreateWindowEx(0,
-                               name.c_str(),
-                               windowTitle.c_str(),
-                               dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-                               0,
-                               0,
-                               windowRect.right - windowRect.left,
-                               windowRect.bottom - windowRect.top,
-                               NULL,
-                               NULL,
-                               hInstance,
-                               NULL);
-
-  // Center on screen
-  uint32_t x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
-  uint32_t y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
-  SetWindowPos(window, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
-
-  if (!window)
-  {
-    printf("Could not create window!\n");
-    fflush(stdout);
-    exit(1);
-  }
-
-  ShowWindow(window, SW_SHOW);
-  SetForegroundWindow(window);
-  SetFocus(window);
+	ShowWindow(window, SW_SHOW);
+	SetForegroundWindow(window);
+	SetFocus(window);
+}
 ```
 
 From there we can create our Win32 surface.
@@ -337,7 +370,7 @@ From there we can create our Win32 surface.
 // Screen Size
 auto surfaceSize = vk::Extent2D(width, height);
 auto renderArea = vk::Rect2D(vk::Offset2D(), surfaceSize);
-auto viewport = vk::Viewport(0, 0, width, height, 0, 1.0f);
+auto viewport = vk::Viewport(0.0f, 0.0f, width, height, 0, 1.0f);
 
 std::vector<vk::Viewport> viewports =
 {
@@ -349,35 +382,165 @@ std::vector<vk::Rect2D> scissors =
   renderArea
 };
 
-// Setup Surface
-auto surfaceSize = vk::Extent2D(width, height);
 auto surfaceInfo = vk::Win32SurfaceCreateInfoKHR(vk::Win32SurfaceCreateFlagsKHR(), hInstance, window);
-auto vkSurfaceInfo = surfaceInfo.operator const VkWin32SurfaceCreateInfoKHR &();
+auto vkSurfaceInfo = surfaceInfo.operator const VkWin32SurfaceCreateInfoKHR&();
 
-auto surface = vk::SurfaceKHR();
-auto createwin32surface = vkCreateWin32SurfaceKHR(instance, &vkSurfaceInfo, NULL, &surface.operator VkSurfaceKHR);
+auto vksurface = VkSurfaceKHR();
+auto createwin32surface = vkCreateWin32SurfaceKHR(instance, &vkSurfaceInfo, NULL, &vksurface);
 assert(createwin32surface == VK_SUCCESS);
 
 // Get surface information
+auto surface = vk::SurfaceKHR(vksurface);
+```
 
-auto surfaceCapabilities = gpu.getSurfaceCapabilitiesKHR(surface);
-auto surfaceFormats = gpu.getSurfaceFormatsKHR(surface);
-auto surfacePresentModes = gpu.getSurfacePresentModesKHR(surface);
+## Color Formats
 
+Knowing what Color formats your GPU supports will play a crutial role in determining what you can display and what kind of buffers you can allocate.
+
+```cpp
 // Check to see if we can display rgb colors.
-vk::Format colorFormat;
-vk::ColorSpaceKHR colorSpace;
+auto surfaceFormats = gpu.getSurfaceFormatsKHR(surface);
+
+vk::Format surfaceColorFormat;
+vk::ColorSpaceKHR surfaceColorSpace;
 
 if (surfaceFormats.size() == 1 && surfaceFormats[0].format == vk::Format::eUndefined)
-  colorFormat = vk::Format::eB8G8R8A8Unorm;
+  surfaceColorFormat = vk::Format::eB8G8R8A8Unorm;
 else
-  colorFormat = surfaceFormats[0].format;
+  surfaceColorFormat = surfaceFormats[0].format;
 
-colorSpace = surfaceFormats[0].colorSpace;
+surfaceColorSpace = surfaceFormats[0].colorSpace;
 
-// ...
+
+auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
+
+// Since all depth formats may be optional, we need to find a suitable depth format to use
+// Start with the highest precision packed format
+std::vector<vk::Format> depthFormats = {
+  vk::Format::eD32SfloatS8Uint,
+  vk::Format::eD32Sfloat,
+  vk::Format::eD24UnormS8Uint,
+  vk::Format::eD16UnormS8Uint,
+  vk::Format::eD16Unorm
+};
+
+vk::Format surfaceDepthFormat;
+
+for (auto& format : depthFormats)
+{
+  auto depthFormatProperties = gpu.getFormatProperties(format);
+  // Format must support depth stencil attachment for optimal tiling
+  if (depthFormatProperties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eDepthStencilAttachment)
+  {
+    surfaceDepthFormat = format;
+    break;
+  }
 }
 ```
+
+## Render Pass
+
+|   | Unreal Engine 4 Render Passes |   |
+|:-:|:-:|:-:|
+| ![Final Render](assets/defered-rendering/final.jpg) | ![Final Render](assets/defered-rendering/ao.jpg) | ![Final Render](assets/defered-rendering/roughness.jpg) |
+| ![Final Render](assets/defered-rendering/normal.jpg) | ![Final Render](assets/defered-rendering/color.jpg) | ![Final Render](assets/defered-rendering/depth.jpg) |
+For defered rendering solutions, Vulkan makes render passes first class, letting you describe your whole postprocessing system as a list of **SubPasses**, groupings of rendered data like a color and depth buffer.
+
+- **Attachment Description** - a description of the image view that will be attached to the subpass.
+
+- **Attachment Reference** - an index name to refer to the framebuffer attachment accessed by different subpasses.
+
+- **Subpass** - A phase of rendering within a render pass, that reads and writes a subset of the attachments.
+
+- **Subpass Dependency** - an execution or memory dependency between different subpasses. This would be for example, the `sampler2D` that you would access in a post-processing system that is waterfalled down the chain of effects. This list also determines the order that subpasses are used.
+
+```cpp
+std::vector<vk::AttachmentDescription> attachmentDescriptions =
+{
+  vk::AttachmentDescription(
+    vk::AttachmentDescriptionFlags(),
+    surfaceColorFormat,
+    vk::SampleCountFlagBits::e1,
+    vk::AttachmentLoadOp::eClear,
+    vk::AttachmentStoreOp::eStore,
+    vk::AttachmentLoadOp::eDontCare,
+    vk::AttachmentStoreOp::eDontCare,
+    vk::ImageLayout::eUndefined,
+    vk::ImageLayout::ePresentSrcKHR
+  ),
+  vk::AttachmentDescription(
+    vk::AttachmentDescriptionFlags(),
+    surfaceDepthFormat,
+    vk::SampleCountFlagBits::e1,
+    vk::AttachmentLoadOp::eClear,
+    vk::AttachmentStoreOp::eDontCare,
+    vk::AttachmentLoadOp::eDontCare,
+    vk::AttachmentStoreOp::eDontCare,
+    vk::ImageLayout::eUndefined,
+    vk::ImageLayout::eDepthStencilAttachmentOptimal
+  )
+};
+
+std::vector<vk::AttachmentReference> colorReferences =
+{
+  vk::AttachmentReference(0, vk::ImageLayout::eColorAttachmentOptimal)
+};
+
+std::vector<vk::AttachmentReference> depthReferences = {
+  vk::AttachmentReference(1, vk::ImageLayout::eDepthStencilAttachmentOptimal)
+};
+
+std::vector<vk::SubpassDescription> subpasses =
+{
+  vk::SubpassDescription(
+    vk::SubpassDescriptionFlags(),
+    vk::PipelineBindPoint::eGraphics,
+    0,
+    nullptr,
+    colorReferences.size(),
+    colorReferences.data(),
+    nullptr,
+    depthReferences.data(),
+    0,
+    nullptr
+  )
+};
+
+std::vector<vk::SubpassDependency> dependencies =
+{
+  vk::SubpassDependency(
+    ~0U,
+    0,
+    vk::PipelineStageFlagBits::eBottomOfPipe,
+    vk::PipelineStageFlagBits::eColorAttachmentOutput,
+    vk::AccessFlagBits::eMemoryRead,
+    vk::AccessFlagBits::eColorAttachmentRead | vk::AccessFlagBits::eColorAttachmentWrite,
+    vk::DependencyFlagBits::eByRegion
+  ),
+  vk::SubpassDependency(
+    0,
+    ~0U,
+    vk::PipelineStageFlagBits::eColorAttachmentOutput,
+    vk::PipelineStageFlagBits::eBottomOfPipe,
+    vk::AccessFlagBits::eColorAttachmentRead | vk::AccessFlagBits::eColorAttachmentWrite,
+    vk::AccessFlagBits::eMemoryRead,
+    vk::DependencyFlagBits::eByRegion
+  )
+};
+
+auto renderpass = device.createRenderPass(
+  vk::RenderPassCreateInfo(
+    vk::RenderPassCreateFlags(),
+    attachmentDescriptions.size(),
+    attachmentDescriptions.data(),
+    subpasses.size(),
+    subpasses.data(),
+    dependencies.size(),
+    dependencies.data()
+  )
+);
+```
+
 
 ## Swapchain
 
@@ -433,14 +596,81 @@ A view in Vulkan is an adapter that lets you interface between GPU data structur
 
 ## Frame Buffers
 
-A frame buffer in VUlkan is a container of Image Views.
+A frame buffer in Vulkan is a container of Image Views.
 
 ```cpp
-// Lets group these images into a custom struct:
+// The swapchain handles allocating frame images.
+auto swapchainImages = device.getSwapchainImagesKHR(swapchain);
+
+// Create Depth Image Data
+auto depthImage = device.createImage(
+  vk::ImageCreateInfo(
+    vk::ImageCreateFlags(),
+    vk::ImageType::e2D,
+    surfaceDepthFormat,
+    vk::Extent3D(surfaceSize.width, surfaceSize.height, 1),
+    1,
+    1,
+    vk::SampleCountFlagBits::e1,
+    vk::ImageTiling::eOptimal,
+    vk::ImageUsageFlagBits::eDepthStencilAttachment | vk::ImageUsageFlagBits::eTransferSrc,
+    vk::SharingMode::eExclusive,
+    queueFamilyIndices.size(),
+    queueFamilyIndices.data(),
+    vk::ImageLayout::eUndefined
+  )
+);
+
+// Search through GPU memory properies to see if this can be device local.
+
+auto depthMemoryReq = device.getImageMemoryRequirements(depthImage);
+uint32_t typeBits = depthMemoryReq.memoryTypeBits;
+uint32_t depthMemoryTypeIndex;
+
+for (uint32_t i = 0; i < gpuMemoryProps.memoryTypeCount; i++)
+{
+  if ((typeBits & 1) == 1)
+  {
+    if ((gpuMemoryProps.memoryTypes[i].propertyFlags & vk::MemoryPropertyFlagBits::eDeviceLocal) == vk::MemoryPropertyFlagBits::eDeviceLocal)
+    {
+      depthMemoryTypeIndex = i;
+      break;
+    }
+  }
+  typeBits >>= 1;
+}
+
+auto depthMemory = device.allocateMemory(
+  vk::MemoryAllocateInfo(depthMemoryReq.size, depthMemoryTypeIndex)
+);
+
+
+device.bindImageMemory(
+  depthImage,
+  depthMemory,
+  0
+);
+
+auto depthImageView = device.createImageView(
+  vk::ImageViewCreateInfo(
+    vk::ImageViewCreateFlags(),
+    depthImage,
+    vk::ImageViewType::e2D,
+    surfaceDepthFormat,
+    vk::ComponentMapping(),
+    vk::ImageSubresourceRange(
+      vk::ImageAspectFlagBits::eDepth | vk::ImageAspectFlagBits::eStencil,
+      0,
+      1,
+      0,
+      1
+    )
+  )
+);
 
 struct SwapChainBuffer {
   vk::Image image;
-  vk::ImageView view;
+  std::array<vk::ImageView, 2> views;
   vk::Framebuffer frameBuffer;
 };
 
@@ -451,23 +681,34 @@ for (int i = 0; i < swapchainImages.size(); i++)
 {
   swapchainBuffers[i].image = swapchainImages[i];
 
-  swapchainBuffers[i].view = device.createImageView(
-    vk::ImageViewCreateInfo(
-      vk::ImageViewCreateFlags(),
-      swapchainImages[i],
-      vk::ImageViewType::e1D,
-      colorFormat,
-      vk::ComponentMapping(),
-      vk::ImageSubresourceRange()
-    )
-  );
+  // Color
+  swapchainBuffers[i].views[0] =
+    device.createImageView(
+      vk::ImageViewCreateInfo(
+        vk::ImageViewCreateFlags(),
+        swapchainImages[i],
+        vk::ImageViewType::e1D,
+        surfaceColorFormat,
+        vk::ComponentMapping(),
+        vk::ImageSubresourceRange(
+          vk::ImageAspectFlagBits::eColor,
+          0,
+          1,
+          0,
+          1
+        )
+      )
+    );
+
+  // Depth
+  swapchainBuffers[i].views[1] = depthImageView;
 
   swapchainBuffers[i].frameBuffer = device.createFramebuffer(
     vk::FramebufferCreateInfo(
       vk::FramebufferCreateFlags(),
       renderpass,
-      1,
-      &swapchainBuffers[i].view,
+      swapchainBuffers[i].views.size(),
+      swapchainBuffers[i].views.data(),
       surfaceSize.width,
       surfaceSize.height,
       1
@@ -499,98 +740,6 @@ for (int i = 0; i < waitFences.size(); i++)
 }
 ```
 
-## Render Pass
-
-|   | Unreal Engine 4 Render Passes |   |
-|:-:|:-:|:-:|
-| ![Final Render](assets/defered-rendering/final.jpg) | ![Final Render](assets/defered-rendering/ao.jpg) | ![Final Render](assets/defered-rendering/roughness.jpg) |
-| ![Final Render](assets/defered-rendering/normal.jpg) | ![Final Render](assets/defered-rendering/color.jpg) | ![Final Render](assets/defered-rendering/depth.jpg) |
-For defered rendering solutions, Vulkan makes render passes first class, letting you describe your whole postprocessing system as a list of **SubPasses**, groupings of rendered data like a color and depth buffer.
-
-- **Attachment Description** - a description of the image view that will be attached to the subpass.
-
-- **Attachment Reference** - an index name to refer to the framebuffer attachment accessed by different subpasses.
-
-- **Subpass** - A phase of rendering within a render pass, that reads and writes a subset of the attachments.
-
-- **Subpass Dependency** - an execution or memory dependency between different subpasses. This would be for example, the `sampler2D` that you would access in a post-processing system that is waterfalled down the chain of effects. This list also determines the order that subpasses are used.
-
-```cpp
-// Describe grouped data that the render pass expects to read/write to
-// As attachments. (Color, Depth)
-std::vector<vk::AttachmentDescription> attachments =
-{
-  vk::AttachmentDescription(
-    vk::AttachmentDescriptionFlags(),
-    vk::Format::eB8G8R8A8Unorm,
-    vk::SampleCountFlagBits::e1,
-    vk::AttachmentLoadOp::eClear,
-    vk::AttachmentStoreOp::eStore,
-    vk::AttachmentLoadOp::eClear,
-    vk::AttachmentStoreOp::eStore,
-    vk::ImageLayout::eUndefined,
-    vk::ImageLayout::ePresentSrcKHR
-  )
-};
-
-std::vector<vk::AttachmentReference> colorReferences =
-{
-  vk::AttachmentReference(0, vk::ImageLayout::eColorAttachmentOptimal)
-};
-
-std::vector<vk::SubpassDescription> subpasses =
-{
-  vk::SubpassDescription(
-    vk::SubpassDescriptionFlags(),
-    vk::PipelineBindPoint::eGraphics,
-    0,
-    nullptr,
-    colorReferences.size(),
-    colorReferences.data(),
-    nullptr,
-    nullptr,
-    0,
-    nullptr
-  )
-};
-
-std::vector<vk::SubpassDependency> dependencies =
-{
-  vk::SubpassDependency(
-    ~0U,
-    0,
-    vk::PipelineStageFlags(vk::PipelineStageFlagBits::eAllGraphics),
-    vk::PipelineStageFlags(vk::PipelineStageFlagBits::eAllGraphics),
-    vk::AccessFlags(vk::AccessFlagBits::eMemoryRead),
-    vk::AccessFlags(vk::AccessFlagBits::eColorAttachmentRead | vk::AccessFlagBits::eColorAttachmentWrite)
-  )
-};
-
-auto renderpass = device.createRenderPass(
-  vk::RenderPassCreateInfo(
-    vk::RenderPassCreateFlags(),
-    attachments.size(),
-    attachments.data(),
-    subpasses.size(),
-    subpasses.data(),
-    dependencies.size(),
-    dependencies.data()
-  )
-);
-```
-
-## Descriptor Pool
-
-## Queue
-
-Once you have a virtual device, you can access the queues you requested when you created it:
-
-```cpp
-// We only allocated one queue earlier,
-//so there's only one available on index 0.
-auto graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
-```
-
 ## Command Pool
 
 A **command pool** is a means of allocating command buffers. Any number of command buffers can be made from command pools, with you as the developer responsible for managing when and how they're created and what is loaded in each.
@@ -620,6 +769,80 @@ You should try to have the minimum number of command buffers possible in your ap
 
 We'll come back to the command buffers we made here later in our app.
 
+## Descriptor Pool
+
+A descriptor pool is a means of allocating Descriptor Sets, a set of data structures containing implementation-specific descriptions of resources. to make a descriptor pool, you need to describe exactly how many of each type of descriptor you need to allocate.
+
+To do that you need to provide a collection of the size of each descriptor type.
+
+```cpp
+std::vector<vk::DescriptorPoolSize> descriptorPoolSizes =
+{
+  vk::DescriptorPoolSize(
+  vk::DescriptorType::eUniformBuffer,
+  1
+  )
+};
+
+auto descriptorPool = device.createDescriptorPool(
+  vk::DescriptorPoolCreateInfo(
+    vk::DescriptorPoolCreateFlags(),
+    1,
+    descriptorPoolSizes.size(),
+    descriptorPoolSizes.data()
+  )
+);
+```
+
+Like command buffers, we'll come back to descriptor sets later.
+
+## Vertex Buffers
+
+The fundamental problem of graphics is how to manage large sets of data. A vertex buffer is an array of rows of relevant vertex information, such as its position, normal, color, etc. Unlike OpenGL where it would handle allocation and handling memory for you, in Vulkan, you must:
+
+1. allocate all the memory related to your buffer.
+2. Map that data to a host visible handle.
+3. Copy that data to your GPU.
+4. Bind your buffer to that block of memory.
+
+## Descriptor Sets
+
+**Descriptor Sets** store the resources bound to the minding points in a shader. It connects the binding points of a shader with the buffers and images used for those bindings.
+
+In React Fiber there's the idea of a frequently updated view and a not frequently updated view. Unreal Engine 4 shares this with two global uniform families for frequently (called variable parameters) and not frequently (constant parameters) updated uniforms. Descriptor Sets are where you would make this distinction in Vulkan.
+
+```cpp
+// Binding 0: Uniform buffer (Vertex shader)
+std::vector<vk::DescriptorSetLayoutBinding> descriptorSetLayoutBindings =
+{
+  vk::DescriptorSetLayoutBinding(
+    0,
+    vk::DescriptorType::eUniformBuffer,
+    1,
+    vk::ShaderStageFlagBits::eVertex,
+    nullptr
+  )
+};
+
+std::vector<vk::DescriptorSetLayout> descriptorSetLayouts = {
+  device.createDescriptorSetLayout(
+    vk::DescriptorSetLayoutCreateInfo(
+      vk::DescriptorSetLayoutCreateFlags(),
+      descriptorSetLayoutBindings.size(),
+      descriptorSetLayoutBindings.data()
+  )
+  )
+};
+
+auto descriptorSets = device.allocateDescriptorSets(
+  vk::DescriptorSetAllocateInfo(
+    descriptorPool,
+    descriptorSetLayouts.size(),
+    descriptorSetLayouts.data()
+  )
+);
+```
+
 ## Pipeline Layouts
 
 Pipeline layouts are a collection of descriptor sets, the bindings to a shader program. In OpenGL in order to bind a shader to a set of data, you needed to describe how the inputs and outputs are organized in memory (their spacing, size, etc.)
@@ -644,7 +867,7 @@ As much as GPUs are now programmable, they still have some static state that you
 
 And many more. These can even be cached! These particular draw calls are grouped such that in older graphics APIs, they would trigger shader recompilation.
 
-## Pipeline Cache
+### Pipeline Cache
 
 A pipeline cache serves to cache previously created pipelines for reuse later. Since pipelines don't change often, this you can quickly create another for use later.
 
@@ -656,15 +879,7 @@ auto pipelineCache = device.createPipelineCache(vk::PipelineCacheCreateInfo());
 
 Any fast changes of state will happen in the dynamic state objects.
 
-### Descriptor Sets
 
-**Descriptor Sets** store the resources bound to the minding points in a shader. It connects the binding points of a shader with the buffers and images used for those bindings.
-
-In React Fiber there's the idea of a frequently updated view and a not frequently updated view. Unreal Engine 4 shares this with two global uniform families for frequently (called variable parameters) and not frequently (constant parameters) updated uniforms. Descriptor Sets are where you would make this distinction in Vulkan.
-
-```cpp
-
-```
 
 ### Shaders
 
