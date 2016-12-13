@@ -289,78 +289,78 @@ int main()
   // Setup Window
 
   std::string title = "MyVulkanApp";
-	std::string name = "MyVulkanApp";
-	uint32_t width = 1280;
-	uint32_t height = 720;
-	auto hInstance = GetModuleHandle(0);
+  std::string name = "MyVulkanApp";
+  uint32_t width = 1280;
+  uint32_t height = 720;
+  auto hInstance = GetModuleHandle(0);
 
-	WNDCLASSEX wndClass;
-	wndClass.cbSize = sizeof(WNDCLASSEX);
-	wndClass.style = CS_HREDRAW | CS_VREDRAW;
-	wndClass.lpfnWndProc = [](HWND h, UINT m, WPARAM w, LPARAM l)->LRESULT
-	{
-		if (m == WM_CLOSE)
-			PostQuitMessage(0);
-		else
-			return DefWindowProc(h, m, w, l);
-		return 0;
-	};
-	wndClass.cbClsExtra = 0;
-	wndClass.cbWndExtra = 0;
-	wndClass.hInstance = hInstance;
-	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	wndClass.lpszMenuName = NULL;
-	wndClass.lpszClassName = name.c_str();
-	wndClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
+  WNDCLASSEX wndClass;
+  wndClass.cbSize = sizeof(WNDCLASSEX);
+  wndClass.style = CS_HREDRAW | CS_VREDRAW;
+  wndClass.lpfnWndProc = [](HWND h, UINT m, WPARAM w, LPARAM l)->LRESULT
+  {
+    if (m == WM_CLOSE)
+      PostQuitMessage(0);
+    else
+      return DefWindowProc(h, m, w, l);
+    return 0;
+  };
+  wndClass.cbClsExtra = 0;
+  wndClass.cbWndExtra = 0;
+  wndClass.hInstance = hInstance;
+  wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+  wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+  wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+  wndClass.lpszMenuName = NULL;
+  wndClass.lpszClassName = name.c_str();
+  wndClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
 
-	if (!RegisterClassEx(&wndClass)) {
-		fflush(stdout);
-		exit(1);
-	}
+  if (!RegisterClassEx(&wndClass)) {
+    fflush(stdout);
+    exit(1);
+  }
 
-	DWORD dwExStyle;
-	DWORD dwStyle;
+  DWORD dwExStyle;
+  DWORD dwStyle;
 
-	dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-	dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+  dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
+  dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 
-	RECT windowRect;
-	windowRect.left = 0L;
-	windowRect.top = 0L;
-	windowRect.right = (long)width;
-	windowRect.bottom = (long)height;
+  RECT windowRect;
+  windowRect.left = 0L;
+  windowRect.top = 0L;
+  windowRect.right = (long)width;
+  windowRect.bottom = (long)height;
 
-	AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
+  AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
 
-	auto window = CreateWindowEx(0,
-		name.c_str(),
-		title.c_str(),
-		dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-		0,
-		0,
-		windowRect.right - windowRect.left,
-		windowRect.bottom - windowRect.top,
-		NULL,
-		NULL,
-		hInstance,
-		NULL);
+  auto window = CreateWindowEx(0,
+    name.c_str(),
+    title.c_str(),
+    dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+    0,
+    0,
+    windowRect.right - windowRect.left,
+    windowRect.bottom - windowRect.top,
+    NULL,
+    NULL,
+    hInstance,
+    NULL);
 
-	// Center on screen
-	uint32_t x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
-	uint32_t y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
-	SetWindowPos(window, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+  // Center on screen
+  uint32_t x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
+  uint32_t y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
+  SetWindowPos(window, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
 
-	if (!window) {
-		printf("Could not create window!\n");
-		fflush(stdout);
-		exit(1);
-	}
+  if (!window) {
+    printf("Could not create window!\n");
+    fflush(stdout);
+    exit(1);
+  }
 
-	ShowWindow(window, SW_SHOW);
-	SetForegroundWindow(window);
-	SetFocus(window);
+  ShowWindow(window, SW_SHOW);
+  SetForegroundWindow(window);
+  SetFocus(window);
 }
 ```
 
@@ -592,7 +592,29 @@ auto swapchainImages = device.getSwapchainImagesKHR(swapchain);
 
 ## View Structures
 
-A view in Vulkan is an adapter that lets you interface between GPU data structures.
+A view in Vulkan is a handle to a particular resource on a GPU, such as an Image or a Buffer, and provides information on how that resource should be handled.
+
+```cpp
+auto depthImageView = device.createImageView(
+  vk::ImageViewCreateInfo(
+    vk::ImageViewCreateFlags(),
+    depthImage,
+    vk::ImageViewType::e2D,
+    surfaceDepthFormat,
+    vk::ComponentMapping(),
+    vk::ImageSubresourceRange(
+      vk::ImageAspectFlagBits::eDepth | vk::ImageAspectFlagBits::eStencil,
+      0,
+      1,
+      0,
+      1
+    )
+  )
+);
+```
+
+They're use for example, in the creation of Frame Buffers, but can also be used in descriptor sets to denote a texture resource,
+
 
 ## Frame Buffers
 
