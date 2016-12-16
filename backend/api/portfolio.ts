@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {database} from '../db';
+import { database } from '../db';
 
 interface API {
   // Skip the x number of posts
@@ -9,7 +9,7 @@ interface API {
   // Find post with this exact permalink
   permalink?: string | RegExp,
   // Find posts where these tags are present
-  tags?: {$in: string[]}
+  tags?: { $in: string[] }
 }
 
 /**
@@ -24,7 +24,7 @@ const sanitize: (any) => API = (reqBody) => {
   } = reqBody;
 
   let inRange = (v, a, b, def) => (v > a && v < b) ? v : def;
-  let isArray = (arr) => (typeof arr === 'object' && typeof arr[0] === 'string') ? {$in: arr} : undefined;
+  let isArray = (arr) => (typeof arr === 'object' && typeof arr[0] === 'string') ? { $in: arr } : undefined;
   let makeRegexPath: ((s: string) => any) = (s) => {
     if (!(typeof s === 'string' && s.length < 256 && s.length > 0))
       return undefined;
@@ -72,7 +72,10 @@ export default (req: Request, res: Response) => {
   let apiReq: API = sanitize(req.body);
 
   // Design Query
-  let query = Object.assign({}, apiReq, {publishDate: {$lte: new Date()}});
+  let query = {
+    ...apiReq,
+    publishDate: { $lte: new Date() }
+  };
   delete query.limit;
   delete query.skip;
 
@@ -82,8 +85,18 @@ export default (req: Request, res: Response) => {
 
   database.then((db) => {
     let c = db.collection('portfolio');
-    
-    let projection = { permalink: 1, title: 1, description: 1, cover: 1, meta: 1, tags: 1, data: 1, main: 1, publishDate: 1}
+
+    let projection = {
+      permalink: 1,
+      title: 1,
+      description: 1,
+      cover: 1,
+      meta: 1,
+      tags: 1,
+      data: 1,
+      main: 1,
+      publishDate: 1
+    }
 
     let data = c.find(query, projection)
       .sort({

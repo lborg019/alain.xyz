@@ -48,7 +48,7 @@ export default class BlogPost extends React.Component<any, any> {
     let {title, description, cover, publishDate, meta, tags, data} = this.props.config;
     return (
       <div>
-        <figure style={Object.assign({}, styles.figure, { backgroundImage: `linear-gradient(rgba(33,37,43,0) 80vh, rgba(33,37,43,1)), url(${cover})` })}>
+        <figure style={{ ...styles.figure, backgroundImage: `linear-gradient(rgba(33,37,43,0) 80vh, rgba(33,37,43,1)), url(${cover})` }}>
           <figcaption style={styles.figcaption}>
             <h1>{title}</h1>
             <p>{description}</p>

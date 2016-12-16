@@ -30,34 +30,39 @@ let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) =
 }
 
 export default createReducer(initialState, {
-    
+
     FETCHED_SUBAPP: (state, payload: { req: APIRequest, res: APIResponse[] }) => {
         let portfolio = cachePortfoliosubapps(payload.res, state.portfolio);
-        return Object.assign({}, state, {
+        return {
+            ...state,
             portfolio: portfolio,
             subapp: portfolio.find((subapp) => subapp.permalink === payload.req.permalink),
             isFetching: false
-        })
+        };
     },
 
     FETCHING_SUBAPP: (state, payload) =>
-        Object.assign({}, state, {
+        ({
+            ...state,
             isFetching: true,
             subapp: null
         }),
 
     SET_SUBAPP: (state, payload) =>
-        Object.assign({}, state, {
+        ({
+            ...state,
             subapp: state.portfolio.find((e) => e.permalink === payload.permalink)
         }),
 
     ERROR: (state, payload) =>
-        Object.assign({}, state, {
+        ({
+            ...state,
             error: payload.error
         }),
 
     HIDE_MENU: (state, payload) =>
-        Object.assign({}, state, {
+        ({
+            ...state,
             hideMenu: !state.hideMenu
         })
 });

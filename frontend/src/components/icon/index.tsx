@@ -28,7 +28,7 @@ export class Icon extends React.Component<IconProps, IconState> {
       height: this.props.size
     };
     return (
-      <svg viewBox="0 0 16 16" style={Object.assign({}, styles, this.props.style)}>
+      <svg viewBox="0 0 16 16" style={{...styles, ...this.props.style}}>
         <g>
           {this.state.paths.map((p, i) => { return <path key={i} d={p}/> })}
         </g>

@@ -19,16 +19,16 @@
   "dependencies": {
     "@types/compression": "^0.0.33",
     "@types/body-parser": "0.0.33",
-    "@types/express": "^4.0.33",
-    "@types/mongodb": "^2.1.33",
-    "@types/node": "^6.0.46",
+    "@types/express": "^4.0.34",
+    "@types/mongodb": "^2.1.36",
+    "@types/node": "^6.0.52",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "express": "^4.14.0",
-    "mongodb": "^2.2.11",
-    "typescript": "^2.0.6"
+    "mongodb": "^2.2.16",
+    "typescript": "^2.1.4"
   },
   "devDependencies": {
-    "ts-node": "^1.6.1"
+    "ts-node": "^1.7.2"
   }
 }

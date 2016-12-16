@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Icon} from '../components/icon';
+import { Icon } from '../components/icon';
 
 const styles = {
   root: {
@@ -134,18 +134,18 @@ export class About extends React.Component<any, any> {
   render() {
     return (
       <div style={styles.root}>
-        <section style={Object.assign({}, styles.section, { flexDirection: (innerWidth < 640) ? 'column' : 'row' })}>
-          <img style={styles.img} src="assets/brand/alaingalvan.jpg" alt="Alain Galvan Photo"/>
+        <section style={{ ...styles.section, flexDirection: (innerWidth < 640) ? 'column' : 'row' }}>
+          <img style={styles.img} src="assets/brand/alaingalvan.jpg" alt="Alain Galvan Photo" />
           <div style={styles.article}>
             <h1>Hi there!</h1>
             <p>My name is Alain, I work @<a href="http://openhid.com">FIU</a> as a Graphics Research Assistant, working on tools to make artists, musicians, and devs lives easier.</p>
             <div>
               {
-                resume.social.map((e, i) => <a key={i} href={e.url}><Icon style={styles.svg} type={e.name}/></a>)
+                resume.social.map((e, i) => <a key={i} href={e.url}><Icon style={styles.svg} type={e.name} /></a>)
               }
             </div>
             <div style={{ padding: '16px 0' }}>
-              <a href="assets/brand/alain-galvan-resume.pdf" style={Object.assign({}, styles.button, { backgroundColor: '#3093b0' })} className="btn">Resume</a>
+              <a href="assets/brand/alain-galvan-resume.pdf" style={{ ...styles.button, backgroundColor: '#3093b0' }} className="btn">Resume</a>
               <a style={styles.button} className="btn" href="mailto:hi@alain.xyz">Email</a>
             </div>
           </div>
