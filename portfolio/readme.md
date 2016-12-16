@@ -1,4 +1,4 @@
-![Latest Cover](blog/raw-vulkan/assets/cover.png)
+![Latest Cover](blog/raw-vulkan/assets/cover.jpg)
 
 # [Alain.xyz Portfolio](http://alain.xyz/portfolio)
 
