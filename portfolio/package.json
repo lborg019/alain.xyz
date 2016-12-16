@@ -1,6 +1,6 @@
 {
   "name": "alain.xyz-portfolio",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A Repo pointing to the different items in the alain.xyz portfolio.",
   "scripts": {
     "build": "set NODE_ENV=production & ts-node utils/build -F"

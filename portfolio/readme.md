@@ -1,6 +1,8 @@
-![Latest Cover](blog/designing-a-cpp-library-2016/assets/cover.png)
+![Latest Cover](blog/raw-vulkan/assets/cover.png)
 
 # [Alain.xyz Portfolio](http://alain.xyz/portfolio)
+
+![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 
 This repo indexes portfolio items to be featured in Alain.xyz, like blog posts, music, art, etc.
 
@@ -55,3 +57,12 @@ export default (props) => (
     </ul>
 );
 ```
+
+[website-url]: https://alain.xyz
+[release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square
+[license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square
+[license-url]: https://opensource.org/licenses/MIT
+[david-url]: https://david-dm.org/alaingalvan/alain.xyz?path=portfolio
+[david-img]: https://david-dm.org/alaingalvan/alain.xyz.svg?path=portfolio&style=flat-square
+[david-dev-url]: https://david-dm.org/alaingalvan/alain.xyz?path=portfolio#info=devDependencies
+[david-dev-img]: https://david-dm.org/alaingalvan/alain.xyz/dev-status.svg?path=frontend&style=flat-square
