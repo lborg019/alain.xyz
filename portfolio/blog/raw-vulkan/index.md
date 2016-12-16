@@ -1076,7 +1076,72 @@ for (int32_t i = 0; i < commandBuffers.size(); ++i)
 ## Rendering Loop
 
 ```cpp
+MSG msg;
+uint64_t frameCounter = 0;
+double frameTimer = 0.0;
+double fpsTimer = 0.0;
+double lastFPS = 0.0;
 
+while (TRUE)
+{
+auto tStart = std::chrono::high_resolution_clock::now();
+
+while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+{
+    TranslateMessage(&msg);
+    DispatchMessage(&msg);
+}
+
+if (msg.message == WM_QUIT)
+{
+    break;
+}
+
+device.acquireNextImageKHR(swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, nullptr, &currentBuffer);
+device.waitForFences(1, &waitFences[currentBuffer], VK_TRUE, UINT64_MAX);
+device.resetFences(1, &waitFences[currentBuffer]);
+
+// Create kernels to submit to the queue on a given render pass.
+vk::PipelineStageFlags kernelPipelineStageFlags = vk::PipelineStageFlagBits::eColorAttachmentOutput;
+
+auto kernel = vk::SubmitInfo(
+    1,
+    &presentCompleteSemaphore,
+    &kernelPipelineStageFlags,
+    1,
+    &commandBuffers[currentBuffer],
+    1,
+    &renderCompleteSemaphore
+);
+
+graphicsQueue.submit(1, &kernel, waitFences[currentBuffer]);
+graphicsQueue.presentKHR(
+    vk::PresentInfoKHR(
+    1,
+    &renderCompleteSemaphore,
+    1,
+    &swapchain,
+    &currentBuffer,
+    nullptr
+    )
+);
+
+frameCounter++;
+auto tEnd = std::chrono::high_resolution_clock::now();
+auto tDiff = std::chrono::duration<double, std::milli>(tEnd - tStart).count();
+frameTimer = tDiff / 1000.0;
+
+fpsTimer += tDiff;
+if (fpsTimer > 1000.0)
+{
+    std::string windowTitle = title + " - " + std::to_string(frameCounter) + " fps";
+    SetWindowText(window, windowTitle.c_str());
+
+    lastFPS = roundf(1.0 / frameTimer);
+    fpsTimer = 0.0;
+    frameCounter = 0;
+}
+}
 ```
 
 ## Program Execution
