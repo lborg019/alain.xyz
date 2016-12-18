@@ -30,7 +30,7 @@ const styles = {
 }
 
 const BlogPost = ({cover, title, description, permalink}) =>
-  <Link to={permalink} style={Object.assign({}, styles.blogPost, { backgroundImage: `url('${cover}')` })}>
+  <Link to={permalink} style={{...styles.blogPost, backgroundImage: `url('${cover}')` }}>
     <section style={{ textAlign: 'right' }}>
       <h1>{title}</h1>
       <p>{description}</p>

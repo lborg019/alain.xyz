@@ -113,7 +113,8 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     var filesCollection = db.collection('files');
 
     // Place all answers in object.
-    let entry = Object.assign({}, answers, {
+    let entry = {
+      ...answers,
       data: markademic({
         input: fs.readFileSync(file).toString(),
         rerouteLinks: (link) => path.join(answers.permalink, link)
@@ -122,7 +123,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
       cover: getCover(file, answers.permalink),
       main: '/blog/main.js',
       file
-    });
+    };
 
     // Index all files in permalink namespace.
 
@@ -135,14 +136,14 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
       var filePermalink = path.join(entry.permalink, path.relative(lastPath, sf)).replace(/\\/g, '/');
 
       await filesCollection.update({ file: sf }, { file: sf, permalink: filePermalink }, { upsert: true })
-      .then(r => console.log(`Updated file ${sf}.`))
-      .catch(e => console.log(e));
+        .then(r => console.log(`Updated file ${sf}.`))
+        .catch(e => console.log(e));
 
     }
 
     await portfolioCollection.update({ file }, entry, { upsert: true })
-    .then(r => console.log(`Added ${answers.title} to the Database`))
-    .catch(e => console.log(e));
+      .then(r => console.log(`Added ${answers.title} to the Database`))
+      .catch(e => console.log(e));
   });
 }
 

@@ -2,7 +2,7 @@
 
 ![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 
-An intelligent portfolio backend build on top of [Node 7](https://nodejs.org/en/), [TypeScript 2.0](http://www.typescriptlang.org/), [Express 4](https://expressjs.com/), and [MongoDB 3.2](http://mongodb.org/).
+An intelligent portfolio API that could serve for a blog or product line.
 
 Give it a repository of portfolio items and a few functions to describe what to do with those items, and it will populate a database for an *SPA* or *Web Service*.
 
@@ -65,7 +65,7 @@ npm run production  # Start the app perpetually in production mode.
 4. When visiting a permalink for the first time, for bots, change the meta tags of the index.html to reflect that permalink's portfolio data.
 
 [website-url]: https://alain.xyz
-[release-img]: https://img.shields.io/badge/release-0.3.0-4dbfcc.svg?style=flat-square
+[release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square
 [license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square
 [license-url]: https://opensource.org/licenses/MIT
 [david-url]: https://david-dm.org/alaingalvan/alain.xyz?path=backend

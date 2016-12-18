@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Motion, StaggeredMotion, spring} from 'react-motion';
+import { Motion, StaggeredMotion, spring } from 'react-motion';
 import { Link } from 'react-router';
 
 const styles = {
@@ -56,37 +56,38 @@ export class Hero extends React.Component<any, any> {
               styles={(pStyles: any) =>
                 pStyles.map((_, i) =>
                   (i === 0) ? { x: spring(0, { stiffness: 240, damping: (i + 1) * 32 }) } :
-                    { x: spring(pStyles[i - 1]['x'], { stiffness: 240, damping: (i + 1) * 32 }) }) }>
+                    { x: spring(pStyles[i - 1]['x'], { stiffness: 240, damping: (i + 1) * 32 }) })}>
               {
                 (sStyles) =>
-                  <nav style={Object.assign({}, styles.root, iStyle) }>
-                    <span style={Object.assign({}, styles.span, { transform: `translateX(${-sStyles[2].x}px)` }) }/>
-                    
-                    <Link style={Object.assign({}, styles.a, { transform: `translateX(${-sStyles[0].x}px)` }) } to='blog'>Blog</Link>
+                  <nav style={{ ...styles.root, ...iStyle }}>
+                    <span style={{ ...styles.span, transform: `translateX(${-sStyles[2].x}px)` }} />
+
+                    <Link style={{ ...styles.a, transform: `translateX(${-sStyles[0].x}px)` }} to='blog'>Blog</Link>
                     <Link to='/'>
-                      <img style={styles.img} src="/assets/brand/ag-logo.svg" alt="Logo"/>
+                      <img style={styles.img} src="/assets/brand/ag-logo.svg" alt="Logo" />
                     </Link>
-                    <Link style={Object.assign({}, styles.a, { transform: `translateX(${sStyles[0].x}px)` }) } to='/about'>About</Link>
-                    
-                    <span style={Object.assign({}, styles.span, { transform: `translateX(${sStyles[2].x}px)` }) }/>
+                    <Link style={{ ...styles.a, transform: `translateX(${sStyles[0].x}px)` }} to='/about'>About</Link>
+
+                    <span style={{ ...styles.span, transform: `translateX(${sStyles[2].x}px)` }} />
                   </nav>
               }
             </StaggeredMotion>
         }
       </Motion>
     ) :
-      (<nav style={Object.assign({}, styles.root, {
+      (<nav style={{
+        ...styles.root,
         height: (this.props.shrink) ? 120 : '100vh',
-      }) }>
-        <span style={styles.span}/>
-        
+      }}>
+        <span style={styles.span} />
+
         <Link style={styles.a} to='https://alain.xyz/blog/'>Blog</Link>
         <Link to='/'>
-          <img style={styles.img} src="/assets/brand/ag-logo.svg" alt="Logo"/>
+          <img style={styles.img} src="/assets/brand/ag-logo.svg" alt="Logo" />
         </Link>
         <Link style={styles.a} to='/about'>About</Link>
-        
-        <span style={styles.span}/>
+
+        <span style={styles.span} />
       </nav>)
   }
 }
