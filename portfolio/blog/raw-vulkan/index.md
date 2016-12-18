@@ -75,8 +75,7 @@ auto installedLayers = vk::enumerateInstanceLayerProperties();
 
 std::vector<const char*> wantedLayers =
 {
-  "VK_LAYER_LUNARG_standard_validation",
-  "VK_LAYER_RENDERDOC_Capture"
+  "VK_LAYER_LUNARG_standard_validation"
 };
 
 auto layers = std::vector<const char*>();
@@ -157,8 +156,7 @@ auto gpuLayers = gpu.enumerateDeviceLayerProperties();
 
 std::vector<const char*> wantedDeviceValidationLayers =
 {
-  "VK_LAYER_LUNARG_standard_validation",
-  "VK_LAYER_RENDERDOC_Capture"
+  "VK_LAYER_LUNARG_standard_validation"
 };
 
 auto deviceValidationLayers = std::vector<const char*>();
@@ -594,7 +592,7 @@ auto swapchainImages = device.getSwapchainImagesKHR(swapchain);
 
 ## View Structures
 
-A view in Vulkan is a handle to a particular resource on a GPU, such as an Image or a Buffer, and provides information on how that resource should be handled.
+A **View** in Vulkan is a handle to a particular resource on a GPU, such as an Image or a Buffer, and provides information on how that resource should be handled.
 
 ```cpp
 auto depthImageView = device.createImageView(
@@ -899,6 +897,8 @@ A pipeline cache serves to cache previously created pipelines for reuse later. S
 auto pipelineCache = device.createPipelineCache(vk::PipelineCacheCreateInfo());
 ```
 
+You're even able to compile the pipeline down into *binary*, and write the pipeline to a a file. This is part of the reason why DOOM 2016 takes a while to first start up when running it on Vulkan.
+
 ### Dynamic State Objects
 
 Any fast changes of state will happen in the dynamic state objects.
@@ -984,10 +984,6 @@ auto fragModule = device.createShaderModule(
     )
 );
 ```
-
-## Vertex Buffers
-
-Loading vertex data into a pipeline requires...
 
 ## Command Buffer
 
