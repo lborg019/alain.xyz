@@ -592,7 +592,7 @@ auto swapchainImages = device.getSwapchainImagesKHR(swapchain);
 
 ## View Structures
 
-A **View** in Vulkan is a handle to a particular resource on a GPU, such as an Image or a Buffer, and provides information on how that resource should be handled.
+A **View** in Vulkan is a handle to a particular resource on a GPU, such as an Image or a Buffer, and provides information on how that resource should be processed.
 
 ```cpp
 auto depthImageView = device.createImageView(
@@ -878,6 +878,8 @@ The rendering pipeline on GPUs is a large complex system that involves a lot of 
 As much as GPUs are now programmable, they still have some static state that you as a developer need to manage when performing draw calls. These include:
 
 ### Graphics Pipeline
+
+![RenderDoc Example](assets/renderdoc.gif)
 
 - **Color Blending** - The function that controls how two objects draw on top of each other.
 
