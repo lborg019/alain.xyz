@@ -1,6 +1,6 @@
 Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on throughput over latency.
 
-I've prepared a [demo](http://github.com/alaingalvan/raw-vulkan-app), inside you'll find platform specific instructions on how to build it. For the sake of brevity I've avoided including some things like listening to window events, cross platform compilation, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan-examples) with a few examples. For the sake of brevity I've avoided including some things like listening to window events, cross platform compilation, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
 ## Overview
 
@@ -16,25 +16,27 @@ In this application we will need to do the following:
 
 5. Create a **Surface** from your window to serve as the OS interface for Vulkan.
 
-6. Create a primary **Render Pass** to be used in your swapchain and surface.
+6. Create a **Swapchain** from your logical device. This will manage changing frames and hold the surface specific **color attachment**.
 
-7. Create a **Swapchain** from your logical device.
+7. Create a **Depth Attachment** that will go into our render pass.
 
-8. Create a set of **FrameBuffers** for each image in your swapchain.
+8. Create a primary **Render Pass** to be used in your swapchain and surface.
 
-9. Create **Synchronization** primatives like semaphores and fences.
+9. Create a set of **FrameBuffers** for each image in your swapchain.
 
-10. Create a **Command Pool** from your logical device.
+10. Create **Synchronization** primatives like semaphores and fences.
 
-11. Create a **Vertex Buffer** and **Index Buffer** for your geometry.
+11. Create a **Command Pool** from your logical device.
 
-12. Compile and load **SPIR-V** shader binary.
+12. Create a **Vertex Buffer** and **Index Buffer** for your geometry.
 
-13. Create a **Graphics Pipeline** to represent the entire state of the Graphics Pipeline for that triangle.
+13. Compile and load **SPIR-V** shader binary.
 
-14. Create **Commands** for each command buffer to set the GPU's state.
+14. Create a **Graphics Pipeline** to represent the entire state of the Graphics Pipeline for that triangle.
 
-15. Use an **Update Loop** to switch between different frames in your swapchain.
+15. Create **Commands** for each command buffer to set the GPU's state.
+
+16. Use an **Update Loop** to switch between different frames in your swapchain.
 
 ## Instances
 
@@ -901,8 +903,6 @@ auto pipelineCache = device.createPipelineCache(vk::PipelineCacheCreateInfo());
 
 Any fast changes of state will happen in the dynamic state objects.
 
-
-
 ### Shaders
 
 Shaders must be passed to Vulkan as SPIR-V binary, so any compiler that can make SPIR-V is allowed. Shaders are precompiled, loaded into memory, transfered to a shader module, bundled in a set of pipelineShaderStages, which is then put into a graphics pipeline.
@@ -913,8 +913,6 @@ Shaders are compiled using the `glslangvalidator` bundled with the Vulkan SDK pr
 glslangvalidator -V shader.vert -o shader.vert.spv
 glslangvalidator -V shader.frag -o shader.frag.spv
 ```
-
-> **Call to Action**: Now that we're sending binary as shaders, we could theoretically compose functions, use metaprogramming, and/or serialize classes to create SPIR-V. This would be a great research topic!
 
 Vulkan's GLSL code is the same as OpenGL 4.5:
 
@@ -1074,6 +1072,8 @@ for (int32_t i = 0; i < commandBuffers.size(); ++i)
 ```
 
 ## Rendering Loop
+
+The key to the render loop is presenting
 
 ```cpp
 MSG msg;
