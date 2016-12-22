@@ -1,4 +1,4 @@
-Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on throughput over latency.
+Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on processing large sets of data quicker than CPUs.
 
 I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan-examples) with a few examples. For the sake of brevity I've avoided including some things like listening to window events, cross platform compilation, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
@@ -38,6 +38,12 @@ In this application we will need to do the following:
 
 16. Use an **Update Loop** to switch between different frames in your swapchain.
 
+### Dependencies
+
+We're using the **Vulkan C++ API** since it's much easier to work with [^vulkanhpp]. 
+
+The following 
+
 ## Instances
 
 ![Instance Diagram](assets/extensions-layers.svg)
@@ -46,9 +52,9 @@ Similar to the OpenGL context, a Vulkan application begins when you create an in
 
 **Extension** - Anything that adds extra functionality to Vulkan, such as support for Win32 windows, or enabling drawing onto a target.
 
-**Layer** - Middleware between existing Vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
+**Layer** - Middleware between existing Vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay [^vulkanin30min].
 
-You'll want to begin by determining which extensions/layers you want, compare that with which are available to you by Vulkan. Once that's done
+You'll want to begin by determining which extensions/layers you want, and compare that with which are available to you by Vulkan.
 
 ```cpp
 auto installedExtensions = vk::enumerateInstanceExtensionProperties();
@@ -899,7 +905,7 @@ A pipeline cache serves to cache previously created pipelines for reuse later. S
 auto pipelineCache = device.createPipelineCache(vk::PipelineCacheCreateInfo());
 ```
 
-You're even able to compile the pipeline down into *binary*, and write the pipeline to a a file. This is part of the reason why DOOM 2016 takes a while to first start up when running it on Vulkan.
+You're even able to compile the pipeline down into *binary*, and write the pipeline to a a file. This is part of the reason why DOOM 2016 takes a while to first start up when running it on Vulkan. [^vulkananddoom]
 
 ### Dynamic State Objects
 

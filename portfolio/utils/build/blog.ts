@@ -112,11 +112,15 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     var portfolioCollection = db.collection('portfolio');
     var filesCollection = db.collection('files');
 
+    // Find a references.json file next to file
+    let citations = JSON.parse(fs.readFileSync(path.join(file, '..', 'references.json')));
+
     // Place all answers in object.
     let entry = {
       ...answers,
       data: markademic({
         input: fs.readFileSync(file).toString(),
+        citations,
         rerouteLinks: (link) => path.join(answers.permalink, link)
       }),
       mtime: fs.statSync(file).mtime,
