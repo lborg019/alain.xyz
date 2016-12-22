@@ -113,7 +113,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     var filesCollection = db.collection('files');
 
     // Find a references.json file next to file
-    let citations = JSON.parse(fs.readFileSync(path.join(file, '..', 'references.json')));
+    let citations = JSON.parse(fs.readFileSync(path.join(file, '..', 'references.json')).toString());
 
     // Place all answers in object.
     let entry = {
