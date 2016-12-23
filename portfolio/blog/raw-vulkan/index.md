@@ -1,5 +1,14 @@
 Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on processing large sets of data quicker than CPUs.
 
+Currently Vulkan 1.0 currently supports:
+
+- Windows
+- Linux
+- Android
+- iOS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
+- Mac OS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
+
+
 I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan-examples) with a few examples. For the sake of brevity I've avoided including some things like listening to window events, cross platform compilation, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
 ## Overview
@@ -40,13 +49,16 @@ In this application we will need to do the following:
 
 ### Dependencies
 
-We're using the **Vulkan C++ API** since it's much easier to work with [^vulkanhpp]. 
+- [Vulkan SDK](https://vulkan.lunarg.com/) - The official Vulkan SDK distributed by LunarG.
+- [Vulkan C++ API](https://github.com/KhronosGroup/Vulkan-Hpp) - Runtimeless C++ bindings that add compile time type safety and ease of use.
+- [WSIWindow](https://github.com/renelindsay/Vulkan-WSIWindow) - LunarG's official window adapter library that supports all Vulkan platforms, with bindings for pointer/keyboard events.
+- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows uses to write `glsl` like C++ code, with types for vectors, matricies, etc.
 
-The following 
+We'll be using [Conan](https://www.conan.io/) - A C++ package manager as easy to use as `npm`, `opam`, and other language package managers.
 
 ## Instances
 
-![Instance Diagram](assets/extensions-layers.svg)
+![Instance Diagram](./assets/extensions-layers.svg)
 
 Similar to the OpenGL context, a Vulkan application begins when you create an instance. This instance must be loaded with some information about the program such as its name, engine, and minimum Vulkan version, as well any extensions and layers you want to load.
 
@@ -117,7 +129,7 @@ auto instance = vk::createInstance(
 
 ## Physical Devices
 
-![Instance Diagram](assets/hardware.svg)
+![Instance Diagram](./assets/hardware.svg)
 
 In Vulkan, you have access to all enumerable devices that support it, and can query for information like their name, the number of heaps they support, their manufacturer, etc.
 
@@ -131,7 +143,7 @@ auto gpu = physicalDevices[0];
 
 ## Logical Devices
 
-![Logical Devices](assets/logical-device.svg)
+![Logical Devices](./assets/logical-device.svg)
 
 You can then create a logical device from a physical device handle. A logical device can be loaded with its own extensions/layers, can be set to work with graphics, gpgpu computations, handle sparse memory and/or memory transfers by creating queues for that device.
 
@@ -230,174 +242,47 @@ auto graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
 
 ## Window Surface Interface
 
-Each OS has their own specific window generation system. Vulkan 1.0 currently supports Windows, Android, and Linux windows out of the box, with plans for iOS and Mac OS in the future.
+Each OS has their own specific window generation system, so Vulkan uses layers and platform specific adapters to interface with them.
 
-A surface is an adapter abstraction to describe an area that will render Vulkan to a window, it's the binding between Vulkan and your OS's windowing system.
+A **surface** is an adapter abstraction to describe an area that will render Vulkan to a window, it's the binding between Vulkan and your OS's windowing system.
 
-| Extension Name | Required Compile Time Symbol | Window System Name | External Header Files Used |
-| :-- | :-- | :-- | :-- |
-| `VK_KHR_android_surface` | `VK_USE_PLATFORM_ANDROID_KHR` | Android Native | `<android/native_window.h>` |
-|`VK_KHR_mir_surface` | `VK_USE_PLATFORM_MIR_KHR`| Mir | `<mir_toolkit/client_types.h>` |
-| `VK_KHR_wayland_surface` | `VK_USE_PLATFORM_WAYLAND_KHR` | Wayland | `<wayland-client.h>`|
-| `VK_KHR_win32_surface` | `VK_USE_PLATFORM_WIN32_KHR` | Microsoft Windows | `<windows.h>`|
-| `VK_KHR_xcb_surface` | `VK_USE_PLATFORM_XCB_KHR` | X Window System Xcb library | `<xcb/xcb.h>` |
-| `VK_KHR_xlib_surface` | `VK_USE_PLATFORM_XLIB_KHR` | X Window System Xlib library | `<X11/Xlib.h>` |
-
-If you want to support multiple platforms, then you'll need to use OS specific preprocessor definitions, and check if they're defined. Alternatively, you could use something like GLFW if you're only interested in supporting Windows and Linux.
+For the sake of simplicity, we'll let **WSIWindow** serve as a cross platform windowing API. 
 
 ```cpp
-#if defined(_WIN32)
+#include "WSIWindow.h"
 
-  // Perform Windows specific logic
-
-#elif defined(__ANDROID__)
-
-  // Perform Android specific logic
-
-#elif defined(__linux__)
-
-  // Perform Linux specific logic
-
-#endif
-
-```
-
-You'll need to keep in mind things like window size, canvas size (supersampling), DPI and retina support, nested windows, window management and spawning multiple windows.
-
-> **Call to Action** - Make a Vulkan library that makes cross platform Vulkan super easy. You can target problems such as how each OS has their own main function, each OS has their own Windowing abstraction, how to manage each and let users access their OS specific handles if needed. One possibility is to add Vulkan support to [SFML](https://github.com/SFML/SFML).
-
-### Win32 Surfaces
-
-A Win32 surface is created when you include the `VK_KHR_win32_surface` extension to Vulkan, declare `VK_USE_PLATFORM_WIN32_KHR`, and include `windows.h` in your project.
-
-Creating windows on [Windows is well documented on MSDN](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632680(v=vs.85).aspx), so refer there for any more questions.
-
-```cpp
-#ifdef _MSC_VER
-#    pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
-#endif
-#define VK_USE_PLATFORM_WIN32_KHR
-#include "windows.h"
-
-#define VULKAN_HPP_TYPESAFE_CONVERSION
-#define USE_SWAPCHAIN_EXTENSIONS
-
-#include "vulkan.hpp"
-
-int main()
+class MyWindow : public WSIWindow 
 {
-  // Setup Instance
-
-  // Setup Phyisical Devices
-
-  // Setup Logical Devices
-
-  // Setup Window
-
-  std::string title = "MyVulkanApp";
-  std::string name = "MyVulkanApp";
-  uint32_t width = 1280;
-  uint32_t height = 720;
-  auto hInstance = GetModuleHandle(0);
-
-  WNDCLASSEX wndClass;
-  wndClass.cbSize = sizeof(WNDCLASSEX);
-  wndClass.style = CS_HREDRAW | CS_VREDRAW;
-  wndClass.lpfnWndProc = [](HWND h, UINT m, WPARAM w, LPARAM l)->LRESULT
+  //--Mouse event handler--
+  void OnMouseEvent(eAction action, int16_t x, int16_t y, uint8_t btn)
   {
-    if (m == WM_CLOSE)
-      PostQuitMessage(0);
-    else
-      return DefWindowProc(h, m, w, l);
-    return 0;
-  };
-  wndClass.cbClsExtra = 0;
-  wndClass.cbWndExtra = 0;
-  wndClass.hInstance = hInstance;
-  wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-  wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-  wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-  wndClass.lpszMenuName = NULL;
-  wndClass.lpszClassName = name.c_str();
-  wndClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
-
-  if (!RegisterClassEx(&wndClass)) {
-    fflush(stdout);
-    exit(1);
+      const char* type[]={"up  ","down","move"};
+      printf("Mouse: %s %d x %d Btn:%d\n",type[action],x,y,btn);
   }
 
-  DWORD dwExStyle;
-  DWORD dwStyle;
-
-  dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-  dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-
-  RECT windowRect;
-  windowRect.left = 0L;
-  windowRect.top = 0L;
-  windowRect.right = (long)width;
-  windowRect.bottom = (long)height;
-
-  AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
-
-  auto window = CreateWindowEx(0,
-    name.c_str(),
-    title.c_str(),
-    dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-    0,
-    0,
-    windowRect.right - windowRect.left,
-    windowRect.bottom - windowRect.top,
-    NULL,
-    NULL,
-    hInstance,
-    NULL);
-
-  // Center on screen
-  uint32_t x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
-  uint32_t y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
-  SetWindowPos(window, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
-
-  if (!window) {
-    printf("Could not create window!\n");
-    fflush(stdout);
-    exit(1);
+  //--Keyboard event handler--
+  void OnKeyEvent(eAction action,uint8_t keycode)
+  {
+      const char* type[]={"up  ","down"};
+      printf("Key: %s keycode:%d\n",type[action],keycode);
   }
 
-  ShowWindow(window, SW_SHOW);
-  SetForegroundWindow(window);
-  SetFocus(window);
-}
+  //--Text typed event handler--
+  void OnTextEvent(const char* str)
+  {
+      printf("Text: %s\n",str);
+  }
+
+  //--Window resize event handler--
+  void OnResizeEvent(uint16_t width, uint16_t height)
+  {
+      printf("Window Resize: width=%4d height=%4d\n",width, height);
+  }
+};
 ```
 
-From there we can create our Win32 surface.
+Bear in mind, it's your responsibility to manage things like window size, canvas size (supersampling), DPI and retina support, nested windows, window management and spawning multiple windows.
 
-```cpp
-// Screen Size
-auto surfaceSize = vk::Extent2D(width, height);
-auto renderArea = vk::Rect2D(vk::Offset2D(), surfaceSize);
-auto viewport = vk::Viewport(0.0f, 0.0f, width, height, 0, 1.0f);
-
-std::vector<vk::Viewport> viewports =
-{
-  viewport
-};
-
-std::vector<vk::Rect2D> scissors =
-{
-  renderArea
-};
-
-auto surfaceInfo = vk::Win32SurfaceCreateInfoKHR(vk::Win32SurfaceCreateFlagsKHR(), hInstance, window);
-auto vkSurfaceInfo = surfaceInfo.operator const VkWin32SurfaceCreateInfoKHR&();
-
-auto vksurface = VkSurfaceKHR();
-auto createwin32surface = vkCreateWin32SurfaceKHR(instance, &vkSurfaceInfo, NULL, &vksurface);
-assert(createwin32surface == VK_SUCCESS);
-
-// Get surface information
-auto surface = vk::SurfaceKHR(vksurface);
-```
 
 ## Color Formats
 

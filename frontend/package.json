@@ -1,7 +1,7 @@
 {
   "name": "alain.xyz-frontend",
   "version": "0.4.0",
-  "description": "My personal website built on top of TypeScript, React, WebPack 2, PostCSS.",
+  "description": "My personal website frontend.",
   "author": "Alain Galvan <hi@alain.xyz>",
   "license": "MIT",
   "repository": {

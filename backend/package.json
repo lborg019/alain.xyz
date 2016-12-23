@@ -1,7 +1,7 @@
 {
   "name": "alain.xyz-backend",
   "version": "0.4.0",
-  "description": "The backend of my personal website. ",
+  "description": "My personal website backend.",
   "author": "Alain Galvan <hi@alain.xyz>",
   "license": "MIT",
   "main": "server.ts",
@@ -11,8 +11,7 @@
   },
   "scripts": {
     "develop": "set DEBUG=express:* & set NODE_ENV=development & ts-node server.ts --no-cache",
-    "production": "set DEBUG=false & set NODE_ENV=production & ts-node server.ts -d -f &",
-    "build": "ts-node utils/build"
+    "production": "set DEBUG=false & set NODE_ENV=production & ts-node server.ts -d -f &"
   },
   "keywords": [],
   "private": true,

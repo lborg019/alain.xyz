@@ -49,7 +49,7 @@ function page(meta) {
                           \`.....\`
  Alain.xyz
  Built with <3 in React and TypeScript
- Check out the source @ https://github.com/alaingalvan/alain.xyz-frontend
+ Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
 <html>

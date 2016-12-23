@@ -4,7 +4,13 @@
 
 ![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url]
 
-My personal portfolio system build on top of [Node 7](https://nodejs.org/en/), [TypeScript 2.1](http://www.typescriptlang.org/),  [React 15.4](https://facebook.github.io/react/), [Express 4](https://expressjs.com/), and [MongoDB 3.2](http://mongodb.org/).
+My personal portfolio system build on top of the latest versions of:
+
+- [Node](https://nodejs.org/en/)
+- [TypeScript](http://www.typescriptlang.org/)
+- [React](https://facebook.github.io/react/)
+- [Express](https://expressjs.com/)
+- [MongoDB](http://mongodb.org/)
 
 [website-img]: frontend/assets/brand/website-screenshot.jpg
 [website-url]: https://alain.xyz
