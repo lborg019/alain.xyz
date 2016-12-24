@@ -7,9 +7,33 @@ Currently Vulkan 1.0 currently supports:
 - Android
 - iOS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
 - Mac OS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
+- Nintendo Switch
 
+I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan) with a few examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
-I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan-examples) with a few examples. For the sake of brevity I've avoided including some things like listening to window events, cross platform compilation, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+## Setup
+
+First install [Conan](https://www.conan.io/downloads), A C++ package manager as easy to use as `npm`, then type the following in your [terminal](https://hyper.is/).
+
+```bash
+# Clone the starter repo
+git clone https://github.com/alaingalvan/raw-vulkan-examples
+cd raw-vulkan-examples
+
+# Install dependencies
+conan install
+
+# After modifying the code, you can build it with:
+# This compiles your shaders, & then compiles the app
+conan build
+```
+
+### Dependencies
+
+- [Vulkan SDK](https://vulkan.lunarg.com/) - The official Vulkan SDK distributed by LunarG.
+- [Vulkan C++ API](https://github.com/KhronosGroup/Vulkan-Hpp) - Runtimeless C++ bindings that add compile time type safety and ease of use.
+- [WSIWindow](https://github.com/renelindsay/Vulkan-WSIWindow) - LunarG's cross platform Window creation library.
+- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows uses to write `glsl` like C++ code, with types for vectors, matricies, etc.
 
 ## Overview
 
@@ -21,46 +45,37 @@ In this application we will need to do the following:
 
 3. Create a **Logical Device** from your physical device to interface with more Vulkan
 
-4. Create **OS Window** using OS specific APIs.
+4. Create **Window** using the WSIWindow library. This will also create a **Surface** for our application to use later. 
 
-5. Create a **Surface** from your window to serve as the OS interface for Vulkan.
+5. Create a **Swapchain** from your logical device. This will manage changing frames and hold the surface specific **color attachment**.
 
-6. Create a **Swapchain** from your logical device. This will manage changing frames and hold the surface specific **color attachment**.
+6. Create a **Depth Attachment** that will go into our render pass.
 
-7. Create a **Depth Attachment** that will go into our render pass.
+7. Create a set of **FrameBuffers** for each image in your swapchain.
 
-8. Create a primary **Render Pass** to be used in your swapchain and surface.
+8. Create a primary **Render Pass** to be used in your swapchain and surface. This will also let us group our depth and color attachments.
 
-9. Create a set of **FrameBuffers** for each image in your swapchain.
+9. Create **Synchronization** primatives like semaphores to determine when we're finished presenting and finished rendering, and fences to check the start of the render loop, or to determine when memory has finished being written to.
 
-10. Create **Synchronization** primatives like semaphores and fences.
+10. Create a **Command Pool** from your logical device.
 
-11. Create a **Command Pool** from your logical device.
+11. Create a **Vertex Buffer** and **Index Buffer** for your geometry. 
 
-12. Create a **Vertex Buffer** and **Index Buffer** for your geometry.
+12. Copy to **GPU Local Memory** the data for your vertex, index, and uniform buffers.
 
-13. Compile and load **SPIR-V** shader binary.
+13. Load **SPIR-V** shader binaries for our Vertex and Fragment shaders.
 
 14. Create a **Graphics Pipeline** to represent the entire state of the Graphics Pipeline for that triangle.
 
-15. Create **Commands** for each command buffer to set the GPU's state.
+15. Create **Commands** for each command buffer to set the GPU's state to render the triangles.
 
-16. Use an **Update Loop** to switch between different frames in your swapchain.
-
-### Dependencies
-
-- [Vulkan SDK](https://vulkan.lunarg.com/) - The official Vulkan SDK distributed by LunarG.
-- [Vulkan C++ API](https://github.com/KhronosGroup/Vulkan-Hpp) - Runtimeless C++ bindings that add compile time type safety and ease of use.
-- [WSIWindow](https://github.com/renelindsay/Vulkan-WSIWindow) - LunarG's official window adapter library that supports all Vulkan platforms, with bindings for pointer/keyboard events.
-- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows uses to write `glsl` like C++ code, with types for vectors, matricies, etc.
-
-We'll be using [Conan](https://www.conan.io/) - A C++ package manager as easy to use as `npm`, `opam`, and other language package managers.
+16. Use an **Update Loop** to switch between different frames in your swapchain as well as to poll input devices/window events.
 
 ## Instances
 
-![Instance Diagram](./assets/extensions-layers.svg)
+![Instance Diagram](assets/extensions-layers.svg)
 
-Similar to the OpenGL context, a Vulkan application begins when you create an instance. This instance must be loaded with some information about the program such as its name, engine, and minimum Vulkan version, as well any extensions and layers you want to load.
+Similar to the OpenGL context, a Vulkan application begins when you create an **instance**. This instance must be loaded with some information about the program such as its name, engine, and minimum Vulkan version, as well any extensions and layers you want to load.
 
 **Extension** - Anything that adds extra functionality to Vulkan, such as support for Win32 windows, or enabling drawing onto a target.
 
@@ -129,7 +144,7 @@ auto instance = vk::createInstance(
 
 ## Physical Devices
 
-![Instance Diagram](./assets/hardware.svg)
+![Instance Diagram](assets/hardware.svg)
 
 In Vulkan, you have access to all enumerable devices that support it, and can query for information like their name, the number of heaps they support, their manufacturer, etc.
 
@@ -143,7 +158,7 @@ auto gpu = physicalDevices[0];
 
 ## Logical Devices
 
-![Logical Devices](./assets/logical-device.svg)
+![Logical Devices](assets/logical-device.svg)
 
 You can then create a logical device from a physical device handle. A logical device can be loaded with its own extensions/layers, can be set to work with graphics, gpgpu computations, handle sparse memory and/or memory transfers by creating queues for that device.
 

@@ -8,7 +8,7 @@ Still, I succumbed to the temptation and built a custom website. Basically I wan
 
 3. Dynamically load modules as needed.
 
-Modules being javascript modules, so full programatic control of any view components you load! Since they're modules, they could be anything from books to entire applications. (So we can have apps inside of apps, **appception** anyone?)
+Modules being JavaScript modules, so full programatic control of any view components you load! Since they're modules, they could be anything from books to entire applications. (So we can have apps inside of apps, **appception** anyone?)
 
 ![Inception Gif](assets/appception.gif)
 
@@ -19,7 +19,7 @@ Here's some of the dependencies I'm building on top of:
 
 1. [NodeJS](https://nodejs.org/) - Serverside JavaScript, one language for everything.
 
-2. [MongoDB](http://mongodb.org/) - A simple to use NoSQL Database. Eventually I'll switch from this to GraphQL and Postgres to avoid having to rewrite the api.
+2. [MongoDB](http://mongodb.org/) - A simple to use NoSQL Database.
 
 ### Client
 
@@ -39,7 +39,7 @@ Here's some of the dependencies I'm building on top of:
 
 1. [TypeScript](https://typescriptlang.org) - A superset of JavaScript which adds types, interfaces, enums, namespaces, and babel-esque compiliation to older versions of js.
 
-2. [Webpack 2](https://webpack.github.io/) - The newest version of Webpack that supports treeshaking and SystemJS modules, really powerful stuff that can remove dead code and allow dynamic module loading respectively. 
+2. [Webpack](https://webpack.github.io/) - The newest version of Webpack that supports treeshaking and SystemJS modules, really powerful stuff that can remove dead code and allow dynamic module loading respectively. 
 
 3. [PostCSS](https://github.com/postcss/postcss) - a sort of preprocessor that's much more modular than [Stylus](http://stylus-lang.com/), [Sass](http://sass-lang.com/), or [Less](http://lesscss.org/). It works similar to [UglyfyJS](http://lisperator.net/uglifyjs/) or [Katex](https://khan.github.io/KaTeX/) in that in generates an AST, and users can supply functions to process that AST.
 
@@ -63,7 +63,7 @@ The fastest way to get something rolling is to fork some boilerplate code, here'
 
 ### Making Design Decisions
 
-There's a *lot of questions* involved in making a website from a architectural perspective, and in the end a lot of it comes down to opinion - *You're asking a lot if you want to understand every little detail down to the bits flipped*, so some decisions will honestly be opinions, but I tried being as unbias as possible:
+There's a *lot of questions* involved in making a website from a architectural perspective, and in the end a lot of it comes down to opinion - *You're asking a lot if you want to understand every little detail down to the bits flipped*, so some decisions will honestly be opinions, but I tried being as unbiased as possible:
 
 1. [What's your Ideal WebPageTest Score?](https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/quick-start-quide) - [100 ms of latency cost amazon 1% of sales](http://blog.gigaspaces.com/amazon-found-every-100ms-of-latency-cost-them-1-in-sales/), Performance is a big deal!
 
@@ -77,25 +77,11 @@ There's a *lot of questions* involved in making a website from a architectural p
 
 The list goes on and on. 
 
-## `<Back/>` - Chaotic Filaments
-
-Everything needs a brand, and I'm no exception. A brand shows that you're reputable, you're accountable, you are keen to detail.
-
-The `<Hero/>` component is the first thing you see when you visit the site, so *you need to know at minimum that this is a cool place*.
-
-### Dynamic Performance Benchmarks
-
-The animation is a WebGL canvas that covers the whole window size, so it is possible to be very performance heavy. just look at any [shadertoy](https://www.shadertoy.com/view/XslGRr) at full screen mode in look at the drop in performance, it's crazy. That's because a brute force **Raymarching Formula** is approximately \(O(rsd)\) where \(rs\) is the resolution and \(d\) is the integration samples.
-
-So to help optimize the animation, I'm using geometry and static images wherever I can to serve as sampling domains, since it's almost always faster to reference from memory existing data than it is to do some crazy calculations to make new data.
-
-As for Rendering, I'm using [coronal](http://coronal.io), a custom graphics library built to be similar to React and Unity.
-
 ## `<Portfolio/>` - The Cream rises to the top
 
-A **Portfolio** is an array of personal/professional work that shows you're not all talk.
+A **Portfolio** is a collection of personal/professional work that shows you're not all talk.
 
-It should be saturated, updated often, and should only consist of your best work. Each work is like a child to be cherished and let shine on its own.
+It should be saturated, updated often, and should only consist of your best work.
 
 A portfolio could be made of many things:
 
@@ -106,7 +92,7 @@ A portfolio could be made of many things:
  - Articles
  - Pictures of your Cat
 
-But a portfolio should be an exclusive place. *Therefore In my portfolio I only feature **finished projects**, no individual art pieces, articles, songs*. Collaborative works like big projects should have specifics pointed out.
+But a portfolio should be an **exclusive place**. *Therefore In my portfolio I only feature **finished projects**, no individual art pieces, articles, songs*. Collaborative works like big projects should have specifics pointed out.
 
 ## `<Blog/>` - A Connected Website
 
@@ -116,9 +102,9 @@ We have Facebook, Twitter, Tumblr, Artstation, Soundcloud, Youtube, Udacity, Cod
 
 The way I did this is sync any new post or update events via apps that give me access to the APIs of these websites, so **any updates to the main site pushes across the social network channels**.
 
-I want to make you comfortable, go to tumblr if you want, we have repost buttons here, facebook like buttons that link directly to the post on facebook! :)
+I want to make you comfortable, go to Tumblr if you want, we have repost buttons here, Facebook like buttons that link directly to the post on Facebook! :)
 
-### Previous Research - Blogs
+### Prior Art - Blogs
 
  * [StackEdit](https://github.com/benweet/stackedit) are really on top of their game when it comes to writing markdown posts, supporting Footnotes, Syntax Highlighting, Mathjax, UML diagrams, etc.
 
@@ -154,10 +140,6 @@ In addition, you can write complex math equations with Katex like The emission-a
 The system even supports tooltips thanks to [Hint.css]():
 
 <span class="hint--bottom-right" aria-label="The Integral from the light source to the camera at distance D">\(I_0\)</span>\( = ... \)
-
-#### Languages | Enseñando en Español
-
-I was born in the Dominican Republic, a tiny country next to Haiti. Honestly, *third world countries suck*, so it's a good idea to help these places out, and at the same time, have an excuse to keep using a language spoken by about 400 million people. So I'll be supporting English and Spanish articles.
 
 ## `<About/>` - An Online Resume
 
