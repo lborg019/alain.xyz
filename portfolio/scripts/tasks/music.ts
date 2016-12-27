@@ -3,7 +3,7 @@ import * as find from 'find';
 import * as fs from 'fs';
 import * as id3 from 'id3js';
 
-import { database } from '../db';
+import { database } from '../../../backend/src/db';
 import { getCover } from './misc';
 
 

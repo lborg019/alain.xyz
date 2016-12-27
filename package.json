@@ -1,25 +1,14 @@
 {
   "name": "alain.xyz",
-  "version": "1.0.0",
+  "version": "0.5.0",
   "description": "My personal website.",
-  "main": "server.js",
   "scripts": {
     "start": ""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alaingalvan/alain.xyz.git"
+    "url": "https://github.com/alaingalvan/alain.xyz.git"
   },
-  "keywords": [
-    "typescript",
-    "portfolio"
-  ],
   "author": "Alain Galvan <hi@alain.xyz>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/alaingalvan/alain.xyz/issues"
-  },
-  "homepage": "https://github.com/alaingalvan/alain.xyz#readme",
-  "devDependencies": {
-  }
+  "license": "MIT"
 }

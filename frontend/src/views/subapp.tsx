@@ -6,7 +6,7 @@ import { Loading } from '../components/loading';
 import { fetchSubapp, setSubapp, failure, APIResponse } from '../store/actions';
 
 
-interface SubappProps {
+type SubappProps = {
     location: {
         pathname: string
     },
@@ -17,7 +17,7 @@ interface SubappProps {
     failure: typeof failure
 }
 
-interface SubappState {
+type SubappState = {
     loading: boolean
 }
 

@@ -1,14 +1,13 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as find from 'find';
-
-import { database } from '../db';
-import { askQuestion } from './question';
 import markademic from 'markademic';
 
+import { database } from '../../../backend/src/db';
+import { askQuestion } from './question';
 import { getCover, makePermalink } from './misc';
 
-let root = path.join(__dirname, '..', '..', 'blog');
+let root = path.join(__dirname, '..', '..', '..', 'src', 'blog');
 
 type IPortfolioItem = {
   title: string,

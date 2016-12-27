@@ -8,13 +8,72 @@ My personal portfolio system build on top of the latest versions of:
 
 - [Node](https://nodejs.org/en/)
 - [TypeScript](http://www.typescriptlang.org/)
-- [React](https://facebook.github.io/react/)
 - [Express](https://expressjs.com/)
 - [MongoDB](http://mongodb.org/)
+- [React](https://facebook.github.io/react/)
+- [SystemJS](https://github.com/systemjs/systemjs)
+- [PostCSS](https://github.com/postcss/postcss)
 
-[website-img]: frontend/assets/brand/website-screenshot.jpg
+Check out the [blog post where I detail design decisions here](https://alain.xyz/blog/the-making-of-alain-xyz).
+
+## Setup
+
+Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/).
+
+```bash
+# Install Docker and Docker Compose.
+wget -qO- https://get.docker.com/ | sh
+sudo apt-get -y install python-pip
+sudo pip install docker-compose
+
+# Begin setup
+docker-compose up
+```
+
+## How it Works
+
+The site is comprised of 3 primary modules:
+
+```bash
+# Http Server
+./backend/
+# React App
+./frontend/
+# Repository of articles, talks, art, music
+./portfolio/
+```
+
+### Backend
+
+The backend application simply serves static files via http, and provides a REST API to view a list of portfolio items.
+
+### Frontend
+
+The frontend serves React views that can query the backend API for portfolio items the client is looking for and serve them.
+
+This service is compiled down to:
+
+```bash
+# Runtime libraries like React, React DOM, etc.
+modules/react.js
+moudles/react-dom.js
+modules/redux.js
+...
+
+# Frontend Modules
+modules/frontend/main.js
+...
+```
+
+
+
+### portfolio
+
+A repository composed of frontend modules for rendering views for different categories like articles, talks, music, etc.
+
+[website-img]: brand/website-screenshot.jpg
 [website-url]: https://alain.xyz
-[release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square
+[release-img]: https://img.shields.io/badge/release-0.5.0-4dbfcc.svg?style=flat-square
 [license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square
 [license-url]: https://opensource.org/licenses/MIT
 [david-url]: https://david-dm.org/alaingalvan/alain.xyz

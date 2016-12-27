@@ -1,13 +1,13 @@
 import * as React from 'react';
 import IconPaths from './icon-paths';
 
-interface IconProps {
+type IconProps = {
   style?: Object,
   size?: number,
   type?: string
 }
 
-interface IconState {
+type IconState = {
   paths: string[]
 }
 
