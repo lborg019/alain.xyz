@@ -7,7 +7,7 @@ import { database } from '../../../backend/src/db';
 import { askQuestion } from './question';
 import { getCover, makePermalink } from './misc';
 
-let root = path.join(__dirname, '..', '..', '..', 'src', 'blog');
+let root = path.join(__dirname, '..', '..', 'blog');
 
 type IPortfolioItem = {
   title: string,

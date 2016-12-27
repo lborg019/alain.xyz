@@ -61,7 +61,18 @@ let config = {
       minimize: isProduction,
       debug: !isProduction
     }),
-    new WebpackSystemJSExportPlugin()
+    new WebpackSystemJSExportPlugin({
+      public: [
+      'react',
+      'react-dom',
+      'react-motion',
+      'react-redux',
+      'react-router',
+      'redux',
+      'redux-thunk',
+      'isomorphic-fetch'
+    ]
+    })
   ]
 };
 

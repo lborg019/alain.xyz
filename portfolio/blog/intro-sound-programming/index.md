@@ -1,60 +1,38 @@
 [Shadertoy](https://www.shadertoy.com/) proved that being a good rendering engineer is just like being a good sound engineer, and that the mathematics and code for both are for the most part the same.
 
-## The Physics of Sound
-
+## Sound Physics & Math
 
 ![Sound Wave](assets/c5-wave.gif)
 
 **Sound** is a series of compressions and decompressions in the air.
+
 Instantaneous acoustic pressure (current sound) is the ambient atmospheric pressure plus perturbation (basically noise) caused by sound wave at a determined instant in time.
 
 
-\[P_{inst} = P_{atmos} + P_{sound}\]
+\[ P_{inst} = P_{atmos} + P_{sound} \]
 
-This is similar to lighting models like Phong.
+This is similar to lighting models in computer graphics.
 
-\[I_{total} = I_{diffuse} + I_{specular} + I_{ambient}\]
+\[ I_{total} = I_{diffuse} + I_{specular} + I_{ambient} \]
 
 
-## Fourier Transform
+### Fourier Transform
 
-The Fourier Transform allows us to make the conversion from the Analog *(Continuous)* to Discrete *(Digital)* Signal. This falls in the extensive and math intensive realm of Signal Processing. For now lets just keep in mind that the Fourier Transform is able to convert an analog signal into the frequencies which it make up that signal.
-We 'slice' analog signal and convert such slices into digital signal. The more slices we have, the more accurate we are in relation to the analog signal. This is called sampling. 44.1kHz per second sample is what is known as 'CD-Quality'.
+[![Fourier Series](http://mathworld.wolfram.com/images/eps-gif/FourierSeriesExamples_800.gif)](http://mathworld.wolfram.com/FourierSeries.html)
 
-Sound recording happen in the following fashion:
-Microphones capture the analog signal; an analog to digital converter (hardware) performs the Fourier Transform which converts the sound into digital information (stores audio frequencies in a .wav file for example). When that wave file is executed, the computer fetches the frequencies, passes them to a digital to analog converter, and your speakers vibrate according to those frequencies, compressing and decompressing the air, producing sound.
-This process is what is known as Pulse Code Modulation and it is used by .wav audio format.
-
-#### Cooley-Tukey Algorithm
-The Cooley-Tukey algorithm allows for a much faster calculation of the Fourier Transform.
-There are many hardware and software implementations with some form of the Fast Fourier Transform.
+Fourier Transforms are a method of converting continuous signals to descrete ones, or visa-versa. This is particularly useful in audio jacks, where sound is simply the modulation of voltage, but has other applications, such as [Jpeg Compression](http://stephaniehurlburt.com/blog/2016/12/20/a-taste-of-fourier-transforms-and-jpeg-compression).
 
 ## Sampling
 ![Shadertoy sound image](assets/supermarioaudio.gif)
 > Source: [Krzysztof Narkowicz](https://twitter.com/knarkowicz)'s Mario 1-1 Siggraph Entry
 
-Sound on computers is represented by tiny changes on the speaker every *1 / 44100* seconds. (That sounds like a lot more than 60 fps). By themselves, these changes will just sound like pops or won't sound like anything at all, but given enough time, they can sound like anything!
+Sound on computers is represented by tiny changes on the speaker every *1 / 44100* seconds. (That sounds like a lot more than 60 fps). By themselves, these changes will just sound like pops or won't sound like anything at all, but when fast enough and with enough time, they can sound like anything!
+
+Let's take a look at the source code from [ShaderToy](https://www.shadertoy.com/) that the devs were kind enough to leave unminified for us to check out. 
 
 Behind the scenes what happens is, shadertoy converts whatever sound you write into a 512x512 image with 1/fps seconds of encoded information of that sound, sends it to an AudioContext object, and that plays it.
 
-```c
-//Get current sample location
-float t = iiBlockOffset + (gl_FragCoord.x + gl_FragCoord.y * 512.0) / 44100.0;
-
-//Get Song Function
-vec2 y = mainSound(t);
-
-//Encode Output
-vec2 v = floor((0.5 + 0.5 * y) * 65536.0); //convert to 16 bit int.
-vec2 vl = mod(v, 256.0) / 255.0; //Get decimal portion
-vec2 vh = floor(v / 256.0) / 255.0; //Get int portion
-
-gl_FragColor = vec4(vl.x, vh.x, vl.y, vh.y);
-```
-
-In Javascript, this is what's happening behind the scenes'
-
-```javascript
+```js
 //Initialize Context
 var canvas = document.getElementById("canvas");
 var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
@@ -93,11 +71,25 @@ for (var j = 0; j < numBlocks; j++) {
 }
 ```
 
-DSP
-Microphone: Converts analog signal to digital
-Speaker: Converts digital to analog
+And in our shader we simply encode a function `mainSound(float time)` onto the output image.
 
-Basic audio definitions:
+```c
+//Get current sample location
+float t = iiBlockOffset + (gl_FragCoord.x + gl_FragCoord.y * 512.0) / 44100.0;
+
+//Get Song Function
+vec2 y = mainSound(t);
+
+//Encode Output
+vec2 v = floor((0.5 + 0.5 * y) * 65536.0); //convert to 16 bit int.
+vec2 vl = mod(v, 256.0) / 255.0; //Get decimal portion
+vec2 vh = floor(v / 256.0) / 255.0; //Get int portion
+
+gl_FragColor = vec4(vl.x, vh.x, vl.y, vh.y);
+```
+
+### Definitions
+
 **Sample** - One measurement of audio data. For Pulse Code Modulation (PCM) encoding, a sample is an instantaneous representation of the voltage of the analog audio. There are other types of encoding, like u-law and a-law, that are rarely used.
 
 **Sampling Rate** - The number of samples in one second. Measured in Hertz (Hz) or kiloHertz (kHz). The most common sampling rate is 44.1 kHz (CD quality).
@@ -113,11 +105,16 @@ So, a 16-bit stereo (two-channel) audio file will have 32-bit frames (16 bits pe
 
 ## Practical Example - Polyphony
 
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/llfSDj?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
+
+The key takeaway here is the fact that you're rendering sin waves to play frequencies like 440 Hz, or A5 on the keyboard. 
+
+For multiple sounds to play, you simply take the average of the two!
+
 ```c
 /*************************************************************************
 * Synth Primitives
 * Everything you should need to get sound on your shaders!
-* Last Updated: Sun Jan 14 2016 @ 12:00PM EST
 * By Alain Galvan (Alain.xyz) | Lukas Borges (Lukas.xyz)
 **************************************************************************
 * Constants

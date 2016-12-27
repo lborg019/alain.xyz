@@ -51,23 +51,7 @@ The backend application simply serves static files via http, and provides a REST
 
 The frontend serves React views that can query the backend API for portfolio items the client is looking for and serve them.
 
-This service is compiled down to:
-
-```bash
-# Runtime libraries like React, React DOM, etc.
-modules/react.js
-moudles/react-dom.js
-modules/redux.js
-...
-
-# Frontend Modules
-modules/frontend/main.js
-...
-```
-
-
-
-### portfolio
+### Portfolio
 
 A repository composed of frontend modules for rendering views for different categories like articles, talks, music, etc.
 
