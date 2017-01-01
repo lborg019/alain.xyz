@@ -1,6 +1,6 @@
 Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on throughput over latency.
 
-I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan-examples) with a few examples. For the sake of brevity I've avoided including some things like listening to window events, cross platform compilation, etc. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan-examples) with a few examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
 ## Overview
 
@@ -48,7 +48,7 @@ Similar to the OpenGL context, a Vulkan application begins when you create an in
 
 **Layer** - Middleware between existing Vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
 
-You'll want to begin by determining which extensions/layers you want, compare that with which are available to you by Vulkan. Once that's done
+You'll want to begin by determining which extensions/layers you want, compare that with which are available to you by Vulkan.
 
 ```cpp
 auto installedExtensions = vk::enumerateInstanceExtensionProperties();
@@ -228,16 +228,7 @@ Each OS has their own specific window generation system. Vulkan 1.0 currently su
 
 A surface is an adapter abstraction to describe an area that will render Vulkan to a window, it's the binding between Vulkan and your OS's windowing system.
 
-| Extension Name | Required Compile Time Symbol | Window System Name | External Header Files Used |
-| :-- | :-- | :-- | :-- |
-| `VK_KHR_android_surface` | `VK_USE_PLATFORM_ANDROID_KHR` | Android Native | `<android/native_window.h>` |
-|`VK_KHR_mir_surface` | `VK_USE_PLATFORM_MIR_KHR`| Mir | `<mir_toolkit/client_types.h>` |
-| `VK_KHR_wayland_surface` | `VK_USE_PLATFORM_WAYLAND_KHR` | Wayland | `<wayland-client.h>`|
-| `VK_KHR_win32_surface` | `VK_USE_PLATFORM_WIN32_KHR` | Microsoft Windows | `<windows.h>`|
-| `VK_KHR_xcb_surface` | `VK_USE_PLATFORM_XCB_KHR` | X Window System Xcb library | `<xcb/xcb.h>` |
-| `VK_KHR_xlib_surface` | `VK_USE_PLATFORM_XLIB_KHR` | X Window System Xlib library | `<X11/Xlib.h>` |
-
-If you want to support multiple platforms, then you'll need to use OS specific preprocessor definitions, and check if they're defined. Alternatively, you could use something like GLFW if you're only interested in supporting Windows and Linux.
+If you want to support multiple platforms, then you'll need to use OS specific preprocessor definitions, and check if they're defined.
 
 ```cpp
 #if defined(_WIN32)
@@ -258,7 +249,7 @@ If you want to support multiple platforms, then you'll need to use OS specific p
 
 You'll need to keep in mind things like window size, canvas size (supersampling), DPI and retina support, nested windows, window management and spawning multiple windows.
 
-> **Call to Action** - Make a Vulkan library that makes cross platform Vulkan super easy. You can target problems such as how each OS has their own main function, each OS has their own Windowing abstraction, how to manage each and let users access their OS specific handles if needed. One possibility is to add Vulkan support to [SFML](https://github.com/SFML/SFML).
+Or, you could just rely on a library developed by LunarG to do just this.
 
 ### Win32 Surfaces
 
