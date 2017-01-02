@@ -1,6 +1,6 @@
-Rust is becoming very mature as a programming language, with research projects ranging from using it in compilers to web browsers like Servo to even entire operating systems and game engines.
+Rust is becoming very mature as a programming language, with research projects ranging from using it in compilers to web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
 
-Jack Moffitt, developer of the Rust powered browser Servo, said on [The Changelog](https://changelog.com/podcast/228) that:
+[Jack Moffitt](https://twitter.com/metajack), developer of the Rust powered browser Servo, said on [The Changelog](https://changelog.com/podcast/228) that:
 
 > All of [our security critical bugs with Firefox WebAudio] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C++ ].
 
@@ -27,7 +27,7 @@ curl https://sh.rustup.rs -sSf | sh
 # Rust is installed now. Great!
 ```
 
-From there you can easily find integrations with code editors like [VS Code](https://github.com/KalitaAlexey/vscode-rust).
+From there you can easily find integrations with code editors like [VS Code](https://github.com/KalitaAlexey/vscode-rust) or [Atom](https://atom.io/packages/language-rust).
 
 ## Modules
 
@@ -77,6 +77,8 @@ fn main() {
 }
 ```
 
+And you can run programs like a CLI similar to `npm` via cargo.
+
 ## Compiling
 
 We live in a world where compiling to multiple platforms is *extremely important*. Rust supports Windows, Mac, Linux, iOS, Android, and Web, this section is designed to clear up how to compile to each of these platforms.
@@ -104,25 +106,96 @@ cargo run --target= # Target Name
 
 #### Android
 
-For android you'll need the Android NDK, so download it and then run it's make standard toolchain script.
+For android there's already a CLI called [`cargo-apk`](https://github.com/tomaka/android-rs-glue) that helps automate creating an `.apk` for you. Just download the Android SDK and NDK, and install it as one of your `build-dependencies`.
 
-```bash
-curl -O https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-tar xzf android-sdk_r24.4.1-linux.tgz
-curl -O http://dl.google.com/android/repository/android-ndk-r10e-linux-x86_64.zip
-unzip android-ndk-r10e-linux-x86_64.zip
-android-ndk-r10e/build/tools/make-standalone-toolchain.sh \
-      --platform=android-18 --toolchain=arm-linux-androideabi-clang3.6 \
-      --install-dir=android-18-toolchain --ndk-dir=android-ndk-r10e/ --arch=arm
+## Semantics
+
+Lets compare Rust semantics with JS and C++:
+
+### Imports, Exports, Variables
+
+```rust
+// Rust
+use std::fs;
+
+pub struct BuildResult {
+    /// The absolute path where the apk is located.
+    pub apk_path: PathBuf,
+}
 ```
 
-Then make a `config` file at `~/.cargo` and add the following:
+```cpp
+#include "ifstream"
 
-```yml
-[build]
-target = "arm-linux-androideabi"
+public struct BuildResult
+{
+  public:
+    PathBuf apk_path;
+}
+```
 
-[target.arm-linux-androideabi]
-linker = "/home/rust/android-18-toolchain"
+```js
+// TypeScript
+import fs from 'fs';
+
+type BuildResult = {
+
+}
+```
+
+### Structs, Functions, Classes
+
+```rust
+
+```
+
+```cpp
+
+```
+
+```js
+
+```
+
+### Templates, Macros, Pointers
+
+By default everything in rust is copied unless you specify otherwise.
+
+```rust
+
+```
+
+What's interesting here is that the `mut` keyword is similar to GLSL's `inout` keyword! In C++, you can use `const` to describe immutable structures, which is not the default.
+
+```cpp
+template<typename T>
+void lol(T what)
+{
+
+}
+```
+
+JavaScript always treats references as pointers similar to C++, unless you actually copy them with object spread. There's no such thing as advanced metaprogramming in JS, but you do have Generics in TypeScript and Flow.
+
+```js
+
+function lol<T>(T what) {
+
+}
+```
+
+### Common Modules
+
+```rust
+
+```
+
+```cpp
+
+```
+
+```js
+import fs from 'fs';
+import path from 'path';
 ```
 

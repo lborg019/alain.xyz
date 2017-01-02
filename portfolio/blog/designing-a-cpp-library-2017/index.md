@@ -4,7 +4,7 @@ C++ has had trouble keeping up with the state of the art in programming language
 
 1. **Module Systems** - Traditionally, packages were managed manually with CMake, however the C++ package manager [Conan](https://conan.io) seems to be gaining traction.
 
-2. **Unit Testing** - Setting up your project for unit testing on continuous integration solutions like Travis CI.
+2. **Testing** - Setting up your project for unit testing on continuous integration solutions like Travis CI.
 
 3. **Cross Platform Compilation** - Architect your library to work on Windows, Mac, Linux, Android, iOS, and even platforms like game consoles, and compile binaries for each platform.
 
@@ -83,6 +83,83 @@ Then once you're done, open the command line and type:
 ```bash
 conan export # YourName/stable
 conan upload
+```
+
+### Testing
+
+Every good library should have Unit Tests, Coverage Tests, and Linting, and every good application should also include Integration tests. The Ruby community brought this philosophy to mainstream programming.
+
+- **Unit Tests** - Test individual blocks of code.
+- **Coverage Tests** - Test how much code your unit tests are verifying.
+- **Linting** - Format and verify your code is following best practices.
+- **Integration Tests** - Verify that all your dependencies work together at the versions your application requires.
+
+#### Unit Tests
+
+Google distributes a powerful testing framework called [GTest](https://github.com/google/googletest).
+
+```bash
+conan install gtest
+```
+
+To use it:
+
+```cpp
+TEST(test_case_name, test_name) {
+ 
+ //... test body ...
+ 
+ auto a = true;
+ auto b = true;
+
+ EXPECT_EQ(a, b)
+}
+
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
+```
+
+Create a folder called `tests` where they will all be.
+
+Add a tests script to conan to help run your tests:
+
+```py
+from conans import ConanFile
+
+class MyLibraryTestConan(ConanFile):
+    name = "Tests"
+    version = "0.1"
+    settings = "os", "compiler", "arch", "build_type"
+    generators = "gcc"
+    requires = "gtest/1.8.0@lasote/stable"
+        
+    def build(self):
+        cmake = CMake(self.settings)
+        self.run('cmake %s %s' % (self.conanfile_directory, cmake.command_line))
+        self.run("cmake --build . %s" % cmake.build_config)
+
+    def imports(self):
+        self.copy(pattern="*.dll", dst="bin", src="bin")
+        self.copy(pattern="*.dylib", dst="bin", src="lib")
+        
+    def test(self):
+        self.run("cd bin && ./test")
+```
+
+Then, in your `.travis.yml` file:
+
+```yml
+os: linux
+language: c++
+compiler:
+  - gcc
+before_install: 
+  - sudo apt-get install python3
+  - sudo pip3 install conan
+script:
+  - conan test
 ```
 
 ### Preprocessor Modules
@@ -180,7 +257,7 @@ Lambda functions are unnamed functions, similar to JavaScript's functions.
 }
 ```
 
-Notice the *skinny arrow* in example 2? It's sorta like f# lambdas in that they say the return type. (ES6 added fat arrows, but those are different, having to do with the working with the pervious function's scope.)
+Notice the *skinny arrow* in example 2? It's sorta like f# lambdas in that they say the return type.
 
 ```fsharp
 let rec addAll arr = function

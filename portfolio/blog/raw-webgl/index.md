@@ -4,7 +4,16 @@ At its core, WebGL is a state machine that lets you tell it how and where it wil
 
 To help introduce WebGL I've written out a simple application which you can find on my [codepen](http://codepen.io/alaingalvan/pen/OMEqKa). This is a simplified rendering system similar to APIs like [Three.js](https://threejs.org/), but I've taken some shortcuts in its design like using the singleton pattern.
 
-In the end, your app will look like the following:
+## Final Program
+
+Here's the final running program, review the source and fork it however you would like!
+
+<iframe height='480' scrolling='no' title='Raw WebGL' src='//codepen.io/alaingalvan/embed/OMEqKa/?height=265&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/alaingalvan/pen/OMEqKa/'>Raw WebGL</a> by Alain Galvan (<a href='http://codepen.io/alaingalvan'>@alaingalvan</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+
+## Abstraction
+
+Let's look at the way it works from a top down perspective:
 
 ```ts
 import {FullscreenRenderer, Scene, Triangle} from './lib';
@@ -336,10 +345,3 @@ void main() {
   }
 }
 ```
-
-## Final Program
-
-Here's the final running program, review the source and fork it however you would like!
-
-<iframe height='480' scrolling='no' title='Raw WebGL' src='//codepen.io/alaingalvan/embed/OMEqKa/?height=265&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/alaingalvan/pen/OMEqKa/'>Raw WebGL</a> by Alain Galvan (<a href='http://codepen.io/alaingalvan'>@alaingalvan</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>

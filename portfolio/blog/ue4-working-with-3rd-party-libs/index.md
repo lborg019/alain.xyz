@@ -1,4 +1,4 @@
-[Eric Neibler](http://ericniebler.com/) on [Cppcast](http://cppcast.com/2015/12/eric-niebler/) described the current state of programming in C++ as being "stuck in the 60s", this system bound by concatination of text. C++ [Modules](http://kennykerr.ca/2015/12/03/getting-started-with-modules-in-c/) are coming to the standard make that less of a pain, but not everyone follows the standard.
+[Eric Neibler](http://ericniebler.com/) on [Cppcast](http://cppcast.com/2015/12/eric-niebler/) described the current state of programming in C++ as being "stuck in the 60s", this system bound by concatination of text. C++ [Modules](http://kennykerr.ca/2015/12/03/getting-started-with-modules-in-c/) are coming to the standard make that less of a pain, but that's still not available yet.
 
 The alternative of course is using your favorite IDE's compiler options and get lost inside the options, mess up somewhere and scratch your head and wonder why. Then there's tools like CMake which try their best to abstract things, but the fact is, [C++ build systems suck](https://www.youtube.com/watch?v=KPi0AuVpxLI).
 
