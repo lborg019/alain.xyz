@@ -1,6 +1,48 @@
-Vulkan is a new low level API released February 2016 by the Khronos Group that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on throughput over latency.
+Vulkan is a new low level Graphics API released February 2016 by the [Khronos Group](https://khronos.org) that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on processing large sets of data quicker than CPUs.
 
-I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan-examples) with a few examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+Currently Vulkan 1.0 currently supports the following operating Systems:
+
+- Windows
+- Linux
+- Android
+- iOS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
+- Mac OS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
+- Nintendo Switch
+
+And languages such as:
+
+- [C](https://vulkan.lunarg.com/) - The default language for Vulkan.
+- [C++](https://github.com/khronosgroup/vulkan-hpp) - Through **Vulkan-Hpp** the official Vulkan C++ library.
+- [Rust](https://github.com/tomaka/vulkano) - Through **Volkano**, an intuitive Rust wrapper designed similarly to Vulkan-Hpp.
+- [Python](https://github.com/bglgwyng/pyVulkan) - Through **pyVulkan**, a Python FFI to the C implementation of Vulkan.
+
+I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan) with a some C++ examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+
+## Setup
+
+First install [Conan](https://www.conan.io/downloads), A C++ package manager as easy to use as `npm`, then type the following in your [terminal](https://hyper.is/).
+
+```bash
+# Clone the starter repo
+git clone https://github.com/alaingalvan/raw-vulkan
+cd raw-vulkan
+
+# Install dependencies
+conan install
+
+# After modifying the code, you can build it with:
+# This compiles your shaders, & then compiles the app
+conan build
+```
+
+### Dependencies
+
+Conan handles downloading/installing all your dependencies:
+
+- [Vulkan SDK](https://vulkan.lunarg.com/) - The official Vulkan SDK distributed by LunarG.
+- [Vulkan C++ API](https://github.com/KhronosGroup/Vulkan-Hpp) - Runtimeless C++ bindings that add compile time type safety and ease of use.
+- [WSIWindow](https://github.com/renelindsay/Vulkan-WSIWindow) - LunarG's cross platform Window creation library.
+- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows uses to write `glsl` like C++ code, with types for vectors, matricies, etc.
 
 ## Overview
 
@@ -12,43 +54,43 @@ In this application we will need to do the following:
 
 3. Create a **Logical Device** from your physical device to interface with more Vulkan
 
-4. Create **OS Window** using OS specific APIs.
+4. Create **Window** using the WSIWindow library. This will also create a **Surface** for our application to use later. 
 
-5. Create a **Surface** from your window to serve as the OS interface for Vulkan.
+5. Create a **Swapchain** from your logical device. This will manage changing frames and hold the surface specific **color attachment**.
 
-6. Create a **Swapchain** from your logical device. This will manage changing frames and hold the surface specific **color attachment**.
+6. Create a **Depth Attachment** that will go into our render pass.
 
-7. Create a **Depth Attachment** that will go into our render pass.
+7. Create a set of **FrameBuffers** for each image in your swapchain.
 
-8. Create a primary **Render Pass** to be used in your swapchain and surface.
+8. Create a primary **Render Pass** to be used in your swapchain and surface. This will also let us group our depth and color attachments.
 
-9. Create a set of **FrameBuffers** for each image in your swapchain.
+9. Create **Synchronization** primatives like semaphores to determine when we're finished presenting and finished rendering, and fences to check the start of the render loop, or to determine when memory has finished being written to.
 
-10. Create **Synchronization** primatives like semaphores and fences.
+10. Create a **Command Pool** from your logical device.
 
-11. Create a **Command Pool** from your logical device.
+11. Create a **Vertex Buffer** and **Index Buffer** for your geometry. 
 
-12. Create a **Vertex Buffer** and **Index Buffer** for your geometry.
+12. Copy to **GPU Local Memory** the data for your vertex, index, and uniform buffers.
 
-13. Compile and load **SPIR-V** shader binary.
+13. Load **SPIR-V** shader binaries for our Vertex and Fragment shaders.
 
 14. Create a **Graphics Pipeline** to represent the entire state of the Graphics Pipeline for that triangle.
 
-15. Create **Commands** for each command buffer to set the GPU's state.
+15. Create **Commands** for each command buffer to set the GPU's state to render the triangles.
 
-16. Use an **Update Loop** to switch between different frames in your swapchain.
+16. Use an **Update Loop** to switch between different frames in your swapchain as well as to poll input devices/window events.
 
 ## Instances
 
 ![Instance Diagram](assets/extensions-layers.svg)
 
-Similar to the OpenGL context, a Vulkan application begins when you create an instance. This instance must be loaded with some information about the program such as its name, engine, and minimum Vulkan version, as well any extensions and layers you want to load.
+Similar to the OpenGL context, a Vulkan application begins when you create an **instance**. This instance must be loaded with some information about the program such as its name, engine, and minimum Vulkan version, as well any extensions and layers you want to load.
 
 **Extension** - Anything that adds extra functionality to Vulkan, such as support for Win32 windows, or enabling drawing onto a target.
 
-**Layer** - Middleware between existing Vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks to hooks to GPU debugging software like [RenderDoc](https://github.com/baldurk/renderdoc) to even hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
+**Layer** - Middleware between existing Vulkan functionality, such as checking for errors. Layers can range from runtime debugging checks like LunarG's Standard Validation tools to hooks to the Steam renderer so your game can behave better when you `Ctrl + Shift` to switch to the Steam overlay.
 
-You'll want to begin by determining which extensions/layers you want, compare that with which are available to you by Vulkan.
+You'll want to begin by determining which extensions/layers you want, and compare that with which are available to you by Vulkan.
 
 ```cpp
 auto installedExtensions = vk::enumerateInstanceExtensionProperties();
@@ -224,165 +266,51 @@ auto graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
 
 ## Window Surface Interface
 
-Each OS has their own specific window generation system. Vulkan 1.0 currently supports Windows, Android, and Linux windows out of the box, with plans for iOS and Mac OS in the future.
-
-A surface is an adapter abstraction to describe an area that will render Vulkan to a window, it's the binding between Vulkan and your OS's windowing system.
-
-If you want to support multiple platforms, then you'll need to use OS specific preprocessor definitions, and check if they're defined.
-
-```cpp
-#if defined(_WIN32)
-
-  // Perform Windows specific logic
-
-#elif defined(__ANDROID__)
-
-  // Perform Android specific logic
-
-#elif defined(__linux__)
-
-  // Perform Linux specific logic
-
-#endif
-
-```
+Each OS has their own specific window generation system, so Vulkan uses layers and platform specific adapters to interface with them.
 
 You'll need to keep in mind things like window size, canvas size (supersampling), DPI and retina support, nested windows, window management and spawning multiple windows.
 
 Or, you could just rely on a library developed by LunarG to do just this.
 
-### Win32 Surfaces
+A **surface** is an adapter abstraction to describe an area that will render Vulkan to a window, it's the binding between Vulkan and your OS's windowing system.
 
-A Win32 surface is created when you include the `VK_KHR_win32_surface` extension to Vulkan, declare `VK_USE_PLATFORM_WIN32_KHR`, and include `windows.h` in your project.
-
-Creating windows on [Windows is well documented on MSDN](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632680(v=vs.85).aspx), so refer there for any more questions.
+For the sake of simplicity, we'll let **WSIWindow** serve as a cross platform windowing API. 
 
 ```cpp
-#ifdef _MSC_VER
-#    pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
-#endif
-#define VK_USE_PLATFORM_WIN32_KHR
-#include "windows.h"
+#include "WSIWindow.h"
 
-#define VULKAN_HPP_TYPESAFE_CONVERSION
-#define USE_SWAPCHAIN_EXTENSIONS
-
-#include "vulkan.hpp"
-
-int main()
+class MyWindow : public WSIWindow 
 {
-  // Setup Instance
-
-  // Setup Phyisical Devices
-
-  // Setup Logical Devices
-
-  // Setup Window
-
-  std::string title = "MyVulkanApp";
-  std::string name = "MyVulkanApp";
-  uint32_t width = 1280;
-  uint32_t height = 720;
-  auto hInstance = GetModuleHandle(0);
-
-  WNDCLASSEX wndClass;
-  wndClass.cbSize = sizeof(WNDCLASSEX);
-  wndClass.style = CS_HREDRAW | CS_VREDRAW;
-  wndClass.lpfnWndProc = [](HWND h, UINT m, WPARAM w, LPARAM l)->LRESULT
+  //--Mouse event handler--
+  void OnMouseEvent(eAction action, int16_t x, int16_t y, uint8_t btn)
   {
-    if (m == WM_CLOSE)
-      PostQuitMessage(0);
-    else
-      return DefWindowProc(h, m, w, l);
-    return 0;
-  };
-  wndClass.cbClsExtra = 0;
-  wndClass.cbWndExtra = 0;
-  wndClass.hInstance = hInstance;
-  wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-  wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-  wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-  wndClass.lpszMenuName = NULL;
-  wndClass.lpszClassName = name.c_str();
-  wndClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
-
-  if (!RegisterClassEx(&wndClass)) {
-    fflush(stdout);
-    exit(1);
+      const char* type[]={"up  ","down","move"};
+      printf("Mouse: %s %d x %d Btn:%d\n",type[action],x,y,btn);
   }
 
-  DWORD dwExStyle;
-  DWORD dwStyle;
-
-  dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-  dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-
-  RECT windowRect;
-  windowRect.left = 0L;
-  windowRect.top = 0L;
-  windowRect.right = (long)width;
-  windowRect.bottom = (long)height;
-
-  AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
-
-  auto window = CreateWindowEx(0,
-    name.c_str(),
-    title.c_str(),
-    dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-    0,
-    0,
-    windowRect.right - windowRect.left,
-    windowRect.bottom - windowRect.top,
-    NULL,
-    NULL,
-    hInstance,
-    NULL);
-
-  // Center on screen
-  uint32_t x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
-  uint32_t y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
-  SetWindowPos(window, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
-
-  if (!window) {
-    printf("Could not create window!\n");
-    fflush(stdout);
-    exit(1);
+  //--Keyboard event handler--
+  void OnKeyEvent(eAction action,uint8_t keycode)
+  {
+      const char* type[]={"up  ","down"};
+      printf("Key: %s keycode:%d\n",type[action],keycode);
   }
 
-  ShowWindow(window, SW_SHOW);
-  SetForegroundWindow(window);
-  SetFocus(window);
-}
+  //--Text typed event handler--
+  void OnTextEvent(const char* str)
+  {
+      printf("Text: %s\n",str);
+  }
+
+  //--Window resize event handler--
+  void OnResizeEvent(uint16_t width, uint16_t height)
+  {
+      printf("Window Resize: width=%4d height=%4d\n",width, height);
+  }
+};
 ```
 
-From there we can create our Win32 surface.
+Bear in mind, it's your responsibility to manage things like window size, canvas size (supersampling), DPI and retina support, nested windows, window management and spawning multiple windows.
 
-```cpp
-// Screen Size
-auto surfaceSize = vk::Extent2D(width, height);
-auto renderArea = vk::Rect2D(vk::Offset2D(), surfaceSize);
-auto viewport = vk::Viewport(0.0f, 0.0f, width, height, 0, 1.0f);
-
-std::vector<vk::Viewport> viewports =
-{
-  viewport
-};
-
-std::vector<vk::Rect2D> scissors =
-{
-  renderArea
-};
-
-auto surfaceInfo = vk::Win32SurfaceCreateInfoKHR(vk::Win32SurfaceCreateFlagsKHR(), hInstance, window);
-auto vkSurfaceInfo = surfaceInfo.operator const VkWin32SurfaceCreateInfoKHR&();
-
-auto vksurface = VkSurfaceKHR();
-auto createwin32surface = vkCreateWin32SurfaceKHR(instance, &vkSurfaceInfo, NULL, &vksurface);
-assert(createwin32surface == VK_SUCCESS);
-
-// Get surface information
-auto surface = vk::SurfaceKHR(vksurface);
-```
 
 ## Color Formats
 
@@ -890,7 +818,7 @@ A pipeline cache serves to cache previously created pipelines for reuse later. S
 auto pipelineCache = device.createPipelineCache(vk::PipelineCacheCreateInfo());
 ```
 
-You're even able to compile the pipeline down into *binary*, and write the pipeline to a a file. This is part of the reason why DOOM 2016 takes a while to first start up when running it on Vulkan.
+You're even able to compile the pipeline down into *binary*, and write the pipeline to a a file. This is part of the reason why DOOM 2016 takes a while to first start up when running it on Vulkan. [^vulkananddoom]
 
 ### Dynamic State Objects
 

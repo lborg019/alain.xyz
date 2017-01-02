@@ -2,46 +2,48 @@
 
 ![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 
-An intelligent portfolio API that could serve for a blog or product line.
+My personal website backend, designed as a thin API and wrapper to the frontend.
 
-Give it a repository of portfolio items and a few functions to describe what to do with those items, and it will populate a database for an *SPA* or *Web Service*.
+Powered by:
+
+- [TypeScript](http://www.typescriptlang.org/)
+- [Node](https://nodejs.org/en/)
+- [Express](http://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
 
 ## API
 
-- `api/v1/posts` - **Get a list of portfolio posts.**
+- `/api/v1/portfolio` - **Get a list of portfolio posts.**
 
 Depending on the response, the SPA has the option of rendering a given string of HTML, loading a mp3 file or even loading a javascript file (to say fetch a React Component from the backend).
 
 ```ts
-interface PostAPIRequest {
-    permalink: string,
-    content: boolean,
-    tags: string[],
-    skip: number,
-    limit: number
+type APIRequest = {
+  permalink?: string,
+  data?: boolean,
+  tags?: string[],
+  meta?: {
+    likes?: number,
+    views?: number,
+    social?: { name: string, url: string }[]
+  }
 }
 
-interface PostAPIResponse {
-  [index: number]: {
-    permalink: string,
-    title: string,
-    description: string,
-    content: string,
-    tags: string[]
+type APIResponse = {
+  permalink: string,
+  title: string,
+  description: string,
+  main: string,
+  data: string,
+  tags: string[],
+  publishDate: Date,
+  meta?: {
+    likes: number,
+    views: number,
+    social: { name: string, url: string }[]
   }
 }
 ```
-
-Supports:
-
-- Apps
-- Games
-- Music
-- Movies
-- Books
-- Blogposts
-- Courses
-
 ## Setup
 
 Make sure to have Node, then:
@@ -50,19 +52,8 @@ Make sure to have Node, then:
 # Starting Off Development
 npm install         # Install server dependencies
 npm run develop     # Start developing if you need to
-npm run build       # Populate the database
 npm run production  # Start the app perpetually in production mode.
 ```
-
-## Roadmap
-
-1. Add Serverside Rendering of the React Frontend similar to [this post in Redux's Docs.](http://redux.js.org/docs/recipes/ServerRendering.html)
-
-2. Switch to Postgres/GraphQL to prevent the need of revising API endpoints.
-
-3. Create a CLI for portfolio watching, and adding meta information on a new post, which communicates with an underlining portfolio api. 
-
-4. When visiting a permalink for the first time, for bots, change the meta tags of the index.html to reflect that permalink's portfolio data.
 
 [website-url]: https://alain.xyz
 [release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square

@@ -12,13 +12,13 @@ const app = express();
 // Configure Exprses
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use((err, req: express.Request, res: express.Response, next) => 
-  res.status(500).send(JSON.stringify({err: 'Bad request!'}))
+app.use((err, req, res, next) =>
+    res.status(500).send(JSON.stringify({ err: 'Bad request!' }))
 );
+app.use(compression({ level: 9 }));
 
 // Route Frontend assets
-const root = path.join(__dirname, '..', 'frontend');
-app.use(compression({level: 9}));
+const root = path.join(__dirname, '..', '..', 'frontend');
 app.use('/assets', express.static(path.join(root, 'assets')));
 
 api(app);
@@ -48,10 +48,13 @@ database.then((db) => {
   });
 
   // All other routes are handled on the frontend.
-  app.get('*', renderPage); 
+  app.get('*', renderPage);
 });
 
 // Server Start
 app.listen(3000, () => {
   console.log('Alain.xyz Running @ port 3000');
 });
+
+// Expose Module
+export {app, database};

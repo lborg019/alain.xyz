@@ -3,11 +3,11 @@ import * as find from 'find';
 import * as fs from 'fs';
 import * as id3 from 'id3js';
 
-import { database } from '../db';
+import { database } from '../../../backend/src/db';
 import { getCover } from './misc';
 
 
-const root = path.join(__dirname, '..', '..', 'portfolio');
+const root = path.join(__dirname, '..', '..', 'music');
 
 let songs = find.fileSync(/\.mp3$/, root);
 

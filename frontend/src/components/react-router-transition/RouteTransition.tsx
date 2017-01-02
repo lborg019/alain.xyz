@@ -3,7 +3,7 @@ import { TransitionMotion } from 'react-motion';
 
 import ensureSpring from './ensureSpring';
 
-interface RouteTransitionProps {
+type RouteTransitionProps = {
   className?: string,
   component?: string,
   pathname: string,

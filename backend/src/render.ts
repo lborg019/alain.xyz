@@ -29,8 +29,8 @@ export function renderPage(req: Request, res: Response) {
 
 function page(meta) {
 
-    let reactRender =
-`<div style="display: flex; width: 100vw; height: 100vh">
+  let reactRender =
+    `<div style="display: flex; width: 100vw; height: 100vh">
   <svg viewBox="0 0 160 112" class="ag-loading">
     <path d="M8,72l50.3-50.3c3.1-3.1,8.2-3.1,11.3,0L152,104"></path>
   </svg>
@@ -49,7 +49,7 @@ function page(meta) {
                           \`.....\`
  Alain.xyz
  Built with <3 in React and TypeScript
- Check out the source @ https://github.com/alaingalvan/alain.xyz-frontend
+ Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
 <html>

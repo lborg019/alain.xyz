@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { database } from '../db';
 
-interface API {
+type API = {
   // Skip the x number of posts
   skip: number,
   // Limit the number of posts to this amount

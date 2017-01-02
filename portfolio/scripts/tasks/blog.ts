@@ -1,11 +1,10 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as find from 'find';
-
-import { database } from '../db';
-import { askQuestion } from './question';
 import markademic from 'markademic';
 
+import { database } from '../../../backend/src/db';
+import { askQuestion } from './question';
 import { getCover, makePermalink } from './misc';
 
 let root = path.join(__dirname, '..', '..', 'blog');
@@ -112,11 +111,15 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     var portfolioCollection = db.collection('portfolio');
     var filesCollection = db.collection('files');
 
+    // Find a references.json file next to file
+    let citations = JSON.parse(fs.readFileSync(path.join(file, '..', 'references.json')).toString());
+
     // Place all answers in object.
     let entry = {
       ...answers,
       data: markademic({
         input: fs.readFileSync(file).toString(),
+        citations,
         rerouteLinks: (link) => path.join(answers.permalink, link)
       }),
       mtime: fs.statSync(file).mtime,

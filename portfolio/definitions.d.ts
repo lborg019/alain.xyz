@@ -1,11 +1,8 @@
 declare module "alain-xyz";
-declare module "jspm";
 declare module "systemjs-builder";
-declare module "remarkable";
-declare module "highlight.js";
 
 declare module "id3js" {
-  interface ITags {
+  type ITags = {
     artist: string,
     title: string,
     album: string,

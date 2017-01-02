@@ -4,7 +4,12 @@
 
 ![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 
-My personal website built on top of [TypeScript 2.0](http://www.typescriptlang.org/), [React 15.3](https://facebook.github.io/react/), [WebPack 2.1](https://webpack.github.io/), [PostCSS](https://github.com/postcss/postcss). Follow the development on [Trello](https://trello.com/b/CVu8yxlf/alain-xyz).
+My personal website frontend built on top of the latest releases of:
+
+- [TypeScript](http://www.typescriptlang.org/)
+- [React](https://facebook.github.io/react/)
+- [WebPack](https://webpack.github.io/)
+- [PostCSS](https://github.com/postcss/postcss). 
 
 It's basically a portfolio system that works by dynamically loading portfolio components with SystemJS. The following repo contains the core of the application. (Redux store, router, core components, etc.) 
 

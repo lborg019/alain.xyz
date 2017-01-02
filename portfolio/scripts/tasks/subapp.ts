@@ -1,11 +1,9 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as find from 'find';
-import * as jspm from 'jspm';
+import * as Builder from 'systemjs-builder';
 
-const Builder = jspm.Builder;
-
-import { database } from '../db';
+import { database } from '../../../backend/src/db';
 import { makePermalink } from './misc';
 
 
@@ -85,8 +83,8 @@ export default async function compileSubapp() {
       },
       map: {
         [libname]: relativeRoot,
-        ts: './node_modules/plugin-typescript/lib/plugin.js',
-        typescript: './node_modules/typescript/lib/typescript.js',
+        ts: '@node/plugin-typescript',
+        typescript: '@node/typescript',
         crypto: "@node/crypto",
         os: "@node/os",
         buffer: "@node/buffer",
@@ -97,8 +95,8 @@ export default async function compileSubapp() {
         path: "@node/path",
         string_decoder: "@node/string_decoder",
         vm: "@node/vm",
-       constants: "@node/constants",
-       process: "@node/process",
+        constants: "@node/constants",
+        process: "@node/process",
         util: "@node/util",
         events: "@node/events"
       }
@@ -121,7 +119,6 @@ export default async function compileSubapp() {
         'react-redux',
         'redux',
         'alain-xyz',
-        'alain-xyz-portfolio',
         'plugin-typescript',
         'typescript',
         'fs',
