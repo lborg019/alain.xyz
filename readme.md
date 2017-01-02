@@ -18,6 +18,8 @@ Check out the [blog post where I detail design decisions here](https://alain.xyz
 
 ## Setup
 
+### Docker
+
 Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/).
 
 ```bash
@@ -28,6 +30,14 @@ sudo pip install docker-compose
 
 # Begin setup
 docker-compose up
+```
+
+### Local
+
+To 
+
+```bash
+npm start
 ```
 
 ## How it Works

@@ -112,25 +112,27 @@ For android there's already a CLI called [`cargo-apk`](https://github.com/tomaka
 
 Lets compare Rust semantics with JS and C++:
 
-### Imports, Exports, Variables
+### Imports, Exports, Namespaces
 
 ```rust
 // Rust
 use std::fs;
 
-pub struct BuildResult {
-    /// The absolute path where the apk is located.
-    pub apk_path: PathBuf,
+pub fn myexport(code: &str) -> u32 {
+    return 0;
 }
 ```
 
 ```cpp
+// C++
 #include "ifstream"
+//Need the following imports for types
+#include "stdio.h"
+#include "string"
 
-public struct BuildResult
+uint32_t myexport(std::string code)
 {
-  public:
-    PathBuf apk_path;
+    return 0;
 }
 ```
 
@@ -138,24 +140,44 @@ public struct BuildResult
 // TypeScript
 import fs from 'fs';
 
-type BuildResult = {
+export function myexport(code: string): number {
+    return 0;
+}
+```
 
+### Macros, Enums, Variables
+
+```rust
+pub enum OomError {
+    One,
+    Two
+}
+
+pub struct Structs {
+    property: u32
+}
+```
+
+```cpp
+enum Enums {
+    One,
+    Two
+}
+
+struct Structs 
+{
+    uint32_t property;
+}
+```
+
+```js
+export enum Enums {
+    One,
+    Two
 }
 ```
 
 ### Structs, Functions, Classes
-
-```rust
-
-```
-
-```cpp
-
-```
-
-```js
-
-```
 
 ### Templates, Macros, Pointers
 
@@ -178,7 +200,6 @@ void lol(T what)
 JavaScript always treats references as pointers similar to C++, unless you actually copy them with object spread. There's no such thing as advanced metaprogramming in JS, but you do have Generics in TypeScript and Flow.
 
 ```js
-
 function lol<T>(T what) {
 
 }
@@ -191,7 +212,7 @@ function lol<T>(T what) {
 ```
 
 ```cpp
-
+#include "ifstream"
 ```
 
 ```js
