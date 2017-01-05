@@ -4,7 +4,6 @@ import { argv } from 'process';
 import * as webpack from 'webpack';
 import * as precss from 'precss';
 import * as autoprefixer from 'autoprefixer';
-import * as cssnano from 'cssnano';
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 import WebpackSystemJSExportPlugin from 'webpack-systemjs-export-plugin';
 
@@ -33,23 +32,52 @@ let config = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     modules: [
-      path.resolve('./src'),
+      path.resolve(__dirname, 'src'),
       'node_modules'
     ]
   },
   module: {
-    loaders: [{
-      test: /\.tsx?$/,
-      loader: 'ts-loader'
-    }, {
-      test: /\.s?css$/,
-      loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader!postcss-loader' }),
-      options: {
-        postcss: [
-          precss()
-        ]
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          compilerOptions: {
+            module: 'es2015'
+          }
+        }
+      },
+      {
+        test: /\.s?css$/,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                // sourceMap: true,
+                postcss: () => [
+                  precss(),
+                  autoprefixer({
+                    browsers: [
+                      'last 3 version',
+                      'ie >= 10',
+                    ],
+                  })
+                ]
+              }
+            }
+          ]
+        })
       }
-    }]
+    ]
   },
 
 
@@ -62,7 +90,16 @@ let config = {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: isProduction,
-      debug: !isProduction
+      debug: !isProduction,
+      postcss: [
+        precss(),
+        autoprefixer({
+          browsers: [
+            'last 3 version',
+            'ie >= 10',
+          ],
+        })
+      ]
     }),
     new WebpackSystemJSExportPlugin({
       public: [
@@ -85,16 +122,14 @@ if (isProduction) {
     ...config,
     plugins: [
       ...config.plugins,
-      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        minimize: true
+      }),
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify('production')
         }
-      })],
-    postcss: [
-      ...config.postcss,
-      autoprefixer()
-    ]
+      })]
   };
 }
 

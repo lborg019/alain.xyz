@@ -16,6 +16,12 @@ My personal portfolio system build on top of the latest versions of:
 
 Check out the [blog post where I detail design decisions here](https://alain.xyz/blog/the-making-of-alain-xyz).
 
+A few of the projects that influenced the design of this app were:
+
+- [Wordpress Calypso](https://github.com/Automattic/wp-calypso)
+- [TypeScript Samples Imageboard](https://github.com/Microsoft/TypeScriptSamples/tree/master/imageboard)
+- [ReactJS Essentials by Artemij Fedosejev](https://github.com/fedosejev/react-essentials)
+
 ## Setup
 
 ### Docker
@@ -46,11 +52,20 @@ The site is comprised of 3 primary modules:
 
 ```bash
 # Http Server
-./backend/
+|- backend/
+  |- src/
+  |- ...
 # React App
-./frontend/
+|- frontend/
+  |- src/
+    |- components/
+        |- hero.tsx
+        |- ...
+  |- assets/
+  |- ...
 # Repository of articles, talks, art, music
-./portfolio/
+|- portfolio/
+  |- 
 ```
 
 ### Backend
