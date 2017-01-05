@@ -34,9 +34,9 @@ docker-compose up
 
 ### Local
 
-To 
-
 ```bash
+npm i
+npm run setup
 npm start
 ```
 

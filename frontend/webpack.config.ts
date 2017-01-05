@@ -2,10 +2,10 @@ import * as path from 'path';
 import { argv } from 'process';
 
 import * as webpack from 'webpack';
-import precss from 'precss';
+import * as precss from 'precss';
 import * as autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import * as cssnano from 'cssnano';
+import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 import WebpackSystemJSExportPlugin from 'webpack-systemjs-export-plugin';
 
 let env = process.env['NODE_ENV'];
@@ -31,7 +31,7 @@ let config = {
     filename: '[name].min.js'
   },
   resolve: {
-    extensions: ['', '.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js'],
     modules: [
       path.resolve('./src'),
       'node_modules'
@@ -43,13 +43,16 @@ let config = {
       loader: 'ts-loader'
     }, {
       test: /\.s?css$/,
-      loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader!postcss-loader' })
+      loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader!postcss-loader' }),
+      options: {
+        postcss: [
+          precss()
+        ]
+      }
     }]
   },
 
-  postcss: [
-    precss()
-  ],
+
   plugins: [
     new ExtractTextPlugin('main.min.css'),
     new webpack.optimize.CommonsChunkPlugin({
@@ -63,15 +66,15 @@ let config = {
     }),
     new WebpackSystemJSExportPlugin({
       public: [
-      'react',
-      'react-dom',
-      'react-motion',
-      'react-redux',
-      'react-router',
-      'redux',
-      'redux-thunk',
-      'isomorphic-fetch'
-    ]
+        'react',
+        'react-dom',
+        'react-motion',
+        'react-redux',
+        'react-router',
+        'redux',
+        'redux-thunk',
+        'isomorphic-fetch'
+      ]
     })
   ]
 };

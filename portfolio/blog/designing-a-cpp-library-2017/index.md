@@ -1,6 +1,6 @@
 C++ was created by Bjarne Stroustrup at Bell Labs, New Jersey in 1983, but has since evolved to become the most ubiquous high performance language in the world with a focus on *zero overhead abstractions* and *directly mapping your code to hardware instructions*.
 
-C++ has had trouble keeping up with the state of the art in programming languages in general, but recent changes to the language and ecosystem have improved this. The following is an overview of what it takes to create a modern library for C++, one that takes advantage of the latest in the language and ecosystem. We'll focus on:
+The following is an overview of what it takes to create a modern library for C++, one that takes advantage of the latest in the language and ecosystem. We'll focus on:
 
 1. **Module Systems** - Traditionally, packages were managed manually with CMake, however the C++ package manager [Conan](https://conan.io) seems to be gaining traction.
 
@@ -209,7 +209,7 @@ void main() {
 
 Sadly, there's no intelisense/optmization released yet, and only Visual Studio's compiler supports it on the command line.
 
-> **Call to Action**: Create a *Babel* tool for converting C++ 14, 17, 20 to C++ 11 or below.
+> **Call to Action**: Create a [*Babel*](https://babeljs.io/) tool for converting C++ 14, 17, 20 to C++ 11 or below.
 
 ## Unit Testing
 
@@ -360,12 +360,16 @@ The best way to learn anything is to surround your daily life with it, constantl
 *Watching* __Conferences Talks__ from:
 - [CppCon](https://www.youtube.com/user/CppCon)
 
+*Reading* **Books** like:
+- [C++ Core Guidelines](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) by Bjarne Stroustrup and Herb Sutter
+
 *Listening* to **Podcasts** like:
 - [CppCast](http://cppcast.com/)
 
 *Working* on **Projects** and talking in communities like:
 - [r/cpp](http://reddit.com/r/cpp/)
 - [r/graphicsprogramming](https://www.reddit.com/r/GraphicsProgramming/)
+
 
  *Grabbing* **Free Resources** from places like:
  - [Unreal Engine 4](https://www.unrealengine.com/what-is-unreal-engine-4) - An amazing open source game engine.

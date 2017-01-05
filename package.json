@@ -5,9 +5,8 @@
   "scripts": {
     "setup:backend": "cd backend && npm i",
     "setup:frontend": "cd frontend && npm i && npm start",
-    "setup:portfolio": "cd portfolio && npm i && npm run build",
-    "setup": "concurrently 'npm run setup:backend' 'npm run setup:frontend' 'npm run setup:portfolio'",
-    "watch": "concurrently 'cd backend && npm run develop' 'cd frontend && npm run watch'",
+    "setup:portfolio": "cd portfolio && npm i && npm start",
+    "setup": "npm run setup:backend && npm run setup:frontend && npm run setup:portfolio",
     "start": "cd backend && npm start"
   },
   "repository": {
@@ -15,8 +14,5 @@
     "url": "https://github.com/alaingalvan/alain.xyz.git"
   },
   "author": "Alain Galvan <hi@alain.xyz>",
-  "license": "MIT",
-  "devDependencies": {
-    "concurrently": "^3.1.0"
-  }
+  "license": "MIT"
 }

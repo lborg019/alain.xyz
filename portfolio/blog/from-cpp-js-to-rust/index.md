@@ -11,6 +11,7 @@ Here we'll be discussing how to migrate from a C++ and JS background to programm
 1. **Installation** - Get off the ground and programming immediately.
 2. **Modules** - Creating and installing modules.
 3. **Cross-platform Compilation** - Targeting Windows, Mac, Linux, Android, iOS, Web, etc.
+4. **Language Interops** - Methods of inlining and interfacing with other languages.
 4. **Semantics** - An overview of the semantics of Rust in comparison to C++.
 
 ## Installation
