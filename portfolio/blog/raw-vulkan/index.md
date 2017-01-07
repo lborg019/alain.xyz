@@ -8,12 +8,13 @@ Currently Vulkan 1.0 currently supports the following operating Systems:
 - iOS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
 - Mac OS (w/ [MoltenVK](https://moltengl.com/moltenvk/))
 - Nintendo Switch
+- [And many more!](https://www.khronos.org/conformance/adopters/conformant-products)
 
 And languages such as:
 
-- [C](https://vulkan.lunarg.com/) - The default language for Vulkan.
+- [C](https://vulkan.lunarg.com/) - The offcially supported language for Vulkan.
 - [C++](https://github.com/khronosgroup/vulkan-hpp) - Through **Vulkan-Hpp** the official Vulkan C++ library.
-- [Rust](https://github.com/tomaka/vulkano) - Through **Volkano**, an intuitive Rust wrapper designed similarly to Vulkan-Hpp.
+- [Rust](https://github.com/tomaka/vulkano) - Through **Volkano**, an intuitive Rust wrapper with a heavy focus on compile time saftety. 
 - [Python](https://github.com/bglgwyng/pyVulkan) - Through **pyVulkan**, a Python FFI to the C implementation of Vulkan.
 
 I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan) with a some C++ examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.

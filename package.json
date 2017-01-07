@@ -7,7 +7,7 @@
     "setup:frontend": "cd frontend && npm i && npm start",
     "setup:portfolio": "cd portfolio && npm i && npm start",
     "setup": "npm run setup:backend && npm run setup:frontend && npm run setup:portfolio",
-    "start": "cd backend && npm start"
+    "start": "set NODE_ENV=production & cd backend && npm start"
   },
   "repository": {
     "type": "git",
