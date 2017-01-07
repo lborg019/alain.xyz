@@ -18,6 +18,8 @@ And languages such as:
 
 I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan) with a some C++ examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
+In the processes we'll clarify exactly what it will take to build a low level graphics abstraction that we can build on top of.
+
 ## Setup
 
 First install [Conan](https://www.conan.io/downloads), A C++ package manager as easy to use as `npm`, then type the following in your [terminal](https://hyper.is/).
@@ -792,9 +794,10 @@ Access to descriptor sets from a pipeline is accomplished through a pipeline lay
 
 ## Pipeline State Objects
 
-The rendering pipeline on GPUs is a large complex system that involves a lot of states, a Pipeline encapsulates the entire process.
+Pipelines are basically a mix of hardware and software functions that do a particular task on the GPU, in Vulkan, there's 2 types:
 
-As much as GPUs are now programmable, they still have some static state that you as a developer need to manage when performing draw calls. These include:
+- Graphics Pipelines
+- Compute Pipelines
 
 ### Graphics Pipeline
 
