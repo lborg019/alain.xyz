@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "ts-node -F -D webpack.config.ts",
-    "watch": "npm start --watch"
+    "develop": "npm start --watch"
   },
   "keywords": [
     "systemjs",
