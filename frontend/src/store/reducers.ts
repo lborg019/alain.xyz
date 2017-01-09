@@ -22,7 +22,7 @@ let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) =
             if (subapp['data'] !== undefined)
                 cache[index] = subapp;
         } else {
-            cache = [subapp, ...cache];
+            cache = [...cache, subapp];
         }
     }
 
@@ -32,10 +32,12 @@ let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) =
 export default createReducer(initialState, {
 
     FETCHED_SUBAPP: (state, payload: { req: APIRequest, res: APIResponse[] }) => {
+
         let portfolio = cachePortfoliosubapps(payload.res, state.portfolio);
+        
         return {
             ...state,
-            portfolio: portfolio,
+            portfolio,
             subapp: portfolio.find((subapp) => subapp.permalink === payload.req.permalink),
             isFetching: false
         };

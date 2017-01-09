@@ -62,15 +62,9 @@ let config = {
             {
               loader: 'postcss-loader',
               options: {
-                // sourceMap: true,
-                postcss: () => [
-                  precss(),
-                  autoprefixer({
-                    browsers: [
-                      'last 3 version',
-                      'ie >= 10',
-                    ],
-                  })
+                plugins: () => [
+                  precss,
+                  autoprefixer
                 ]
               }
             }
@@ -90,16 +84,7 @@ let config = {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: isProduction,
-      debug: !isProduction,
-      postcss: [
-        precss(),
-        autoprefixer({
-          browsers: [
-            'last 3 version',
-            'ie >= 10',
-          ],
-        })
-      ]
+      debug: !isProduction
     }),
     new WebpackSystemJSExportPlugin({
       public: [

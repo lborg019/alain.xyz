@@ -4,7 +4,7 @@ Whether you choose to build above Vulkan or below, or a mix of both, our code ne
 
 Our goal is to build a well crafted library similar to [Cinder](https://libcinder.org/) or [Three](https://threejs.org/), with these features:
 
-- Can take a scene and render onto a `vk::surface`.
+- Can take a *Scene* and render onto a `vk::surface`.
 
 - Algorithms for Vertex Buffers for planes, uv-spheres, etc.
 
@@ -17,8 +17,12 @@ Our goal is to build a well crafted library similar to [Cinder](https://libcinde
 ## Obsidian - The Modern C++ Vulkan Renderer
 
 ```bash
-
+conan install obsidian@hyperfuse/stable
 ```
+
+Scenes are represented as a tree of `class Object3D`, which are composed of `class MeshData`, which is composed of multiple `class Material`, which are then composed of multiple `class Texture`. The choice of organizing it like this came from Blender.
+
+A scene can also contain `class Camera` that can be selected to render onto the screen. 
 
 ## Optimizations
 

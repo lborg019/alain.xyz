@@ -180,6 +180,18 @@ export enum Enums {
 
 ### Structs, Functions, Classes
 
+```rust
+
+```
+
+```cpp
+
+```
+
+```js
+
+```
+
 ### Templates, Macros, Pointers
 
 By default everything in rust is copied unless you specify otherwise.
