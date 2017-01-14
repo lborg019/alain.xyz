@@ -1,10 +1,10 @@
-Rust is becoming very mature as a programming language, with research projects ranging from using it in compilers to web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
+Rust is becoming very mature as a programming language, with exciting research projects ranging from using it in compilers to web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
 
 [Jack Moffitt](https://twitter.com/metajack), developer of the Rust powered browser Servo, said on [The Changelog](https://changelog.com/podcast/228) that:
 
 > All of [our security critical bugs with Firefox WebAudio] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C++ ].
 
-Now that's not to say that C++ with `vector` and `smart_ptr` couldn't fix that problem, but there is a value in making these features a part of the language. In addition, Rust features a powerful type system inspired by Functional Programming languages like Ocaml and Haskell, which make types helpful instead of in your way.
+Now that's not to say that C++ with `vector` and `smart_ptr` couldn't fix that problem, but there is a value in making these security features a part of the language. In addition, Rust features a powerful type system inspired by Functional Programming languages like Ocaml and Haskell, which make types helpful instead of in your way.
 
 Here we'll be discussing how to migrate from a C++ and JS background to programming in Rust by reviewing:
 
@@ -91,10 +91,11 @@ We live in a world where compiling to multiple platforms is *extremely important
 | OS | Target Name |
 |:------:|:-----------:|
 | Windows | `x86_64-pc-windows-msvc` |
-| Mac     | `x86_64-apple-darwin` |
-| Linux   | `x86_64-unknown-linux-gnu` |
+| Mac | `x86_64-apple-darwin` |
+| Linux | `x86_64-unknown-linux-gnu` |
 | Android | `arm-linux-androideabi` |
-| iOS     | `aarch64-apple-ios`     |
+| iOS | `aarch64-apple-ios`     |
+| Arm Linux | `aarch64-unknown-linux-gnu` |
 
 For more details visit [Rust's platform support documentation](https://doc.rust-lang.org/stable/book/getting-started.html#platform-support).
 
@@ -118,6 +119,7 @@ Lets compare Rust semantics with JS and C++:
 ```rust
 // Rust
 use std::fs;
+mod file;
 
 pub fn myexport(code: &str) -> u32 {
     return 0;

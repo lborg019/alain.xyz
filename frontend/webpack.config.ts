@@ -62,9 +62,10 @@ let config = {
             {
               loader: 'postcss-loader',
               options: {
+                // Doesn't work, postcss forces you to use a config file! >:(
                 plugins: () => [
-                  precss,
-                  autoprefixer
+                  precss(),
+                  autoprefixer()
                 ]
               }
             }
@@ -81,10 +82,6 @@ let config = {
       name: 'vendor',
       minChunks: Infinity,
       filename: 'vendor.min.js'
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: isProduction,
-      debug: !isProduction
     }),
     new WebpackSystemJSExportPlugin({
       public: [
@@ -127,6 +124,8 @@ if (!argv.reduce((prev, cur) => prev || (cur === '--watch'), false)) {
   compiler.run((err, stats) => {
     if (err)
       return console.error(err);
+    else
+      console.log("Compilation finished successfully.")
   });
 }
 else {
