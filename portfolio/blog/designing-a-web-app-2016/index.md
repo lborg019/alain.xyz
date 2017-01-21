@@ -1,16 +1,24 @@
-Making web apps has gotten pretty complicated, it seems every language and company wants to come up with their own way of doing it! Deep down all we're doing is serving `html`, `css`, and `javascript` to a user, but there's a lot to bear in mind:
+Making web apps has gotten pretty complicated, it seems every company, language, and individual wants to come up with their own way of doing it!
 
- - **New Language Features** - like modules, generators, decarators, promises, async/await, etc.
- - **Legacy Suport** (polyfills, shims, vendor prefixes) for JavaScript
- - **Backend Programming** - Writing a server in **JavaScript**, **Python**, **Go**, **C++**, you name it.
- - **Automation** - streaming tasks like compiling our apps and compressing our images and making icon fonts. 
- - **Deploying** your app with services like [Docker](http://docker.com/), [AWS](http://aws.amazon.com/), [DigitalOcean](http://digitalocean.com/), etc.
- - **Dev Ops** - load balancing your app, working with microservices and a polyglot architecture.
- - **Testing** - unit testing your app, linting, type checking, etc.
+Deep down all we're doing is sending strings of `html`, `css`, and `javascript` to a user through HTTP, but there's a lot to bear in mind:
 
-Frankly, *it can be overwelming*, there's __no way__ you'll know how every part works, but to quote [Brenna O'Brien](http://brennaobrien.com/) it's better to just *"be aware"* of these technologies and focus on what you love.
+- **State of the Art** - Web Development is constantly changing, what's the current State of the Art?
 
-At the same time, there's no excuse to not know about web development, machine learning, graphics, compilers, game development, not when there's so many books published by [O'Reilly](http://www.oreilly.com/), [Packt](https://www.packtpub.com/), [Manning Publications](https://manning.com/), [CRC Press](https://www.crcpress.com/), etc. 
+- **New Browser Features** - modules, async/await, generators, decarators, promises, etc.
+
+- **Legacy Suport** - polyfills, shims, vendor prefixes for older browsers that don't suppor current JavaScript standards.
+
+- **Backend Programming** - JavaScript isn't the only language that can server HTTP requests, [C/C++](https://github.com/h2o/h2o), [Rust](https://github.com/SergioBenitez/Rocket), [OCaml](https://github.com/ocsigen/ocsigenserver), [Scala](http://akka.io/), and many more can too.
+
+- **Automation** - streaming tasks like compiling our apps and compressing our images and making icon fonts. 
+
+- **Dev Ops** - Using tools like [Docker](http://docker.com/) to deploy to cloud providers like [AWS](http://aws.amazon.com/), [DigitalOcean](http://digitalocean.com/), etc. Load balancing your app, working with microservices and a polyglot architecture.
+
+- **Testing** - Speeding up new updates to the site thorugh automated testing, linting, type checking, etc.
+
+Frankly, *it can be overwelming*, its nearly impossible to know everything about every part of the stack, but:
+
+> It's better to just *"be aware"* of these technologies and focus on what you love. ~[Brenna O'Brien](http://brennaobrien.com/)
 
 ## Learning Web Technologies
 
@@ -27,22 +35,22 @@ At the same time, there's no excuse to not know about web development, machine l
 ### Javascript
 
 **Javascript** has tons of little languages you can use, and that's besides just the frameworks and libraries available.
- * [TypeScript](http://typescriptlang.org/) - JavaScript Beta + Types
- * [CoffeeScript](http://coffeescript.org/) - Tiny JavaScript
- * [NativeScript](https://www.nativescript.org/) - JavaScript + Native Objects
- * [PureScript](http://www.purescript.org/) - JavaScript + Functional Programming
+- [TypeScript](http://typescriptlang.org/) - JavaScript Beta + Types
+- [CoffeeScript](http://coffeescript.org/) - Tiny JavaScript
+- [NativeScript](https://www.nativescript.org/) - JavaScript + Native Objects
+- [PureScript](http://www.purescript.org/) - JavaScript + Functional Programming
 
 #### Frameworks
 
 We're saturated with frontend frameworks, [TodoMVC](http://todomvc.com) has a pretty good list of them all:
 
- * [React](https://facebook.github.io/react/) - Facebook's Unopinionated View Layer, follows the GNU style of a single library that does one thing very well. Used by Wordpress Calypso.
+- [React](https://facebook.github.io/react/) - Facebook's simple rendering library. Used by Instagram, Wordpress, Capital One, DeviantArt and [way more](https://github.com/facebook/react/wiki/sites-using-react).
 
- * [Angular 2](http://angular.io/) - The next version of Angular, adopting new standards like `@decorator`, `class`, ES6 modules, etc.
+- [Angular 2/3](http://angular.io/) - The next version of Angular, adopting new standards like `@decorator`, `class`, ES6 modules, etc.
 
- * [Ember](http://emberjs.com/) - One of the first MVC frameworks for front end development. In use in places like Groupon or for the Ghost CMS.
+- [Ember](http://emberjs.com/) - One of the first MVC frameworks for front end development. In use in places like Groupon or for the Ghost CMS.
 
- * [Vue](http://vuejs.org/) - A very Tiny view library developed as a side project from [Evan You](https://twitter.com/youyuxi), a Meteor Dev.
+- [Vue](http://vuejs.org/) - A very Tiny view library developed as a side project from [Evan You](https://twitter.com/youyuxi), a Meteor Dev.
 
 ### CSS
 
@@ -136,7 +144,7 @@ Makes your file structure look more like a dependency tree, and has been adopted
   |- ...
 ```
 
-#### Sorted by Module - Angular 2.0 Beta Structure
+#### Sorted by Task - Angular 2.0 Beta Structure
 
 Angular 2 organized it's files in regular folders, with a corresponding `.ts` file for the folder they want to export.
 
@@ -224,5 +232,5 @@ You could also compile your whole app to static files on the server for [SEO](ht
 
 ## Conclusion
 
-This guide sorta scratches the surface, but then there's developing mobile/desktop apps using web technologies, stuff like [Windows 8/Windows 10 apps](https://msdn.microsoft.com/en-us/library/windows/apps/mt244352.aspx), [Apache Cordova](https://cordova.apache.org/), [Meteor](https://www.meteor.com/), [Electron](http://electron.atom.io/), and [nw.js](http://nwjs.io/).
+This guide sorta scratches the surface, but then there's developing mobile/desktop apps using web technologies, stuff like [Electron](http://electron.atom.io/), [Windows 8/Windows 10 apps](https://msdn.microsoft.com/en-us/library/windows/apps/mt244352.aspx), [Apache Cordova](https://cordova.apache.org/), and [Meteor](https://www.meteor.com/).
 
