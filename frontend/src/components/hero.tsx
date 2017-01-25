@@ -66,7 +66,7 @@ export class Hero extends React.Component<any, any> {
                     <Link to='/'>
                       <img style={styles.img} src="/assets/brand/ag-logo.svg" alt="Logo" />
                     </Link>
-                    <Link style={{ ...styles.a, transform: `translateX(${sStyles[0].x}px)` }} to='/about'>About</Link>
+                    <Link style={{ ...styles.a, transform: `translateX(${sStyles[0].x}px)` }} to='about'>About</Link>
 
                     <span style={{ ...styles.span, transform: `translateX(${sStyles[2].x}px)` }} />
                   </nav>
