@@ -54,18 +54,15 @@ let config = {
           fallbackLoader: 'style-loader',
           loader: [
             {
-              loader: 'css-loader',
-              options: {
-                modules: true
-              }
+              loader: 'css-loader'
             },
             {
               loader: 'postcss-loader',
               options: {
-                // Doesn't work, postcss forces you to use a config file! >:(
+                ident: 'postcss',
                 plugins: () => [
-                  precss(),
-                  autoprefixer()
+                  precss,
+                  autoprefixer
                 ]
               }
             }
