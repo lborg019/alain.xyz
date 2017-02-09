@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { HashRouter, Match, Miss, Link, Redirect } from 'react-router';
+import { HashRouter, Route, Miss, Link, Redirect } from 'react-router';
 import { Home, Subapp, About, Blog, NotFound} from './views';
 
 export default (
   <HashRouter>
     <div>
-      <Match exactly pattern="/" component={Home} />
-      <Match pattern="/about" component={About} />
-      <Match pattern="/portfolio" Component={Blog}/>
-      <Match pattern="/blog" Component={Blog}/>
-      <Match pattern="404" Component={NotFound}/>
+      <Route exact path="/" component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/portfolio" Component={Blog}/>
+      <Route path="/blog" Component={Blog}/>
+      <Route path="404" Component={NotFound}/>
       <Miss render={(props) => <Subapp {...props}/>} />
     </div>
   </HashRouter>
-)
+);
 /*
 export default (
   <Router history={browserHistory}>
