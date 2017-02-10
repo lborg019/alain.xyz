@@ -84,7 +84,7 @@ async function askQuestions(file: string) {
     {
       key: 'publishDate',
       default: new Date().toISOString(),
-      cb: (ans) => {
+      cb: ans => {
         var d = new Date(ans);
         if (d === undefined) throw new Error('Please enter a valid date!');
         return d;
@@ -95,7 +95,7 @@ async function askQuestions(file: string) {
   let answers: any = {};
   // Populate the answers object.
   for (var question of questions)
-    await askQuestion(question).then((answer) => {
+    await askQuestion(question).then(answer => {
       answers[question.key] = answer;
     });
 
@@ -106,7 +106,7 @@ async function askQuestions(file: string) {
  * Write a given set of answers to the database.
  */
 async function writeToDb(file: string, answers: IPortfolioItem) {
-  await database.then(async (db) => {
+  await database.then(async db => {
 
     var portfolioCollection = db.collection('portfolio');
     var filesCollection = db.collection('files');
@@ -159,12 +159,12 @@ function clean() {
     var files = db.collection('files');
     var posts = db.collection('posts');
 
-    var cleanFiles = (col) => col.find()
+    var cleanFiles = col => col.find()
       .toArray()
-      .catch((err) => console.error(err))
-      .then((res) => {
+      .catch(err => console.error(err))
+      .then(res => {
         for (var f of res) {
-          fs.exists(f.file, (exists) => {
+          fs.exists(f.file, exists => {
             if (!exists)
               files.remove(f);
           });

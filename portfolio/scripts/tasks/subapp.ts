@@ -126,12 +126,12 @@ export default async function compileSubapp() {
       ],
       runtime: false
     })
-      .then((res) => console.log('Bundle Complete'))
+      .then(res => console.log('Bundle Complete'))
       .catch(err => console.error(err));
 
 
     //index them according to their folder name. 
-    await database.then((db) => {
+    await database.then(db => {
       var filesCollection = db.collection('files');
       var p = '/' + path.relative(root, subappjs).replace(/\\/g, '/');
       filesCollection.update({ file: subappjs }, { file: subappjs, permalink: p }, { upsert: true });
