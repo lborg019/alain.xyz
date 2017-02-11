@@ -1,29 +1,20 @@
-Unity is the most popular game engine in the world, used by large companies like Nintendo, Square Enix as well as many independent developers to quickly build cross platform games. 
+Unity is the most popular game engine in the world, used by large companies like Nintendo, Square Enix as well as many independent developers to quickly build cross platform games.
 
 ## Editor Design
 
 ![Unity Editor](assets/editor.png)
 
-Each window is given it's own window and rendering context, similar to Unreal Engine, and are simply positioned atop one another by the main window's positioning system. 
+Each window is given it's own window and rendering context, similar to Unreal Engine, and are simply positioned atop one another by the main window's positioning system.
 
 Updates to the window depend on user interactions (Reactive model), otherwise it simply doesn't refresh rendering.
 
+## File Hierarchy
+
+Meta
+Hashmap
+Tree
+
 ## C# Runtime
-
-Unity follows a module singleton pattern for low level services like inputs.
-
-```cs
-/// <summary>
-/// You can write your docs with XML.
-/// </summary>
-public class Controller : MonoBehavior {
-  Update() {
-      if (Input.GetKey(KeyCode.A)) {
-        // Perform some action
-      }
-  }
-}
-```
 
 ### C# Code Style
 
@@ -33,17 +24,9 @@ public class Controller : MonoBehavior {
 
 - **Private** - camelCase with the first character as an underscore, the second lower cased, default behavior.
 
+- **Comments** - C# Lets you write XML for your docs.
 
-
-C# Lets you write XML for your docs
-
-Unity projects are built with C# runtime which bundles the Unity's low level engine systems through easy to use function interfaces. C# saves the developer the hassle of managing memory 
-
-serialization of your code to Unity UI objects
-
-By default every class/enum you include in your project is available in the entire c# runtime, so it's your responsibility to alias modules through namespaces instead of `import` statements like JavaScript or Python.
-
-Rust for example enforces a file based module system rather than letting you have the freedom of putting files wherever.
+- **Modules/Namespaces** - By default every class/enum you include in your project is available in the entire C# runtime, so it's your responsibility to alias modules through namespaces instead of `import` statements like JavaScript or Python.
 
 ## File Hierarchy
 
@@ -87,19 +70,21 @@ Classes that inherit from `MonoBehavior` handle controller logic
 
 ## Renderer
 
-Mesh ref
+![Material, Mesh, Renderer Coupling](assets/material-mesh-renderer.png)
 
-Mesh Renderer 
+- **Material** - An interface between a shader and other parts of the engine. You can set uniforms, use as a reference for postprocessing systems, etc.
 
-n Material to 1 Shader
+- **Mesh** - A pointer to a set of primitives, which multiple materials can be assigned to.
 
-Shaders written in HLSL
+- **Renderer** - A component that handles the rendering of a mesh with a given material.
 
-HLSL to GLSL compiler
+\[ N_{Material} \rightarrow 1_{Shader} \]
+
+Shaders written as a single HLSL file that handles all the steps of the Graphics Pipeline. Unity lets you include shader libraries with the extension `.cginc`. 
+
+For cross platform support, your HLSL code is compiled to GLSL by [HLSL2GLSL](https://github.com/aras-p/hlsl2glslfork).
 
 ## Resources
-
-To put as much effort into learning Unity as possible, you'll want to become a part of the community:
 
 ### People
 
