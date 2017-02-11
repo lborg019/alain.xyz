@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchSubapp } from '../store/actions';
 
-import Anime from 'react-anime';
-
 const styles = {
   articleContainer: {
     width: '100vw',
@@ -29,8 +27,8 @@ const styles = {
   }
 }
 
-const BlogPost = ({cover, title, description, permalink}) =>
-  <Link to={permalink} style={{...styles.blogPost, backgroundImage: `url('${cover}')` }}>
+const BlogPost = ({ cover, title, description, permalink }) =>
+  <Link to={permalink} style={{ ...styles.blogPost, backgroundImage: `url('${cover}')` }}>
     <section style={{ textAlign: 'right' }}>
       <h1>{title}</h1>
       <p>{description}</p>
@@ -43,7 +41,7 @@ const BlogPost = ({cover, title, description, permalink}) =>
     portfolio: store.portfolio
   }),
   (dispatch) => ({
-    fetchSubapp:  bindActionCreators(fetchSubapp, dispatch)
+    fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
   })
 )
 export class Blog extends React.Component<any, any> {
@@ -57,7 +55,7 @@ export class Blog extends React.Component<any, any> {
   render() {
     return (
       <div style={styles.articleContainer}>
-      <div style={styles.article}>
+        <div style={styles.article}>
           {
             this.props.portfolio
               .filter((post) => post.permalink.slice(0, 5) === '/blog')

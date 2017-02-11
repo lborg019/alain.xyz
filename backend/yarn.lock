@@ -20,7 +20,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/express@*", "@types/express@^4.0.34":
+"@types/express@*", "@types/express@^4.0.35":
   version "4.0.35"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.0.35.tgz#6267c7b60a51fac473467b3c4a02cd1e441805fe"
   dependencies:
@@ -31,15 +31,19 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-0.0.29.tgz#fbcfd330573b912ef59eeee14602bface630754b"
 
-"@types/mongodb@^2.1.36":
-  version "2.1.39"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-2.1.39.tgz#6a5d5532ceae2258f50d7b5f75b301771e1c32f4"
+"@types/mongodb@^2.1.40":
+  version "2.1.40"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-2.1.40.tgz#c60fdff6f52f43ba15ec9bb6a26dc5a728530ac0"
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^6.0.56":
+"@types/node@*":
   version "6.0.63"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.63.tgz#e08acbbd5946e0e95990b1c76f3ce5b7882a48eb"
+
+"@types/node@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.5.tgz#96a0f0a618b7b606f1ec547403c00650210bfbb7"
 
 "@types/react-dom@^0.14.23":
   version "0.14.23"
@@ -47,9 +51,13 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^15.0.8":
+"@types/react@*":
   version "15.0.8"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.8.tgz#3aaceb79ef2a27fb41e4ab681c2e4b35803d7918"
+
+"@types/react@^15.0.9":
+  version "15.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.9.tgz#b45b6174870890a7f8426cdad6935ba7af4c13f4"
 
 "@types/serve-static@*":
   version "1.7.31"
@@ -89,13 +97,13 @@ asap@~2.0.3:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.5.tgz#522765b50c3510490e52d7dcfe085ef9ba96958f"
 
-body-parser@^1.15.2:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.16.0.tgz#924a5e472c6229fb9d69b85a20d5f2532dec788b"
+body-parser@^1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.16.1.tgz#51540d045adfa7a0c6995a014bb6b1ed9b802329"
   dependencies:
     bytes "2.4.0"
     content-type "~1.0.2"
-    debug "2.6.0"
+    debug "2.6.1"
     depd "~1.1.0"
     http-errors "~1.5.1"
     iconv-lite "0.4.15"
@@ -171,9 +179,9 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-debug@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.0.tgz#bc596bcabe7617f11d9fa15361eded5608b8499b"
+debug@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
@@ -231,7 +239,7 @@ etag@~1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.7.0.tgz#03d30b5f67dd6e632d2945d30d6652731a34d5d8"
 
-express@^4.14.0:
+express@^4.14.1:
   version "4.14.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.14.1.tgz#646c237f766f148c2120aff073817b9e4d7e0d33"
   dependencies:
@@ -422,7 +430,7 @@ mongodb-core@2.1.7:
     bson "~1.0.4"
     require_optional "~1.0.0"
 
-mongodb@^2.2.19:
+mongodb@^2.2.22:
   version "2.2.22"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.22.tgz#d67c588fc08f922db19754b1d2e03e2d7d1319fb"
   dependencies:
@@ -654,7 +662,7 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-ts-node@^2.0.0:
+ts-node@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-2.1.0.tgz#aa2bf4b2e25c5fb6a7c54701edc3666d3a9db25d"
   dependencies:
@@ -687,7 +695,7 @@ type-is@~1.6.14:
     media-typer "0.3.0"
     mime-types "~2.1.13"
 
-typescript@^2.1.4:
+typescript@^2.1.6:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.0.tgz#626f2fc70087d2480f21ebb12c1888288c8614e3"
 

@@ -9,6 +9,8 @@ import { makePermalink } from './misc';
 
 export default async function compileSubapp() {
 
+  console.log('~~ SubApp Compiler ~~');
+
   // Query root folders in portfolio for their /main.tsx?$/ file.
   let root = path.join(__dirname, '..', '..');
   let subapps = find.fileSync(/\main\.tsx?$/, root);

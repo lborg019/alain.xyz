@@ -185,6 +185,7 @@ function clean() {
  * Finally index neseted elements in 'indexes' collection.
  */
 export default async function buildBlog() {
+  console.log('~~ Blog Builder ~~')
   let files = find.fileSync(/\.md$/, root);
   clean();
 

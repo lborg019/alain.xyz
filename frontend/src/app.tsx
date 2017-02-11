@@ -1,28 +1,17 @@
 import * as React from 'react';
-import { HashRouter, Route, Miss, Link, Redirect } from 'react-router';
-import { Home, Subapp, About, Blog, NotFound} from './views';
+import { Route, Miss, Link, Redirect } from 'react-router/es';
+import { Home, Subapp, About, Blog } from './views';
 
-export default (
-  <HashRouter>
-    <div>
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/portfolio" Component={Blog}/>
-      <Route path="/blog" Component={Blog}/>
-      <Route path="404" Component={NotFound}/>
-      <Miss render={(props) => <Subapp {...props}/>} />
-    </div>
-  </HashRouter>
+import './css';
+
+const App = (
+  <div>
+    <Route exact path="/" component={Home} />
+    <Route exact path="/about" component={About} />
+    <Route exact path="/portfolio" Component={Blog} />
+    <Route exact path="/blog" Component={Blog} />
+    <Route path="*" Component ={Subapp} />
+  </div>
 );
-/*
-export default (
-  <Router history={browserHistory}>
-    <Route path="/" component={Home}>
-      <Route path="about" component={About} />
-      <Route path="portfolio" component={About} />
-      <Route path="blog" component={Blog} />
-      <Route path="*" component={Subapp} />
-    </Route>
-  </Router>
-);
-*/
+
+export default App;

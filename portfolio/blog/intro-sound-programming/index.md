@@ -23,8 +23,6 @@ This is similar to lighting models in computer graphics.
 Fourier Transforms are a method of converting continuous signals to descrete ones, or visa-versa. This is particularly useful in audio jacks, where sound is simply the modulation of voltage, but has other applications, such as [Jpeg Compression](http://stephaniehurlburt.com/blog/2016/12/20/a-taste-of-fourier-transforms-and-jpeg-compression).
 
 ## Sampling
-![Shadertoy sound image](assets/supermarioaudio.gif)
-> Source: [Krzysztof Narkowicz](https://twitter.com/knarkowicz)'s Mario 1-1 Siggraph Entry
 
 Sound on computers is represented by tiny changes on the speaker every *1 / 44100* seconds. (That sounds like a lot more than 60 fps). By themselves, these changes will just sound like pops or won't sound like anything at all, but when fast enough and with enough time, they can sound like anything!
 

@@ -1,35 +1,42 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
+import { BrowserRouter } from 'react-router-dom/es';
 import { createStore, applyMiddleware, compose } from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 
-import routes from './routes';
+import App from './app';
 import reducers from './store/reducers';
+ 
+// Debug
+const NODE_ENV = typeof process !== 'undefined' ? process.env.NODE_ENV : 'development';
 
-import './css';
-
+// State
 declare var devToolsExtension;
 
 const store = createStore(
   reducers,
   compose(
     applyMiddleware(thunk)
-    //, devToolsExtension()
+    , (NODE_ENV !== 'production') ? devToolsExtension() : undefined
     )
   );
+
+
+// Render
 const target = document.getElementById('app');
 
 const node = (
     <Provider store={store}>
-      {routes}
+      <BrowserRouter>
+        {App}
+      </BrowserRouter>
     </Provider>
 );
 
 ReactDOM.render(node, target);
 
-// Expose Core Components for use in dynamically loaded modules.
-
+// Expose
+export { NODE_ENV };
 export * from './components';
 export * from './store/actions';
