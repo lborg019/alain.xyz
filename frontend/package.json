@@ -27,7 +27,6 @@
     "@types/react-redux": "^4.4.36",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
-    "@types/systemjs": "^0.20.0",
     "@types/webpack": "^2.2.5",
     "autoprefixer": "^6.7.2",
     "concurrently": "^3.2.0",
@@ -38,18 +37,18 @@
     "style-loader": "^0.13.1",
     "ts-loader": "^2.0.0",
     "ts-node": "^2.1.0",
-    "typescript": "^2.2.0-dev.20170201",
+    "typescript": "^2.1.6",
     "webpack": "^2.2.1",
     "webpack-systemjs-export-plugin": "git+ssh://git@github.com/alaingalvan/webpack-systemjs-export-plugin.git"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "react": "^16.0.0-alpha.0",
-    "react-dom": "^16.0.0-alpha.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "react-motion": "^0.4.7",
     "react-redux": "^5.0.2",
     "react-router": "^4.0.0-beta.3",
-    "react-router-dom": "rc",
+    "react-router-dom": "4.0.0-beta.5",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
   }

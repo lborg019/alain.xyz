@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { Route, Miss, Link, Redirect } from 'react-router/es';
+import { Route, Switch } from 'react-router';
 import { Home, Subapp, About, Blog } from './views';
-
-import './css';
 
 const App = (
   <div>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/about" component={About} />
-    <Route exact path="/portfolio" Component={Blog} />
-    <Route exact path="/blog" Component={Blog} />
-    <Route path="*" Component ={Subapp} />
+    <Route component={Home} />
+    <Switch>
+      <Route exact path="/about" component={About} />
+      <Route exact path="/blog" render={props => <Blog {...props} />} />
+      <Route render={props => <Subapp {...props} />} />
+    </Switch>
   </div>
 );
 

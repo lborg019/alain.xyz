@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
-import * as React from 'react';
-import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router';
 import { database } from './db';
-import App from '../../frontend/src/app';
+
 /**
  * Prerenders a given page with React.
  */
@@ -36,27 +33,12 @@ function page(meta, req: Request, res: Response) {
   // This context object contains the results of the render
   const context: any = {};
 
-  let markup = renderToString(
-    <StaticRouter location={req.url} context={context}>
-      {App}
-    </StaticRouter>
-  ) ||
-    `<div style="display: flex; width: 100vw; height: 100vh">
+  let markup = 
+  `<div style="display: flex; width: 100vw; height: 100vh">
   <svg viewBox="0 0 160 112" class="ag-loading">
     <path d="M8,72l50.3-50.3c3.1-3.1,8.2-3.1,11.3,0L152,104"></path>
   </svg>
 </div>`;
-
-  // context.url will contain the URL to redirect to if a <Redirect> was used
-  if (context.url) {
-
-    res.writeHead(302, {
-      Location: context.url
-    });
-
-    res.end();
-
-  } else {
 
     res.contentType('text/html').send(
       `<!--
@@ -109,12 +91,10 @@ function page(meta, req: Request, res: Response) {
   </div>
 
   <!--Load App-->
-  <script src="/assets/system.min.js"></script> 
   <script src="/assets/vendor.min.js"></script>
   <script src="/assets/main.min.js"></script>
 </body>
 
 </html>
 `);
-  }
 }

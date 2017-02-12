@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const styles = {
   root: {

@@ -26,7 +26,6 @@
     "mongodb": "^2.2.22",
     "plugin-typescript": "^6.0.4",
     "systemjs-builder": "^0.16.3",
-    "ts-loader": "^2.0.0",
     "ts-node": "^2.1.0",
     "typescript": "^2.1.6"
   }

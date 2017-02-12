@@ -62,48 +62,6 @@ There's been a lot of debate on the Cascading and Sheets portion of CSS, with ta
 
 **BEM** - A design methodology as an acronym, Block, Element, Modifier.
 
-### Community Outreach
-
-The Web Community is huge and friendly, always working on new features, libraries, posts and talks! I've been learning a lot just from:
-
-*Watching* __Conferences Talks__ from:
-  * [JSConf](http://jsconf.com/)
-  * [ngConf](http://www.ng-conf.org/)
-  * [nodeConf](http://nodeconf.com/)
-  * [Wix Tech Talks](https://www.youtube.com/user/WixTechTalks)
-  * [
-O'Reilly](https://www.youtube.com/user/OreillyMedia)
-  * [Google Developers](https://www.youtube.com/user/GoogleDevelopers)
-
-*Reading* **Blog Posts** from:
-* [Facbook Engineering Blog](https://code.facebook.com/posts)
-* [Google Developers](https://medium.com/google-developers)
-* [Codepen Blog](http://blog.codepen.io/)
-* [Tumblr Developers](http://developers.tumblr.com/)
-* [Scotch.io](https://scotch.io/)
-
-*Reading* **Books** like:
-* [Elequent Javascript](http://eloquentjavascript.net/) by [Marijn Haverbeke](https://marijnhaverbeke.nl/)
-* [Programming Javascript Applications](http://chimera.labs.oreilly.com/books/1234000000262) by [Eric Elliott](https://ericelliottjs.com/)
-* [GitBook](https://www.gitbook.com/explore) - A Free Book Community
-
-*Listening* to **Podcasts** like:
-* [Codepen Radio](http://blog.codepen.io/radio/)
-* [ShopTalk](http://shoptalkshow.com/)
-* [Javascript Jabber](https://devchat.tv/js-jabber/)
-* [The Web Ahead](http://5by5.tv/webahead)
-javascript air
-
-*Working* on **Projects** and talking in communities like:
-* [Codepen](http://codepen.io)
-* [r/web_design](http://reddit.com/r/web_design/)
-* [r/webdev](http://reddit.com/r/webdev/)
-
- *Grabbing* **Free Resources** from places like:
- * [Let's Encrypt](https://letsencrypt.org/) - Free SSL Certificates
- * [FbStart](https://fbstart.com/) -  new program from Facebook designed to help early stage mobile startups build and grow their apps.
- * [Github Education](https://education.github.com/) - Dozens of free resources from great companies to help students learn.
-
 ## File Structure
 
 One way to be sure of what you're doing is to know what good file structure is like. What I love about places like Scotch.io is that they acknowledge this by always starting off a post with the project structure.
@@ -234,3 +192,42 @@ You could also compile your whole app to static files on the server for [SEO](ht
 
 This guide sorta scratches the surface, but then there's developing mobile/desktop apps using web technologies, stuff like [Electron](http://electron.atom.io/), [Windows 8/Windows 10 apps](https://msdn.microsoft.com/en-us/library/windows/apps/mt244352.aspx), [Apache Cordova](https://cordova.apache.org/), and [Meteor](https://www.meteor.com/).
 
+The Web Community is huge and friendly, always working on new features, libraries, posts and talks! Here's a few resources to wrap up:
+
+*Watching* __Conferences Talks__ from:
+* [JSConf](http://jsconf.com/)
+* [ngConf](http://www.ng-conf.org/)
+* [nodeConf](http://nodeconf.com/)
+* [Wix Tech Talks](https://www.youtube.com/user/WixTechTalks)
+* [
+O'Reilly](https://www.youtube.com/user/OreillyMedia)
+* [Google Developers](https://www.youtube.com/user/GoogleDevelopers)
+
+*Reading* **Blog Posts** from:
+* [Facbook Engineering Blog](https://code.facebook.com/posts)
+* [Google Developers](https://medium.com/google-developers)
+* [Codepen Blog](http://blog.codepen.io/)
+* [Tumblr Developers](http://developers.tumblr.com/)
+* [Scotch.io](https://scotch.io/)
+
+*Reading* **Books** like:
+* [Elequent Javascript](http://eloquentjavascript.net/) by [Marijn Haverbeke](https://marijnhaverbeke.nl/)
+* [Programming Javascript Applications](http://chimera.labs.oreilly.com/books/1234000000262) by [Eric Elliott](https://ericelliottjs.com/)
+* [GitBook](https://www.gitbook.com/explore) - A Free Book Community
+
+*Listening* to **Podcasts** like:
+* [Codepen Radio](http://blog.codepen.io/radio/)
+* [ShopTalk](http://shoptalkshow.com/)
+* [Javascript Jabber](https://devchat.tv/js-jabber/)
+* [The Web Ahead](http://5by5.tv/webahead)
+javascript air
+
+*Working* on **Projects** and talking in communities like:
+* [Codepen](http://codepen.io)
+* [r/web_design](http://reddit.com/r/web_design/)
+* [r/webdev](http://reddit.com/r/webdev/)
+
+*Grabbing* **Free Resources** from places like:
+* [Let's Encrypt](https://letsencrypt.org/) - Free SSL Certificates
+* [FbStart](https://fbstart.com/) -  new program from Facebook designed to help early stage mobile startups build and grow their apps.
+* [Github Education](https://education.github.com/) - Dozens of free resources from great companies to help students learn.

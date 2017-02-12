@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchSubapp } from '../store/actions';
@@ -44,7 +44,7 @@ const BlogPost = ({ cover, title, description, permalink }) =>
     fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
   })
 )
-export class Blog extends React.Component<any, any> {
+class Blog extends React.Component<any, any> {
 
   componentWillMount() {
     this.props.fetchSubapp({
@@ -65,3 +65,5 @@ export class Blog extends React.Component<any, any> {
       </div>);
   }
 }
+
+export { Blog }

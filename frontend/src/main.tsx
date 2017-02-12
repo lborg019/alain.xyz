@@ -2,12 +2,18 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom/es';
 import { createStore, applyMiddleware, compose } from 'redux';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import RegisterLoader from './loader/register-loader';
 
+import './css';
 import App from './app';
 import reducers from './store/reducers';
  
+if (typeof window !== undefined) {
+  window['System'] = new RegisterLoader();
+}
+
 // Debug
 const NODE_ENV = typeof process !== 'undefined' ? process.env.NODE_ENV : 'development';
 
@@ -37,6 +43,5 @@ const node = (
 ReactDOM.render(node, target);
 
 // Expose
-export { NODE_ENV };
 export * from './components';
 export * from './store/actions';

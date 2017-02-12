@@ -51,8 +51,8 @@ let config = {
       {
         test: /\.s?css$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: [
+          fallback: 'style-loader',
+          use: [
             {
               loader: 'css-loader'
             },
@@ -87,6 +87,7 @@ let config = {
         'react-motion',
         'react-redux',
         'react-router',
+        'react-router-dom',
         'redux',
         'redux-thunk',
         'isomorphic-fetch'
@@ -116,6 +117,8 @@ if (isProduction) {
  * Start Build
  */
 const compiler = webpack(config);
+
+console.log(argv);
 
 if (!argv.reduce((prev, cur) => prev || (cur === '--watch'), false)) {
   compiler.run((err, stats) => {

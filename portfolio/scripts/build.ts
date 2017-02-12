@@ -4,7 +4,7 @@
  * Each portfolio item has a unique Build step.
  */
 
-import { cyan, green } from 'chalk';
+import { red, cyan, green, gray } from 'chalk';
 import * as buildScripts from './tasks';
 
 (async () => {
@@ -17,11 +17,19 @@ import * as buildScripts from './tasks';
   // Run each task
   var scripts = Object.values(buildScripts);
   for (var script of scripts) {
-    console.log('Running Task!\n');
-    await script();
-    console.log('Finished task!\n')
+    console.log(`\n👟 ${gray('Running Task...')}\n`);
+    await script()
+    .then( res => {
+      console.log(`\n✔️️ ${green('Finished task!')}\n`);
+    })
+    .catch(err => {
+      console.log(`\n❌ ${red('Failed task!')}\n`);
+      console.error(err);
+    });
+    
+    
   }
-  console.log(green(`Finished processing ${scripts.length} tasks!`));
+  console.log('\n💮 ' + gray(`Finished processing ${scripts.length} tasks!\n`));
 
   // Close process
   process.exit();

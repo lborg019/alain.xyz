@@ -28,7 +28,7 @@ type IModifiedFileStatus = {
  */
 async function checkIfModified(file: string): Promise<IModifiedFileStatus> {
   var data = await new Promise<any[]>((res, rej) => {
-    database.then((db) => {
+    database.then(db => {
       var c = db.collection('portfolio');
 
       // Check if the default permalink is in the database.
@@ -95,9 +95,11 @@ async function askQuestions(file: string) {
   let answers: any = {};
   // Populate the answers object.
   for (var question of questions)
-    await askQuestion(question).then(answer => {
+    await askQuestion(question)
+    .then(answer => {
       answers[question.key] = answer;
-    });
+    })
+    .catch(err => {console.error(err)});
 
   return answers;
 }
@@ -112,7 +114,11 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     var filesCollection = db.collection('files');
 
     // Find a references.json file next to file
-    let citations = JSON.parse(fs.readFileSync(path.join(file, '..', 'references.json')).toString());
+    let references = path.join(file, '..', 'references.json');
+    let citations;
+
+    if (fs.existsSync(references))
+      citations = JSON.parse(fs.readFileSync(references).toString());
 
     // Place all answers in object.
     let entry = {
@@ -184,8 +190,8 @@ function clean() {
  * while writing static files to 'files' collection
  * Finally index neseted elements in 'indexes' collection.
  */
-export default async function buildBlog() {
-  console.log('~~ Blog Builder ~~')
+async function buildBlog() {
+  console.log('📔 Alain.xyz Blog Builder\n~~')
   let files = find.fileSync(/\.md$/, root);
   clean();
 
@@ -207,3 +213,4 @@ export default async function buildBlog() {
 }
 
 
+export default buildBlog;
