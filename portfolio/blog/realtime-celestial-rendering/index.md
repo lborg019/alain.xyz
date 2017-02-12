@@ -1,4 +1,4 @@
-For my [Realtime Celestial Rendering Paper](http://openhid.com/aeonsys), I made a dynamic, responsive stary sky that the player would see while exploring the star system. To do this, I wrote a some shaders that renders onto a cubemap texture target, which could then be used as a simple skybox or as a displacement layer for celestial bodies.
+For my [Realtime Celestial Rendering Paper](https://github.com/OpenHID/realtime-celestial-rendering), I made a dynamic, responsive stary sky that the player would see while exploring the star system. To do this, I wrote a some shaders that renders onto a cubemap texture target, which could then be used as a simple skybox or as a displacement layer for celestial bodies.
 
 To make this more manageable and portable, the shader was written in HLSL rather than using Unreal's Material compositor tools.
 
@@ -18,7 +18,7 @@ Not that it isn't possible with the custom node in Unreal's Material Editor, but
 
 ### Cubemap Textures
 
-![Cubemap Example](assets/cubemaptexture.png)
+![Cubemap Example](assets/directioncubemap.png)
 
 A **Cubemap Texture** is a 6 sided texture that allows for very low cost sampling of an environmental texture that can serve as a skybox or mapped onto any object with normals, or mapped onto a cube. This means this texture could potentially be used as a light source for PBR calculations, so it's a good idea to make it an HDR texture for skyboxes.
 
@@ -38,7 +38,7 @@ The **Render Hardware Interface (RHI)** is Unreal's rendering abstraction layer 
 
 The **RHI** manages a rendering queue, handles all render requests. You need to make requests to the RHI to render onto your rendertarget.
 
-```c++
+```cpp
 void FCubeRenderTargetShader::RunShader(UTextureRenderTargetCube* RenderTarget, float time) {
 
 	//Setup ECubeFace Struct (Just a basis matrix of the current face)
