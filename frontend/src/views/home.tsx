@@ -8,7 +8,7 @@ export class Home extends React.Component<any, any> {
   render() {
     return (
       <div style={{ width: '100vw', height: '100vh'}}>
-        <Hero shrink={null != this.props.children}/>
+        <Hero shrink={this.props.location.pathname !== '/'}/>
         <div style={{ position: 'relative' }}>
         {
           (innerWidth > 640) ?

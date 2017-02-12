@@ -62,11 +62,11 @@ export class Hero extends React.Component<any, any> {
                   <nav style={{ ...styles.root, ...iStyle }}>
                     <span style={{ ...styles.span, transform: `translateX(${-sStyles[2].x}px)` }} />
 
-                    <Link style={{ ...styles.a, transform: `translateX(${-sStyles[0].x}px)` }} to='blog'>Blog</Link>
+                    <Link style={{ ...styles.a, transform: `translateX(${-sStyles[0].x}px)` }} to='/blog'>Blog</Link>
                     <Link to='/'>
                       <img style={styles.img} src="/assets/brand/ag-logo.svg" alt="Logo" />
                     </Link>
-                    <Link style={{ ...styles.a, transform: `translateX(${sStyles[0].x}px)` }} to='about'>About</Link>
+                    <Link style={{ ...styles.a, transform: `translateX(${sStyles[0].x}px)` }} to='/about'>About</Link>
 
                     <span style={{ ...styles.span, transform: `translateX(${sStyles[2].x}px)` }} />
                   </nav>
@@ -77,7 +77,7 @@ export class Hero extends React.Component<any, any> {
     ) :
       (<nav style={{
         ...styles.root,
-        height: (this.props.shrink) ? 120 : '100vh',
+        height: (this.props.shrink) ? 120 : innerHeight,
       }}>
         <span style={styles.span} />
 

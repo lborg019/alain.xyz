@@ -91,6 +91,7 @@ function page(meta, req: Request, res: Response) {
   </div>
 
   <!--Load App-->
+  <script src="/assets/system.min.js"></script>
   <script src="/assets/vendor.min.js"></script>
   <script src="/assets/main.min.js"></script>
 </body>

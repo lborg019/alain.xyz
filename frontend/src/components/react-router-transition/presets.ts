@@ -82,7 +82,7 @@ const slideRight = {
 const slideUp = {
     atEnter: {
         opacity: 0,
-        offset: 1000
+        offset: innerHeight
     },
     atLeave: {
         opacity: spring(0, fadeConfig),

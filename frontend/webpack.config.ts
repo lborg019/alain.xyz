@@ -118,17 +118,16 @@ if (isProduction) {
  */
 const compiler = webpack(config);
 
-console.log(argv);
-
 if (!argv.reduce((prev, cur) => prev || (cur === '--watch'), false)) {
   compiler.run((err, stats) => {
     if (err)
       return console.error(err);
     else
-      console.log("Compilation finished successfully.")
+      console.log("✔️️ Frontend Compiled Successfully.")
   });
 }
 else {
+  console.log('👓 Watching for changes...')
   compiler.watch({}, (err, stats) => {
     if (err)
       return console.error(err);

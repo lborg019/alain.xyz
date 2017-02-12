@@ -102,6 +102,7 @@ async function compileSubapp() {
     var builder = new Builder(config);
 
     await builder.bundle(libname, relativeRoot + '/main.js', {
+      anonymous: true,
       minify: true,
       mangle: false,
       globalDefs: {

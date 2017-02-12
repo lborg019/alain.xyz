@@ -53,7 +53,7 @@ database.then((db) => {
 
 // Server Start
 app.listen(3000, () => {
-  console.log('Alain.xyz Running @ port 3000');
+  console.log('🔳 Alain.xyz Running @ port 3000');
 });
 
 // Expose Module
