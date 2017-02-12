@@ -16,14 +16,15 @@ import * as buildScripts from './tasks';
 
   // Run each task
   var scripts = Object.values(buildScripts);
-  for (var script of scripts) {
-    console.log(`\n👟 ${gray('Running Task...')}\n`);
-    await script()
+
+  for (var i = 0; i < scripts.length; i++) {
+    console.log(`\n👟 ${gray(`Running Task (${i + 1}/${scripts.length})...`)}\n`);
+    await scripts[i]()
     .then( res => {
-      console.log(`\n✔️️ ${green('Finished task!')}\n`);
+      console.log(`\n✔️️ ${green(`Finished Task (${i + 1}/${scripts.length})!`)}\n`);
     })
     .catch(err => {
-      console.log(`\n❌ ${red('Failed task!')}\n`);
+      console.log(`\n❌ ${red(`Failed Task (${i + 1}/${scripts.length})!`)}\n`);
       console.error(err);
     });
     

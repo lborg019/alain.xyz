@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as find from 'find';
 import markademic from 'markademic';
-
+import { yellow } from 'chalk';
 import { database } from '../../../backend/src/db';
 import { askQuestion } from './question';
 import { getCover, makePermalink } from './misc';
@@ -191,7 +191,7 @@ function clean() {
  * Finally index neseted elements in 'indexes' collection.
  */
 async function buildBlog() {
-  console.log('📔 Alain.xyz Blog Builder\n~~')
+  console.log('📔 ' + yellow('Alain.xyz Blog Builder\n'))
   let files = find.fileSync(/\.md$/, root);
   clean();
 
@@ -213,4 +213,4 @@ async function buildBlog() {
 }
 
 
-export default buildBlog;
+export { buildBlog };

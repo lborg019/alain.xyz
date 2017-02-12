@@ -26,7 +26,6 @@ async function compileSubapp() {
 
     let config = {
       globalEvaluationScope: false,
-      baseURL: './',
       format: 'commonjs',
       defaultJSExtensions: true,
       typescriptOptions: {
@@ -40,7 +39,7 @@ async function compileSubapp() {
         [libname]: {
           main: 'main',
           defaultExtension: 'tsx',
-          transpiler: 'ts',
+          transpiler: 'plugin-typescript',
           format: 'system',
           typescriptOptions: {
             module: 'system',
@@ -53,6 +52,7 @@ async function compileSubapp() {
             'react',
             'react-dom',
             'react-router',
+            'react-router-dom',
             'react-redux',
             'redux',
             'alain-xyz'
@@ -72,7 +72,7 @@ async function compileSubapp() {
           format: 'cjs'
         },
         ts: {
-          format: 'register'
+          format: 'cjs'
         }
       },
       map: {
@@ -136,4 +136,4 @@ async function compileSubapp() {
   }
 }
 
-export default compileSubapp;
+export { compileSubapp };
