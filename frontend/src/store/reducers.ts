@@ -22,7 +22,7 @@ let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) =
             if (subapp['data'] !== undefined)
                 cache[index] = subapp;
         } else {
-            cache = [...cache, subapp].sort((a, b) => new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime());
+            cache = [...cache, subapp].sort((a, b) => -(new Date(a.publishDate).getTime()) + new Date(b.publishDate).getTime());
         }
     }
 
