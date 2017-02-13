@@ -16,11 +16,11 @@ We're now free to use all 256^3 colors if we want, make pixel art at any size, b
 
 **Pixel Art** is an image that was designed pixel by pixel.
 
-It's different from other forms of art like digital painting or line art in that every pixel is important, whereas those forms of art avoid that level of percision.
+It's different from other forms of art like digital painting or line art in that every pixel is important, whereas those forms of art avoid that level of precision.
 
 ## Palette
 
-A **palette** is a color ramp, from low to high, and should be characterized by complex, hue shifting tones. You shouldn't have a pallete that's linear but rather, have one that mixes colors togehter.
+A **palette** is a color ramp, from low to high, and should be characterized by complex, hue shifting tones. You shouldn't have a pallette that's linear but rather, have one that mixes colors together.
 
 Most artists start with an average color for the piece that they're doing, then add highlights and shadows to that.
 
@@ -28,7 +28,7 @@ Most artists start with an average color for the piece that they're doing, then 
 
 A good idea is to use complementary colors to help blend colors together. Purple or Teal work well for shadows, whereas yellows and whites work for specular highlights.
 
-It's best to have a maximum of 15 colors per sprite (with transparancy being the 16th color).
+It's best to have a maximum of 15 colors per sprite (with transparency being the 16th color).
 
 ## Silhouette
 
@@ -58,7 +58,7 @@ One way to improve readability is to add **outlines** to your sprite. That's not
 
 **Dithering** is to gradate colors together via a pattern. Generally you want to avoid mechanical dithering and op for a pattern based effect instead.
 
-In this sprite of Perfect Chaos from Sonic Adventure DX, I dithered the image with intrecite water simulation. Proper anti-aliasing and careful shapes and edges made the water look almost photorealistic.
+In this sprite of Perfect Chaos from Sonic Adventure DX, I dithered the image with intricate water simulation. Proper anti-aliasing and careful shapes and edges made the water look almost photo-realistic.
 
 ## Post-Processing
 
@@ -70,7 +70,7 @@ Often times your original choice of colors wasn't the best one, so post-processi
 
 ![Levels in Photoshop](assets/levelsphotoshop.gif)
 
-**Levels** - The levels tool is a simple method of adjusting the brightness of colors. The **middle handle** adjust the mid color balance, the **left handle** adjusts the darks, the **right handle** adjusts the highlights. Curves and levels are interchangable so use whichever you perfer.
+**Levels** - The levels tool is a simple method of adjusting the brightness of colors. The **middle handle** adjust the mid color balance, the **left handle** adjusts the darks, the **right handle** adjusts the highlights. Curves and levels are interchangeable so use whichever you prefer.
 
 ![Color Balance in Photoshop](assets/colorbalancephotoshop.gif)
 
@@ -82,4 +82,4 @@ Often times your original choice of colors wasn't the best one, so post-processi
 
 ![Color Count in Gimp](assets/colorcountgimp.gif)
 
-To messure the number of colors on your sprite, you can use a tool like Gimp's **Colorcube Analysis**.
+To measure the number of colors on your sprite, you can use a tool like Gimp's **Colorcube Analysis**.

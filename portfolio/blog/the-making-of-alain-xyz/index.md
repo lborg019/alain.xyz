@@ -8,10 +8,9 @@ Still, I succumbed to the temptation and built a custom website. Basically I wan
 
 3. Dynamically load modules as needed.
 
-Modules being JavaScript modules, so full programatic control of any view components you load! Since they're modules, they could be anything from books to entire applications. (So we can have apps inside of apps, **appception** anyone?)
+Modules being JavaScript modules, so full programmatic control of any view components you load! Since they're modules, they could be anything from books to entire applications. (So we can have apps inside of apps, **appception** anyone?)
 
 ![Inception Gif](assets/appception.gif)
-
 
 Here's some of the dependencies I'm building on top of:
 
@@ -29,7 +28,7 @@ Here's some of the dependencies I'm building on top of:
 
 ### Markup
 
-1. [Katex](https://khan.github.io/KaTeX/) - Quickly process LaTex math expressions.
+1. [KaTex](https://khan.github.io/KaTeX/) - Quickly process LaTex math expressions.
 
 2. [Remarkable](https://github.com/jonschlinkert/remarkable) - Handles markdown rendering.
 
@@ -133,13 +132,13 @@ It's our job as the next generation to make it easier for future generations to 
 
 Similar to Latex References, to place references, simply write `[^yourrefname]`, and this will be matched with the folder's `references.json` file. (This is directly inspired by the same feature on [stackedit.io](https://stackedit.io)).
 
-In addition, you can write complex math equations with Katex like The emission-absorption optical model from the book [Real Time Volume Rendering by Klaus Engel et al.](http://www.real-time-volume-graphics.org/):
+In addition, you can write complex math equations with KaTex like The emission-absorption optical model from the book [Real Time Volume Rendering by Klaus Engel et al.](http://www.real-time-volume-graphics.org/):
 
 \[I(D) = I_0 e^{-\int_{s_0}^{D} \kappa(t) dt} + \int_{s_0}^D q(s) e^{-\int_{s_0}^{D} \kappa(d) dt} \; ds\]
 
-The system even supports tooltips thanks to [Hint.css]():
+The system even supports tooltips thanks to [Hint.css](https://kushagragour.in/lab/hint/):
 
-<span class="hint--bottom-right" aria-label="The Integral from the light source to the camera at distance D">\(I_0\)</span>\( = ... \)
+<span class="hint--right" aria-label="The Integral from the light source to the camera at distance D">\(I_0\)</span>\( = ... \)
 
 ## `<About/>` - An Online Resume
 

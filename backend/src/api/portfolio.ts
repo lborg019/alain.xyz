@@ -81,9 +81,10 @@ export default (req: Request, res: Response) => {
 
   // Responses
   let failure = () => res.status(400).json({ error: "We can't find these posts. :(" });
-  let success = (msg) => res.status(200).json(msg);
+  let success = msg => res.status(200).json(msg);
 
-  database.then((db) => {
+  database.then(
+    db => {
     let c = db.collection('portfolio');
 
     let projection = {

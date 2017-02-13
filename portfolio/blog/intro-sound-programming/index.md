@@ -18,7 +18,7 @@ This is similar to lighting models in computer graphics.
 
 ### Fourier Transform
 
-Fourier Transforms are a method of converting continuous signals to descrete ones, or visa-versa. This is particularly useful in audio jacks, where sound is simply the modulation of voltage, but has other applications, such as [Jpeg Compression](http://stephaniehurlburt.com/blog/2016/12/20/a-taste-of-fourier-transforms-and-jpeg-compression).
+Fourier Transforms are a method of converting continuous signals to discrete ones, or visa-versa. This is particularly useful in audio jacks, where sound is simply the modulation of voltage, but has other applications, such as [Jpeg Compression](http://stephaniehurlburt.com/blog/2016/12/20/a-taste-of-fourier-transforms-and-jpeg-compression).
 
 ## Sampling
 
@@ -30,15 +30,15 @@ Behind the scenes what happens is, shadertoy converts whatever sound you write i
 
 ```js
 //Initialize Context
-var canvas = document.getElementById("canvas");
-var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+var canvas = document.getElementById('canvas');
+var gl = canvas.getContext('webgl');
 
-var AudioContext = window.AudioContext || window.webkitAudioContext;
+var AudioContext = window.AudioContext;
 var wa = new AudioContext();
 
 //Audio Ini
 var mSampleRate = 44100;
-var mPlayTime = 60; //fps
+var mPlayTime = 60; // Seconds
 var mPlaySamples = mPlayTime * mSampleRate;
 var mBuffer = wa.createBuffer(2, mPlaySamples, mSampleRate);
 
@@ -88,7 +88,7 @@ gl_FragColor = vec4(vl.x, vh.x, vl.y, vh.y);
 
 **Sample** - One measurement of audio data. For Pulse Code Modulation (PCM) encoding, a sample is an instantaneous representation of the voltage of the analog audio. There are other types of encoding, like u-law and a-law, that are rarely used.
 
-**Sampling Rate** - The number of samples in one second. Measured in Hertz (Hz) or kiloHertz (kHz). The most common sampling rate is 44.1 kHz (CD quality).
+**Sampling Rate** - The number of samples in one second. Measured in Hertz ( \( Hz \) ) or kiloHertz ( \( kHz \) ). The most common sampling rate is 44.1 kHz (CD quality).
 
 **Sample Size** - Number of bits in one sample. It is typically a multiple of eight because data is stored in 8-bit bytes. Most common sample size is *16 bits*, which is CD quality audio.
 
@@ -109,10 +109,6 @@ For multiple sounds to play, you simply take the average of the two!
 
 ```c
 /*************************************************************************
-* Synth Primitives
-* Everything you should need to get sound on your shaders!
-* By Alain Galvan (Alain.xyz) | Lukas Borges (Lukas.xyz)
-**************************************************************************
 * Constants
 *************************************************************************/
 #define TAU 6.283185
