@@ -44,7 +44,7 @@ const sanitize: (any) => API = (reqBody) => {
   try {
     let cleanReq: API = {
       skip: inRange(skip, 0, 1000, 0),
-      limit: inRange(limit, 1, 10, 10),
+      limit: inRange(limit, 1, 30, 15),
       permalink: makeRegexPath(permalink),
       tags: isArray(tags)
     };
@@ -57,7 +57,7 @@ const sanitize: (any) => API = (reqBody) => {
   catch (e) {
     return {
       skip: 0,
-      limit: 10
+      limit: 15
     }
   }
 

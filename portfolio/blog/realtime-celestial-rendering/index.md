@@ -2,7 +2,7 @@ For my [Realtime Celestial Rendering Paper](https://github.com/OpenHID/realtime-
 
 To make this more manageable and portable, the shader was written in HLSL rather than using Unreal's Material compositor tools.
 
-![Custom Node](assets\ue4-material-custom.gif)
+![Custom Node](assets/ue4-material-custom.gif)
 
 Not that it isn't possible with the custom node in Unreal's Material Editor, but c++ gives you more programmatic freedom.
 
@@ -18,7 +18,7 @@ Not that it isn't possible with the custom node in Unreal's Material Editor, but
 
 ### Cubemap Textures
 
-![Cubemap Example](assets/directioncubemap.png)
+![Cubemap Example](assets/directioncubemap.jpg)
 
 A **Cubemap Texture** is a 6 sided texture that allows for very low cost sampling of an environmental texture that can serve as a skybox or mapped onto any object with normals, or mapped onto a cube. This means this texture could potentially be used as a light source for PBR calculations, so it's a good idea to make it an HDR texture for skyboxes.
 

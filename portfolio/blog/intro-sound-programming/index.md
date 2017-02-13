@@ -18,8 +18,6 @@ This is similar to lighting models in computer graphics.
 
 ### Fourier Transform
 
-[![Fourier Series](http://mathworld.wolfram.com/images/eps-gif/FourierSeriesExamples_800.gif)](http://mathworld.wolfram.com/FourierSeries.html)
-
 Fourier Transforms are a method of converting continuous signals to descrete ones, or visa-versa. This is particularly useful in audio jacks, where sound is simply the modulation of voltage, but has other applications, such as [Jpeg Compression](http://stephaniehurlburt.com/blog/2016/12/20/a-taste-of-fourier-transforms-and-jpeg-compression).
 
 ## Sampling
