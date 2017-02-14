@@ -1,4 +1,4 @@
-Unity is the most popular game engine in the world, used by large companies like Nintendo, Square Enix as well as many independent developers to quickly build cross platform games. 
+Unity is the most popular game engine in the world, used by Nintendo, Square Enix, and many independent developers to quickly build cross platform games. 
 
 This is a high level overview of how Unity is designed and how you can build on top of it.
 
@@ -9,6 +9,10 @@ This is a high level overview of how Unity is designed and how you can build on 
 Each pane in Unity is given it's own OS Window and Rendering Context, and are simply positioned/sized by the engine's window management system.
 
 Rendering updates to the window depend on user interactions (Reactive model), otherwise it simply doesn't refresh rendering.
+
+![Unity UI Draw Calls](assets/unityui.gif)
+
+Rendering the UI is a few draw calls, with text batched into a single call.
 
 ## File Hierarchy
 
@@ -58,7 +62,7 @@ Unity actually stores all of the state of your application within your scenes, w
 
 You can see that parameters like `ugid`s, components and their corresponding settings, are all here.
 
-```yml
+```yaml
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1255243119
@@ -108,7 +112,7 @@ Transform:
 
 Unity's low level engine code is interfaced using C#, an ECMA standard like JavaScript that was popularized with the .Net framework by Microsoft. 
 
-Unity allows you to control the engine through controller scripts that extend `MonoBehavior`:
+Unity allows you to control the engine through *controller scripts* that extend `MonoBehavior`:
 
 ```cs
 using UnityEngine;
@@ -143,7 +147,7 @@ public class MyController : MonoBehaviour
 
 ```
 
-These scripts are then serialized by Unity, which uses the information in your script to build a UI view for your component. This view lets you easily send information from the scene to your controller logic.
+These scripts are then *serialized* by Unity, which uses the information in your script to build a UI view for your component. This view lets you easily send information from the scene to your controller logic.
 
 ### C# Code Style
 

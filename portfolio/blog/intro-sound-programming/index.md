@@ -20,46 +20,52 @@ This is similar to lighting models in computer graphics.
 
 Fourier Transforms are a method of converting continuous signals to discrete ones, or visa-versa. This is particularly useful in audio jacks, where sound is simply the modulation of voltage, but has other applications, such as [Jpeg Compression](http://stephaniehurlburt.com/blog/2016/12/20/a-taste-of-fourier-transforms-and-jpeg-compression).
 
+The key is that in software we're working with *discrete* steps, like **pixels** in an image, or **samples** in audio.
+
 ## Sampling
 
 Sound on computers is represented by tiny changes on the speaker every *1 / 44100* seconds. (That sounds like a lot more than 60 fps). By themselves, these changes will just sound like pops or won't sound like anything at all, but when fast enough and with enough time, they can sound like anything!
 
-Let's take a look at the source code from [ShaderToy](https://www.shadertoy.com/) that the devs were kind enough to leave unminified for us to check out. 
+Let's take a look at the source code from [ShaderToy](https://www.shadertoy.com/) that the devs were kind enough to leave unminified for us to check out. :3
 
-Behind the scenes what happens is, shadertoy converts whatever sound you write into a 512x512 image with 1/fps seconds of encoded information of that sound, sends it to an AudioContext object, and that plays it.
+Behind the scenes what happens is, ShaderToy converts whatever sound you write into a 512x512 image with `1/fps` seconds of encoded information of that sound, sends it to an `AudioContext` object, and that plays it.
 
 ```js
-//Initialize Context
-var canvas = document.getElementById('canvas');
-var gl = canvas.getContext('webgl');
+//Initialize WebGL / AudioContext
+let canvas = document.getElementById('canvas');
+let gl = canvas.getContext('webgl');
+let wa = new AudioContext();
 
-var AudioContext = window.AudioContext;
-var wa = new AudioContext();
+// Create a 1 second buffer for our audio
+let mSampleRate = 44100;
+let mPlayTime = 60;
+let mPlaySamples = mPlayTime * mSampleRate;
+let mBuffer = wa.createBuffer(2, mPlaySamples, mSampleRate);
 
-//Audio Ini
-var mSampleRate = 44100;
-var mPlayTime = 60; // Seconds
-var mPlaySamples = mPlayTime * mSampleRate;
-var mBuffer = wa.createBuffer(2, mPlaySamples, mSampleRate);
+// Get pointers to each audio channel
+let bufL = mBuffer.getChannelData(0);
+let bufR = mBuffer.getChannelData(1);
 
+// Create an output buffer to write to from the GPU
+let mTextureDimensions = 512;
+let mTmpBufferSamples = mTextureDimensions * mTextureDimensions;
+let mData = new Uint8Array(mTmpBufferSamples * 4);
+let numBlocks = mPlaySamples / mTmpBufferSamples;
 
-var bufL = mBuffer.getChannelData(0);
-var bufR = mBuffer.getChannelData(1);
-
-var mTextureDimensions = 512;
-var mTmpBufferSamples = mTextureDimensions * mTextureDimensions;
-var mData = new Uint8Array(mTmpBufferSamples * 4);
-
-var numBlocks = mPlaySamples / mTmpBufferSamples;
+// For ~10 runs of the shader
 for (var j = 0; j < numBlocks; j++) {
-  var off = j * mTmpBufferSamples;
 
-  gl.uniform1f(l2, off / mSampleRate);
+  // Set Uniform for Buffer Offset
+  let off = j * mTmpBufferSamples;
+  gl.uniform1f(iBufferOffset, off / mSampleRate);
+
+  // Draw 
   gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-//Read encoded information
+  //Read encoded information
   gl.readPixels(0, 0, mTextureDimensions, mTextureDimensions, gl.RGBA, gl.UNSIGNED_BYTE, mData);
 
+  // For 262144 Buffer Locations
   for (var i = 0; i < mTmpBufferSamples; i++) {
     bufL[off + i] = -1.0 + 2.0 * (mData[4 * i + 0] + 256.0 * mData[4 * i + 1]) / 65535.0;
     bufR[off + i] = -1.0 + 2.0 * (mData[4 * i + 2] + 256.0 * mData[4 * i + 3]) / 65535.0;
@@ -69,19 +75,22 @@ for (var j = 0; j < numBlocks; j++) {
 
 And in our shader we simply encode a function `mainSound(float time)` onto the output image.
 
-```c
-//Get current sample location
-float t = iiBlockOffset + (gl_FragCoord.x + gl_FragCoord.y * 512.0) / 44100.0;
+```glsl
+void main()
+{
+    //Get current sample location
+    float t = iiBlockOffset + (gl_FragCoord.x + gl_FragCoord.y * 512.0) / 44100.0;
 
-//Get Song Function
-vec2 y = mainSound(t);
+    //Get Song Function
+    vec2 y = mainSound(t);
 
-//Encode Output
-vec2 v = floor((0.5 + 0.5 * y) * 65536.0); //convert to 16 bit int.
-vec2 vl = mod(v, 256.0) / 255.0; //Get decimal portion
-vec2 vh = floor(v / 256.0) / 255.0; //Get int portion
+    //Encode Output
+    vec2 v = floor((0.5 + 0.5 * y) * 65536.0); //convert to 16 bit int.
+    vec2 vl = mod(v, 256.0) / 255.0; //Get decimal portion
+    vec2 vh = floor(v / 256.0) / 255.0; //Get int portion
 
-gl_FragColor = vec4(vl.x, vh.x, vl.y, vh.y);
+    gl_FragColor = vec4(vl.x, vh.x, vl.y, vh.y);
+}
 ```
 
 ### Definitions
@@ -107,7 +116,7 @@ The key takeaway here is the fact that you're rendering sin waves to play freque
 
 For multiple sounds to play, you simply take the average of the two!
 
-```c
+```glsl
 /*************************************************************************
 * Constants
 *************************************************************************/
@@ -152,4 +161,19 @@ vec2 mainSound(float time)
 }
 ```
 
+### MIDI
+
+You can take this further by putting [WebMIDI](https://webaudio.github.io/web-midi-api/) into the equation. For that I built a simple library to hook WebMIDI to redux. From there I send the midi information in the redux store to my synth as a uniform.
+
+[![Redux WebMIDI](assets/redux-webmidi.png)](https://github.com/hyperfuse/redux-webmidi)
+
+```bash
+# Download it for your projects!
+npm i redux-webmidi -S
+```
+
+The results are that you're able to programatically create a Synth powered by your GPU!
+
+<blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/HackGT?src=hash">#HackGT</a> For HackGT me and my team built a Web based DAW, was a fun and we&#39;re totally going to polish this more! <a href="https://t.co/Qw1VLVgHwa">pic.twitter.com/Qw1VLVgHwa</a></p>&mdash; Alain Galvan ✌️ (@Alainxyz) <a href="https://twitter.com/Alainxyz/status/780507405897633792">September 26, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
