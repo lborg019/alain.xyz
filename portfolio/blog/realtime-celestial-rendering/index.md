@@ -2,8 +2,6 @@ For my [Realtime Celestial Rendering Paper](https://github.com/OpenHID/realtime-
 
 ![Cubemap Reflections](assets/reflections.gif)
 
-The results look amazing
-
 To make this more manageable and portable, the shader was written in **HLSL** rather than using Unreal's Material compositor tools.
 
 ![Custom Node](assets/ue4-material-custom.gif)
