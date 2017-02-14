@@ -172,8 +172,4 @@ You can take this further by putting [WebMIDI](https://webaudio.github.io/web-mi
 npm i redux-webmidi -S
 ```
 
-The results are that you're able to programatically create a Synth powered by your GPU!
-
-<blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/HackGT?src=hash">#HackGT</a> For HackGT me and my team built a Web based DAW, was a fun and we&#39;re totally going to polish this more! <a href="https://t.co/Qw1VLVgHwa">pic.twitter.com/Qw1VLVgHwa</a></p>&mdash; Alain Galvan ✌️ (@Alainxyz) <a href="https://twitter.com/Alainxyz/status/780507405897633792">September 26, 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+The results are that you're able to programmatically create a Synth powered by your GPU!
