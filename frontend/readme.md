@@ -1,4 +1,4 @@
-# ![Icon](assets/brand/icon.ico) [Alain.xyz](https://alain.xyz)
+# ![Icon](assets/brand/icon.ico) [Alain.xyz](https://alain.xyz) Frontend
 
 ![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
 

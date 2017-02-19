@@ -42,7 +42,6 @@ docker-compose up
 
 ```bash
 npm i
-npm run setup
 npm start
 ```
 
@@ -51,34 +50,10 @@ npm start
 The site is comprised of 3 primary modules:
 
 ```bash
-# Http Server
-|- backend/
-  |- src/
-  |- ...
-# React App
-|- frontend/
-  |- src/
-    |- components/
-        |- hero.tsx
-        |- ...
-  |- assets/
-  |- ...
-# Repository of articles, talks, art, music
-|- portfolio/
-  |- 
+├─ backend/   # Express HTTP Server
+├─ frontend/  # React Frontend Application
+└─ portfolio/ # Personal Portfolio 
 ```
-
-### Backend
-
-The backend application simply serves static files via http, and provides a REST API to view a list of portfolio items.
-
-### Frontend
-
-The frontend serves React views that can query the backend API for portfolio items the client is looking for and serve them.
-
-### Portfolio
-
-A repository composed of frontend modules for rendering views for different categories like articles, talks, music, etc.
 
 [website-img]: brand/website-screenshot.jpg
 [website-url]: https://alain.xyz

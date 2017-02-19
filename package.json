@@ -6,7 +6,7 @@
     "setup:backend": "cd backend && npm i",
     "setup:frontend": "cd frontend && npm i",
     "setup:portfolio": "cd portfolio && npm i && npm start",
-    "setup": "npm run setup:backend && npm run setup:frontend && npm run setup:portfolio",
+    "postinstall": "npm run setup:backend && npm run setup:frontend && npm run setup:portfolio",
     "watch": "concurrently \"cd frontend && npm run develop\" \"cd backend && npm run develop\"",
     "start": "cd backend && npm start"
   },
