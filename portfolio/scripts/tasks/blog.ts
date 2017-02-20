@@ -156,32 +156,6 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
   });
 }
 
-/**
- * Run through every indexed file and portfolio item to see if it still exists. 
- */
-function clean() {
-  database.then(async (db) => {
-
-    var files = db.collection('files');
-    var posts = db.collection('posts');
-
-    var cleanFiles = col => col.find()
-      .toArray()
-      .catch(err => console.error(err))
-      .then(res => {
-        for (var f of res) {
-          fs.exists(f.file, exists => {
-            if (!exists)
-              files.remove(f);
-          });
-        }
-      });
-
-    await cleanFiles(files);
-    await cleanFiles(posts);
-
-  });
-}
 
 /**
  * Clean the database of any missing files in the portfolio,
@@ -193,7 +167,6 @@ function clean() {
 async function buildBlog() {
   console.log('📔 ' + yellow('Alain.xyz Blog Builder\n'))
   let files = find.fileSync(/\.md$/, root);
-  clean();
 
   for (var file of files) {
 
