@@ -13,9 +13,18 @@ JavaScript has evolved to a viable high level language, with a great set of feat
 
 > Note: Performance isn't everything, other languages have great ideas too.
 
-A far cry to what people thought it would be at it's conception. JavaScript was designed in 10 days by [Brendan Eich](https://twitter.com/brendaneich?lang=en), had varying levels of browser support, and Adobe Flash's **ActionScript** was looking to be a much better web platform. But things have calmed down since then and the language is regularly maintained by the ECMA standard body, stable across browsers, beat Flash and even took some of ActionScript's language features (a classic case of t0o early for it's time).
+A far cry to what people thought it would be at it's conception. JavaScript was designed in 10 days by [Brendan Eich](https://twitter.com/brendaneich?lang=en), had varying levels of browser support, and Adobe Flash's **ActionScript** was looking to be a much better web platform. But things have calmed down since then and the language is regularly maintained by the ECMA standard body, stable across browsers, beat Flash and even took some of ActionScript's language features (a classic case of too early for it's time).
 
-The following is a quick overview of all the new features of JavaScript as of 2017.
+The following is a quick overview of all the new features of JavaScript as of 2017, we'll be looking at:
+
+- **Variable Declaration**
+- **Functions**
+- **Classes**
+- **Modules**
+- **Destructuring**
+- **Decorators**
+- **Iterators**
+- **Async/Await**
 
 ## `let`/`const` Variable Declaration
 
@@ -54,10 +63,47 @@ const callback = () => console.log("Callback!");
 function callback() { return console.log("Callback!");}
 ```
 
-Javascript functions have always been pretty verbose. You have to write the whole word `function`, compared to say [Swift](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html)'s or [Go](https://gobyexample.com/functions)'s `func`, [Reason (A Facebook Language)](https://facebook.github.io/reason/)'s `fun`, or [Rust]()'s `fn`.
+JavaScript functions have always been pretty verbose. You have to write the whole word `function`, other languages had it better:
+
+| Language | Function |
+|----------|----------|
+| Swift    | `func`   |
+| Go       | `func`   |
+| Reason   | `fun`    |
+| Rust     | `fn`     |
+| Python   | `def`    |
 
 JavaScript functions were also a bit confusing, `this` is bound to the global `window` scope unless declared otherwise, so **Fat Arrow** functions make things a bit clearer.
 
+## Classes
+
+```js
+class Hero extends React.Component {
+  static defaultProps = {
+    shrink: false
+  }
+
+  toggleShrink = () => {
+    // ...
+  }
+
+  render() {
+    // ...
+  }
+}
+```
+
+They're syntactic sugar for functions with prototype functions added to them:
+
+```js
+function Hero {
+  // Constructor Logic
+}
+
+Hero.prototype.toggleShrink = () => {
+  // ...
+}
+```
 
 ## ECMAScript Modules
 
@@ -75,14 +121,14 @@ Since JavaScript has `global` scopes, there's always been a need for defining th
 
 This is known as the [Module Pattern](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html), and it's a big part of writing libraries/apps.
 
-```javascript
+```js
 (function(window, jQuery){
   //...
-})(window)
+})(window, $)
 ```
 Then Node came along with their package syntax, defined by the guys at [CommonJS](http://groups.google.com/group/commonjs).
 
-```javascript
+```js
 var app = require('express'); //express is defined in node_modules.
 
 module.exports = {some: 'data'};
@@ -90,7 +136,7 @@ module.exports = {some: 'data'};
 
 Then [RequireJS](http://requirejs.org/docs/whyamd.html) defined a new spec! **Asyncronous Module Definition**, or AMD for short. The AMD loader will parse out the `require('')` calls by using `Function.prototype.toString()`, then internally convert it to the format above.
 
-```javascript
+```js
 define([ "require", "jquery"], function (require, $) {});
 //or
 define(function (require) {
@@ -100,10 +146,6 @@ define(function (require) {
 ```
 
 The syntax is similar to [Angular 1.x dependency injection](https://docs.angularjs.org/guide/di). The real benefit of this however, is that it's **non-blocking**, however that doesn't matter if you're compiling your source into one binary.
-
-Now with ECMAScript 2016, the following syntax is becoming the official way:
-
-However, loading one JavaScript file for your app, combining your code and compiling/compressing it gives you a big boost in performance, so the module system doesn't really matter if you're doing that, you can just compile it all and be done.
 
 [Brian Leroux](https://medium.com/@brianleroux/es6-modules-amd-and-commonjs-c1acefbe6fc0#.m6cj1o5hp) and [Wes Bos](http://wesbos.com/javascript-modules/) both wrote some great articles on the state of modules it you want more details.
 
@@ -245,4 +287,13 @@ scope.bandUrl = data.user.permalink_url;
 });
 ```
 
+A function can be async, in other words, it's a promise, and can `await` other promises/async functions.
 
+```js
+import database from 'db';
+async function getFromDatabase() {
+  let db = await database;
+  let collection = db.collection('mongoCollection');
+  // ...
+}
+```

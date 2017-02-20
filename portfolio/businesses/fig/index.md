@@ -10,13 +10,13 @@ Creating a physical product today has never been easier, there's so many tools a
 
 ### IOT Computers
 
-- [Raspbery Pi](https://www.amazon.com/CanaKit-Raspberry-Micro-Supply-Listed/dp/B01C6FFNY4/ref=pd_lpo_147_tr_t_3?_encoding=UTF8&psc=1&refRID=DTKWYDD6P2ZJSTQF5JMM) - **$49** | A low powered linux computer, with USB, Bluetooth, Wifi, and HDMI I/O, plus 32 GPIO pins.
+- [Raspberry Pi](https://www.amazon.com/CanaKit-Raspberry-Micro-Supply-Listed/dp/B01C6FFNY4/ref=pd_lpo_147_tr_t_3?_encoding=UTF8&psc=1&refRID=DTKWYDD6P2ZJSTQF5JMM) - **$41** | A low powered linux computer, with USB, Bluetooth, Wifi, and HDMI I/O, plus 32 GPIO pins.
 
 - [Omega](https://onion.io/store/) - **$19** | A similar device to the Pi, but smaller and cheaper.
 
 #### Videos
 
-- [EEV Blog](https://www.youtube.com/channel/UC2DjFE7Xf11URZqWBigcVOQ) - A blog detailing the ideosychronies of being an electrical engineer. 
+- [EEV Blog](https://www.youtube.com/channel/UC2DjFE7Xf11URZqWBigcVOQ) - A blog detailing the idiosyncrasies of being an electrical engineer. 
 
 - [GreatScott!](https://www.youtube.com/user/greatscottlab) - a variety of custom electrical engineering projects. 
 

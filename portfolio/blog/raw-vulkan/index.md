@@ -15,7 +15,6 @@ And languages such as:
 - [C](https://vulkan.lunarg.com/) - The offcially supported language for Vulkan.
 - [C++](https://github.com/khronosgroup/vulkan-hpp) - Through [**Vulkan-Hpp**](https://github.com/KhronosGroup/Vulkan-Hpp) the official Vulkan C++ library.
 - [Rust](https://github.com/tomaka/vulkano) - Through [**Volkano**](https://github.com/tomaka/vulkano), an intuitive Rust wrapper with a heavy focus on compile time saftety.
-- [JavaScript/OCaml](https://github.com/hyperfuse/Vulkan-Shim) - Through [**Vulkan-Shim**](https://github.com/hyperfuse/Vulkan-Shim), a shim for WebGL on browsers and FFI for native targets.
 - [Python](https://github.com/bglgwyng/pyVulkan) - Through [**pyVulkan**](https://github.com/bglgwyng/pyVulkan), a Python FFI to the C implementation of Vulkan.
 
 I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan) with a some C++ examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
