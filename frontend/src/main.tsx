@@ -8,9 +8,6 @@ import thunk from 'redux-thunk';
 import './css';
 import App from './app';
 import reducers from './store/reducers';
- 
-// Debug
-const NODE_ENV = typeof process !== 'undefined' ? process.env.NODE_ENV : 'development';
 
 // State
 declare var devToolsExtension;

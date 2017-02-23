@@ -2,29 +2,7 @@ import * as React from 'react';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
 import { Link } from 'react-router-dom';
 
-const styles = {
-  root: {
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0))',
-    zIndex: 100,
-    position: 'relative'
-  },
-  img: {
-    width: 96
-  },
-  span: {
-    borderBottom: '1px inset #fff',
-    width: 24
-  },
-  a: {
-    padding: 16
-  }
-}
+
 
 /**
  * The Header/Hero for Alain.xyz
@@ -89,5 +67,29 @@ export class Hero extends React.Component<any, any> {
 
         <span style={styles.span} />
       </nav>)
+  }
+}
+
+const styles = {
+  root: {
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0))',
+    zIndex: 100,
+    position: 'relative'
+  },
+  img: {
+    width: 96
+  },
+  span: {
+    borderBottom: '1px inset #fff',
+    width: 24
+  },
+  a: {
+    padding: 16
   }
 }

@@ -18,7 +18,7 @@ export class Icon extends React.Component<IconProps, IconState> {
     style: {}
   };
 
-  public state = { paths: IconPaths[this.props.type] }
+  public state = { paths: IconPaths[this.props.type] || [] }
 
   render() {
     var styles = {

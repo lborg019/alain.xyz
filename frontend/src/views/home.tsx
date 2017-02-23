@@ -1,26 +1,33 @@
 import * as React from 'react';
 
-import {Hero} from '../components/hero';
-import {RouteTransition, presets} from '../components/react-router-transition';
+import { Hero, SocialBar } from '../components';
+import { RouteTransition, presets } from '../components/react-router-transition';
 
-
-export class Home extends React.Component<any, any> {
-  render() {
-    return (
-      <div style={{ width: '100vw', height: '100vh'}}>
-        <Hero shrink={this.props.location.pathname !== '/'}/>
-        <div style={{ position: 'relative' }}>
+export function Home({ location, children }) {
+  return (
+    <div style={styles.root}>
+      <Hero shrink={location.pathname !== '/'} />
+      <Sidebar/>
+      <SocialBar/>
+      <div style={styles.mainPage}>
         {
           (innerWidth > 640) ?
             <RouteTransition pathname={this.props.location.pathname} {...presets.slideUp}>
-              {this.props.children}
+              {children}
             </RouteTransition> :
-            this.props.children
+            children
         }
-        </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-export default Home;
+const styles = {
+  root: {
+    width: '100vw',
+    height: '100vh'
+  },
+  mainPage: {
+    position: 'relative'
+  }
+}
