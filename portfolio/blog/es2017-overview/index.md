@@ -4,6 +4,7 @@ JavaScript has evolved to a viable high level language, with a great set of feat
 
 | Language | Sec | Memory (KB) |
 |---|---|---|
+| C | 1.64 | 29,588 |
 | *Node.js* | **17.35** | 616,024 |
 | Dart | 20.51 | 111,732 |
 | PHP (Hack) | 125.28	 | 116,064 |
@@ -13,7 +14,7 @@ JavaScript has evolved to a viable high level language, with a great set of feat
 
 > Note: Performance isn't everything, other languages have great ideas too.
 
-A far cry to what people thought it would be at it's conception. JavaScript was designed in 10 days by [Brendan Eich](https://twitter.com/brendaneich?lang=en), had varying levels of browser support, and Adobe Flash's **ActionScript** was looking to be a much better web platform. But things have calmed down since then and the language is regularly maintained by the ECMA standard body, stable across browsers, beat Flash and even took some of ActionScript's language features (a classic case of too early for it's time).
+A far cry to what people thought it would be at it's conception. JavaScript was designed in 10 days by [Brendan Eich](https://twitter.com/brendaneich?lang=en), had varying levels of browser support, and Adobe Flash was looking to be a much better web platform. But things have calmed down since then and the language is regularly maintained by the ECMA standard body, stable across browsers, beat Flash and even took some of ActionScript's language features (a classic case of too early for it's time).
 
 The following is a quick overview of all the new features of JavaScript as of 2017, we'll be looking at:
 
@@ -73,7 +74,7 @@ JavaScript functions have always been pretty verbose. You have to write the whol
 | Rust     | `fn`     |
 | Python   | `def`    |
 
-JavaScript functions were also a bit confusing, `this` is bound to the global `window` scope unless declared otherwise, so **Fat Arrow** functions make things a bit clearer.
+JavaScript functions were also a bit confusing, `this` is bound to the global `window` scope unless declared otherwise, so **Fat Arrow** functions are instead bound to the current class.
 
 ## Classes
 
@@ -202,8 +203,6 @@ function connect(mapStateToProps, mapDispatchToProps) {
 
 **Decorators** are a way of wrapping functions to add extra functionality. They originated from [Python](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/PythonDecorators.html).
 
-
-
 ### Iterators & Generators
 
 ```js
@@ -226,8 +225,6 @@ console.log(gen.next().value); // 2
 ES6 brought built in Iterator support, and a way to "Generate" Iterators!
 
 > A function becomes a **generator** if *it contains one or more yield expressions and if it uses the function* syntax*.
-
-
 
 It's similar to [C# Coroutines](http://docs.unity3d.com/Manual/Coroutines.html) if you've ever used the Unity Game Engine.
 
@@ -272,8 +269,6 @@ class Promise<T> {
 ```
 
 **Promises** - An Asyncronous function that acts sort of like a Coroutine in C#, independent of the caller. Angular had them in AJAX requests, and It's now in ES6!
-
-
 
 ```js
 // Angular 1.x had something similar to promises.

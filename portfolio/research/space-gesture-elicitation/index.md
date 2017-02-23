@@ -1,0 +1,1 @@
+For my first year of research in OpenHID I was responsible for an HCI elicitation study. 
