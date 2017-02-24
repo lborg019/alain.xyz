@@ -22,8 +22,8 @@ export class Icon extends React.Component<IconProps, IconState> {
 
   render() {
     var styles = {
-      fill: "currentcolor",
-      verticalAlign: "middle",
+      fill: 'currentcolor',
+      verticalAlign: 'middle',
       width: this.props.size,
       height: this.props.size
     };

@@ -129,6 +129,7 @@ if (!argv.reduce((prev, cur) => prev || (cur === '--watch'), false)) {
 else {
   console.log('👓 Watching for changes...')
   compiler.watch({}, (err, stats) => {
+     console.log("✔️️ Frontend Compiled Successfully, 👓 still watching...")
     if (err)
       return console.error(err);
   });
