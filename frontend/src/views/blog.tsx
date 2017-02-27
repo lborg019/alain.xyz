@@ -4,28 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchSubapp } from '../store/actions';
 
-const styles = {
-  articleContainer: {
-    width: '100vw',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  article: {
-    width: '100vw',
-    maxWidth: 960,
-    padding: 16
-  },
-  blogPost: {
-    display: 'flex',
-    height: 320,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    padding: '1.5em',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
-  }
-}
+
 
 const BlogPost = ({ cover, title, description, permalink }) =>
   <Link to={permalink} style={{ ...styles.blogPost, backgroundImage: `url('${cover}')` }}>
@@ -44,7 +23,7 @@ const BlogPost = ({ cover, title, description, permalink }) =>
     fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
   })
 )
-class Blog extends React.Component<any, any> {
+export class Blog extends React.Component<any, any> {
 
   componentWillMount() {
     this.props.fetchSubapp({
@@ -54,7 +33,7 @@ class Blog extends React.Component<any, any> {
 
   render() {
     return (
-      <div style={styles.articleContainer}>
+      <div style={styles.root}>
         <div style={styles.article}>
           {
             this.props.portfolio
@@ -66,4 +45,26 @@ class Blog extends React.Component<any, any> {
   }
 }
 
-export { Blog }
+const styles = {
+  root: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    userSelect: 'none'
+  },
+  article: {
+    width: '100%',
+    maxWidth: 960,
+    padding: 16
+  },
+  blogPost: {
+    display: 'flex',
+    height: 320,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: '1.5em',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  }
+}

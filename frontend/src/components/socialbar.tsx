@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StaggeredMotion, Motion, spring } from 'react-motion';
 import { Icon } from './icon';
 import resume from '../store/resume';
 
@@ -23,38 +22,37 @@ export class SocialBar extends React.Component<SocialBarProps, SocialBarState> {
     if (shrink)
       social = social.slice(0, 3);
 
+    let mediaQuery = window && innerWidth < 480;
+
+    let mq = mediaQuery
+      ? {
+        bottom: 0,
+        justifyContent: 'inherit'
+      }
+      : {
+        top: 0,
+        justifyContent: 'flex-end'
+      }
+
     return (
-      <div style={styles.root}>
-        <StaggeredMotion
-          defaultStyles={
-            resume.social.map(v => ({ x: shrink ? 1 : 0 }))
-          }
-          styles={
-            ss =>
-              ss.map((_, i) =>
-                (i === 0) ? { x: spring(shrink ? 1 : 0, { stiffness: 240, damping: (i + 1) * 32 }) } :
-                  { x: spring(ss[i - 1]['x'], { stiffness: 240, damping: (i + 1) * 32 }) }
-              )}>
-          {ss => <div>
-            {social.map(
-              ({ name: type, url }, key) =>
-                <a key={key}
-                  href={url}
-                  style={{ ...styles.icon, opacity: ss[key].x }}>
-                  <Icon type={type} />
-                </a>
-            )}
-          </div>
-          }
-        </StaggeredMotion>
+      <div style={{ ...styles.root, ...mq, ...this.props.style }}>
+        {social.map(
+          ({ name, url }, key) =>
+            <a key={key}
+              href={url}
+              style={styles.icon}>
+              <Icon type={name} />
+            </a>
+        )}
         <a style={styles.icon} onClick={this.toggleShrink}>
           <svg viewBox="0 0 16 16"
             style={styles.more.root}>
-            <Motion
-              defaultStyle={{ y: shrink ? 0 : 6 }}
-              style={{ y: spring(shrink ? 0 : 6) }}>
-              {({ y }) => <line style={styles.more.line} x1="8" y1={8 - y} x2="8" y2={8 + y} />}
-            </Motion>
+            <line style={{
+              ...styles.more.line,
+              transform: `rotateZ(${shrink ? 0 : 90}deg)`,
+              transformOrigin: '50% 50%',
+              transition: 'transform .5s ease-out'
+            }} x1="8" y1="2" x2="8" y2="14" />
             <line style={styles.more.line} x1="2" y1="8" x2="14" y2="8" />
           </svg>
         </a>
@@ -66,7 +64,7 @@ export class SocialBar extends React.Component<SocialBarProps, SocialBarState> {
 }
 
 type SocialBarProps = {
-
+  style?: any
 }
 
 type SocialBarState = {
@@ -78,9 +76,11 @@ const styles = {
     width: '100vw',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: window && (innerWidth / innerHeight > 1) ? 'flex-end' : 'inherit',
-    overflowX: 'scroll',
-    overflowY: 'hidden'
+    overflowX: 'hidden',
+    overflowY: 'hidden',
+    padding: '.5em 1em',
+    position: 'fixed',
+    zIndex: 30
   },
   icon: {
     paddingRight: '1em'

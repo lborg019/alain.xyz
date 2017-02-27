@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Hero, SocialBar } from '../components';
+import { SideBar, SocialBar } from '../components';
 import { RouteTransition, presets } from '../components/react-router-transition';
 
 export class Home extends React.Component<any, any> {
+
   render() {
 
     let {
@@ -12,17 +13,18 @@ export class Home extends React.Component<any, any> {
       children
     } = this.props;
 
+    let mediaQuery = window && innerWidth > 440;
+
     return (
       <div style={styles.root}>
         <SocialBar />
-        <div style={styles.mainPage}>
-          {
-            (innerWidth > 640) ?
-              <RouteTransition pathname={pathname} {...presets.slideUp}>
-                {children}
-              </RouteTransition> :
-              children
-          }
+        <SideBar pathname={pathname} />
+        <div style={{
+          ...styles.mainPage, 
+          width: mediaQuery ? 'calc(100vw - 440px)' : '100vw',
+          transform: `translateX(${mediaQuery ? 440 : 0}px)`
+          }}>
+          {children}
         </div>
       </div>
     )
@@ -35,6 +37,8 @@ const styles = {
     height: '100vh'
   },
   mainPage: {
-    position: 'relative'
+    height: '100vh',
+    position: 'relative',
+    transition: 'transform 0.3s ease-out'
   }
 }

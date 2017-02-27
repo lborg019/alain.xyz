@@ -25,7 +25,7 @@ body {
     background-position: center bottom;
     background-repeat: no-repeat;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: -moz-scrollbars-none, scroll;
 }
 
 input {
@@ -46,10 +46,10 @@ a {
         color: #fff;
     }
     &:hover {
-        color: #eee;
+        color: #abcde8;
     }
     &:active {
-        color: #aaa;
+        color: #4c8abd;
     }
 }
 
@@ -69,11 +69,11 @@ h2 {
 }
 
 h3 {
-    font-size: 1.5em;
+    font-size: 1.6666em;
 }
 
 h4 {
-    font-size: 1.25em;
+    font-size: 1.5em;
 }
 
 h5 {
@@ -91,17 +91,17 @@ img {
 p {
     line-height: 2.5em;
     a {
-    &:link,
-    &:visited {
-        color: #639dcc;
+        &:link,
+        &:visited {
+            color: #639dcc;
+        }
+        &:hover {
+            color: #abcde8;
+        }
+        &:active {
+            color: #4c8abd;
+        }
     }
-    &:hover {
-        color: #abcde8;
-    }
-    &:active {
-        color: #4c8abd;
-    }
-}
 }
 
 pre {
@@ -118,7 +118,6 @@ code {
     line-height: 1.5em;
 }
 
-
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -133,12 +132,13 @@ code {
     border-radius: 20px;
 }
 
+
 /* Article Specific CSS */
+
 article {
     p {
-    line-height: 2.5em;
+        line-height: 2.5em;
     }
-
     img {
         display: block;
         margin: auto;
@@ -155,7 +155,7 @@ article {
     strong {
         font-weight: 500;
     }
-    &> p {
+    &>p {
         padding: 1em 0;
     }
     h1,
@@ -180,8 +180,23 @@ article {
         list-style: circle;
         padding-left: 2em;
     }
-    ul, ol {
+    ul,
+    ol {
         line-height: 1.5em;
+    }
+    table {
+        line-height: 2em;
+        th {
+            padding: .5em .7em;
+        }
+        tr {
+            &:nth-child(2n) {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+            td {
+                padding: .4em .7em;
+            }
+        }
     }
 }
 

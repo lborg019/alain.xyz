@@ -7,10 +7,10 @@ export class About extends React.Component<any, any> {
     return (
       <div>
         <section >
-          <img src="assets/brand/alaingalvan.jpg" alt="A photo of Alain Galvan. :)" />
+          <img style={styles.img} src="assets/brand/alaingalvan.jpg" alt="A photo of Alain Galvan. :)" />
           <div >
             <h1>Hi there! <span style={{fontSize: '1.5em'}}>✌</span></h1>
-            <p>My name is Alain, Graduate Graphics Research Assistant <a href="http://fiu.edu/">@FIU</a>'s <a href="http://OpenHID.com">@OpenHID</a> Lab, where my research focuses on low level graphics programming, HCI, WebGL, Vulkan.</p>
+            <p>My name is Alain,  and I'm a Graduate Graphics Research Assistant <a href="http://fiu.edu/">@FIU</a>'s <a href="http://OpenHID.com">@OpenHID</a> Lab, where my research focuses on low level graphics programming, HCI, WebGL, Vulkan.</p>
             <p>I'm also a Speaker @ <a href="https://www.meetup.com/MakeGamesMiami/">The Miami Game Development Meetup</a> and Guitarist @ Princeton Church.</p>
             <div style={{ padding: '16px 0' }}>
               <a href="assets/brand/alain-galvan-resume.pdf" style={{ ...styles.button, backgroundColor: '#3093b0' }} className="btn">Resume</a>

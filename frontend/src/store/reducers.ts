@@ -2,11 +2,11 @@ import { APIRequest, APIResponse } from './actions';
 import { createReducer } from './utils';
 
 const initialState = {
-    subapp: null,       // Current SubApplication
-    portfolio: [],      // Cached SubApplications
-    isFetching: false,  // Loading
-    error: '',          // API Errors
-    hideMenu: false     // Hide Header
+    subapp: null,           // Current SubApplication
+    portfolio: [],          // Cached SubApplications
+    fetchingSubapp: false,  // Loading
+    error: '',              // API Errors
+    hideMenu: false         // Hide Sidebar
 };
 
 // Keep Portfolio Cache a max of 100 subapps long.
@@ -39,27 +39,30 @@ export default createReducer(initialState, {
             ...state,
             portfolio,
             subapp: portfolio.find((subapp) => subapp.permalink === payload.req.permalink),
-            isFetching: false
+            fetchingSubapp: false
         };
     },
 
     FETCHING_SUBAPP: (state, payload) =>
         ({
             ...state,
-            isFetching: true,
+            fetchingSubapp: true,
             subapp: null
         }),
 
     SET_SUBAPP: (state, payload) =>
         ({
             ...state,
-            subapp: state.portfolio.find((e) => e.permalink === payload.permalink)
+            subapp: state.portfolio.find((e) => e.permalink === payload.permalink),
+            fetchingSubapp: false
         }),
 
     ERROR: (state, payload) =>
         ({
             ...state,
-            error: payload.error
+            error: payload.error,
+            subapp: null,
+            fetchingSubapp: false
         }),
 
     HIDE_MENU: (state, payload) =>

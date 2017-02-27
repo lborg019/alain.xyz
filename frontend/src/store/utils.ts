@@ -10,7 +10,7 @@ export function createReducer(initialState, reducerMap) {
     };
 }
 
-export const transport = (api, body) =>
+export const transport = (api: string, body: Object) =>
     fetch(api, {
         method: 'post',
         credentials: 'include',

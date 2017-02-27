@@ -51,11 +51,12 @@ export const setSubapp = (permalink: string) => ({
 
 export const fetchSubapp = (req: APIRequest) =>
   dispatch => {
+    dispatch(fetchingSubapp());
     transport('/api/v1/portfolio', req)
       .then(checkHttpStatus)
       .then(parseJSON)
       .then(res => dispatch(fetchedSubapp(req, res)))
-      .catch((err) => dispatch(failure(err.message)));
+      .catch(err => dispatch(failure('Couldn\'t find that page...')));
 
     return fetchingSubapp();
   };

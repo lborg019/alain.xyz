@@ -3,7 +3,7 @@ export default {
     {
       name: 'twitter',
       url: 'https://twitter.com/alainxyz'
-    },{
+    }, {
       name: 'github',
       url: 'https://github.com/alaingalvan'
     }, {
@@ -12,22 +12,22 @@ export default {
     }, {
       name: 'artstation',
       url: 'https://www.artstation.com/artist/alaingalvan'
-    }, {
+    },/* {
       name: 'deviantart',
       url: 'https:///alaingalvan.deviantart.com'
-    }, {
+    }, */{
       name: 'soundcloud',
       url: 'http://soundcloud.com/alaingalvan'
+    },/* {
+      name: 'youtube',
+      url: 'https://www.youtube.com/user/AGCreate'
     }, {
       name: 'codepen',
       url: 'https://codepen.io/alaingalvan'
     }, {
-      name: 'youtube',
-      url: 'https://www.youtube.com/user/AGCreate'
-    }, {
       name: 'tumblr',
       url: 'http://alaingalvan.tumblr.com/'
-    }
+    }*/
   ],
   experience: [{
     position: 'Graduate Graphics Research Assistant',
