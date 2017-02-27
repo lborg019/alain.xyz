@@ -9,7 +9,6 @@ const App = (
         <Switch>
           <Route exact path="/" render={() => null} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/portfolio" component={About} />
           <Route exact path="/blog" render={props => <Blog {...props} />} />
           <Route render={props => <Subapp {...props} />} />
         </Switch>

@@ -5,19 +5,26 @@ import resume from './resume';
 export class About extends React.Component<any, any> {
   render() {
     return (
-      <div>
-        <section >
+      <div style={styles.root}>
+        <section style={styles.section}>
           <img style={styles.img} src="assets/brand/alaingalvan.jpg" alt="A photo of Alain Galvan. :)" />
-          <div >
-            <h1>Hi there! <span style={{fontSize: '1.5em'}}>✌</span></h1>
+          <article style={styles.article}>
+            <h1 style={styles.h1}>Hi there! <span style={{fontSize: '1.5em'}}>✌</span></h1>
             <p>My name is Alain,  and I'm a Graduate Graphics Research Assistant <a href="http://fiu.edu/">@FIU</a>'s <a href="http://OpenHID.com">@OpenHID</a> Lab, where my research focuses on low level graphics programming, HCI, WebGL, Vulkan.</p>
             <p>I'm also a Speaker @ <a href="https://www.meetup.com/MakeGamesMiami/">The Miami Game Development Meetup</a> and Guitarist @ Princeton Church.</p>
             <div style={{ padding: '16px 0' }}>
-              <a href="assets/brand/alain-galvan-resume.pdf" style={{ ...styles.button, backgroundColor: '#3093b0' }} className="btn">Resume</a>
-              <a href="mailto:hi@alain.xyz"><Icon type="email"/></a>
-              <a href=""><Icon type="twitter"/></a>
+              <a href="assets/brand/alain-galvan-resume.pdf" 
+              style={{backgroundColor: '#3093b0' }}
+              className="btn" >
+              Resume
+              </a>
+              <a href="mailto:hi@alain.xyz" 
+              style={{ backgroundColor: '#6945bf' }}
+              className="btn" >
+              Email
+              </a>
             </div>
-          </div>
+          </article>
         </section>
       </div>
     )
@@ -29,22 +36,26 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: 'calc(100vh - 240px)',
-    width: '100vw'
+    minHeight: '100%',
+    width: '100%'
   },
   section: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    maxWidth: 720
+    maxWidth: 720,
+    flexDirection: 'column'
   },
   img: {
-    width: 192,
-    height: 192,
+    width: 256,
+    height: 256,
     borderRadius: '100%',
     margin: 16,
     border: '1px solid rgb(255, 255, 255)',
     boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23)'
+  },
+  h1: {
+    padding: '0.2em 0'
   },
   article: {
     padding: '4px 16px'

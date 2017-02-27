@@ -16,8 +16,8 @@ let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) =
 
     // check to see if it's in the cache
     // if it is in the cache, replace it if the data field is empty.
-    for (var subapp of subapps) {
-        var index = cache.findIndex((v) => v.permalink === subapp.permalink);
+    for (let subapp of subapps) {
+        let index = cache.findIndex((v) => v.permalink === subapp.permalink);
         if (index > -1) {
             if (subapp['data'] !== undefined)
                 cache[index] = subapp;

@@ -106,7 +106,7 @@ p {
 
 pre {
     text-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-    background-color: #282c34;
+    background-color: rgba(0, 0, 0, 0.23);
     padding: 8px;
     overflow: auto;
     border-radius: 8px;
@@ -145,12 +145,13 @@ article {
     }
     blockquote {
         border-left-width: 10px;
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: rgba(0, 0, 0, 0.151);
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         padding: 15px 20px;
         margin: 0 0 1.1em;
-        border-left: 5px solid rgba(0, 0, 0, 0.075);
+        border-left: 5px solid rgba(54, 140, 202, 0.52);
+        ;
     }
     strong {
         font-weight: 500;
@@ -177,8 +178,14 @@ article {
         padding-left: 2em;
     }
     ol {
-        list-style: circle;
+        list-style: decimal;
         padding-left: 2em;
+        >ol {
+            list-style: lower-alpha;
+            >ol {
+                list-style: lower-roman;
+            }
+        }
     }
     ul,
     ol {
@@ -186,6 +193,7 @@ article {
     }
     table {
         line-height: 2em;
+        margin: 1em;
         th {
             padding: .5em .7em;
         }
@@ -197,6 +205,29 @@ article {
                 padding: .4em .7em;
             }
         }
+    }
+}
+
+
+/* Core Styles */
+
+.btn {
+    background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.19));
+    background-repeat: no-repeat;
+    box-shadow: 0 2px 0 rgba(255, 255, 255, 0.5) inset;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-out, background-position 0.3s ease-out;
+    cursor: pointer;
+    border-radius: .25em;
+    background-color: #3676d1;
+    margin: .5em .25em;
+    padding: .75em 1.5em;
+    &:hover {
+        background-position: 0 1em;
+    }
+    &:active {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) inset;
     }
 }
 

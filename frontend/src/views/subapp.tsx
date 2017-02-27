@@ -79,8 +79,6 @@ export class Subapp extends React.Component<SubappProps, SubappState> {
             post => post.permalink === path
         );
 
-        console.log(location);
-
         let cached = isCached(portfolio, location.pathname);
 
         if (cached)

@@ -57,6 +57,4 @@ export const fetchSubapp = (req: APIRequest) =>
       .then(parseJSON)
       .then(res => dispatch(fetchedSubapp(req, res)))
       .catch(err => dispatch(failure('Couldn\'t find that page...')));
-
-    return fetchingSubapp();
   };

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { database } from './db';
 
+
 /**
  * Prerenders a given page with React.
  */

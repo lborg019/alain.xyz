@@ -1,18 +1,23 @@
 JavaScript has evolved to a viable high level language, with a great set of features and performance.
 
-### Mandelbrot Benchmark (Courtesy of [Gouy, Isaac. The Computer Benchmark Game](http://benchmarksgame.alioth.debian.org/)) 
+[![Mandelbrot Courtesy of Inigo Quilez, ShaderToy](assets/mandelbrot.png)](https://www.shadertoy.com/view/4df3Rn)
+
+The Mandelbrot Benchmark (Courtesy of [Gouy, Isaac. The Computer Benchmark Game](http://benchmarksgame.alioth.debian.org/)) shows just how far it's come, beating Ruby, PHP, and Python in performance. 
 
 | Language | Sec | Memory (KB) |
 |---|---|---|
 | C | 1.64 | 29,588 |
 | *Node.js* | **17.35** | 616,024 |
 | Dart | 20.51 | 111,732 |
-| PHP (Hack) | 125.28	 | 116,064 |
+| Hack (PHP) | 125.28	 | 116,064 |
 | *Python* | 250.62 | **52,752** |
 | Ruby | 7 min | 69,656 |
 | Erlang | 8 min | 1,303,564 |
 
-> Note: Performance isn't everything, other languages have great ideas too.
+> Please Note: 
+> 1. Performance isn't everything, other languages have great ideas too. 
+> 
+> 2. There's no better benchmark than your app, the Mandelbrot fractal is great but there are variations in performance across benchmarks, so look at the others!
 
 A far cry to what people thought it would be at it's conception. JavaScript was designed in 10 days by [Brendan Eich](https://twitter.com/brendaneich?lang=en), had varying levels of browser support, and Adobe Flash was looking to be a much better web platform. But things have calmed down since then and the language is regularly maintained by the ECMA standard body, stable across browsers, beat Flash and even took some of ActionScript's language features (a classic case of too early for it's time).
 
@@ -66,7 +71,7 @@ function callback() { return console.log("Callback!");}
 
 JavaScript functions have always been pretty verbose. You have to write the whole word `function`, other languages had it better:
 
-| Language | Function |
+| Language | `function` Keyword |
 |----------|----------|
 | Swift    | `func`   |
 | Go       | `func`   |
@@ -135,7 +140,7 @@ var app = require('express'); //express is defined in node_modules.
 module.exports = {some: 'data'};
 ```
 
-Then [RequireJS](http://requirejs.org/docs/whyamd.html) defined a new spec! **Asyncronous Module Definition**, or AMD for short. The AMD loader will parse out the `require('')` calls by using `Function.prototype.toString()`, then internally convert it to the format above.
+Then [RequireJS](http://requirejs.org/docs/whyamd.html) defined a new spec! **Asynchronous Module Definition**, or AMD for short. The AMD loader will parse out the `require('')` calls by using `Function.prototype.toString()`, then internally convert it to the format above.
 
 ```js
 define([ "require", "jquery"], function (require, $) {});
@@ -174,6 +179,14 @@ let newProps = {
 
 ### Decorators
 
+```ts
+type Decorator<C, D extends C> = (...args: any[]) => C => D;
+```
+
+**Decorators** are a way of wrapping functions to add extra functionality. They originated from [Python](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/PythonDecorators.html).
+
+They're used for example, in `react-redux` to make it easier to wrap a React component with a listener to the Rexdux store.
+
 ```js
 // In your code:
 @connect(mapStateToProps, mapDispatchToProps)
@@ -200,8 +213,6 @@ function connect(mapStateToProps, mapDispatchToProps) {
   }
 }
 ```
-
-**Decorators** are a way of wrapping functions to add extra functionality. They originated from [Python](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/PythonDecorators.html).
 
 ### Iterators & Generators
 

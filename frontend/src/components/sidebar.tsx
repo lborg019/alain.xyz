@@ -58,7 +58,8 @@ const styles = {
     position: 'fixed',
     left: 0,
     top: 0,
-    zIndex: 10
+    zIndex: 10,
+    background: 'rgba(33, 37, 43, 0.8)'
   },
   h1: {
     textTransform: 'uppercase'
@@ -80,6 +81,5 @@ const styles = {
   img: {
     height: 56,
     width: 56
-
   }
 };
