@@ -55,7 +55,7 @@ async function compileSubapp() {
             'react-router-dom',
             'react-redux',
             'redux',
-            'alain-xyz'
+            'main'
           ],
           meta: {
             '*.ts': {
@@ -72,7 +72,7 @@ async function compileSubapp() {
           format: 'cjs'
         },
         ts: {
-          format: 'cjs'
+          format: 'systemjs'
         }
       },
       map: {
@@ -114,7 +114,7 @@ async function compileSubapp() {
         'react-router',
         'react-redux',
         'redux',
-        'alain-xyz',
+        'main',
         'plugin-typescript',
         'typescript',
         'fs',

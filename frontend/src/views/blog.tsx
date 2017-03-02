@@ -18,8 +18,6 @@ const BlogPost = ({ cover, title, description, permalink, publishDate, tags, sty
         <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)'}}>
           <Icon type='date' style={{marginRight: '.5em'}}/>
           {date.toLocaleDateString()} @ {date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}
-          <Icon type='eye' style={{margin: '0 .5em'}}/>
-          1421 Views
           </p>
         <p style={{lineHeight: '1.25em', color: '#fff'}}>{description}</p>
       </section>
@@ -31,7 +29,7 @@ const BlogPost = ({ cover, title, description, permalink, publishDate, tags, sty
   ({ portfolio }) => ({
     portfolio
   }),
-  (dispatch) => ({
+  dispatch => ({
     fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
   })
 )

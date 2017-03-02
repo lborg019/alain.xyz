@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon } from 'alain-xyz';
+import { Icon } from 'main';
 export default class BlogPost extends React.Component<any, any> {
 
   private root = null;
@@ -16,7 +16,7 @@ export default class BlogPost extends React.Component<any, any> {
     if (!this.props.config)
       return null;
 
-    let { title, description, cover, publishDate, meta, publishDate, tags, data } = this.props.config;
+    let { title, description, cover, meta, publishDate, tags, data } = this.props.config;
 
     let date = new Date(publishDate);
     return (
@@ -29,8 +29,6 @@ export default class BlogPost extends React.Component<any, any> {
             <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)' }}>
               <Icon type='date' style={{ marginRight: '.5em' }} />
               {date.toLocaleDateString()} @ {date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}
-              <Icon type='eye' style={{ margin: '0 .5em' }} />
-              1421 Views
           </p>
           </div>
           <div style={styles.articleContainer}>

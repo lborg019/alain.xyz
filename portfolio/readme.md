@@ -1,4 +1,4 @@
-![Latest Cover](blog/realtime-celestial-rendering/assets/cover.png)
+![Latest Cover](blog/the-making-of-alain-xyz/assets/cover.png)
 
 # [Alain.xyz](http://alain.xyz/portfolio) Portfolio
 
@@ -22,10 +22,10 @@ This portfolio is indexed by the Alain.xyz Builder, compiling markdown, building
 ├─ businesses/ # 🏬 Physical Products
 # Writings
 ├─ research/   # 📄 Research Papers
-├─ blog/       # 📰 Blog Articles
+├─ talks/      # 🗨️ Conference Presentations
 ├─ books/      # 📘 Books
 ├─ readings/   # 👓 Reviews/Notes/Audio Clips
-├─ talks/      # 🗨️ Conference Presentations
+├─ blog/       # 📰 Blog Articles
 # Code
 ├─ apps/       # 🅰️️ Applications
 ├─ libraries/  # 📚 Libraries

@@ -1,4 +1,4 @@
-declare module "alain-xyz";
+declare module "main";
 declare module "systemjs-builder";
 
 declare module "id3js" {
