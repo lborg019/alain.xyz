@@ -8,7 +8,7 @@ Nothing is born from a vacuum, so it's thanks to all the resources posted by Sha
 
 Here's the final program in action:
 
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XlfXz2?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
+<iframe width="100%" height="480" frameborder="0" src="https://www.shadertoy.com/embed/XlfXz2?gui=true&t=10&paused=false&muted=false" allowfullscreen></iframe>
 
 ## Shader Theory
 
@@ -63,9 +63,9 @@ vec4 integrate( in vec4 sum, in float dif, in float density, in vec3 bgcol, in f
 
 ### Raymarching
 
-**Raymarching** is a method of GPU raytracing, with the goal of trying to compute or estimate a lower bound of the distance to the closest surface at any point in space. It works like regular raycasting, but marching with smaller and smaller distances like an inverse function.
-
 [![Gif of Raymarching Steps](assets/raymarchsteps.gif)](https://www.shadertoy.com/view/XtsXRB)
+
+**Raymarching** is a method of GPU raytracing, with the goal of trying to compute or estimate a lower bound of the distance to the closest surface at any point in space. It works by iterating over descrete steps until that ray collides with an object.
 
 This gives room for optimization since you can change the iteration behavior, like using larger steps when distances are farther from the origin, clamping the step distance like a camera's near/far planes, lowering the step count, etc.
 
@@ -90,7 +90,9 @@ vec2 distmarch( vec3 rayOrigin, vec3 rayDestination, float maxd )
   //March
   for (int i = 0; i < DISTMARCH_STEPS; i++)
   {
+    // Near/Far Planes
     if ( abs(dist) < epsilon || t > maxd ) break;
+
     // advance the distance of the last lookup
     t += dist;
     vec2 dfresult = scenedf( rayOrigin + t * rayDestination );
@@ -106,7 +108,11 @@ vec2 distmarch( vec3 rayOrigin, vec3 rayDestination, float maxd )
 }
 ```
 
-So raymarching behaves like a camera, so it's a good idea to have a camera system set up for it:
+### Camera
+
+![First Person Cam Spinning](assets/firstperson.gif)
+
+You can create a camera by defining a system that determines the direction of each ray casted.
 
 ```glsl
 //Globals
@@ -144,8 +150,6 @@ CameraData setupCamera(in vec2 fragCoord)
 }
 ```
 
-![First Person Cam Spinning](assets/firstperson.gif)
-
 The camera is built to be first person, and works by transforming the pointing vector with mouse uniforms.
 
 ```glsl
@@ -157,7 +161,7 @@ void animateCamera()
     vec2 click = iMouse.xy / iResolution.xx;
     click = 1.6 * click - .8;
 
-    float yaw    =  PI_OVER_TWO * (click.x);
+    float yaw = PI_OVER_TWO * (click.x);
 
     camPointAt = camOrigin + vec3(cos(yaw), 0., sin(yaw) );
 }
@@ -178,15 +182,14 @@ vec2 scenemarch = distmarch(cam.origin, cam.dir, DISTMARCH_MAXDIST);
 
 ### PBR
 
-**Physically Based Rendering** is a method of describing materials that decouples a material's behavior from it's color. A material's defined as:
-
-- **Albedo** - base color.
-- **Metallic** - How reflective a material is.
-- **Roughness** - how rough a material is (Unreal calls this *roughness*, Unity calls this *smoothness*, others call it *gloss* or *microsurface*)
-
-
 ![Marmoset PBR Metal](assets/pbr-metal.png)
 ![Marmoset PBR Gloss](assets/pbr-gloss.png)
+
+**Physically Based Rendering** is a method of describing materials that decouples a material's *behavior* from it's *color*. A material's defined as:
+
+- **Albedo** - base color, what the color of a surface would be in a perfectly ambient environment.
+- **Metallic** - How reflective a material is.
+- **Roughness** - how rough a material is (Unreal calls this *roughness*, Unity calls this *smoothness*, others call it *gloss* or *microsurface*)
 
 In this example I'm using PBR rendering to quickly design materials via this struct:
 

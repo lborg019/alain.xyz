@@ -16,7 +16,9 @@ export class NestedMenu extends React.Component<any, any> {
       },
       blog: ''
     },
-    root: ''
+    root: '',
+    style: {},
+    liStyles: {}
   }
 
   render() {
@@ -35,7 +37,15 @@ export class NestedMenu extends React.Component<any, any> {
           (v, k) => {
 
             let p = {
-              style: { color: pathname === (root + '/' + v) ? '#639dcc' : '#fff' },
+              style: {
+                ...styles.link,
+                color: pathname === (root + '/' + v)
+                  ? '#639dcc'
+                  : '#ffffffee',
+                borderLeft: pathname === (root + '/' + v)
+                  ? 'rgba(78, 160, 232, 1) .5em solid'
+                  : 'rgba(78, 160, 232, 0.33) .2em solid'
+              },
               to: `${root + '/' + v}`,
               children: capitalize(v)
             };
@@ -51,7 +61,10 @@ export class NestedMenu extends React.Component<any, any> {
                     ? link
                     : null}
                 {isObj
-                  ? <NestedMenu pathname={pathname} root={root + '/' + v} structure={structure[v]} />
+                  ? <NestedMenu
+                    pathname={pathname} root={root + '/' + v}
+                    style={{ paddingLeft: '1em' }}
+                    structure={structure[v]} />
                   : link}
               </li>)
           })}
@@ -62,10 +75,17 @@ export class NestedMenu extends React.Component<any, any> {
 
 const styles = {
   root: {
-    paddingLeft: '1em',
-    fontSize: '1.1rem'
+    //padding: '.75em 1em 0 1em'
   },
   li: {
-    padding: '1.5em 0 0 0'
+
+
+  },
+  link: {
+    display: 'block',
+    padding: '.75em 0 .75em .5em',
+    margin: '.2em',
+    background: 'rgba(23,26,30,0.11)',
+    transition: 'border-left .3s, color .3s'
   }
 }

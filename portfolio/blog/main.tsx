@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { Icon } from 'alain-xyz';
 export default class BlogPost extends React.Component<any, any> {
 
   private root = null;
@@ -7,7 +7,8 @@ export default class BlogPost extends React.Component<any, any> {
   componentDidMount() {
     if (window && this.root) {
       window.scrollTo(0, 0);
-    } 
+      document.title = this.props.config.title;
+    }
   }
 
   render() {
@@ -15,16 +16,23 @@ export default class BlogPost extends React.Component<any, any> {
     if (!this.props.config)
       return null;
 
-    let {title, description, cover, publishDate, meta, tags, data} = this.props.config;
+    let { title, description, cover, publishDate, meta, publishDate, tags, data } = this.props.config;
+
+    let date = new Date(publishDate);
     return (
       <div ref={r => this.root = r} style={styles.root}>
-        <figure style={{ ...styles.figure, backgroundImage: `linear-gradient(rgba(33,37,43,0) 80vh, rgba(33,37,43,1)), url(${cover})` }}>
-          <figcaption style={styles.figcaption}>
-            <h1>{title}</h1>
-            <p>{description}</p>
-          </figcaption>
-        </figure>
+        <figure style={{ ...styles.figure, backgroundImage: `linear-gradient(rgba(33,37,43,0) 65vh, rgba(33,37,43,1)), url(${cover})` }}/>
         <section style={styles.section}>
+          <div style={{padding: '.5em'}}>
+            <h1 style={{ color: '#fff' }}>{title}</h1>
+            <p>{description}</p>
+            <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)' }}>
+              <Icon type='date' style={{ marginRight: '.5em' }} />
+              {date.toLocaleDateString()} @ {date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}
+              <Icon type='eye' style={{ margin: '0 .5em' }} />
+              1421 Views
+          </p>
+          </div>
           <div style={styles.articleContainer}>
             <article style={styles.article} dangerouslySetInnerHTML={{ __html: data }} />
           </div>
@@ -48,7 +56,7 @@ const styles = {
     height: '100vh',
     position: 'relative',
     zIndex: 1,
-    left: -440,
+    left: -340,
     backgroundSize: 'cover',
     backgroundPosition: 'center'
   },
@@ -60,7 +68,7 @@ const styles = {
   article: {
     width: '100%',
     maxWidth: 960,
-    padding: 16
+    padding: '1.5em'
   },
   articleContainer: {
     width: '100%',
@@ -70,7 +78,8 @@ const styles = {
   },
   section: {
     display: 'flex',
-    transform: 'translate(0, -120px)',
+    flexDirection: 'column',
+    transform: 'translate(0, -16em)',
     position: 'relative',
     zIndex: 10
   }

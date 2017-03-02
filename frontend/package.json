@@ -19,7 +19,6 @@
   ],
   "private": true,
   "devDependencies": {
-    "@types/isomorphic-fetch": "0.0.32",
     "@types/node": "^7.0.5",
     "@types/react": "^15.0.12",
     "@types/react-dom": "^0.14.23",
@@ -27,11 +26,12 @@
     "@types/react-redux": "^4.4.36",
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack": "^2.2.7",
-    "autoprefixer": "^6.7.5",
+    "autoprefixer": "^6.7.6",
     "concurrently": "^3.3.0",
     "css-loader": "^0.26.2",
     "extract-text-webpack-plugin": "^2.0.0",
-    "postcss-loader": "1.3.2",
+    "file-loader": "^0.10.1",
+    "postcss-loader": "1.3.3",
     "precss": "^1.4.0",
     "style-loader": "^0.13.2",
     "ts-loader": "^2.0.1",
@@ -41,15 +41,17 @@
     "webpack-systemjs-export-plugin": "git+ssh://git@github.com/alaingalvan/webpack-systemjs-export-plugin.git"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-motion": "^0.4.7",
     "react-redux": "^5.0.2",
-    "react-router": "^4.0.0-beta.3",
-    "react-router-dom": "4.0.0-beta.5",
+    "react-router": "^4.0.0-beta.6",
+    "react-router-dom": "4.0.0-beta.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "systemjs": "^0.20.9",
+    "typeface-fira-sans": "^0.0.22",
+    "typeface-source-code-pro": "^0.0.22",
     "unfetch": "^2.1.0"
   }
 }

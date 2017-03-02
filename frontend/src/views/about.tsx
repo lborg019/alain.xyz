@@ -16,7 +16,7 @@ export class About extends React.Component<any, any> {
               <a href="assets/brand/alain-galvan-resume.pdf" 
               style={{backgroundColor: '#3093b0' }}
               className="btn" >
-              Resume
+              Résumé
               </a>
               <a href="mailto:hi@alain.xyz" 
               style={{ backgroundColor: '#6945bf' }}

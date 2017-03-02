@@ -2,22 +2,34 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Icon } from '../components';
 import { fetchSubapp } from '../store/actions';
 
 
 
-const BlogPost = ({ cover, title, description, permalink }) =>
-  <Link to={permalink} style={{ ...styles.blogPost, backgroundImage: `url('${cover}')` }}>
-    <section style={{ textAlign: 'right' }}>
-      <h1>{title}</h1>
-      <p>{description}</p>
-    </section>
-  </Link>;
+const BlogPost = ({ cover, title, description, permalink, publishDate, tags, style = {} }) => {
 
+  let date = new Date(publishDate);
+
+  return (
+    <Link to={permalink} style={{ ...styles.blogPost, ...style, backgroundImage: `url('${cover}')` }}>
+      <section style={{backgroundImage: 'linear-gradient(#21252b00, #21252b)', width: '100%', padding: '1.5em',}}>
+        <h2 style={{ color: '#fff'}}>{title}</h2>
+        <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)'}}>
+          <Icon type='date' style={{marginRight: '.5em'}}/>
+          {date.toLocaleDateString()} @ {date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}
+          <Icon type='eye' style={{margin: '0 .5em'}}/>
+          1421 Views
+          </p>
+        <p style={{lineHeight: '1.25em', color: '#fff'}}>{description}</p>
+      </section>
+    </Link>
+  );
+}
 
 @connect(
-  (store) => ({
-    portfolio: store.portfolio
+  ({ portfolio }) => ({
+    portfolio
   }),
   (dispatch) => ({
     fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
@@ -32,13 +44,18 @@ export class Blog extends React.Component<any, any> {
   }
 
   render() {
+
+    let { portfolio } = this.props;
+    let blog = portfolio.filter((post) => post.permalink.slice(0, 5) === '/blog');
+    let [first, ...rest] = blog;
+
     return (
       <div style={styles.root}>
         <div style={styles.article}>
+          <a href='/blog/rss.xml' style={styles.rss}><Icon type="rss" /></a>
+          {first ? <BlogPost style={{ height: 480, width: '100%' }} {...first} /> : null}
           {
-            this.props.portfolio
-              .filter((post) => post.permalink.slice(0, 5) === '/blog')
-              .map((post, key) => <BlogPost key={key} {...post} />)
+            rest.map((post, key) => <BlogPost style={{ width: '50%' }} key={key} {...post} />)
           }
         </div>
       </div>);
@@ -50,21 +67,32 @@ const styles = {
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    userSelect: 'none'
+    userSelect: 'none',
+    flexDirection: 'column',
+    color: '#fff'
+  },
+  rss: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    padding: '2em 1em 1em'
   },
   article: {
+    display: 'flex',
+    flex: '0 1 auto',
+    flexWrap: 'wrap',
+    alignItems: 'center',
     width: '100%',
-    maxWidth: 960,
+    maxWidth: 1280,
     padding: 16
   },
   blogPost: {
     display: 'flex',
-    height: 320,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    padding: '1.5em',
+    height: 280,
+    alignItems: 'flex-end',
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
+    //margin: '2%',
+    //borderRadius: '.5em'
   }
 }

@@ -137,9 +137,10 @@ You can get a lot more done a lot faster if you automatically generate your code
 
 Idealistically, you want the URLs of your website to be expressive, which URL do you think is better:
 
-| CodePen.io | Ebay.com |
+| Site | URL |
 |:----------:|:--------:|
-| `codepen.io/alaingalvan/pen/jPMXXj` | `ebay.com/itm/Apple-iPad-Pro-32GB-Wi-Fi-12-9in-Gold-Latest-Model-ML0H2LL-A-New-Sealed-/301798988450`|
+| CodePen.io | `codepen.io/alaingalvan/pen/jPMXXj` |
+| Ebay.com | `ebay.com/itm/Apple-iPad-Pro-32GB-Wi-Fi-12-9in-Gold-Latest-Model-ML0H2LL-A-New-Sealed-/301798988450`|
 
 Codepen describes their routes perfectly, it's clear that this is Alain's pen of slug jPMXXj. Ebay decides to shorthand **item** to `/itm/...` include a messy version of the item's title in the link, and some random number.
 

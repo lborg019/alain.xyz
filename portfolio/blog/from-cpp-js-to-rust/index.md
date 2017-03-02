@@ -1,8 +1,8 @@
-Rust is becoming very mature as a programming language, with exciting research projects ranging from using it in compilers to web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
+Rust is becoming very mature as a programming language, with exciting research projects ranging from using it to build web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
 
-[Jack Moffitt](https://twitter.com/metajack), developer of the Rust powered browser Servo, said on [The Changelog](https://changelog.com/podcast/228) that:
+[Jack Moffitt](https://twitter.com/metajack), developer for the Rust powered browser Servo, said on [The Changelog](https://changelog.com/podcast/228) that:
 
-> All of [our security critical bugs with Firefox WebAudio] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C++ ].
+> "All of [our security critical bugs with Firefox WebAudio] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C++ ]."
 
 Now that's not to say that C++ with `vector` and `smart_ptr` couldn't fix that problem, but there is a value in making these security features a part of the language. In addition, Rust features a powerful type system inspired by Functional Programming languages like Ocaml and Haskell, which make types helpful instead of in your way.
 
@@ -183,6 +183,14 @@ export enum Enums {
 ### Structs, Functions, Classes
 
 ```rust
+// A tuple struct
+struct Pair(i32, f32);
+
+// A struct with two fields
+struct Point {
+    x: f32,
+    y: f32,
+}
 
 ```
 
@@ -199,7 +207,30 @@ export enum Enums {
 By default everything in rust is copied unless you specify otherwise.
 
 ```rust
+struct Val {
+    val: f64
+}
 
+struct GenVal<T>{
+    gen_val: T
+}
+
+// impl of Val
+impl Val {
+    fn value(&self) -> &f64 { &self.val }
+}
+
+// impl of GenVal for a generic type `T`
+impl <T> GenVal<T> {
+    fn value(&self) -> &T { &self.gen_val }
+}
+
+fn main() {
+    let x = Val { val: 3.0 };
+    let y = GenVal { gen_val: 3i32 };
+
+    println!("{}, {}", x.value(), y.value());
+}
 ```
 
 What's interesting here is that the `mut` keyword is similar to GLSL's `inout` keyword! In C++, you can use `const` to describe immutable structures, which is not the default.
@@ -223,7 +254,7 @@ function lol<T>(T what) {
 ### Common Modules
 
 ```rust
-
+// Implementation
 ```
 
 ```cpp

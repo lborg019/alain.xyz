@@ -83,7 +83,7 @@ function page(meta, req: Request, res: Response) {
   <!--Icons/Mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
   <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
-  <link rel="stylesheet" href="/assets/main.min.css"/>
+  <link rel="stylesheet" href="/assets/build/main.min.css"/>
 </head>
 
 <body>
@@ -92,9 +92,9 @@ function page(meta, req: Request, res: Response) {
   </div>
 
   <!--Load App-->
-  <script src="/assets/system.min.js"></script>
-  <script src="/assets/vendor.min.js"></script>
-  <script src="/assets/main.min.js"></script>
+  <script src="/assets/build/system.min.js"></script>
+  <script src="/assets/build/vendor.min.js"></script>
+  <script src="/assets/build/main.min.js"></script>
 </body>
 
 </html>

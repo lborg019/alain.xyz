@@ -8,7 +8,7 @@ To help introduce WebGL I've written out a simple application which you can find
 
 Here's the final running program, review the source and fork it however you would like!
 
-<iframe height='480' scrolling='no' title='Raw WebGL' src='//codepen.io/alaingalvan/embed/OMEqKa/?height=265&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/alaingalvan/pen/OMEqKa/'>Raw WebGL</a> by Alain Galvan (<a href='http://codepen.io/alaingalvan'>@alaingalvan</a>) on <a href='http://codepen.io'>CodePen</a>.
+<iframe height='480' scrolling='no' title='Raw WebGL' src='//codepen.io/alaingalvan/embed/OMEqKa/?height=480&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/alaingalvan/pen/OMEqKa/'>Raw WebGL</a> by Alain Galvan (<a href='http://codepen.io/alaingalvan'>@alaingalvan</a>) on <a href='http://codepen.io'>CodePen</a>.
 </iframe>
 
 ## Abstraction

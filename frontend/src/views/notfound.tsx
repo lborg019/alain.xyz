@@ -25,7 +25,7 @@ const styles = {
     flexDirection: 'column'
   },
   h1: {
-  }
+  },
   link: {
     padding: '1em',
     margin: '.5em',
@@ -36,11 +36,11 @@ const styles = {
 
 const phrases = [
   '🛰️ Ground control to Major Tom! :(',
-  '🥃 Wubalubadubdub!',
+  '🔬 Wubalubadubdub!',
   '🌃 Night gathers, and now my watch begins...',
   '👺 404\'d!',
   '🥕 Kakarot!',
-  '👍🏻 It was me DIO!',
+  '👍 It was me DIO!',
   '🕊️ Griffith!',
   '🍩 D\'oh!',
   '🌙 Rise and Shine Mr. Freeman...',

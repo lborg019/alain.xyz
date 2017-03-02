@@ -14,14 +14,15 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
   }
 
   render() {
-    let scale = window && innerWidth < 480
-      ? innerWidth / 480
+    let mediaQuery = window && innerWidth < 360;
+    let scale = mediaQuery
+      ? innerWidth / 360
       : 1;
 
     return (
       <div style={styles.root}>
         <div style={{ ...styles.title, transform: `scale(${scale})` }}>
-          <Link to="/" style={{ height: 64 }}>
+          <Link to="/" style={{ height: 48 }}>
             <LogoIcon style={styles.img} />
           </Link>
           <div style={styles.logotype}>
@@ -54,32 +55,34 @@ const styles = {
     overflowY: '-moz-scrollbars-none, scroll',
     padding: '8em 2em',
     userSelect: 'none',
-    width: 440,
+    width: 340,
     position: 'fixed',
     left: 0,
     top: 0,
     zIndex: 10,
-    background: 'rgba(33, 37, 43, 0.8)'
+    background: 'rgba(23,26,30,0.11)'
   },
   h1: {
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontSize: '3.3em'
   },
   h3: {
     fontSize: '1.44em'
   },
   title: {
-    fontSize: '.8rem',
+    fontSize: '.6rem',
     letterSpacing: '.2em',
     lineHeight: '2.5em',
     display: 'flex',
     alignItems: 'center',
-    transformOrigin: '0 50%'
+    transformOrigin: '0 50%',
+    padding: '0 0 1.5em 0'
   },
   logotype: {
     paddingLeft: '1.2em'
   },
   img: {
-    height: 56,
-    width: 56
+    height: 48,
+    width: 48
   }
 };

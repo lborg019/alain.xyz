@@ -13,7 +13,7 @@ export class Home extends React.Component<any, any> {
       children
     } = this.props;
 
-    let mediaQuery = window && innerWidth > 440;
+    let mediaQuery = window && innerWidth > 340;
 
     return (
       <div style={styles.root}>
@@ -21,8 +21,8 @@ export class Home extends React.Component<any, any> {
         <SideBar pathname={pathname} />
         <div style={{
           ...styles.mainPage, 
-          width: mediaQuery ? 'calc(100vw - 440px)' : '100vw',
-          transform: `translateX(${mediaQuery ? 440 : 0}px)`
+          width: mediaQuery ? 'calc(100vw - 340px)' : '100vw',
+          transform: `translateX(${mediaQuery ? 340 : 0}px)`
           }}>
           {children}
         </div>

@@ -25,9 +25,9 @@ async function compileSubapp() {
     let libname = path.join('alainxyz-subapp', relativeRoot).replace(/\\/g, '-');
 
     let config = {
+      warnings: true,
       globalEvaluationScope: false,
       format: 'commonjs',
-      defaultJSExtensions: true,
       typescriptOptions: {
         module: 'system',
         target: 'es5',

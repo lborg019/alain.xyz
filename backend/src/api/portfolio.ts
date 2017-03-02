@@ -15,7 +15,7 @@ type API = {
 /**
  * Sanitizes the API's Input.
  */
-const sanitize: (any) => API = (reqBody) => {
+function sanitize(reqBody): API {
   let {
     skip,
     limit,

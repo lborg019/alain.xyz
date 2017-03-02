@@ -20,13 +20,14 @@ let config = {
       'react-motion',
       'react-redux',
       'react-router',
+      'react-router-dom',
       'redux',
       'redux-thunk',
       'isomorphic-fetch'
     ]
   },
   output: {
-    path: path.join(__dirname, 'assets'),
+    path: path.join(__dirname, 'assets', 'build'),
     filename: '[name].min.js'
   },
   resolve: {
@@ -68,7 +69,15 @@ let config = {
             }
           ]
         })
-      }
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
+      },
     ]
   },
 
@@ -123,13 +132,13 @@ if (!argv.reduce((prev, cur) => prev || (cur === '--watch'), false)) {
     if (err)
       return console.error(err);
     else
-      console.log("✔️️ Frontend Compiled Successfully.")
+      console.log('✔️️ Frontend Compiled Successfully.')
   });
 }
 else {
   console.log('👓 Watching for changes...')
   compiler.watch({}, (err, stats) => {
-     console.log("✔️️ Frontend Compiled Successfully, 👓 still watching...")
+    console.log('✔️️ Frontend Compiled Successfully, 👓 still watching...')
     if (err)
       return console.error(err);
   });
