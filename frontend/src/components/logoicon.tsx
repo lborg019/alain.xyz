@@ -3,6 +3,9 @@ import * as React from 'react';
 export class LogoIcon extends React.Component<any, any> {
 
   render() {
+  
+    let mediaQuery = window && innerWidth < 640;
+
     return (
       <svg style={this.props.style} viewBox="0 0 64 64">
         <linearGradient id="ag-logo-gradient" gradientUnits="userSpaceOnUse" x1="40" y1="8.6218748" x2="40" y2="29.3781242" gradientTransform="matrix(1 0 0 -1 0 65)">
@@ -14,4 +17,5 @@ export class LogoIcon extends React.Component<any, any> {
       </svg>
     );
   }
+
 }

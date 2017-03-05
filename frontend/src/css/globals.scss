@@ -87,6 +87,10 @@ img {
     max-width: 100%;
 }
 
+table, span {
+    max-width: 100%;
+}
+
 em {
     font-style: italic;
     font-weight: 100;
@@ -220,17 +224,17 @@ article {
 .btn {
     background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.19));
     background-repeat: no-repeat;
-    box-shadow: 0 2px 0 rgba(255, 255, 255, 0.5) inset;
+    box-shadow: 0 2px 0 rgba(255, 255, 255, 0.0) inset;
     text-decoration: none;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease-out, background-position 0.3s ease-out;
     cursor: pointer;
-    border-radius: .25em;
+    border-radius: 2em;
     background-color: #3676d1;
     margin: .5em .25em;
     padding: .75em 1.5em;
     &:hover {
-        background-position: 0 1em;
+        background-position: 0 2em;
     }
     &:active {
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) inset;

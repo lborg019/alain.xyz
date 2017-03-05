@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { SideBar, SocialBar } from '../components';
-import { RouteTransition, presets } from '../components/react-router-transition';
+import { SideBar } from '../components';
 
 export class Home extends React.Component<any, any> {
 
@@ -13,17 +12,16 @@ export class Home extends React.Component<any, any> {
       children
     } = this.props;
 
-    let mediaQuery = window && innerWidth > 340;
+    let mediaQuery = window && innerWidth < 1024;
 
     return (
       <div style={styles.root}>
-        <SocialBar />
         <SideBar pathname={pathname} />
         <div style={{
-          ...styles.mainPage, 
-          width: mediaQuery ? 'calc(100vw - 340px)' : '100vw',
-          transform: `translateX(${mediaQuery ? 340 : 0}px)`
-          }}>
+          ...styles.mainPage,
+          width: mediaQuery ? '100vw' : 'calc(100vw - 350px)',
+          transform: `translate(${mediaQuery ? 0 : 350}px, ${mediaQuery ? 84 : 0}px)`
+        }}>
           {children}
         </div>
       </div>

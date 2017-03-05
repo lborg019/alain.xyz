@@ -23,37 +23,29 @@ export class SocialBar extends React.Component<SocialBarProps, SocialBarState> {
       social = social.slice(0, 3);
 
     let mediaQuery = window && innerWidth < 480;
-
-    let mq = mediaQuery
-      ? {
-        bottom: 0,
-        justifyContent: 'inherit'
-      }
-      : {
-        top: 0,
-        justifyContent: 'flex-end'
-      }
-
+    let iconProps = {
+      size: 12
+    }
     return (
-      <div style={{ ...styles.root, ...mq, ...this.props.style }}>
+      <div style={{ ...styles.root, ...this.props.style }}>
         {social.map(
           ({ name, url }, key) =>
             <a key={key}
               href={url}
               style={styles.icon}>
-              <Icon type={name} />
+              <Icon type={name} {...iconProps} />
             </a>
         )}
-        <a style={styles.icon} onClick={this.toggleShrink}>
-          <svg viewBox="0 0 16 16"
+        <a onClick={this.toggleShrink}>
+          <svg viewBox="0 0 12 12"
             style={styles.more.root}>
             <line style={{
               ...styles.more.line,
               transform: `rotateZ(${shrink ? 0 : 90}deg)`,
               transformOrigin: '50% 50%',
               transition: 'transform .5s ease-out'
-            }} x1="8" y1="2" x2="8" y2="14" />
-            <line style={styles.more.line} x1="2" y1="8" x2="14" y2="8" />
+            }} x1="6" y1="1.5" x2="6" y2="10.5" />
+            <line style={styles.more.line} x1="1.5" y1="6" x2="10.5" y2="6" />
           </svg>
         </a>
 
@@ -73,13 +65,12 @@ type SocialBarState = {
 
 const styles = {
   root: {
-    width: '100vw',
+    width: 'calc(100% - 5em)',
     display: 'flex',
     alignItems: 'center',
-    overflowX: 'hidden',
+    overflowX: '-moz-scrollbars-none, scroll',
     overflowY: 'hidden',
-    padding: '.5em 1em',
-    position: 'fixed',
+    paddingRight: '2em',
     zIndex: 30
   },
   icon: {
@@ -87,8 +78,8 @@ const styles = {
   },
   more: {
     root: {
-      width: 16,
-      height: 16,
+      width: 12,
+      height: 12,
       verticalAlign: 'middle'
     },
     line: {

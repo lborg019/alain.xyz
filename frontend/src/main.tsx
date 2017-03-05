@@ -36,4 +36,5 @@ ReactDOM.render(node, target);
 
 // Expose
 export * from './components';
-export * from './store/actions';
+export * from './store';
+export { App };

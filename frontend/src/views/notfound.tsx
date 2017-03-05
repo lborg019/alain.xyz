@@ -9,7 +9,7 @@ export class NotFound extends React.Component<any, any> {
           phrases[Math.floor(Math.random() * phrases.length)]
         }</h1>
         <p>Doesn't look like that page exists.</p>
-        <Link style={styles.link} to="/">Go Home</Link>
+        <Link className="btn" style={styles.link} to="/">Go Home</Link>
       </div>
     )
   }
@@ -29,20 +29,12 @@ const styles = {
   link: {
     padding: '1em',
     margin: '.5em',
-    background: '#2a7c94',
-    borderRadius: '.2em'
+    backgroundColor: '#4ea0e8'
   }
 }
 
 const phrases = [
-  '🛰️ Ground control to Major Tom! :(',
   '🔬 Wubalubadubdub!',
-  '🌃 Night gathers, and now my watch begins...',
   '👺 404\'d!',
-  '🥕 Kakarot!',
-  '👍 It was me DIO!',
-  '🕊️ Griffith!',
-  '🍩 D\'oh!',
-  '🌙 Rise and Shine Mr. Freeman...',
-  '⛓️ Rip and Tear!'
+  '🍩 D\'oh!'
 ]

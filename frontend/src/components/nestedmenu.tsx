@@ -39,9 +39,9 @@ export class NestedMenu extends React.Component<any, any> {
             let p = {
               style: {
                 ...styles.link,
-                color: pathname === (root + '/' + v)
-                  ? '#639dcc'
-                  : '#ffffffee',
+                backgroundColor: pathname === (root + '/' + v)
+                  ? 'rgba(78, 160, 232, 0.74)'
+                  : 'rgba(23,26,30,0.11)',
                 borderLeft: pathname === (root + '/' + v)
                   ? 'rgba(78, 160, 232, 1) .5em solid'
                   : 'rgba(78, 160, 232, 0.33) .2em solid'
@@ -75,7 +75,8 @@ export class NestedMenu extends React.Component<any, any> {
 
 const styles = {
   root: {
-    //padding: '.75em 1em 0 1em'
+    fontSize: '.875rem',
+    fontWeight: 200
   },
   li: {
 
@@ -86,6 +87,6 @@ const styles = {
     padding: '.75em 0 .75em .5em',
     margin: '.2em',
     background: 'rgba(23,26,30,0.11)',
-    transition: 'border-left .3s, color .3s'
+    transition: 'border-left .3s, background-color .3s'
   }
 }

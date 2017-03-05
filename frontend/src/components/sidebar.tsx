@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { SocialBar } from './socialbar';
 import { LogoIcon } from './logoicon';
 import { NestedMenu } from './nestedmenu';
+import { Icon } from './icon';
 
 /**
  * Sidebar Menu
@@ -10,19 +11,30 @@ import { NestedMenu } from './nestedmenu';
 export class SideBar extends React.Component<SideBarProps, SideBarState> {
 
   state = {
-    shrink: false
+    open: false
   }
 
+  toggleMenu = () =>
+    this.setState(({ shrink }) => ({ shrink: !shrink }))
+
   render() {
-    let mediaQuery = window && innerWidth < 360;
-    let scale = mediaQuery
-      ? innerWidth / 360
+    let { pathname } = this.props;
+
+    let mobileQuery = window && innerWidth < 350;
+    let tabletQuery = window && innerWidth < 1024;
+
+    let scale = mobileQuery
+      ? innerWidth / 350
       : 1;
 
+    let left = tabletQuery
+      ? this.state.open ? 0 : -350
+      : 0;
+
     return (
-      <div style={styles.root}>
-        <div style={{ ...styles.title, transform: `scale(${scale})` }}>
-          <Link to="/" style={{ height: 48 }}>
+      <div style={{ ...styles.root, transform: `translateX(${left}px)`, padding: tabletQuery ? '1em 2em' : '8em 2em', background: tabletQuery ? 'rgba(23,26,30,.975)' : undefined,}}>
+        <div style={{ ...styles.title, transform: `scale(${scale})  translate(${this.state.open ? 0 : 350}px,0px)`, zIndex: 10000 }}>
+          <Link to={this.state.open ? `/` : pathname} onClick={this.toggleMenu} style={{ height: 48 }}>
             <LogoIcon style={styles.img} />
           </Link>
           <div style={styles.logotype}>
@@ -31,13 +43,14 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
           </div>
         </div>
         <NestedMenu pathname={this.props.pathname} />
+        <SocialBar style={{ position: 'absolute', bottom: '1.75em' }} />
+        <p style={styles.footer}>© {year} Alain Galvan | Made with <a href="https://github.com/alaingalvan/alain.xyz"><Icon type="love" size={12} style={{ fill: 'rgba(236, 82, 82, 0.75)' }} /></a> in Miami, Florida
+        </p>
+
       </div>
     );
   }
-
 }
-
-
 
 type SideBarProps = {
   pathname: string
@@ -51,16 +64,17 @@ const styles = {
   root: {
     cursor: 'default',
     height: '100vh',
-    overflowX: 'hidden',
+    overflowX: 'visible',
     overflowY: '-moz-scrollbars-none, scroll',
     padding: '8em 2em',
     userSelect: 'none',
-    width: 340,
+    width: 350,
     position: 'fixed',
     left: 0,
     top: 0,
     zIndex: 10,
-    background: 'rgba(23,26,30,0.11)'
+    background: 'rgba(23,26,30,0.11)',
+    transition: 'transform 0.3s ease-out'
   },
   h1: {
     textTransform: 'uppercase',
@@ -76,7 +90,8 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     transformOrigin: '0 50%',
-    padding: '0 0 1.5em 0'
+    padding: '0 0 1.5em 0',
+    transition: 'transform 0.3s ease-out'
   },
   logotype: {
     paddingLeft: '1.2em'
@@ -84,5 +99,13 @@ const styles = {
   img: {
     height: 48,
     width: 48
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    color: 'rgba(255,255,255,.5)',
+    fontSize: '.75em'
   }
 };
+
+const year = new Date().getFullYear();

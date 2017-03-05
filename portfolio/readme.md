@@ -43,6 +43,14 @@ This portfolio is indexed by the Alain.xyz Builder, compiling markdown, building
 
 If you want to add to publish to the blog, you'll want to do a pull request. Please make sure to write your name in the article!
 
+### Guidelines
+
+1. Covers must be:
+  - 1080p
+  - Have no logo or readable text at the center of the image.
+  - Have a balanced color gradient, avoiding whites.
+
+
 ## How it Works
 
 Every portfolio item is it's own **Sub-Application** loaded on demand by the core Alain.xyz Application.

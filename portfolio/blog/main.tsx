@@ -21,15 +21,19 @@ export default class BlogPost extends React.Component<any, any> {
     let date = new Date(publishDate);
     return (
       <div ref={r => this.root = r} style={styles.root}>
-        <figure style={{ ...styles.figure, backgroundImage: `linear-gradient(rgba(33,37,43,0) 65vh, rgba(33,37,43,1)), url(${cover})` }}/>
+        <figure style={{
+          ...styles.figure,
+          backgroundImage: `linear-gradient(rgba(33,37,43,0) 65vh, rgba(33,37,43,1)), url(${cover})`,
+		  left: window && innerWidth < 1024 ? 0 : -350
+        }} />
         <section style={styles.section}>
-          <div style={{padding: '.5em'}}>
+          <div style={{ padding: '.5em' }}>
             <h1 style={{ color: '#fff' }}>{title}</h1>
             <p>{description}</p>
             <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)' }}>
               <Icon type='date' style={{ marginRight: '.5em' }} />
               {date.toLocaleDateString()} @ {date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}
-          </p>
+            </p>
           </div>
           <div style={styles.articleContainer}>
             <article style={styles.article} dangerouslySetInnerHTML={{ __html: data }} />
@@ -54,7 +58,7 @@ const styles = {
     height: '100vh',
     position: 'relative',
     zIndex: 1,
-    left: -340,
+    left: -350,
     backgroundSize: 'cover',
     backgroundPosition: 'center'
   },

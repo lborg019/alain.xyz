@@ -1,6 +1,7 @@
 import { APIRequest, APIResponse } from './actions';
 import { createReducer } from './utils';
 
+
 const initialState = {
     subapp: null,           // Current SubApplication
     portfolio: [],          // Cached SubApplications

@@ -10,23 +10,32 @@ export default {
       name: 'linkedin',
       url: 'https://linkedin.com/in/alaingalvan'
     }, {
+      name: 'facebook',
+      url: 'https://www.facebook.com/alaingalv'
+    }, {
       name: 'artstation',
       url: 'https://www.artstation.com/artist/alaingalvan'
-    },/* {
+    }, {
       name: 'deviantart',
       url: 'https:///alaingalvan.deviantart.com'
-    }, */{
+    }, {
       name: 'soundcloud',
-      url: 'http://soundcloud.com/alaingalvan'
-    },/* {
-      name: 'youtube',
-      url: 'https://www.youtube.com/user/AGCreate'
+      url: 'https://soundcloud.com/alaingalvan'
     }, {
       name: 'codepen',
       url: 'https://codepen.io/alaingalvan'
+    },/* {
+      name: 'stackoverflow',
+      url: 'https://stackoverflow.com/users/3911386/alain-galvan'
     }, {
+      name: 'youtube',
+      url: 'https://www.youtube.com/user/AGCreate'
+    },*/ {
+      name: 'medium',
+      url: 'https://medium.com/@AlainGalvan'
+    }, /*{
       name: 'tumblr',
-      url: 'http://alaingalvan.tumblr.com/'
+      url: 'https://alaingalvan.tumblr.com/'
     }*/
   ],
   experience: [{
@@ -34,7 +43,7 @@ export default {
     company: 'Florida International University',
     cover: '',
     startTime: new Date('06/06/2013'),
-    endTime: new Date('06/06/2013'),
+    endTime: '',
     description: "I'm responsible for creating an Unreal Engine 4 research project adding a procedurally generated skybox system and Windows 8 multitouch support. This project was further developed into a gesture elicitation experiment system, as well as a paper published to a conference. In addition, I serve as a Teacher's Assistant for Web Application Development creating assignments/exams/grading, and give workshops on Khronos Standards (OpenGL, OpenCL, WebGL, WebCL), Unreal Engine 4, HTML5 and Node.js."
   }],
   awards: [

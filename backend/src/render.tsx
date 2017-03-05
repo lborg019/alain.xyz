@@ -1,18 +1,28 @@
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { Request, Response } from 'express';
-import { database } from './db';
+import { StaticRouter } from 'react-router';
+import { template, render } from 'rapscallion';
+import * as React from 'react';
+import * as serialize from 'serialize-javascript';
 
+import { database } from './db';
+import { App, reducers } from 'alain-xyz-frontend';
 
 /**
  * Prerenders a given page with React.
  */
 export function renderPage(req: Request, res: Response) {
+
+  // Set page meta tags
   let meta = {
     permalink: '/',
-    title: 'Alain Galvan | Graphics Research Assistant @ FIU',
-    description: 'The portfolio of Alain Galvan, Graphics Research Assistant @ Florida International University.',
+    title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
+    description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
     cover: '/assets/brand/website-screenshot.jpg'
   };
 
+  // Query portfolio
   let query = {
     permalink: req.originalUrl
   };
@@ -24,25 +34,29 @@ export function renderPage(req: Request, res: Response) {
         if (!errCol && data.length >= 1)
           meta = data[0];
 
-        page(meta, req, res);
+        page(req, res, meta, data);
       });
   });
 }
 
-function page(meta, req: Request, res: Response) {
+function page(req: Request, res: Response, meta: Meta, data) {
 
-  // This context object contains the results of the render
+  const state = {};
+
+  const store = createStore(reducers, state);
+
+
+  // React Router
   const context: any = {};
+  const app = (
+    <Provider>
+      <StaticRouter location={req.url} context={context}>
+        {App}
+      </StaticRouter>
+    </Provider>
+  );
 
-  let markup = 
-  `<div style="display: flex; width: 100vw; height: 100vh">
-  <svg viewBox="0 0 160 112" class="ag-loading">
-    <path d="M8,72l50.3-50.3c3.1-3.1,8.2-3.1,11.3,0L152,104"></path>
-  </svg>
-</div>`;
-
-    res.contentType('text/html').send(
-      `<!--
+  let responseRenderer = template`<!--
             ..\`
           ......\`
         ..........\`
@@ -64,9 +78,9 @@ function page(meta, req: Request, res: Response) {
   <meta charset="UTF-8">
   <title>${meta.title}</title>
   <!--Search Engines-->
-  <meta name="author" content="Alain Galvan"/>
+  <meta name="author" content="${meta.author}"/>
   <meta name="description" content="${meta.description}"/>
-  <meta name="keywords" content="shadertoy, shader toy, fractals, demoscene, computer graphics, mathematics, rendering, demo, 3D, realtime, shader, raytracing, webgl, glsl"/>
+  <meta name="keywords" content="${meta.tags.reduce((prev, cur) => prev + ' ' + cur, '')}"/>
   <!--Twitter-->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:site" content="@Alainxyz"/>
@@ -88,15 +102,28 @@ function page(meta, req: Request, res: Response) {
 
 <body>
   <div id="app">
-    ${markup}
+    ${app}
   </div>
 
   <!--Load App-->
+  <script>
+    window._initialState=${serialize(state)};
+  </script>
   <script src="/assets/build/system.min.js"></script>
   <script src="/assets/build/vendor.min.js"></script>
   <script src="/assets/build/main.min.js"></script>
 </body>
 
 </html>
-`);
+`
+    responseRenderer.toStream().pipe(res);
+}
+
+type Meta = {
+  title: string,
+  description: string,
+  cover: string
+  tags: string[],
+  permalink: string,
+  author: string
 }

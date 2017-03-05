@@ -11,6 +11,9 @@ My personal portfolio system build on top of the latest versions of:
 - [Express](https://expressjs.com/)
 - [MongoDB](http://mongodb.org/)
 - [React](https://facebook.github.io/react/)
+- [Redux](http://http://redux.js.org)
+- [Lerna](https://lernajs.io/)
+- [Webpack](https://webpack.js.org)
 - [SystemJS](https://github.com/systemjs/systemjs)
 - [PostCSS](https://github.com/postcss/postcss)
 
@@ -41,8 +44,8 @@ docker-compose up
 ### Local
 
 ```bash
+# After installing lerna will handle the rest.
 npm i
-npm start
 ```
 
 ## How it Works

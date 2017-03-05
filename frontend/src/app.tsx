@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import { Home, Subapp, About, Blog } from './views';
+import { Home, Portfolio, Subapp, About, Blog } from './views';
+import { Slideshow } from './components';
 
 const App = (
   <div>
     <Route render={props => (
       <Home {...props}>
         <Switch>
-          <Route exact path="/" render={() => null} />
+          <Route exact path="/" component={Slideshow} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/portfolio" component={Portfolio} />
           <Route exact path="/blog" render={props => <Blog {...props} />} />
           <Route render={props => <Subapp {...props} />} />
         </Switch>

@@ -1,0 +1,28 @@
+{
+  "name": "react-anime",
+  "description": "An ES2017 WebGL2 Rendering Library",
+  "main": "index.md",
+  "keywords": [
+    "library",
+    "npm",
+    "github",
+    "ts",
+    "js"
+  ],
+  "homepage": "https://coronal.io",
+  "alainxyz": {
+    "title": "React Anime",
+    "badges": [{
+        "name": "npm",
+        "url": "https://www.npmjs.com/package/coronal"
+      },
+      {
+        "name": "github",
+        "url": "https://github.com/hyperfuse/coronal"
+      },
+      {
+        "name": "ts"
+      }
+    ]
+  }
+}
