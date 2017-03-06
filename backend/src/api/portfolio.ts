@@ -1,7 +1,36 @@
 import { Request, Response } from 'express';
 import { database } from '../db';
 
-type API = {
+/**
+ * Portfolio Item Schema
+ */
+export type PortfolioItem = {
+  permalink: string,
+  cover: string,
+  icon: string,
+  authors: string[],
+  title: string,
+  description: string,
+  tags: string[],
+  publishDate: Date,
+  lastUpdated: Date,
+  // Analytics
+  views: number,
+  social: {
+    [index: string]: {
+      name: string,
+      url: string
+    }
+  },
+  // App Data
+  main: string,
+  data: any
+}
+
+/**
+ * API Request Schema
+ */
+export type APISanitized = {
   // Skip the x number of posts
   skip: number,
   // Limit the number of posts to this amount
@@ -9,13 +38,24 @@ type API = {
   // Find post with this exact permalink
   permalink?: string | RegExp,
   // Find posts where these tags are present
-  tags?: { $in: string[] }
+  tags?: {
+    $in: string[]
+  }
+}
+
+/**
+ * 
+ */
+export type APIRequest = {
+  permalink?: string,
+  data?: boolean,
+  tags?: string[]
 }
 
 /**
  * Sanitizes the API's Input.
  */
-function sanitize(reqBody): API {
+function sanitize(reqBody): APISanitized {
   let {
     skip,
     limit,
@@ -42,7 +82,7 @@ function sanitize(reqBody): API {
   };
 
   try {
-    let cleanReq: API = {
+    let cleanReq: APISanitized = {
       skip: inRange(skip, 0, 1000, 0),
       limit: inRange(limit, 1, 30, 15),
       permalink: makeRegexPath(permalink),
@@ -69,7 +109,7 @@ function sanitize(reqBody): API {
  */
 export default (req: Request, res: Response) => {
   // Get POST parameters
-  let apiReq: API = sanitize(req.body);
+  let apiReq: APISanitized = sanitize(req.body);
 
   // Design Query
   let query = {
@@ -96,7 +136,8 @@ export default (req: Request, res: Response) => {
       tags: 1,
       data: 1,
       main: 1,
-      publishDate: 1
+      publishDate: 1,
+      lastUpdated: 1
     }
 
     let data = c.find(query, projection)

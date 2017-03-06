@@ -1,4 +1,4 @@
-[Jen Simmons' in her Podcast *The Web Ahead*](http://thewebahead.net/) said *Everyone wants to make their own **CMS***, that idea extends to Game Devs, *everyone wants to make their own **Game Engine***, or with musicians, *everyone wants to make their own **Synth***, or artists, *everyone wants to make their own **Anime** or **Comic** or whatever*. I guess it's that desire to really make an strong impact on the world that drives people to *reinvent*. 
+[Jen Simmons' in her Podcast *The Web Ahead*](http://thewebahead.net/) said *Everyone wants to make their own **CMS***, that idea extends to Game Devs, *everyone wants to make their own **Game Engine***, or with musicians, *everyone wants to make their own **Sound***, or artists, *everyone wants to make their own **Anime** or **Comic** or whatever*. I guess it's that desire to really make an strong impact on the world that drives people to *reinvent*. 
 
 Still, I succumbed to the temptation and built a custom website. Basically I wanted a single page web app that:
 
@@ -36,17 +36,17 @@ Here's some of the dependencies I'm building on top of:
 
 ### Preprocessing
 
-1. [TypeScript](https://typescriptlang.org) - A superset of JavaScript which adds types, interfaces, enums, namespaces, and babel-esque compiliation to older versions of js.
+1. [TypeScript](https://typescriptlang.org) - A superset of JavaScript which adds types, interfaces, enums, namespaces, and babel-esque compilation to older versions of JavaScript.
 
-2. [Webpack](https://webpack.github.io/) - The newest version of Webpack that supports treeshaking and SystemJS modules, really powerful stuff that can remove dead code and allow dynamic module loading respectively. 
+2. [Webpack](https://webpack.github.io/) - The newest version of Webpack that supports treeshaking and ECMAScript Modules (ESM), really powerful stuff that can remove dead code and allow dynamic module loading respectively. 
 
 3. [PostCSS](https://github.com/postcss/postcss) - a sort of preprocessor that's much more modular than [Stylus](http://stylus-lang.com/), [Sass](http://sass-lang.com/), or [Less](http://lesscss.org/). It works similar to [UglyfyJS](http://lisperator.net/uglifyjs/) or [Katex](https://khan.github.io/KaTeX/) in that in generates an AST, and users can supply functions to process that AST.
 
 ### Host
 
-[Digital Ocean](https://www.digitalocean.com/) - After comparing [AWS](http://aws.amazon.com), [Google Cloud](https://cloud.google.com/), [Dreamhost](https://www.dreamhost.com/), [Heroku](https://www.heroku.com/) this host offers the best balance of features and price.
+[Digital Ocean](https://www.digitalocean.com/) - After comparing [AWS](http://aws.amazon.com), [Google Cloud](https://cloud.google.com/), [Dreamhost](https://www.dreamhost.com/), [Heroku](https://www.heroku.com/) this host offers the best balance of features and price **$10.00**.
 
-I changed up my name servers at my domain provider [NameCheap](https://www.namecheap.com) to Digital Ocean's name servers, and installed Node, Nginx and MongoDB. Pretty straightfoward.
+I changed up my name servers at my domain provider [NameCheap](https://www.namecheap.com) to Digital Ocean's name servers, and installed Node, Nginx and MongoDB. Pretty straightforward.
 
 ## Getting Started
 
@@ -68,7 +68,7 @@ There's a *lot of questions* involved in making a website from a architectural p
 
 2. [How can you make an Emotional Website?](blog.teamtreehouse.com/emotional-interface-design-the-gateway-to-passionate-users) - We need websites people *care about*.
 
-3. What kind of database should you use? What about [Polyglot Persistence](http://www.jamesserra.com/archive/2015/07/what-is-polyglot-persistence/), [Micro-Serivces](http://www.martinfowler.com/microservices/)?
+3. What kind of database should you use? What about [Polyglot Persistence](http://www.jamesserra.com/archive/2015/07/what-is-polyglot-persistence/), [Micro-Services](http://www.martinfowler.com/microservices/)?
 
 4. Should you containerize your app with [Docker](http://docker.com/) or dedicate the entire Virtual Machine to your app with [IncludeOS](http://www.includeos.org/)? 
 

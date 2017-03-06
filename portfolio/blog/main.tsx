@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon } from 'main';
+
 export default class BlogPost extends React.Component<any, any> {
 
   private root = null;
@@ -23,10 +24,13 @@ export default class BlogPost extends React.Component<any, any> {
       <div ref={r => this.root = r} style={styles.root}>
         <figure style={{
           ...styles.figure,
-          backgroundImage: `linear-gradient(rgba(33,37,43,0) 65vh, rgba(33,37,43,1)), url(${cover})`,
-		  left: window && innerWidth < 1024 ? 0 : -350
+          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '25vh' : '45vh' }, rgba(33,37,43,1)), url(${cover})`,
+		      left: window && innerWidth < 1024 ? 0 : -350
         }} />
-        <section style={styles.section}>
+        <section style={{
+          ...styles.section,
+              transform: `translate(0, -${window && innerWidth < 1024 ? 55 : 40}vh)`
+          }}>
           <div style={{ padding: '.5em' }}>
             <h1 style={{ color: '#fff' }}>{title}</h1>
             <p>{description}</p>
@@ -43,7 +47,6 @@ export default class BlogPost extends React.Component<any, any> {
     );
   }
 }
-
 
 const styles = {
   root: {
@@ -75,13 +78,12 @@ const styles = {
   articleContainer: {
     width: '100%',
     display: 'flex',
-    alignItems: 'center',
-    //justifyContent: 'center'
+    alignItems: 'center'
   },
   section: {
     display: 'flex',
     flexDirection: 'column',
-    transform: 'translate(0, -16em)',
+    transform: 'translate(0, -40vh)',
     position: 'relative',
     zIndex: 10
   }

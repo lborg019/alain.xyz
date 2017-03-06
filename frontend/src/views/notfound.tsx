@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 
 export class NotFound extends React.Component<any, any> {
   render() {
+    let i = Math.floor(Math.random() * stuff.length);
+    let { phrase, name, url, img } = stuff[i];
     return (
-      <div style={styles.root}>
-        <h1 style={styles.h1}>{
-          phrases[Math.floor(Math.random() * phrases.length)]
-        }</h1>
+      <div style={{
+        ...styles.root,
+        backgroundImage: `url(${img})`
+        }}>
+        <h1>{ phrase }</h1>
         <p>Doesn't look like that page exists.</p>
         <Link className="btn" style={styles.link} to="/">Go Home</Link>
+        <p style={styles.source}> Img Source: <a href={url} >{ name }</a> </p>
       </div>
     )
   }
@@ -22,9 +26,18 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundBlendMode: 'soft-light',
+    backgroundColor: '#202429'
   },
-  h1: {
+  source: {
+    position: 'absolute',
+    right: '1em',
+    bottom: '.25em',
+    fontSize: '.75em',
+    color: 'rgba(255,255,255,.75)'
   },
   link: {
     padding: '1em',
@@ -33,8 +46,17 @@ const styles = {
   }
 }
 
-const phrases = [
-  '🔬 Wubalubadubdub!',
-  '👺 404\'d!',
-  '🍩 D\'oh!'
+const stuff = [
+  {
+    phrase: '🍩 D\'oh!',
+    name: 'Salty Donut',
+    url: 'https://saltydonut.com/',
+    img: 'https://scontent.cdninstagram.com/t51.2885-15/e35/16583529_182609438889344_4841201472928481280_n.jpg'
+  },
+    {
+    phrase: '👺 404\'d!',
+    name: 'Wikipedia',
+    url: 'https://en.wikipedia.org/wiki/Wrestling_mask',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Lucha_libre_m%C3%A1scaras.JPG'
+  }
 ]

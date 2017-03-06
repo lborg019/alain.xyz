@@ -75,7 +75,7 @@ export class Slideshow extends React.Component<any, any> {
                 ...styles.figure,
                 backgroundImage: `linear-gradient(rgba(33,37,43,0), rgba(33,37,43,1)), url(${cover})`,
                 left: window && innerWidth < 1024 ? 0 : -350
-                height: window && innerWidth < 768 ? ( i > 0 ? '240px' : '320px') : '100vh'
+                height: window && innerWidth < 768 ? ( i > 0 ? '192px' : '240px') : '100vh'
               }}>
                 <div style={{textAlign: 'center', padding: '1em'}}>
                   

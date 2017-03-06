@@ -11,7 +11,7 @@ import { transport } from '../store/utils';
 @connect(
     ({ subapp, fetchingSubapp, portfolio }) => ({
         subapp,
-        loading: fetchingSubapp
+        loading: fetchingSubapp,
         portfolio
     }),
     dispatch => ({

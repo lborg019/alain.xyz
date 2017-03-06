@@ -1,5 +1,5 @@
 {
-  "name": "alain.xyz-frontend",
+  "name": "alain-xyz-frontend",
   "version": "0.5.0",
   "description": "My personal website frontend.",
   "author": "Alain Galvan <hi@alain.xyz>",
@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/alaingalvan/alain.xyz.git"
   },
+  "files": [
+    "src"
+  ],
   "scripts": {
     "start": "set NODE_ENV=production & ts-node -F -D webpack.config.ts",
     "develop": "set NODE_ENV=development & ts-node -F -D webpack.config.ts --watch"
@@ -27,9 +30,8 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack": "^2.2.7",
     "autoprefixer": "^6.7.6",
-    "concurrently": "^3.3.0",
     "css-loader": "^0.26.2",
-    "extract-text-webpack-plugin": "^2.0.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.10.1",
     "postcss-loader": "1.3.3",
     "precss": "^1.4.0",
@@ -52,6 +54,6 @@
     "systemjs": "^0.20.9",
     "typeface-fira-sans": "^0.0.22",
     "typeface-source-code-pro": "^0.0.22",
-    "unfetch": "^2.1.0"
+    "unfetch": "^2.1.2"
   }
 }

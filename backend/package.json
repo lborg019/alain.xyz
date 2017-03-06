@@ -1,10 +1,13 @@
 {
-  "name": "alain.xyz-backend",
-  "version": "0.4.0",
-  "description": "My personal website backend.",
+  "name": "alain-xyz-backend",
+  "version": "0.5.0",
+  "description": "My personal website backend, designed as a thin API and wrapper to the frontend.",
   "author": "Alain Galvan <hi@alain.xyz>",
   "license": "MIT",
   "main": "src/main.ts",
+  "files": [
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/alaingalvan/alain.xyz.git"

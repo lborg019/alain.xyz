@@ -55,7 +55,7 @@ export class NestedMenu extends React.Component<any, any> {
             let isObj = typeof structure[v] === 'object';
 
             return (
-              <li key={k} style={styles.li}>
+              <li key={k}>
                 {
                   isObj
                     ? link
@@ -77,10 +77,6 @@ const styles = {
   root: {
     fontSize: '.875rem',
     fontWeight: 200
-  },
-  li: {
-
-
   },
   link: {
     display: 'block',

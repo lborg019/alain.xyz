@@ -7,7 +7,8 @@ import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 
 import { database } from './db';
-import { App, reducers } from 'alain-xyz-frontend';
+import App from '../../frontend/src/app';
+import reducers from '../../frontend/src/store/reducers';
 
 /**
  * Prerenders a given page with React.
@@ -19,7 +20,9 @@ export function renderPage(req: Request, res: Response) {
     permalink: '/',
     title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
     description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
-    cover: '/assets/brand/website-screenshot.jpg'
+    cover: '/assets/brand/website-screenshot.jpg',
+    tags: ['alain', 'galvan', 'miami', 'graphics', 'programmer'],
+    author: 'Alain Galvan'
   };
 
   // Query portfolio
@@ -32,7 +35,7 @@ export function renderPage(req: Request, res: Response) {
       .limit(1)
       .toArray((errCol, data) => {
         if (!errCol && data.length >= 1)
-          meta = data[0];
+          meta = {...meta, ...data[0]};
 
         page(req, res, meta, data);
       });
@@ -49,7 +52,7 @@ function page(req: Request, res: Response, meta: Meta, data) {
   // React Router
   const context: any = {};
   const app = (
-    <Provider>
+    <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
         {App}
       </StaticRouter>
@@ -96,6 +99,7 @@ function page(req: Request, res: Response, meta: Meta, data) {
   <meta property="fb:app_id" content="1404536383143308"/>
   <!--Icons/Mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <link rel="manifest" href="/assets/manifest.webmanifest">
   <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
   <link rel="stylesheet" href="/assets/build/main.min.css"/>
 </head>

@@ -129,6 +129,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
         rerouteLinks: (link) => path.join(answers.permalink, link)
       }),
       mtime: fs.statSync(file).mtime,
+      lastUpdated: new Date(),
       cover: getCover(file, answers.permalink),
       main: '/blog/main.js',
       file

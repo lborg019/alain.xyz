@@ -7,7 +7,7 @@ My personal website frontend.
 ## Special Thanks
 
 - [LocalFont.com](http://www.localfont.com/) for making it easy to set up custom fonts.
-- [IcoMoon.io](https://icomoon.io/) - For providing the icon svgs.
+- [IcoMoon.io](https://icomoon.io/) - For providing the icon SVGs.
 
 [website-url]: https://alain.xyz
 [release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square

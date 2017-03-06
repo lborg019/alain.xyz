@@ -58,7 +58,7 @@ The site is comprised of 3 primary modules:
 └─ portfolio/ # Personal Portfolio 
 ```
 
-[website-img]: brand/website-screenshot.jpg
+[website-img]: brand/screenshots/branding-overview.png
 [website-url]: https://alain.xyz
 [release-img]: https://img.shields.io/badge/release-0.5.0-4dbfcc.svg?style=flat-square
 [license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square

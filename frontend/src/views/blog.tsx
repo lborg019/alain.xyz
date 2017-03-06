@@ -41,6 +41,13 @@ export class Blog extends React.Component<any, any> {
     this.props.fetchSubapp({
       permalink: '/blog/*'
     });
+
+    if (window) {
+      document.title = 'Alain Galvan | Blog';
+      scrollTo(0,0);
+      console.log(document.getElementsByTagName('meta'));
+    }
+  
   }
 
   render() {
@@ -52,7 +59,7 @@ export class Blog extends React.Component<any, any> {
 
     return (
       <div style={styles.root}>
-        <div style={{...styles.article, padding: window && innerWidth < 768 ? '0' :  '1.5em'}}>
+        <div style={{...styles.article, padding: 0}}>
           <a href='/blog/rss.xml' style={styles.rss}><Icon type="rss" /></a>
           {first ? <BlogPost style={{ height: 480, width: '100%' }} {...first} /> : null}
           {
@@ -76,7 +83,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: '2em 1em 1em'
+    padding: '1em'
   },
   article: {
     display: 'flex',

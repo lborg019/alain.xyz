@@ -16,11 +16,20 @@ export class Home extends React.Component<any, any> {
 
     return (
       <div style={styles.root}>
+        {mediaQuery ? <div style={{
+          background: 'rgb(23,26,30)',
+          width: '100vw',
+          height: 'calc(48px + 4em)',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 10
+        }} /> : null}
         <SideBar pathname={pathname} />
         <div style={{
           ...styles.mainPage,
           width: mediaQuery ? '100vw' : 'calc(100vw - 350px)',
-          transform: `translate(${mediaQuery ? 0 : 350}px, ${mediaQuery ? 84 : 0}px)`
+          transform: `translate(${mediaQuery ? 0 : 350}px, ${mediaQuery ? 112 : 0}px)`
         }}>
           {children}
         </div>

@@ -9,19 +9,22 @@
     "ts",
     "js"
   ],
-  "homepage": "https://coronal.io",
+  "homepage": "https://hyperfuse.github.io/react-anime",
   "alainxyz": {
     "title": "React Anime",
     "badges": [{
         "name": "npm",
-        "url": "https://www.npmjs.com/package/coronal"
+        "url": "https://www.npmjs.com/package/react-anime"
       },
       {
         "name": "github",
-        "url": "https://github.com/hyperfuse/coronal"
+        "url": "https://github.com/hyperfuse/react-anime"
       },
       {
-        "name": "ts"
+        "name": "js"
+      },
+      {
+        "name": "react"
       }
     ]
   }

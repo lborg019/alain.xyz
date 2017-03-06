@@ -10,8 +10,6 @@ import App from './app';
 import reducers from './store/reducers';
 
 // State
-declare var devToolsExtension;
-
 const store = createStore(
   reducers,
   compose(
@@ -34,7 +32,7 @@ const node = (
 
 ReactDOM.render(node, target);
 
-// Expose
+// Expose App Runtime
 export * from './components';
 export * from './store';
 export { App };

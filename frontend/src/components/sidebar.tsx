@@ -14,8 +14,26 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
     open: false
   }
 
+  private mouseListener;
+
+  componentWillMount() {
+    if (window)
+      this.mouseListener = addEventListener('mousedown', e => {
+        if (this.state.open) {
+          e.preventDefault();
+          if (e.clientX > styles.root.width)
+            this.setState(_ => ({ open: false }))
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    if (window)
+      removeEventListener('mousedown', this.mouseListener);
+  }
+
   toggleMenu = () =>
-    this.setState(({ shrink }) => ({ shrink: !shrink }))
+    this.setState(({ open }) => ({ open: !open }))
 
   render() {
     let { pathname } = this.props;
@@ -32,11 +50,24 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
       : 0;
 
     return (
-      <div style={{ ...styles.root, transform: `translateX(${left}px)`, padding: tabletQuery ? '1em 2em' : '8em 2em', background: tabletQuery ? 'rgba(23,26,30,.975)' : undefined,}}>
-        <div style={{ ...styles.title, transform: `scale(${scale})  translate(${this.state.open ? 0 : 350}px,0px)`, zIndex: 10000 }}>
-          <Link to={this.state.open ? `/` : pathname} onClick={this.toggleMenu} style={{ height: 48 }}>
+      <div
+        style={{
+          ...styles.root,
+          transform: `translateX(${left}px)`,
+          padding: tabletQuery ? '2em' : '8em 2em',
+          background: tabletQuery ? 'rgb(23,26,30)' : 'rgba(23,26,30,0.11)'
+        }}>
+        <div
+          style={{
+            ...styles.title,
+            transform: `scale(${scale}) translate(${-left}px,0px)`,
+            zIndex: 10000
+          }}>
+          <a
+            onClick={this.toggleMenu}
+            style={{ height: 48 }}>
             <LogoIcon style={styles.img} />
-          </Link>
+          </a>
           <div style={styles.logotype}>
             <h1 style={styles.h1}>Alain Galván</h1>
             <h3 style={styles.h3}>Graphics Researcher @ FIU</h3>
@@ -57,7 +88,7 @@ type SideBarProps = {
 };
 
 type SideBarState = {
-  shrink: boolean
+  open: boolean
 };
 
 const styles = {
