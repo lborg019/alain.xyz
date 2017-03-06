@@ -4,7 +4,7 @@ import { SocialBar } from './socialbar';
 import { LogoIcon } from './logoicon';
 import { NestedMenu } from './nestedmenu';
 import { Icon } from './icon';
-
+import { mobileQuery, tabletQuery } from '../store';
 /**
  * Sidebar Menu
  */
@@ -16,30 +16,11 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
 
   private mouseListener;
 
-  componentWillMount() {
-    if (window)
-      this.mouseListener = addEventListener('mousedown', e => {
-        if (this.state.open) {
-          e.preventDefault();
-          if (e.clientX > styles.root.width)
-            this.setState(_ => ({ open: false }))
-        }
-      });
-  }
-
-  componentWillUnmount() {
-    if (window)
-      removeEventListener('mousedown', this.mouseListener);
-  }
-
   toggleMenu = () =>
     this.setState(({ open }) => ({ open: !open }))
 
   render() {
     let { pathname } = this.props;
-
-    let mobileQuery = window && innerWidth < 350;
-    let tabletQuery = window && innerWidth < 1024;
 
     let scale = mobileQuery
       ? innerWidth / 350

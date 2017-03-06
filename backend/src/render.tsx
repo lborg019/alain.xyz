@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Request, Response } from 'express';
 import { StaticRouter } from 'react-router';
@@ -49,7 +50,7 @@ export function renderPage(req: Request, res: Response) {
       .toArray()
       .catch(err => console.error(err));
 
-    return page(req, res, portfolio || []);
+    page(req, res, portfolio || []);
 
   });
 }
@@ -68,7 +69,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
     subapp: data.find(subapp => subapp.permalink === req.originalUrl)
   };
 
-  const store = createStore(reducers, state);
+  const store = createStore(reducers, state, compose(applyMiddleware(thunk)));
 
 
   // React Router
@@ -94,7 +95,8 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
 
   } else {
 
-    let responseRenderer = template`<!--
+    const componentRenderer = render(app);
+    const responseRenderer = template`<!--
             ..\`
           ......\`
         ..........\`
@@ -134,15 +136,14 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <meta property="fb:app_id" content="1404536383143308"/>
   <!--Icons/Mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="theme-color" content="#21252b">
   <link rel="manifest" href="/assets/manifest.webmanifest">
   <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
   <link rel="stylesheet" href="/assets/build/main.min.css"/>
 </head>
 
 <body>
-  <div id="app">
-    ${app}
-  </div>
+  <div id="app">${app}</div>
 
   <!--Load App-->
   <script>
@@ -155,7 +156,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
 
 </html>
 `
-    return responseRenderer
+    responseRenderer
       .toStream()
       .pipe(res);
 

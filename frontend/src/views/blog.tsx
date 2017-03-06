@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Icon } from '../components';
 import { fetchSubapp } from '../store/actions';
+import { tabletQuery } from '../store'
 
 const BlogPost = ({ cover, title, description, permalink, publishDate, tags, style = {} }) => {
 
@@ -42,10 +43,9 @@ export class Blog extends React.Component<any, any> {
       permalink: '/blog/*'
     });
 
-    if (window) {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       document.title = 'Alain Galvan | Blog';
       scrollTo(0,0);
-      console.log(document.getElementsByTagName('meta'));
     }
   
   }
@@ -55,7 +55,6 @@ export class Blog extends React.Component<any, any> {
     let { portfolio } = this.props;
     let blog = portfolio.filter((post) => post.permalink.slice(0, 5) === '/blog');
     let [first, ...rest] = blog;
-    let mediaQuery = window && innerWidth < 768;
 
     return (
       <div style={styles.root}>
@@ -63,7 +62,7 @@ export class Blog extends React.Component<any, any> {
           <a href='/blog/rss.xml' style={styles.rss}><Icon type="rss" /></a>
           {first ? <BlogPost style={{ height: 480, width: '100%' }} {...first} /> : null}
           {
-            rest.map((post, key) => <BlogPost style={{ width:  mediaQuery ? '100%' : '50%' }} key={key} {...post} />)
+            rest.map((post, key) => <BlogPost style={{ width:  tabletQuery ? '100%' : '50%' }} key={key} {...post} />)
           }
         </div>
       </div>);

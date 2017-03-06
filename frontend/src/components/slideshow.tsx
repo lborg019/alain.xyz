@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from './icon';
+import { tabletQuery, mobileQuery } from '../store';
 
 export class Slideshow extends React.Component<any, any> {
   state = {
@@ -52,7 +53,7 @@ export class Slideshow extends React.Component<any, any> {
               ? 1
               : 0;
 
-          let responsive = window && innerWidth < 768
+          let responsive = tabletQuery
             ? {
 
             }
@@ -74,14 +75,14 @@ export class Slideshow extends React.Component<any, any> {
               <figure style={{
                 ...styles.figure,
                 backgroundImage: `linear-gradient(rgba(33,37,43,0), rgba(33,37,43,1)), url(${cover})`,
-                left: window && innerWidth < 1024 ? 0 : -350
-                height: window && innerWidth < 768 ? ( i > 0 ? '192px' : '240px') : '100vh'
+                left: tabletQuery ? 0 : -350
+                height: tabletQuery ? ( i > 0 ? '192px' : '240px') : '100vh'
               }}>
                 <div style={{textAlign: 'center', padding: '1em'}}>
                   
                   <h1 style={{
                     ...styles.h1,
-                    fontSize: window && innerWidth < 768 ? '1.5rem' : undefined
+                    fontSize: tabletQuery ? '1.5rem' : undefined
                   }}><Icon type={tags[0]} /> {title}</h1>
                   <p style={styles.p}>{description}</p>
                 </div>

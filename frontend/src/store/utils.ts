@@ -1,4 +1,4 @@
-import fetch from 'unfetch';
+import 'isomorphic-fetch';
 
 export function createReducer(initialState, reducerMap) {
     return (state = initialState, action) => {
@@ -34,3 +34,16 @@ export function checkHttpStatus(response) {
 export function parseJSON(response) {
     return response.json();
 }
+
+/**
+ * Media Queries
+ */
+let mobileQuery = false;
+let tabletQuery = false;
+
+if (typeof window !== undefined) {
+    mobileQuery = window && innerWidth < 350;
+    tabletQuery = window && innerWidth < 1024;
+}
+
+export { mobileQuery, tabletQuery };

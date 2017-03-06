@@ -26,23 +26,23 @@ api(app);
 // Route Static Portfolio Files
 database.then(db => {
 
-  let collection = db.collection('redirect');
+  let redirectCol = db.collection('redirect');
 
   // File Routing
   // Sends files indexed by database.
-  app.get('*.*', (req, res) => {
+  app.get('*.*',async (req, res) => {
 
     let query = {
-      permalink: req.originalUrl
+     from: req.originalUrl
     };
 
-    collection.find(query)
-      .limit(1)
+    redirectCol.find(query)
+      .limit(2)
       .toArray((errCol, data) => {
         if (errCol || data.length < 1)
-          return res.sendStatus(404);
+          res.redirect(301, '/404');
         else
-          res.sendFile(data[0].from);
+          res.sendFile(data[0].to);
       });
 
   });

@@ -22,7 +22,6 @@ export class SocialBar extends React.Component<SocialBarProps, SocialBarState> {
     if (shrink)
       social = social.slice(0, 3);
 
-    let mediaQuery = window && innerWidth < 480;
     let iconProps = {
       size: 12
     }

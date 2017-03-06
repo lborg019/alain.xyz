@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { SideBar } from '../components';
+import { tabletQuery } from '../store';
 
 export class Home extends React.Component<any, any> {
 
@@ -12,11 +13,9 @@ export class Home extends React.Component<any, any> {
       children
     } = this.props;
 
-    let mediaQuery = window && innerWidth < 1024;
-
     return (
       <div style={styles.root}>
-        {mediaQuery ? <div style={{
+        {tabletQuery ? <div style={{
           background: 'rgb(23,26,30)',
           width: '100vw',
           height: 'calc(48px + 4em)',
@@ -28,8 +27,8 @@ export class Home extends React.Component<any, any> {
         <SideBar pathname={pathname} />
         <div style={{
           ...styles.mainPage,
-          width: mediaQuery ? '100vw' : 'calc(100vw - 350px)',
-          transform: `translate(${mediaQuery ? 0 : 350}px, ${mediaQuery ? 112 : 0}px)`
+          width: tabletQuery ? '100vw' : 'calc(100vw - 350px)',
+          transform: `translate(${tabletQuery ? 0 : 350}px, ${tabletQuery ? 112 : 0}px)`
         }}>
           {children}
         </div>
