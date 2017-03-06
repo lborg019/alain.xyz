@@ -94,16 +94,17 @@ export class Subapp extends React.Component<SubappProps, SubappState> {
 
         let { subapp, failure } = this.props;
 
-        SystemJS.import(main)
-            .then(res => {
-                this.subComponent = res.default;
-                this.setState({ loading: false });
-            })
-            .catch(err => {
-                console.error(err);
-                failure(err);
-                this.setState({ loading: false });
-            });
+        if (SystemJS)
+            SystemJS.import(main)
+                .then(res => {
+                    this.subComponent = res.default;
+                    this.setState({ loading: false });
+                })
+                .catch(err => {
+                    console.error(err);
+                    failure(err);
+                    this.setState({ loading: false });
+                });
     }
 
     render() {

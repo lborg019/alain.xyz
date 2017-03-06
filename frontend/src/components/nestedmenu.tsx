@@ -41,7 +41,7 @@ export class NestedMenu extends React.Component<any, any> {
                 ...styles.link,
                 backgroundColor: pathname === (root + '/' + v)
                   ? 'rgba(78, 160, 232, 0.74)'
-                  : 'rgba(23,26,30,0.11)',
+                  : 'rgba(23, 26, 30, 0.11)',
                 borderLeft: pathname === (root + '/' + v)
                   ? 'rgba(78, 160, 232, 1) .5em solid'
                   : 'rgba(78, 160, 232, 0.33) .2em solid'

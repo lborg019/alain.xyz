@@ -7,50 +7,73 @@ import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 
 import { database } from './db';
+import { Redirect, PortfolioItem } from './schema';
+
 import App from '../../frontend/src/app';
 import reducers from '../../frontend/src/store/reducers';
 
+
 /**
- * Prerenders a given page with React.
+ * Queries Database for portfolio items
+ * Sends portfolio items
  */
 export function renderPage(req: Request, res: Response) {
 
+  let { originalUrl } = req;
+
   // Set page meta tags
-  let meta = {
-    permalink: '/',
-    title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
-    description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
-    cover: '/assets/brand/website-screenshot.jpg',
-    tags: ['alain', 'galvan', 'miami', 'graphics', 'programmer'],
-    author: 'Alain Galvan'
-  };
 
-  // Query portfolio
-  let query = {
-    permalink: req.originalUrl
-  };
+  database.then(async db => {
 
-  database.then((db) => {
-    db.collection('portfolio').find(query)
+    let portfolioCol = db.collection('portfolio');
+
+    let redirectCol = db.collection('redirect');
+
+    // Redirect (Max 1 times)
+    let getRedirects = from => redirectCol
+      .find<Redirect>({ from })
       .limit(1)
-      .toArray((errCol, data) => {
-        if (!errCol && data.length >= 1)
-          meta = {...meta, ...data[0]};
+      .toArray()
+      .catch(err => console.error(err));
 
-        page(req, res, meta, data);
-      });
+    let redirects = await getRedirects(originalUrl);
+
+    if (redirects && redirects.length > 0) {
+      originalUrl = redirects[0].to;
+    }
+
+    // Query Portfolio and grab 10 items.
+    let portfolio = await portfolioCol
+      .find<PortfolioItem>({ permalink: originalUrl })
+      .limit(MAXITEMS)
+      .toArray()
+      .catch(err => console.error(err));
+
+    return page(req, res, portfolio || []);
+
   });
 }
 
-function page(req: Request, res: Response, meta: Meta, data) {
+/**
+ * Render Page with Rapscallion
+ */
+function page(req: Request, res: Response, data: PortfolioItem[]) {
 
-  const state = {};
+  let meta: Meta = data.length === 1
+    ? data[0]
+    : META;
+
+  const state = {
+    portfolio: data,
+    subapp: data.find(subapp => subapp.permalink === req.originalUrl)
+  };
 
   const store = createStore(reducers, state);
 
 
   // React Router
   const context: any = {};
+
   const app = (
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
@@ -59,7 +82,19 @@ function page(req: Request, res: Response, meta: Meta, data) {
     </Provider>
   );
 
-  let responseRenderer = template`<!--
+
+  // context.url will contain the URL to redirect to if a <Redirect> was used
+  if (context.url) {
+
+    res.writeHead(302, {
+      Location: context.url
+    });
+
+    return res.end();
+
+  } else {
+
+    let responseRenderer = template`<!--
             ..\`
           ......\`
         ..........\`
@@ -81,7 +116,7 @@ function page(req: Request, res: Response, meta: Meta, data) {
   <meta charset="UTF-8">
   <title>${meta.title}</title>
   <!--Search Engines-->
-  <meta name="author" content="${meta.author}"/>
+  <meta name="author" content="${meta.authors[0]}"/>
   <meta name="description" content="${meta.description}"/>
   <meta name="keywords" content="${meta.tags.reduce((prev, cur) => prev + ' ' + cur, '')}"/>
   <!--Twitter-->
@@ -93,7 +128,7 @@ function page(req: Request, res: Response, meta: Meta, data) {
   <!--Facebook-->
   <meta property="og:title" content="${meta.title}"/>
   <meta property="og:description" content="${meta.description}"/>
-  <meta property="og:url" content="https://Alain.xyz${meta.permalink}"/>
+  <meta property="og:url" content="https://alain.xyz${meta.permalink}"/>
   <meta property="og:site_name" content="Alain.xyz"/>
   <meta property="og:image" content="https://alain.xyz${meta.cover}"/>
   <meta property="fb:app_id" content="1404536383143308"/>
@@ -120,8 +155,25 @@ function page(req: Request, res: Response, meta: Meta, data) {
 
 </html>
 `
-    responseRenderer.toStream().pipe(res);
+    return responseRenderer
+      .toStream()
+      .pipe(res);
+
+  }
+
+
 }
+
+const META = {
+  permalink: '/',
+  title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
+  description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
+  cover: '/assets/brand/website-screenshot.jpg',
+  tags: ['alain', 'galvan', 'miami', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
+  authors: ['Alain Galvan']
+};
+
+const MAXITEMS = 10;
 
 type Meta = {
   title: string,
@@ -129,5 +181,5 @@ type Meta = {
   cover: string
   tags: string[],
   permalink: string,
-  author: string
+  authors: string[]
 }

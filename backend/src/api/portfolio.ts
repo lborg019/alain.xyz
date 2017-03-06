@@ -1,31 +1,6 @@
 import { Request, Response } from 'express';
 import { database } from '../db';
 
-/**
- * Portfolio Item Schema
- */
-export type PortfolioItem = {
-  permalink: string,
-  cover: string,
-  icon: string,
-  authors: string[],
-  title: string,
-  description: string,
-  tags: string[],
-  publishDate: Date,
-  lastUpdated: Date,
-  // Analytics
-  views: number,
-  social: {
-    [index: string]: {
-      name: string,
-      url: string
-    }
-  },
-  // App Data
-  main: string,
-  data: any
-}
 
 /**
  * API Request Schema

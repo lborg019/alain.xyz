@@ -24,9 +24,9 @@ app.use('/assets', express.static(path.join(root, 'assets')));
 api(app);
 
 // Route Static Portfolio Files
-database.then((db) => {
+database.then(db => {
 
-  let collection = db.collection('files');
+  let collection = db.collection('redirect');
 
   // File Routing
   // Sends files indexed by database.
@@ -42,7 +42,7 @@ database.then((db) => {
         if (errCol || data.length < 1)
           return res.sendStatus(404);
         else
-          res.sendFile(data[0].file);
+          res.sendFile(data[0].from);
       });
 
   });

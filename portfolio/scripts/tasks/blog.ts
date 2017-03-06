@@ -111,7 +111,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
   await database.then(async db => {
 
     var portfolioCollection = db.collection('portfolio');
-    var filesCollection = db.collection('files');
+    var redirectCollection = db.collection('redirect');
 
     // Find a references.json file next to file
     let citationsPath = path.join(file, '..', 'references.json');
@@ -145,7 +145,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     for (var sf of staticFiles) {
       var filePermalink = path.join(entry.permalink, path.relative(lastPath, sf)).replace(/\\/g, '/');
 
-      await filesCollection.update({ file: sf }, { file: sf, permalink: filePermalink }, { upsert: true })
+      await redirectCollection.update({ from: sf }, { from: sf, to: filePermalink }, { upsert: true })
         .then(r => console.log(`Updated file ${sf}.`))
         .catch(e => console.log(e));
 
@@ -162,7 +162,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
  * Clean the database of any missing files in the portfolio,
  * then Check each file if it's been modified or doesn't exist,
  * And write it to the database 'protfolio' collection 
- * while writing static files to 'files' collection
+ * while writing static files to 'redirect' collection
  * Finally index neseted elements in 'indexes' collection.
  */
 async function buildBlog() {
