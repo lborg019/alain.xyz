@@ -1,20 +1,50 @@
-Rust is becoming very mature as a programming language, with exciting research projects ranging from using it to build web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
+Migrating between C++, JavaScript and Rust today has never been easier, the skills needed between each language has never been closer. 
+
+Have open mind towards each programming language and being willing to understand and respect their differences is how the programming community will grow and evolve. 
+
+1. **Installation** - Get off the ground and programming immediately.
+
+2. **Semantics** - An overview of the semantics of Rust in comparison to C++.
+
+3. **Modules** - Creating and installing modules.
+
+4. **Cross-platform Compilation** - Targeting Windows, Mac, Linux, Android, iOS, Web, etc.
+
+5. **Language Interops** - Methods of inlining and interfacing with other languages.
+
+## C++
+
+C++ is a mature language that has a lot of heritige. Developed by Bjorne Strustrup in Bell Labs as an extension to C, it became its own language once people coming from C began to see how much more maintainable their codebases were with class hierarchies and template metaprogramming.
+
+### Installation
+
+```bash
+apt-get install gcc
+```
+
+## JavaScript
+
+Brendon Eich is known as a bit of an appologist because of this, nevertheless, thanks to no small effort on the part of the many people contributing to the evolution of the language, modern JavaScript is a pleasure to develop in.
+
+### Installation
+
+Visit [The Node Foundation](https://nodejs.org) and down load the *current* version of Node.
+
+Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
+
+## Rust
+
+Rust has become pretty popular, with exciting research projects ranging from using it to build web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
+
+This is thanks to the strong emphasis on [ease of use through tooling, performance, and security]() that the Rust standard body pushes for.
 
 [Jack Moffitt](https://twitter.com/metajack), developer for the Rust powered browser Servo, said on [The Changelog](https://changelog.com/podcast/228) that:
 
-> "All of [our security critical bugs with Firefox WebAudio] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C++ ]."
+> "All of [our security critical bugs with Firefox WebAudio] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C ]."
 
-Now that's not to say that C++ with `vector` and `smart_ptr` couldn't fix that problem, but there is a value in making these security features a part of the language. In addition, Rust features a powerful type system inspired by Functional Programming languages like Ocaml and Haskell, which make types helpful instead of in your way.
+Now that's not to say that C++ with `vector` and `smart_ptr` couldn't fix that problem,  a lot of developers end up shooting themselves in the foot thinking that performance but there is a value in making these security features a part of the language. In addition, Rust features a powerful type system inspired by Functional Programming languages like Ocaml and Haskell, which make types helpful instead of in your way.
 
-Here we'll be discussing how to migrate from a C++ and JS background to programming in Rust by reviewing:
-
-1. **Installation** - Get off the ground and programming immediately.
-2. **Modules** - Creating and installing modules.
-3. **Cross-platform Compilation** - Targeting Windows, Mac, Linux, Android, iOS, Web, etc.
-4. **Language Interops** - Methods of inlining and interfacing with other languages.
-4. **Semantics** - An overview of the semantics of Rust in comparison to C++.
-
-## Installation
+### Installation
 
 ### Windows
 
@@ -150,14 +180,10 @@ export function myexport(code: string): number {
 
 ### Macros, Enums, Variables
 
-```rust
-pub enum OomError {
+```js
+export enum Enums {
     One,
     Two
-}
-
-pub struct Structs {
-    property: u32
 }
 ```
 
@@ -166,19 +192,31 @@ enum Enums {
     One,
     Two
 }
+```
 
+```rust
+pub enum OomError {
+    One,
+    Two
+}
+```
+
+### Struct
+
+```rust
+pub struct Structs {
+    property: u32
+}
+```
+
+```
 struct Structs 
 {
     uint32_t property;
 }
 ```
 
-```js
-export enum Enums {
-    One,
-    Two
-}
-```
+
 
 ### Structs, Functions, Classes
 
@@ -192,14 +230,43 @@ struct Point {
     y: f32,
 }
 
+trait Renderable {
+    fn render(&self) -> void;
+}
 ```
 
 ```cpp
 
 ```
 
-```js
+```ts
+// TypeScript / Flow
+type Renderable = {
+  render: () => void
+}
+```
 
+### Pointers
+
+```js
+// JavaScript Objects are by default Mutable References
+let five = { value: 5 };
+```
+
+```rust
+// Rust pointers are smart by default
+
+// Alternatively there's Arcs
+use std::sync::Arc;
+use std::thread;
+
+let five = Arc::new(5);
+```
+
+```cpp
+import memory;
+
+std::shared_ptr<Base> five;
 ```
 
 ### Templates, Macros, Pointers
