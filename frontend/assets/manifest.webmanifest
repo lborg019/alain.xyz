@@ -1,8 +1,8 @@
 {  
   "short_name": "Alain.xyz",  
-  "name": "Alain Galván | Graduate Graphics Researcher @ FIU",  
+  "name": "Alain Galván",  
   "description": "The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.",
-  "start_url": ".",  
+  "start_url": ".",
   "icons": [  
     {  
       "src": "/assets/brand/icon/192.png",  

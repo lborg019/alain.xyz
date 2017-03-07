@@ -53,8 +53,10 @@ export const fetchSubapp = (req: APIRequest) =>
   dispatch => {
     dispatch(fetchingSubapp());
     transport('/api/v1/portfolio', req)
+      .catch(err => dispatch(failure('Couldn\'t find that page...')))
       .then(checkHttpStatus)
+      .catch(err => dispatch(failure('Couldn\'t find that page...')))
       .then(parseJSON)
-      .then(res => dispatch(fetchedSubapp(req, res)))
-      .catch(err => dispatch(failure('Couldn\'t find that page...')));
+      .then(res => dispatch(fetchedSubapp(req, res)));
+
   };

@@ -94,7 +94,7 @@ export class Subapp extends React.Component<SubappProps, SubappState> {
 
         let { subapp, failure } = this.props;
 
-        if (typeof SystemJS !== undefined)
+        if (typeof SystemJS !== 'undefined')
             SystemJS.import(main)
                 .then(res => {
                     this.subComponent = res.default;

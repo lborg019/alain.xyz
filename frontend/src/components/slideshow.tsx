@@ -5,7 +5,7 @@ import { tabletQuery, mobileQuery } from '../store';
 
 export class Slideshow extends React.Component<any, any> {
   state = {
-    index: Math.floor(slideshow.length * Math.random()),
+    index: 0,
     prevIndex: -1,
     slides: [...slideshow]
   }
@@ -23,7 +23,7 @@ export class Slideshow extends React.Component<any, any> {
   incrementSlides = (inc = 1) =>
     this.setState(({ index, slides }) => {
       let i = (index + inc) % slides.length;
-      if (i < 0) i += slides.length;
+      while (i < 0) i += slides.length;
       return {
         index: i
       }
@@ -54,9 +54,7 @@ export class Slideshow extends React.Component<any, any> {
               : 0;
 
           let responsive = tabletQuery
-            ? {
-
-            }
+            ? {}
             : {
               position: 'absolute',
               left: 0,

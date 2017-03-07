@@ -26,7 +26,7 @@ export function checkHttpStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     } else {
-        var error = new Error(response.error);
+        var error = new Error('Resource not found.');
         throw error;
     }
 }
@@ -41,7 +41,7 @@ export function parseJSON(response) {
 let mobileQuery = false;
 let tabletQuery = false;
 
-if (typeof window !== undefined) {
+if (typeof window !== 'undefined') {
     mobileQuery = window && innerWidth < 350;
     tabletQuery = window && innerWidth < 1024;
 }

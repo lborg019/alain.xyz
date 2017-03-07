@@ -36,7 +36,7 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
           ...styles.root,
           transform: `translateX(${left}px)`,
           padding: tabletQuery ? '2em' : '8em 2em',
-          background: tabletQuery ? 'rgb(23,26,30)' : 'rgba(23,26,30,0.11)'
+          background: tabletQuery ? 'rgb(23,26,30)' : 'rgba(23,26,30,0.22)'
         }}>
         <div
           style={{

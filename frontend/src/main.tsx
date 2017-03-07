@@ -9,25 +9,27 @@ import './css';
 import App from './app';
 import reducers from './store/reducers';
 
-// State
+// Setup Redux State
+const composeEnhancers = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined' ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
+
 const store = createStore(
   reducers,
-  compose(
+  _initialState || {},
+  composeEnhancers(
     applyMiddleware(thunk)
-    ,devToolsExtension()
-    )
-  );
+  )
+);
 
 
 // Render
 const target = document.getElementById('app');
 
 const node = (
-    <Provider store={store}>
-      <BrowserRouter>
-        {App}
-      </BrowserRouter>
-    </Provider>
+  <Provider store={store}>
+    <BrowserRouter>
+      {App}
+    </BrowserRouter>
+  </Provider>
 );
 
 ReactDOM.render(node, target);

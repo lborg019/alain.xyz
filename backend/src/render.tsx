@@ -7,11 +7,13 @@ import { template, render } from 'rapscallion';
 import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 
+import App from '../../frontend/src/app';
+import reducers from '../../frontend/src/store/reducers';
+
 import { database } from './db';
 import { Redirect, PortfolioItem } from './schema';
 
-import App from '../../frontend/src/app';
-import reducers from '../../frontend/src/store/reducers';
+
 
 
 /**
@@ -61,12 +63,11 @@ export function renderPage(req: Request, res: Response) {
 function page(req: Request, res: Response, data: PortfolioItem[]) {
 
   let meta: Meta = data.length === 1
-    ? data[0]
+    ? {...META, ...data[0]}
     : META;
 
   const state = {
-    portfolio: data,
-    subapp: data.find(subapp => subapp.permalink === req.originalUrl)
+    portfolio: data
   };
 
   const store = createStore(reducers, state, compose(applyMiddleware(thunk)));
@@ -107,12 +108,12 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
                       \`.....\`
                         \`.....\`
                           \`.....\`
- Alain.xyz
- Built with <3 in React and TypeScript
+ ✔️ Alain.xyz
+ Built with ❤️️ in Miami / NYC / Wherever I Be
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -149,9 +150,9 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <script>
     window._initialState=${serialize(state)};
   </script>
-  <script src="/assets/build/system.min.js"></script>
-  <script src="/assets/build/vendor.min.js"></script>
-  <script src="/assets/build/main.min.js"></script>
+  <script type="text/javascript" src="/assets/build/system.min.js"></script>
+  <script type="text/javascript" src="/assets/build/vendor.min.js"></script>
+  <script type="text/javascript" src="/assets/build/main.min.js"></script>
 </body>
 
 </html>

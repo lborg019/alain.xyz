@@ -15,15 +15,16 @@ export class Home extends React.Component<any, any> {
 
     return (
       <div style={styles.root}>
-        {tabletQuery ? <div style={{
+        <div style={{
           background: 'rgb(23,26,30)',
           width: '100vw',
           height: 'calc(48px + 4em)',
           position: 'fixed',
           top: 0,
           left: 0,
-          zIndex: 10
-        }} /> : null}
+          zIndex: 10,
+          opacity: tabletQuery ? 1 : 0
+        }} />
         <SideBar pathname={pathname} />
         <div style={{
           ...styles.mainPage,

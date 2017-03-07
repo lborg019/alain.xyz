@@ -37,7 +37,7 @@ database.then(db => {
     };
 
     redirectCol.find(query)
-      .limit(2)
+      .limit(1)
       .toArray((errCol, data) => {
         if (errCol || data.length < 1)
           res.redirect(301, '/404');
