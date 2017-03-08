@@ -1,10 +1,13 @@
+import { Request, Response } from 'express';
+
+import * as React from 'react';
+import { StaticRouter } from 'react-router';
+import { template, render } from 'rapscallion';
+import { renderStatic } from 'glamor-server';
+
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { Request, Response } from 'express';
-import { StaticRouter } from 'react-router';
-import { template, render } from 'rapscallion';
-import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 
 import App from '../../frontend/src/app';
@@ -12,10 +15,7 @@ import reducers from '../../frontend/src/store/reducers';
 
 import { database } from './db';
 import { Redirect, PortfolioItem } from './schema';
-
-
-
-
+import { makeRegexPath } from './api/utils';
 /**
  * Queries Database for portfolio items
  * Sends portfolio items
@@ -42,7 +42,7 @@ export function renderPage(req: Request, res: Response) {
     let redirects = await getRedirects(originalUrl);
 
     if (redirects && redirects.length > 0) {
-      originalUrl = redirects[0].to;
+      originalUrl =  makeRegexPath(redirects[0].to) || originalUrl;
     }
 
     // Query Portfolio and grab 10 items.
@@ -63,7 +63,7 @@ export function renderPage(req: Request, res: Response) {
 function page(req: Request, res: Response, data: PortfolioItem[]) {
 
   let meta: Meta = data.length === 1
-    ? {...META, ...data[0]}
+    ? { ...META, ...data[0] }
     : META;
 
   const state = {
@@ -109,7 +109,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
                         \`.....\`
                           \`.....\`
  ✔️ Alain.xyz
- Built with ❤️️ in Miami / NYC / Wherever I Be
+ Built with ❤️️ in Miami, Florida
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
@@ -121,7 +121,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <!--Search Engines-->
   <meta name="author" content="${meta.authors[0]}"/>
   <meta name="description" content="${meta.description}"/>
-  <meta name="keywords" content="${meta.tags.reduce((prev, cur) => prev + ' ' + cur, '')}"/>
+  <meta name="keywords" content="${meta.tags.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
   <!--Twitter-->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:site" content="@Alainxyz"/>
@@ -136,11 +136,33 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <meta property="og:image" content="https://alain.xyz${meta.cover}"/>
   <meta property="fb:app_id" content="1404536383143308"/>
   <!--Icons/Mobile-->
+  <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <!--Chrome-->
   <meta name="theme-color" content="#21252b">
   <link rel="manifest" href="/assets/manifest.webmanifest">
-  <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
+  <!--Safari-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Alain.xyz">
+  <link rel="apple-touch-icon-precomposed" href="assets/brand/icon/512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/icon/180.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="assets/brand/icon/167.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/brand/icon/152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/brand/icon/120.png">
+  <link rel="apple-touch-icon" sizes="80x80" href="assets/brand/icon/80.png">
+  <!--Windows-->
+  <meta name="application-name" content="Alain.xyz">
+  <meta name="msapplication-square70x70logo" content="assets/brand/icon/70.png" />
+  <meta name="msapplication-square150x150logo" content="assets/brand/icon/150.png" />
+  <meta name="msapplication-wide310x150logo" content="assets/brand/icon/310x150.png">
+  <meta name="msapplication-square310x310logo" content="assets/brand/icon/310.png">
+  <meta name="msapplication-TileImage" content="assets/brand/icon/512.png">
+  <meta name="msapplication-TileColor" content="#21252b">
+  <meta name="msapplication-tap-highlight" content="no"/>
+  <!--Styles-->
   <link rel="stylesheet" href="/assets/build/main.min.css"/>
+  <style type="text/css"></style>
 </head>
 
 <body>
@@ -148,7 +170,12 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
 
   <!--Load App-->
   <script>
+    // React
+    //document.querySelector("#app").setAttribute("data-react-checksum", "{}")
+    // Redux
     window._initialState=${serialize(state)};
+    // Glamor
+    window._glam = {};
   </script>
   <script type="text/javascript" src="/assets/build/system.min.js"></script>
   <script type="text/javascript" src="/assets/build/vendor.min.js"></script>
@@ -171,7 +198,7 @@ const META = {
   title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
   description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
   cover: '/assets/brand/website-screenshot.jpg',
-  tags: ['alain', 'galvan', 'miami', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
+  tags: ['alain', 'galvan', 'miami', 'florida', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
   authors: ['Alain Galvan']
 };
 

@@ -1,6 +1,6 @@
-WebGL is an adaptation of the [OpenGL ES 2.0 Spec](https://www.khronos.org/opengles/) to JavaScript, and started off as a collaboration of the Khronos Group and Mozilla. OpenGL is a library designed from a collaboration of multiple companies as a cross platform rendering API.
+WebGL is an adaptation of the [OpenGL ES 2.0 Spec](https://www.khronos.org/opengles/) to JavaScript, and started off as a collaboration of the Khronos Group and Mozilla.
 
-At its core, WebGL is a state machine that lets you tell it how and where it will draw triangles/points/lines, so it's your job as a engine developer to organize when and how the state of the application will change.
+At its core, WebGL is a state machine that lets you as the developer tell it how and where it will draw triangles/points/lines, so it's your job as a engine developer to organize when and how the state of the application will change.
 
 To help introduce WebGL I've written out a simple application which you can find on my [codepen](http://codepen.io/alaingalvan/pen/OMEqKa). This is a simplified rendering system similar to APIs like [Three.js](https://threejs.org/), but I've taken some shortcuts in its design like using the singleton pattern.
 

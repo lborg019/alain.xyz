@@ -129,9 +129,9 @@ async function compileSubapp() {
     //index them according to their folder name. 
     await database
       .then(db => {
-        var filesCollection = db.collection('files');
+        var filesCollection = db.collection('redirect');
         var p = '/' + path.relative(root, subappjs).replace(/\\/g, '/');
-        filesCollection.update({ file: subappjs }, { file: subappjs, permalink: p }, { upsert: true });
+        filesCollection.update({ file: subappjs }, { to: subappjs, from: p }, { upsert: true });
         console.log(gray(`    Indexing Build: \n    file: ${subappjs}\n    permalink: ${p}\n`));
       });
   }

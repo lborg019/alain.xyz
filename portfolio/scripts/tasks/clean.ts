@@ -19,7 +19,7 @@ export async function clean() {
           if (res)
             for (var f of res) {
 
-              let file = f.file || f.from;
+              let file = f.file || f.to;
 
               if (/\.([A-z])*$/.test(file))
                 fs.exists(file, exists => {

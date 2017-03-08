@@ -16,7 +16,7 @@ Deep down all we're doing is sending strings of `html`, `css`, and `javascript` 
 
 - **Testing** - Speeding up new updates to the site thorugh automated testing, linting, type checking, etc.
 
-Frankly, *it can be overwelming*, its nearly impossible to know everything about every part of the stack, but:
+Frankly, *it can be overwhelming*, its nearly impossible to know everything about every part of the stack, but:
 
 > It's better to just *"be aware"* of these technologies and focus on what you love. ~[Brenna O'Brien](http://brennaobrien.com/)
 

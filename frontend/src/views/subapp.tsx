@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { NotFound } from './notfound';
 import { Loading } from '../components/loading';
 import { fetchSubapp, setSubapp, failure, APIResponse } from '../store/actions';

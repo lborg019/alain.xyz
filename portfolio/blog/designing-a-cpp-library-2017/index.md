@@ -1,4 +1,4 @@
-C++ was created by Bjarne Stroustrup at Bell Labs, New Jersey in 1983, but has since evolved to become the most ubiquous high performance language in the world with a focus on *zero overhead abstractions* and *directly mapping your code to hardware instructions*.
+C++ was created by Bjarne Stroustrup at Bell Labs, New Jersey in 1983, but has since evolved to become the most ubiquitous high performance language in the world with a focus on *zero overhead abstractions* and *directly mapping your code to hardware instructions*.
 
 The following is an overview of what it takes to create a modern library for C++, one that takes advantage of the latest in the language and ecosystem. We'll focus on:
 

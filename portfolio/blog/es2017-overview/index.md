@@ -2,12 +2,14 @@ JavaScript has evolved to a viable high level language, with a great set of feat
 
 [![Mandelbrot Courtesy of Inigo Quilez, ShaderToy](assets/mandelbrot.png)](https://www.shadertoy.com/view/4df3Rn)
 
-The Mandelbrot Benchmark (Courtesy of [Gouy, Isaac. The Computer Benchmark Game](http://benchmarksgame.alioth.debian.org/)) shows just how far it's come, beating Ruby, PHP, and Python in performance. 
+The Mandelbrot Benchmark ([Gouy, Isaac. The Computer Benchmark Game](http://benchmarksgame.alioth.debian.org/)) shows just how far it's come, beating Ruby, PHP, and Python in performance. 
 
 | Language | Sec | Memory (KB) |
 |---|---|---|
 | C | 1.64 | 29,588 |
-| Rust | 2.01 | 28,256 |
+| Rust | 1.93 | 52,848 |
+| Swift | 3.32 | 42,428 |
+| Go | 5.64 | 31,052 |
 | Java | 5.89 | 89,504 |
 | OCaml | 13.78 | 7,800 |
 | 🚩 *Node.js* | **17.35** | 616,024 |

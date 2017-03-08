@@ -6,8 +6,6 @@ Migrating between C++, JavaScript and Rust today has never been easier, language
 - **C++ 17** now features array destructuring, and `auto` became much more powerful.
 - **Rust** now has a TypeScript-like [Language Server](https://github.com/rust-lang-nursery/rls).
 
-So try to have open mind towards each programming language and being willing to understand and respect their differences, and let's break it down:
-
 ### Table of Contents
 
 1. **Installation** - Get off the ground and programming immediately.

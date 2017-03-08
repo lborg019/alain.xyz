@@ -6,7 +6,7 @@
 
 **Sound** is a series of compressions and decompressions in the air.
 
-Instantaneous acoustic pressure (current sound) is the ambient atmospheric pressure plus perturbation (basically noise) caused by sound wave at a determined instant in time.
+Instantaneous acoustic pressure (current sound) is the ambient atmospheric pressure plus perturbation (basically noise) caused by a sound wave at a determined instant in time.
 
 
 \[ P_{inst} = P_{atmos} + P_{sound} \]

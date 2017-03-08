@@ -31,7 +31,7 @@ export default class BlogPost extends React.Component<any, any> {
           ...styles.section,
               transform: `translate(0, -${window && innerWidth < 1024 ? 55 : 40}vh)`
           }}>
-          <div style={{ padding: '.5em' }}>
+          <div style={{ padding: '0.5em 1.5em' }}>
             <h1 style={{ color: '#fff' }}>{title}</h1>
             <p>{description}</p>
             <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)' }}>

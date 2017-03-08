@@ -1,4 +1,4 @@
-[Jen Simmons' in her Podcast *The Web Ahead*](http://thewebahead.net/) said *Everyone wants to make their own **CMS***, that idea extends to Game Devs, *everyone wants to make their own **Game Engine***, or with musicians, *everyone wants to make their own **Sound***, or artists, *everyone wants to make their own **Anime** or **Comic** or whatever*. I guess it's that desire to really make an strong impact on the world that drives people to *reinvent*. 
+[Jen Simmons' in her Podcast *The Web Ahead*](http://thewebahead.net/) said *Everyone wants to make their own **CMS***, that idea extends to Game Devs, *everyone wants to make their own **Game Engine***, or with musicians, *everyone wants to make their own unique **Sound***, or artists, *everyone wants to make their own **Style** or **Comic**.* I guess it's that desire to really make an strong impact on the world that drives people to *reinvent*. 
 
 Still, I succumbed to the temptation and built a custom website. Basically I wanted a single page web app that:
 

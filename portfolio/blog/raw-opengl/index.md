@@ -1,4 +1,4 @@
-OpenGL is a cross platform low level graphics API designed as a state machine. The graphics driver manages and maintains the state of your application and you just have to change things like what objects you're currently manipulating.
+OpenGL is a cross platform low level graphics API designed as a state machine. The graphics driver manages and maintains the state of your application so that the developer only needs to set what objects are being used to render onto the screen.
 
 I've prepared a [repo](http://github.com/alaingalvan/raw-opengl) with a some examples. We're going to walk through a *Hello Triangle* app in modern C++, a program that creates a triangle, processes it with a shader, and displays it on a window.
 

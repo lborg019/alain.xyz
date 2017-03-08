@@ -1,6 +1,6 @@
-Pokemon had pixel art in every game up until their X/Y series, Sonic's last pixel art game was Sonic Advance 3, Ragnarok Online tried to mix 3D and Pixel Art. Pixel art has a rich cultural history in early game development.
+Pixel art is a part of the legacy of game development, all early games were pixel art.
 
-This post will serve as a guide, telling you everything you need to know to begin making pixel art.
+Pokemon had pixel art in every game up until their X/Y series, Sonic's last pixel art game was Sonic Advance 3, Ragnarok Online tried to mix 3D and Pixel Art.
 
 ## Limitations & Guidelines
 

@@ -1,4 +1,4 @@
-DirectX is a propreitary graphics API developed by Microsoft, created out of a lack of a unified graphics API available on Windows. Over the years it's become an eligant API which microsoft maintains heavily.
+DirectX is a proprietary graphics API developed by Microsoft, created out of a lack of a unified graphics API available on Windows. Over the years it's become an elegant API which microsoft maintains heavily.
 
 DirectX 12 like Vulkan has offloaded a lot of driver managed structures to the developer, and shares a lot of the same data structures and abstractions, however it isn't as close to graphics hardware.
 

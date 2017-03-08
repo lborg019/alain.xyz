@@ -145,7 +145,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     for (var sf of staticFiles) {
       var filePermalink = path.join(entry.permalink, path.relative(lastPath, sf)).replace(/\\/g, '/');
 
-      await redirectCollection.update({ from: sf }, { from: sf, to: filePermalink }, { upsert: true })
+      await redirectCollection.update({ to: sf }, { from: filePermalink, to: sf }, { upsert: true })
         .then(r => console.log(`Updated file ${sf}.`))
         .catch(e => console.log(e));
 

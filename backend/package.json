@@ -29,6 +29,7 @@
     "body-parser": "^1.16.1",
     "compression": "^1.6.2",
     "express": "^4.14.1",
+    "glamor-server": "^3.0.0-1",
     "mongodb": "^2.2.24",
     "rapscallion": "^2.1.1",
     "react": "^15.4.2",

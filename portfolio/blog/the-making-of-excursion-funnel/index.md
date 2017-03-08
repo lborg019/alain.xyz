@@ -1,4 +1,4 @@
-Whenever I think of Portal 2, there's a ton of amazing memories that come to mind, the science fair, Wheatley getting control of the facility, [Spaaaaaaaaaaaaaaaaaaaaaaaccee](https://youtu.be/xeKMS62GrTI). I wanted to make a shader that showcased one of my favorite scenes, the tractor beam leading to Wheatley.
+Whenever I think of Portal 2, there's a ton of amazing memories that come to mind, the science fair, Wheatley's incompetence, [Spaaaaaaaaaaaaaaaaaaaaaaaccee](https://youtu.be/xeKMS62GrTI). I wanted to make a shader that showcased one of my favorite scenes, the tractor beam leading to Wheatley.
 
 Nothing is born from a vacuum, so it's thanks to all the resources posted by ShaderToy users like [iq](https://www.shadertoy.com/user/iq) and [mplanck](https://www.shadertoy.com/user/mplanck) that this was possible, a lot of the code here was forked from them, alteredaquila, the three.js team, unity's standard shaders.
 

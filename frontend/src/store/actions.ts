@@ -26,7 +26,7 @@ export type APIResponse = {
   }
 }
 
-export const failure = (error: string) => ({
+export const failure = (error = 'Couldn\'t find that page...') => ({
   type: 'ERROR',
   payload: { error }
 });
@@ -53,9 +53,9 @@ export const fetchSubapp = (req: APIRequest) =>
   dispatch => {
     dispatch(fetchingSubapp());
     transport('/api/v1/portfolio', req)
-      .catch(err => dispatch(failure('Couldn\'t find that page...')))
+      .catch(err => dispatch(failure()))
       .then(checkHttpStatus)
-      .catch(err => dispatch(failure('Couldn\'t find that page...')))
+      .catch(err => dispatch(failure()))
       .then(parseJSON)
       .then(res => dispatch(fetchedSubapp(req, res)));
 
