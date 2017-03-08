@@ -1,6 +1,14 @@
-Migrating between C++, JavaScript and Rust today has never been easier, the skills needed between each language has never been closer. 
+> Things people tell me that they know: "full-stack JavaScript is the Future", "everyone should know C", "Rust is the best language for Systems Programming"... Most people hear stuff like this, and say to themselves, is that true? ~ [Haseeb Qureshi, Converge: Why Engineers Disagree About Everything (Talk)](https://softwareengineeringdaily.com/2017/02/24/convergence-with-haseeb-qureshi/)
 
-Have open mind towards each programming language and being willing to understand and respect their differences is how the programming community will grow and evolve. 
+Migrating between C++, JavaScript and Rust today has never been easier, languages seem to be converging, recent updates to each language added features exclusive to other languages. 
+
+- **ECMAScript 2017** now features shared memory and atomics.
+- **C++ 17** now features array destructuring, and `auto` became much more powerful.
+- **Rust** now has a TypeScript-like [Language Server](https://github.com/rust-lang-nursery/rls).
+
+So try to have open mind towards each programming language and being willing to understand and respect their differences, and let's break it down:
+
+### Table of Contents
 
 1. **Installation** - Get off the ground and programming immediately.
 
@@ -8,23 +16,13 @@ Have open mind towards each programming language and being willing to understand
 
 3. **Modules** - Creating and installing modules.
 
-4. **Cross-platform Compilation** - Targeting Windows, Mac, Linux, Android, iOS, Web, etc.
+4. **Cross Platform Compilation** - Targeting Windows, Mac, Linux, Android, iOS, Web, etc.
 
-5. **Language Interops** - Methods of inlining and interfacing with other languages.
-
-## C++
-
-C++ is a mature language that has a lot of heritige. Developed by Bjorne Strustrup in Bell Labs as an extension to C, it became its own language once people coming from C began to see how much more maintainable their codebases were with class hierarchies and template metaprogramming.
-
-### Installation
-
-```bash
-apt-get install gcc
-```
+5. **Foreign Function Interfaces** - Methods of inlining and interfacing with other languages.
 
 ## JavaScript
 
-Brendon Eich is known as a bit of an appologist because of this, nevertheless, thanks to no small effort on the part of the many people contributing to the evolution of the language, modern JavaScript is a pleasure to develop in.
+*Brendon Eich* is known as a bit of an apologist because of this, nevertheless, thanks to no small effort on the part of the many people contributing to the evolution of the language, modern JavaScript is a pleasure to develop in.
 
 ### Installation
 
@@ -32,25 +30,33 @@ Visit [The Node Foundation](https://nodejs.org) and down load the *current* vers
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
 
+## C++
+
+C++ is a mature language that has a lot of heritage. Developed by *Bjarne Stroustrup* in Bell Labs as an extension to C, it became its own language once people coming from C began to see how much more maintainable their codebases were with class hierarchies and template metaprogramming.
+
+### Installation
+
+```bash
+apt-get install gcc
+```
+
 ## Rust
 
 Rust has become pretty popular, with exciting research projects ranging from using it to build web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
 
-This is thanks to the strong emphasis on [ease of use through tooling, performance, and security]() that the Rust standard body pushes for.
+This is thanks to the strong emphasis on [ergonomics, performance, and security](https://blog.rust-lang.org/2017/03/02/lang-ergonomics.html) that the Rust standard body pushes for.
 
 [Jack Moffitt](https://twitter.com/metajack), developer for the Rust powered browser Servo, said on [The Changelog](https://changelog.com/podcast/228) that:
 
-> "All of [our security critical bugs with Firefox WebAudio] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C ]."
-
-Now that's not to say that C++ with `vector` and `smart_ptr` couldn't fix that problem,  a lot of developers end up shooting themselves in the foot thinking that performance but there is a value in making these security features a part of the language. In addition, Rust features a powerful type system inspired by Functional Programming languages like Ocaml and Haskell, which make types helpful instead of in your way.
+> "All of [ our security critical bugs with Firefox WebAudio ] were array out of bounds/use after free errors and all of them would have been prevented by the Rust compiler [ instead of C ]."
 
 ### Installation
 
-### Windows
+#### Windows
 
 Visit [win.rustup.rs](https://win.rustup.rs/) to get an installer `.exe`.
 
-### Linux / OSX
+#### Linux / OSX
 
 ```bash
 curl https://sh.rustup.rs -sSf | sh
@@ -65,10 +71,10 @@ From there you can easily find integrations with code editors like [VS Code](htt
 In Rust, any folder can be a module if it has a `Cargo.toml` file (which is basically an `.ini` file similar to NPM's `package.json`), and often you'll see a script to handle building the package as well.
 
 ```bash
-|- src/
-  |- ...
-|- Cargo.toml
-|- build.rs
+├─ src/
+  └─ ...
+├─ Cargo.toml
+└─ build.rs
 ```
 
 ```yml
@@ -146,12 +152,11 @@ Lets compare Rust semantics with JS and C++:
 
 ### Imports, Exports, Namespaces
 
-```rust
-// Rust
-use std::fs;
-mod file;
+```js
+// TypeScript
+import fs from 'fs';
 
-pub fn myexport(code: &str) -> u32 {
+export function myexport(code: string): number {
     return 0;
 }
 ```
@@ -169,18 +174,22 @@ uint32_t myexport(std::string code)
 }
 ```
 
-```js
-// TypeScript
-import fs from 'fs';
+```rust
+// Rust
+use std::fs;
+mod file;
 
-export function myexport(code: string): number {
+pub fn myexport(code: &str) -> u32 {
     return 0;
 }
 ```
 
-### Macros, Enums, Variables
+### Enums
 
-```js
+Enums don't exist in JavaScript, but are available in TypeScript:
+
+```ts
+// TypeScript
 export enum Enums {
     One,
     Two
@@ -201,7 +210,23 @@ pub enum OomError {
 }
 ```
 
-### Struct
+### Structs
+
+JavaScript doesn't have types, so no need to define structs. Types aren't limited to being just structs in TypeScript though.
+
+```ts
+// TypeScript / Flow
+type Structs = {
+  property: number;
+}
+```
+
+```cpp
+struct Structs 
+{
+    uint32_t property;
+}
+```
 
 ```rust
 pub struct Structs {
@@ -209,34 +234,16 @@ pub struct Structs {
 }
 ```
 
-```
-struct Structs 
-{
-    uint32_t property;
-}
-```
-
-
-
-### Structs, Functions, Classes
+### Duck Typing
 
 ```rust
-// A tuple struct
-struct Pair(i32, f32);
-
-// A struct with two fields
-struct Point {
-    x: f32,
-    y: f32,
-}
-
 trait Renderable {
     fn render(&self) -> void;
 }
 ```
 
 ```cpp
-
+// C++ Doesn't have Duck Typing :(
 ```
 
 ```ts
@@ -253,8 +260,19 @@ type Renderable = {
 let five = { value: 5 };
 ```
 
+```cpp
+#include <memory>
+
+// Raw Pointers
+
+// Smart Pointers
+std::shared_ptr<Base> five;
+```
+
 ```rust
 // Rust pointers are smart by default
+
+// Unless specified otherwise
 
 // Alternatively there's Arcs
 use std::sync::Arc;
@@ -263,13 +281,7 @@ use std::thread;
 let five = Arc::new(5);
 ```
 
-```cpp
-import memory;
-
-std::shared_ptr<Base> five;
-```
-
-### Templates, Macros, Pointers
+### Templates
 
 By default everything in rust is copied unless you specify otherwise.
 
