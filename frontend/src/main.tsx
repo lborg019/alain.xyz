@@ -9,7 +9,7 @@ import './css';
 import App from './app';
 import reducers from './store/reducers';
 
-// Setup Redux State
+// Redux State
 const composeEnhancers = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
   ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   : compose;
@@ -22,8 +22,7 @@ const store = createStore(
   )
 );
 
-
-// Render
+// React Render
 const target = document.getElementById('app');
 
 const node = (

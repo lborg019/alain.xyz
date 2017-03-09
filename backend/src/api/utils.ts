@@ -1,4 +1,4 @@
-export function makeRegexPath(s: string): string | RegExp {
+export function makeRegexPath(s: string) {
 
 if (!(typeof s === 'string' && s.length < 256 && s.length > 0))
       return undefined;

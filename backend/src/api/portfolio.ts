@@ -83,6 +83,7 @@ function sanitize(reqBody): APISanitized {
  * An API Endpoint requesting blog posts.
  */
 export default (req: Request, res: Response) => {
+
   // Get POST parameters
   let apiReq: APISanitized = sanitize(req.body);
 
@@ -91,6 +92,7 @@ export default (req: Request, res: Response) => {
     ...apiReq,
     publishDate: { $lte: new Date() }
   };
+
   delete query.limit;
   delete query.skip;
 

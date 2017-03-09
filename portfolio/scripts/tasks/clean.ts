@@ -8,8 +8,8 @@ export async function clean() {
   console.log('🌊 Alain.xyz Database Cleaner\n');
   await database.then(async db => {
 
-    var files = db.collection('redirect');
-    var posts = db.collection('portfolio');
+    var redirectCol = db.collection('redirect');
+    var portfolioCol = db.collection('portfolio');
 
     var cleanFiles = (col: Collection) =>
       col.find({})
@@ -18,20 +18,22 @@ export async function clean() {
         .then(res => {
           if (res)
             for (var f of res) {
-
+              let { _id } = f;
               let file = f.file || f.to;
-
               if (/\.([A-z])*$/.test(file))
                 fs.exists(file, exists => {
-                  if (!exists)
-                    files.remove(f);
+                  if (!exists) {
+                    col.deleteOne({_id})
+                    .catch(err => console.error(err))
+                    .then(() => console.log('Removed ' + file));
+                  }
                 });
             }
         });
 
-    await cleanFiles(files);
+    await cleanFiles(redirectCol);
     console.log('✨ Cleaned files collection.')
-    await cleanFiles(posts);
+    await cleanFiles(portfolioCol);
     console.log('✨ Cleaned portfolio collection.')
 
   });
