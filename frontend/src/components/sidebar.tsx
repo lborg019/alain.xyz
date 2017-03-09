@@ -49,10 +49,10 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
             style={{ height: 48 }}>
             <LogoIcon style={styles.img} />
           </a>
-          <div style={styles.logotype}>
+          <Link style={styles.logotype} to='/'>
             <h1 style={styles.h1}>Alain Galván</h1>
             <h3 style={styles.h3}>Graphics Researcher @ FIU</h3>
-          </div>
+          </Link>
         </div>
         <NestedMenu pathname={this.props.pathname} />
         <SocialBar style={{ position: 'absolute', bottom: '1.75em' }} />
@@ -106,7 +106,8 @@ const styles = {
     transition: 'transform 0.3s ease-out'
   },
   logotype: {
-    paddingLeft: '1.2em'
+    paddingLeft: '1.2em',
+    color: '#fff'
   },
   img: {
     height: 48,

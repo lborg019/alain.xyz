@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 import * as React from 'react';
 import { StaticRouter } from 'react-router';
-import { template, render } from 'rapscallion';
-import { renderStatic } from 'glamor-server';
+import { template, render as jsxRender } from 'rapscallion';
+import { renderStatic as cssRender } from 'glamor-server';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -30,25 +30,10 @@ export function renderPage(req: Request, res: Response) {
 
     let portfolioCol = db.collection('portfolio');
 
-    let redirectCol = db.collection('redirect');
-
-    // Redirect (Max 1 times)
-    let getRedirects = from => redirectCol
-      .find<Redirect>({ from })
-      .limit(1)
-      .toArray()
-      .catch(err => console.error(err));
-
-    let redirects = await getRedirects(originalUrl);
-
-    if (redirects && redirects.length > 0) {
-      originalUrl =  makeRegexPath(redirects[0].to) || originalUrl;
-    }
-
     // Query Portfolio and grab 10 items.
     let portfolio = await portfolioCol
       .find<PortfolioItem>({ permalink: originalUrl })
-      .limit(MAXITEMS)
+      .limit(1)
       .toArray()
       .catch(err => console.error(err));
 
@@ -96,7 +81,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
 
   } else {
 
-    const componentRenderer = render(app);
+    const componentRenderer = jsxRender(app);
     const responseRenderer = template`<!--
             ..\`
           ......\`

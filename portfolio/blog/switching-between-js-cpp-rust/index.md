@@ -70,7 +70,7 @@ In Rust, any folder can be a module if it has a `Cargo.toml` file (which is basi
 
 ```bash
 ├─ src/
-  └─ ...
+│   └─ ...
 ├─ Cargo.toml
 └─ build.rs
 ```
@@ -230,6 +230,34 @@ struct Structs
 pub struct Structs {
     property: u32
 }
+```
+
+### Functions
+
+```js
+// JS
+let lambda = () => null;
+```
+
+```cpp
+// C++
+auto lambda = []() 
+{
+    return null;
+};
+
+```
+
+The brackets  (`[]`) portion of a C++ lambda where identifiers are placed is two pipes `| |` in Rust:
+
+```rust
+fn ten_times<F>(f: F) where F: Fn(i32) {
+    for index in 0..10 {
+        f(index);
+    }
+}
+
+ten_times(|j| println!("hello, {}", j));
 ```
 
 ### Duck Typing

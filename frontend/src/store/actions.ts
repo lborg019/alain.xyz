@@ -57,6 +57,7 @@ export const fetchSubapp = (req: APIRequest) =>
       .then(checkHttpStatus)
       .catch(err => dispatch(failure()))
       .then(parseJSON)
+      .catch(err => dispatch(failure()))
       .then(res => dispatch(fetchedSubapp(req, res)));
 
   };
