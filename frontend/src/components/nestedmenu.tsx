@@ -8,13 +8,13 @@ export class NestedMenu extends React.Component<any, any> {
 
   static defaultProps = {
     structure: {
-      about: '',
+      about: 'about',
       portfolio: {
-        research: '',
-        apps: '',
-        libraries: ''
+        research: '?tag=research',
+        apps: '?tag=apps',
+        libraries: '?tag=libraries'
       },
-      blog: ''
+      blog: 'blog'
     },
     root: '',
     style: {},
@@ -26,8 +26,13 @@ export class NestedMenu extends React.Component<any, any> {
       structure,
       root,
       style,
-      pathname = '/'
+      location
     } = this.props;
+
+    let {
+      pathname,
+      search
+    } = location;
 
     let capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -35,24 +40,30 @@ export class NestedMenu extends React.Component<any, any> {
       <ul style={{ ...styles.root, ...style }}>
         {Object.keys(structure).map(
           (v, k) => {
+            let obj = structure[v];
+
+            let isObj = typeof obj === 'object';
+
+            let to = root + '/' + (isObj ? v : structure[v]);
 
             let p = {
+
               style: {
                 ...styles.link,
-                backgroundColor: pathname === (root + '/' + v)
+                backgroundColor: (pathname + search) === to
                   ? 'rgba(78, 160, 232, 0.74)'
                   : 'rgba(23, 26, 30, 0.11)',
-                borderLeft: pathname === (root + '/' + v)
+                borderLeft: (pathname + search) === to
                   ? 'rgba(78, 160, 232, 1) .5em solid'
                   : 'rgba(78, 160, 232, 0.33) .2em solid'
               },
-              to: `${root + '/' + v}`,
+
+              to,
+
               children: capitalize(v)
             };
 
             let link = <Link {...p} />;
-
-            let isObj = typeof structure[v] === 'object';
 
             return (
               <li key={k}>
@@ -62,9 +73,9 @@ export class NestedMenu extends React.Component<any, any> {
                     : null}
                 {isObj
                   ? <NestedMenu
-                    pathname={pathname} root={root + '/' + v}
+                    location={location} root={root + '/' + v}
                     style={{ paddingLeft: '1em' }}
-                    structure={structure[v]} />
+                    structure={obj} />
                   : link}
               </li>)
           })}

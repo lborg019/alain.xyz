@@ -7,9 +7,7 @@ export class Home extends React.Component<any, any> {
   render() {
 
     let {
-      location: {
-        pathname = '/'
-      },
+      location,
       children
     } = this.props;
 
@@ -23,9 +21,9 @@ export class Home extends React.Component<any, any> {
           top: 0,
           left: 0,
           zIndex: 10,
-          opacity: tabletQuery ? 1 : 0
+          visibility: tabletQuery ? 'visible' : 'hidden'
         }} />
-        <SideBar pathname={pathname} />
+        <SideBar location={location} />
         <div style={{
           ...styles.mainPage,
           width: tabletQuery ? '100vw' : 'calc(100vw - 350px)',

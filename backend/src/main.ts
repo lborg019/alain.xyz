@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as compression from 'compression';
+import * as helmet from 'helmet';
 
 import api from './api';
 import { database } from './db';
@@ -9,13 +10,14 @@ import { renderPage } from './render';
 
 const app = express();
 
-// Configure Exprses
+// Configure Express
+app.use(compression({ level: 9 }));
+//app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((err, req, res, next) =>
     res.status(500).send(JSON.stringify({ err: 'Bad request!' }))
 );
-app.use(compression({ level: 9 }));
 
 // Route Frontend assets
 const root = path.join(__dirname, '..', '..', 'frontend');

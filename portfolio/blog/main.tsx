@@ -24,12 +24,12 @@ export default class BlogPost extends React.Component<any, any> {
       <div ref={r => this.root = r} style={styles.root}>
         <figure style={{
           ...styles.figure,
-          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '25vh' : '45vh' }, rgba(33,37,43,1)), url(${cover})`,
+          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '15vh' : '45vh' }, rgba(33,37,43,1)), url(${cover})`,
 		      left: window && innerWidth < 1024 ? 0 : -350
         }} />
         <section style={{
           ...styles.section,
-              transform: `translate(0, -${window && innerWidth < 1024 ? 55 : 40}vh)`
+              transform: `translate(0, -${window && innerWidth < 1024 ? 65 : 40}vh)`
           }}>
           <div style={{ padding: '0.5em 1.5em' }}>
             <h1 style={{ color: '#fff' }}>{title}</h1>

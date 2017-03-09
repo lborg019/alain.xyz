@@ -9,6 +9,8 @@ import './css';
 import App from './app';
 import reducers from './store/reducers';
 
+// Glamor CSS
+
 // Redux State
 const composeEnhancers = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
   ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__
