@@ -13,6 +13,9 @@ const initialState = {
 // Keep Portfolio Cache a max of 100 subapps long.
 let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) => {
 
+    if (!subapps)
+        return portfolio;
+
     let cache = [...portfolio];
 
     // check to see if it's in the cache
@@ -35,7 +38,7 @@ export default createReducer(initialState, {
     FETCHED_SUBAPP: (state, payload: { req: APIRequest, res: APIResponse[] }) => {
 
         let portfolio = cachePortfoliosubapps(payload.res, state.portfolio);
-        
+
         return {
             ...state,
             portfolio,

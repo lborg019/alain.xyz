@@ -51,13 +51,12 @@ export const setSubapp = (permalink: string) => ({
 
 export const fetchSubapp = (req: APIRequest) =>
   dispatch => {
+    let fail = err => dispatch(failure());
     dispatch(fetchingSubapp());
-    transport('/api/v1/portfolio', req)
-      .catch(err => dispatch(failure()))
-      .then(checkHttpStatus)
-      .catch(err => dispatch(failure()))
-      .then(parseJSON)
-      .catch(err => dispatch(failure()))
-      .then(res => dispatch(fetchedSubapp(req, res)));
-
+    return transport('/api/v1/portfolio', req)
+      .catch(fail)
+      .then(checkHttpStatus, fail)
+      .then(parseJSON, fail)
+      .then(res => dispatch(fetchedSubapp(req, res)), fail);
+    }
   };
