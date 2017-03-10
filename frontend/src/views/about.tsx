@@ -66,7 +66,7 @@ const styles = {
     padding: '0.2em 0'
   },
   article: {
-    padding: '4px 16px'
+    padding: '.25em 1em 1em'
   },
   p: {
     padding: '8px 0'
