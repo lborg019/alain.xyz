@@ -20,7 +20,6 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
     this.setState(({ open }) => ({ open: !open }))
 
   render() {
-    let { pathname } = this.props;
 
     let scale = mobileQuery
       ? innerWidth / 350

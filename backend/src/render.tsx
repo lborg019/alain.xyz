@@ -124,7 +124,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
   <!--Chrome-->
-  <meta name="theme-color" content="#21252b">
+  <meta name="theme-color" content="#171a1e">
   <link rel="manifest" href="/assets/manifest.webmanifest">
   <!--Safari-->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -169,6 +169,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
 
 </html>
 `
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
     responseRenderer
       .toStream()
       .pipe(res);

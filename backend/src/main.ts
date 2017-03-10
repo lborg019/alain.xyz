@@ -12,11 +12,11 @@ const app = express();
 
 // Configure Express
 app.use(compression({ level: 9 }));
-//app.use(helmet());
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((err, req, res, next) =>
-    res.status(500).send(JSON.stringify({ err: 'Bad request!' }))
+  res.status(500).send(JSON.stringify({ err: 'Bad request!' }))
 );
 
 // Route Frontend assets
@@ -32,10 +32,10 @@ database.then(db => {
 
   // File Routing
   // Sends files indexed by database.
-  app.get('*.*',async (req, res) => {
+  app.get('*.*', async (req, res) => {
 
     let query = {
-     from: req.originalUrl
+      from: req.originalUrl
     };
 
     redirectCol.find(query)
@@ -59,4 +59,4 @@ app.listen(3000, () => {
 });
 
 // Expose Module
-export {app, database};
+export { app, database };

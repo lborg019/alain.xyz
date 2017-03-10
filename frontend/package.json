@@ -12,8 +12,8 @@
     "src"
   ],
   "scripts": {
-    "start": "set NODE_ENV=production & ts-node -F -D webpack.config.ts",
-    "develop": "set NODE_ENV=development & ts-node -F -D webpack.config.ts --watch"
+    "start": "set NODE_ENV=production& ts-node -F -D webpack.config.ts",
+    "develop": "set NODE_ENV=development& ts-node -F -D webpack.config.ts --watch"
   },
   "keywords": [
     "systemjs",
