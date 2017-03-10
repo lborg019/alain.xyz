@@ -6,6 +6,7 @@ import * as precss from 'precss';
 import * as autoprefixer from 'autoprefixer';
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 import WebpackSystemJSExportPlugin from 'webpack-systemjs-export-plugin';
+import * as OfflinePlugin from 'offline-plugin';
 
 let env = process.env['NODE_ENV'];
 let isProduction = env && env.match(/production/);
@@ -100,6 +101,9 @@ let config = {
         'redux-thunk',
         'isomorphic-fetch'
       ]
+    }),
+    new OfflinePlugin({
+      publicPath: '/assets/build'
     })
   ]
 };

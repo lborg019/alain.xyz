@@ -55,7 +55,7 @@ export class SideBar extends React.Component<SideBarProps, SideBarState> {
         </div>
         <NestedMenu location={this.props.location} />
         <SocialBar style={{ position: 'absolute', bottom: '1.75em' }} />
-        <p style={styles.footer}>© {year} Alain Galvan | Made with <a href="https://github.com/alaingalvan/alain.xyz"><Icon type="love" size={12} style={{ fill: 'rgba(236, 82, 82, 0.75)' }} /></a> in Miami, Florida
+        <p style={styles.footer}>© {year} Alain Galvan | Made with <a href='https://github.com/alaingalvan/alain.xyz'><Icon type='love' size={12} style={{ fill: 'rgba(236, 82, 82, 0.75)' }} /></a> in Miami, Florida
         </p>
 
       </div>

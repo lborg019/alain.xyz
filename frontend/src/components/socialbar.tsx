@@ -36,15 +36,15 @@ export class SocialBar extends React.Component<SocialBarProps, SocialBarState> {
             </a>
         )}
         <a onClick={this.toggleShrink}>
-          <svg viewBox="0 0 12 12"
+          <svg viewBox='0 0 12 12'
             style={styles.more.root}>
             <line style={{
               ...styles.more.line,
               transform: `rotateZ(${shrink ? 0 : 90}deg)`,
               transformOrigin: '50% 50%',
               transition: 'transform .5s ease-out'
-            }} x1="6" y1="1.5" x2="6" y2="10.5" />
-            <line style={styles.more.line} x1="1.5" y1="6" x2="10.5" y2="6" />
+            }} x1='6' y1='1.5' x2='6' y2='10.5' />
+            <line style={styles.more.line} x1='1.5' y1='6' x2='10.5' y2='6' />
           </svg>
         </a>
 

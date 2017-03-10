@@ -59,7 +59,7 @@ export class Blog extends React.Component<any, any> {
     return (
       <div style={styles.root}>
         <div style={{...styles.article, padding: 0}}>
-          <a href='/blog/rss.xml' style={styles.rss}><Icon type="rss" /></a>
+          <a href='/blog/rss.xml' style={styles.rss}><Icon type='rss' /></a>
           {first ? <BlogPost style={{ height: 480, width: '100%' }} {...first} /> : null}
           {
             rest.map((post, key) => <BlogPost style={{ width:  tabletQuery ? '100%' : '50%' }} key={key} {...post} />)

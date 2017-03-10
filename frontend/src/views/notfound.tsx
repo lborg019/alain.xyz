@@ -12,7 +12,7 @@ export class NotFound extends React.Component<any, any> {
         }}>
         <h1>{ phrase }</h1>
         <p>Doesn't look like that page exists.</p>
-        <Link className="btn" style={styles.link} to="/">Go Home</Link>
+        <Link className='btn' style={styles.link} to='/'>Go Home</Link>
         <p style={styles.source}> Img Source: <a href={url} >{ name }</a> </p>
       </div>
     )

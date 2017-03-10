@@ -4,12 +4,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 import './css';
 import App from './app';
 import reducers from './store/reducers';
 
+// Service Worker
+OfflinePluginRuntime.install();
+
 // Glamor CSS
+// hydrate(_glam);
 
 // Redux State
 const composeEnhancers = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'

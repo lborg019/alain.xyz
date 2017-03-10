@@ -8,11 +8,11 @@ const App = (
     <Route render={props => (
       <Home {...props}>
         <Switch>
-          <Route exact path="/" component={Slideshow} />
+          <Route exact path='/' component={Slideshow} />
           <Route exact path='/404' component={NotFound}/>
-          <Route exact path="/about" component={About} />
-          <Route exact path="/portfolio" component={Portfolio} />
-          <Route exact path="/blog" render={props => <Blog {...props} />} />
+          <Route exact path='/about' component={About} />
+          <Route exact path='/portfolio' component={Portfolio} />
+          <Route exact path='/blog' render={props => <Blog {...props} />} />
           <Route render={props => <Subapp {...props} />} />
         </Switch>
       </Home>)} />

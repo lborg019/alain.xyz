@@ -15,20 +15,20 @@ export class About extends React.Component<any, any> {
     return (
       <div style={styles.root}>
         <section style={styles.section}>
-          <img style={styles.img} src="assets/brand/alaingalvan.jpg" alt="A photo of Alain Galvan. :)" />
+          <img style={styles.img} src='assets/brand/alaingalvan.jpg' alt='A photo of Alain Galvan. :)' />
           <article style={styles.article}>
             <h1 style={styles.h1}>Hi there! <span style={{ fontSize: '1.5em' }}>✌</span></h1>
-            <p>My name is Alain (pronounced <em>Alan</em> ), a graduate (MSc) student / graphics research assistant <a href="http://fiu.edu/">@FIU</a>'s <a href="http://OpenHID.com">@OpenHID</a> Lab, a Human Computer Interaction lab part of the <a href="http://hpdrc.fiu.edu">High Performance Database Research Center</a> where my research focuses on low level graphics programming.</p>
-            <p>I'm also a Speaker @ <a href="https://www.meetup.com/MakeGamesMiami/">The Miami Game Development Meetup</a> and Guitarist @ Princeton Church.</p>
+            <p>My name is Alain (pronounced <em>Alan</em> ), a graduate (MSc) student / graphics research assistant <a href='http://fiu.edu/'>@FIU</a>'s <a href='http://OpenHID.com'>@OpenHID</a> Lab, a Human Computer Interaction lab part of the <a href='http://hpdrc.fiu.edu'>High Performance Database Research Center</a> where my research focuses on low level graphics programming.</p>
+            <p>I'm also a Speaker @ <a href='https://www.meetup.com/MakeGamesMiami/'>The Miami Game Development Meetup</a> and Guitarist @ Princeton Church.</p>
             <div style={{ padding: '16px 0' }}>
-              <a href="assets/brand/alain-galvan-resume.pdf"
+              <a href='assets/brand/alain-galvan-resume.pdf'
                 style={{ backgroundColor: '#3093b0' }}
-                className="btn" >
+                className='btn' >
                 Résumé
               </a>
-              <a href="mailto:hi@alain.xyz"
+              <a href='mailto:hi@alain.xyz'
                 style={{ backgroundColor: '#6945bf' }}
-                className="btn" >
+                className='btn' >
                 Email
               </a>
             </div>
