@@ -26,7 +26,9 @@ export type PortfolioItem = {
 }
 
 /**
- * Redirection Schema
+ * Redirection Schema | 
+ * Ex: { from: '/blog/raw-vulkan/cover.jpg', to: 'D:/Pictures/...'}
+ * Or: { from '/blog', to '/blog/*' } 
  */
 export type Redirect = {
   from: string,

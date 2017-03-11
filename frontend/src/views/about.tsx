@@ -52,7 +52,8 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     maxWidth: 720,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: '.5em'
   },
   img: {
     width: 256,

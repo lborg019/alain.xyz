@@ -14,7 +14,7 @@ const initialState = {
 // Keep Portfolio Cache a max of 100 subapps long.
 let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) => {
 
-    if (!subapps)
+    if (!Array.isArray(subapps))
         return portfolio;
 
     let cache = [...portfolio];

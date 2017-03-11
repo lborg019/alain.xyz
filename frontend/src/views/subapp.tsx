@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NotFound } from './notfound';
@@ -31,7 +32,7 @@ export class Subapp extends React.Component<SubappProps, SubappState> {
         loading: true
     };
 
-    private subComponent: React.ComponentClass<any> = null;
+    private subComponent: any = null;
 
     componentWillMount() {
 
@@ -41,6 +42,8 @@ export class Subapp extends React.Component<SubappProps, SubappState> {
             loading
         } = this.props;
 
+        this.setState(() => ({ loading }));
+
         this.querySubapp(location);
 
         if (subapp !== null)
@@ -48,11 +51,14 @@ export class Subapp extends React.Component<SubappProps, SubappState> {
     }
 
     componentWillReceiveProps(newProps) {
+        
         let {
             subapp,
             location,
             loading
         } = newProps;
+
+        this.setState(() => ({ loading }));
 
         if (location && location !== this.props.location)
             this.querySubapp(location);
@@ -91,36 +97,33 @@ export class Subapp extends React.Component<SubappProps, SubappState> {
      */
     attachSubapp = ({ main }: APIResponse) => {
 
-        let { subapp, failure } = this.props;
+        let { subapp, location, failure } = this.props;
 
         if (typeof SystemJS !== 'undefined')
             SystemJS.import(main)
-                .then(res => {
-                    this.subComponent = res.default;
+                .then(({ default: AsyncApp }) => {
+                    this.subComponent = <AsyncApp config={this.props.subapp} location={this.props.location} />;
                     this.setState({ loading: false });
                 })
                 .catch(err => {
                     console.error(err);
                     failure(err);
+                    this.subComponent = <Redirect to='/404' />
                     this.setState({ loading: false });
                 });
     }
 
     render() {
-        if (this.props.loading)
+        if (this.state.loading)
             return <Loading />;
 
         if (this.props.subapp) {
             if (this.subComponent !== null)
-                return (
-                    <this.subComponent
-                        config={this.props.subapp}
-                        location={this.props.location}
-                    />);
+                return this.subComponent;
             else
                 return <Loading />
         }
-        return <NotFound />
+        return <Redirect to='/404' />
     }
 }
 

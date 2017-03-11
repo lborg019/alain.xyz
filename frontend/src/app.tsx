@@ -11,12 +11,19 @@ const App = (
           <Route exact path='/' component={Slideshow} />
           <Route exact path='/404' component={NotFound}/>
           <Route exact path='/about' component={About} />
-          <Route exact path='/portfolio' component={Portfolio} />
-          <Route exact path='/blog' render={props => <Blog {...props} />} />
+          {categories.map((c, i) => <Route key={i} exact path={`/${c}`} render={props => <Blog {...props} />} />)}
           <Route render={props => <Subapp {...props} />} />
         </Switch>
       </Home>)} />
   </div>
 );
+
+const categories = [
+  'portfolio',
+  'apps',
+  'libraries',
+  'research',
+  'blog'
+]
 
 export default App;
