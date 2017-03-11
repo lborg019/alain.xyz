@@ -1,4 +1,4 @@
-export * from './socialbar'
+export * from './mobilebar';
 export * from './sidebar';
 export * from './icon';
 export * from './loading';

@@ -31,9 +31,13 @@ export const failure = (error = 'Couldn\'t find that page...') => ({
   payload: { error }
 });
 
-export const hideMenu = () => ({
-  type: 'HIDE_MENU'
+export const toggleSidebar = () => ({
+  type: 'SIDEBAR'
 });
+
+export const toggleFullscreen = () => ({
+  type: 'FULLSCREEN'
+})
 
 const fetchingSubapp = () => ({
   type: 'FETCHING_SUBAPP'

@@ -7,7 +7,8 @@ const initialState = {
     portfolio: [],          // Cached SubApplications
     fetchingSubapp: false,  // Loading
     error: '',              // API Errors
-    hideMenu: false         // Hide Sidebar
+    fullscreen: false,      // Fullscreen Application
+    showSidebar: false      // Show Sidebar
 };
 
 // Keep Portfolio Cache a max of 100 subapps long.
@@ -69,9 +70,15 @@ export default createReducer(initialState, {
             fetchingSubapp: false
         }),
 
-    HIDE_MENU: (state, payload) =>
+    FULLSCREEN: (state, payload) =>
         ({
             ...state,
-            hideMenu: !state.hideMenu
+            fullscreen: !state.fullscreen
+        }),
+
+    SIDEBAR: (state, payload) =>
+        ({
+            ...state,
+            showSidebar: !state.showSidebar
         })
 });

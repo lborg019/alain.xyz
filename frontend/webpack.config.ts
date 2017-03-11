@@ -93,7 +93,6 @@ let config = {
       public: [
         'react',
         'react-dom',
-        'react-motion',
         'react-redux',
         'react-router',
         'react-router-dom',

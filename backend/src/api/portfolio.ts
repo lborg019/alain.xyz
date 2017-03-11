@@ -119,7 +119,7 @@ export default (req: Request, res: Response) => {
 
     let data = c.find(query, projection)
       .sort({
-        publishDate: 1
+        publishDate: -1
       })
       .skip(apiReq.skip)
       .limit(apiReq.limit)

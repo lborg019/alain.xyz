@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Icon } from './icon';
-import resume from '../store/resume';
+import { Icon } from '../icon';
+import resume from '../../store/resume';
 
 /**
  * All social media featured in Alain.xyz

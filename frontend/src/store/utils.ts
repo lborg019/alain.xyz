@@ -42,7 +42,7 @@ let mobileQuery = false;
 let tabletQuery = false;
 
 if (typeof window !== 'undefined') {
-    mobileQuery = window && innerWidth < 350;
+    mobileQuery = window && innerWidth < 768;
     tabletQuery = window && innerWidth < 1024;
 }
 

@@ -1,8 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import { Icon } from './icon';
 import { tabletQuery, mobileQuery } from '../store';
 
+@connect(
+  ({ portfolio }) => ({ portfolio })
+)
 export class Slideshow extends React.Component<any, any> {
   state = {
     index: 0,
@@ -74,7 +79,7 @@ export class Slideshow extends React.Component<any, any> {
                 ...styles.figure,
                 backgroundImage: `linear-gradient(rgba(33,37,43,0), rgba(33,37,43,1)), url(${cover})`,
                 left: tabletQuery ? 0 : -350
-                height: tabletQuery ? ( i > 0 ? '192px' : '240px') : '100vh'
+                height: tabletQuery ? ( i > 0 ? '192px' : '320px') : '100vh'
               }}>
                 <div style={{textAlign: 'center', padding: '1em'}}>
                   

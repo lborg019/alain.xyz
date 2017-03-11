@@ -1,6 +1,8 @@
 [Jen Simmons' in her Podcast *The Web Ahead*](http://thewebahead.net/) said *Everyone wants to make their own **CMS***, that idea extends to Game Devs, *everyone wants to make their own **Game Engine***, or with musicians, *everyone wants to make their own unique **Sound***, or artists, *everyone wants to make their own **Style** or **Comic**.* I guess it's that desire to really make an strong impact on the world that drives people to *reinvent*. 
 
-Still, I succumbed to the temptation and built a custom website. Basically I wanted a single page web app that:
+Still, I succumbed to the temptation and built a custom website.
+
+## Design Goals
 
 1. Prerenders the page for the user to save that initial render step.
 
@@ -19,6 +21,9 @@ Here's some of the dependencies I'm building on top of:
 1. [NodeJS](https://nodejs.org/) - Serverside JavaScript, one language for everything.
 
 2. [MongoDB](http://mongodb.org/) - A simple to use NoSQL Database.
+
+3. [Express]() - Node.js' De'facto HTTP Server.
+    - [Helmet]() - Security header middleware.
 
 ### Client
 
@@ -45,8 +50,6 @@ Here's some of the dependencies I'm building on top of:
 ### Host
 
 [Digital Ocean](https://www.digitalocean.com/) - After comparing [AWS](http://aws.amazon.com), [Google Cloud](https://cloud.google.com/), [Dreamhost](https://www.dreamhost.com/), [Heroku](https://www.heroku.com/) this host offers the best balance of features and price **$10.00**.
-
-I changed up my name servers at my domain provider [NameCheap](https://www.namecheap.com) to Digital Ocean's name servers, and installed Node, Nginx and MongoDB. Pretty straightforward.
 
 ## Getting Started
 

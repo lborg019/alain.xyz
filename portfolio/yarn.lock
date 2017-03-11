@@ -6,37 +6,41 @@
   version "0.4.31"
   resolved "https://registry.yarnpkg.com/@types/chalk/-/chalk-0.4.31.tgz#a31d74241a6b1edbb973cf36d97a2896834a51f9"
 
-"@types/history@*":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@types/history/-/history-4.5.0.tgz#2f5c3aad4fbd00f89e99b83083e354bc5308e307"
+"@types/history@^3":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@types/history/-/history-3.2.1.tgz#0039ab0e0be2a0cc22bac171d27a44588103d123"
 
-"@types/mongodb@^2.1.40":
-  version "2.1.40"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-2.1.40.tgz#c60fdff6f52f43ba15ec9bb6a26dc5a728530ac0"
+"@types/mongodb@^2.1.41":
+  version "2.1.41"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-2.1.41.tgz#92ea0f832b9e0269c7826fb7f899cf86fe5c4df5"
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^7.0.5":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.5.tgz#96a0f0a618b7b606f1ec547403c00650210bfbb7"
+"@types/node@*", "@types/node@^7.0.8":
+  version "7.0.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.8.tgz#25e4dd804b630c916ae671233e6d71f6ce18124a"
 
-"@types/react-redux@^4.4.36":
-  version "4.4.36"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-4.4.36.tgz#5d1e768f3291c66c8e54d8a48e42f7cb554a7d87"
+"@types/react-redux@^4.4.37":
+  version "4.4.37"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-4.4.37.tgz#14489a999cdfb0a05fb5c2335fa6c3c3e7c89ed5"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
 
-"@types/react-router@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-3.0.3.tgz#78644c9a0dd7e04f7101b9a03d63361e69587030"
+"@types/react-router@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-3.0.7.tgz#f2f70df67a3a381228cf686b75cf27fc22663951"
   dependencies:
-    "@types/history" "*"
+    "@types/history" "^3"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^15.0.9":
+"@types/react@*":
   version "15.0.9"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.9.tgz#b45b6174870890a7f8426cdad6935ba7af4c13f4"
+
+"@types/react@^15.0.16":
+  version "15.0.16"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.16.tgz#78e39511a9cfcabf7f74ecd55180522f4290a0c1"
 
 "@types/redux@^3.6.0":
   version "3.6.31"
@@ -875,9 +879,13 @@ tsconfig@^5.0.2:
     strip-bom "^2.0.0"
     strip-json-comments "^2.0.0"
 
-typescript@^2.1.0, typescript@^2.1.6:
+typescript@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.0.tgz#626f2fc70087d2480f21ebb12c1888288c8614e3"
+
+typescript@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.1.tgz#4862b662b988a4c8ff691cc7969622d24db76ae9"
 
 uglify-js@^2.6.1:
   version "2.7.5"

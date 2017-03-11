@@ -1,6 +1,9 @@
 export default {
   social: [
     {
+      name: 'rss',
+      url: '/rss.xml'
+    }, {
       name: 'twitter',
       url: 'https://twitter.com/alainxyz'
     }, {
@@ -15,10 +18,10 @@ export default {
     }, {
       name: 'artstation',
       url: 'https://www.artstation.com/artist/alaingalvan'
-    }, {
+    },/* {
       name: 'deviantart',
       url: 'https:///alaingalvan.deviantart.com'
-    }, {
+    }, */{
       name: 'soundcloud',
       url: 'https://soundcloud.com/alaingalvan'
     }, {

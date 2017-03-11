@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+@connect(({ portfolio }) => ({ portfolio }))
 export class Portfolio extends React.Component<any, any> {
   render() {
     return (
@@ -19,13 +21,5 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column'
-  },
-  h1: {
-  },
-  link: {
-    padding: '1em',
-    margin: '.5em',
-    background: '#2a7c94',
-    borderRadius: '.2em'
   }
 }

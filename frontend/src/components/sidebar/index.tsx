@@ -1,74 +1,62 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { SocialBar } from './socialbar';
-import { LogoIcon } from './logoicon';
+import { LogoIcon } from '../logoicon';
 import { NestedMenu } from './nestedmenu';
-import { Icon } from './icon';
-import { mobileQuery, tabletQuery } from '../store';
+import { Icon } from '../icon';
+import { toggleSidebar, mobileQuery, tabletQuery } from '../../store';
+
 /**
  * Sidebar Menu
  */
-export class SideBar extends React.Component<SideBarProps, SideBarState> {
-
-  state = {
-    open: false
-  }
-
-  private mouseListener;
-
-  toggleMenu = () =>
-    this.setState(({ open }) => ({ open: !open }))
+@connect(
+  ({ fullscreen, showSidebar }) => ({ fullscreen, showSidebar }),
+  dispatch => ({
+    toggleSidebar: bindActionCreators(toggleSidebar, dispatch)
+  })
+)
+export class SideBar extends React.Component<any, any> {
 
   render() {
-
-    let scale = mobileQuery
-      ? innerWidth / 350
-      : 1;
+    let { location, fullscreen, showSidebar, toggleSidebar } = this.props;
 
     let left = tabletQuery
-      ? this.state.open ? 0 : -350
+      ? showSidebar ? 0 : 350
       : 0;
+
+    left = fullscreen ? 350 : left;
 
     return (
       <div
         style={{
           ...styles.root,
-          transform: `translateX(${left}px)`,
+          transform: `translateX(-${left}px)`,
           padding: tabletQuery ? '2em' : '8em 2em',
           background: tabletQuery ? 'rgb(23,26,30)' : 'rgba(23,26,30,0.22)'
         }}>
-        <div
-          style={{
-            ...styles.title,
-            transform: `scale(${scale}) translate(${-left}px,0px)`,
-            zIndex: 10000
-          }}>
-          <a
-            onClick={this.toggleMenu}
-            style={{ height: 48 }}>
-            <LogoIcon style={styles.img} />
-          </a>
+        <div style={styles.title}>
+          <LogoIcon style={styles.img} />
           <Link style={styles.logotype} to='/'>
             <h1 style={styles.h1}>Alain Galván</h1>
             <h3 style={styles.h3}>Graphics Researcher @ FIU</h3>
           </Link>
         </div>
-        <NestedMenu location={this.props.location} />
+        <NestedMenu location={location} />
         <SocialBar style={{ position: 'absolute', bottom: '1.75em' }} />
         <p style={styles.footer}>© {year} Alain Galvan | Made with <a href='https://github.com/alaingalvan/alain.xyz'><Icon type='love' size={12} style={{ fill: 'rgba(236, 82, 82, 0.75)' }} /></a> in Miami, Florida
         </p>
-
+        <div style={{...styles.overlay, opacity: 1 - (left / 350), display: showSidebar ? 'block' : 'none'}} onClick={toggleSidebar}/>
       </div>
     );
   }
+
 }
 
 type SideBarProps = {
   location: any
-};
-
-type SideBarState = {
-  open: boolean
 };
 
 const styles = {
@@ -83,9 +71,18 @@ const styles = {
     position: 'fixed',
     left: 0,
     top: 0,
-    zIndex: 10,
-    background: 'rgba(23,26,30,0.11)',
+    zIndex: 100000,
+    background: 'rgba(23,26,30,0.22)',
+    transform: 'translateX(0px)',
     transition: 'transform 0.3s ease-out'
+  },
+  overlay: {
+    position: 'fixed',
+    zIndex: 10,
+    width: '100vw',
+    height: '100vh',
+    left: 350,
+    top: 0
   },
   h1: {
     textTransform: 'uppercase',

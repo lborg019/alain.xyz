@@ -10,9 +10,15 @@ export class NestedMenu extends React.Component<any, any> {
     structure: {
       about: 'about',
       portfolio: {
+        //buisnesses: '?tag=businesses',
         research: '?tag=research',
+        //courses: '?tag=courses',
+        //books: '?tag=books',
         apps: '?tag=apps',
-        libraries: '?tag=libraries'
+        libraries: '?tag=libraries',
+        //podcast: '?tag=podcast',
+        //art: '?tag=art',
+        //music: '?tag=music'
       },
       blog: 'blog'
     },

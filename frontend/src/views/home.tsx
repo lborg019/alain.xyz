@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SideBar } from '../components';
+import { MobileBar, SideBar } from '../components';
 import { tabletQuery } from '../store';
 
 export class Home extends React.Component<any, any> {
@@ -13,21 +13,12 @@ export class Home extends React.Component<any, any> {
 
     return (
       <div style={styles.root}>
-        <div style={{
-          background: 'rgb(23,26,30)',
-          width: '100vw',
-          height: 'calc(48px + 4em)',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: 10,
-          visibility: tabletQuery ? 'visible' : 'hidden'
-        }} />
+        <MobileBar />
         <SideBar location={location} />
         <div style={{
           ...styles.mainPage,
           width: tabletQuery ? '100vw' : 'calc(100vw - 350px)',
-          transform: `translate(${tabletQuery ? 0 : 350}px, ${tabletQuery ? 112 : 0}px)`
+          transform: `translate(${tabletQuery ? 0 : 350}px, ${tabletQuery ? 52 : 0}px)`
         }}>
           {children}
         </div>
