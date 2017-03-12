@@ -3,10 +3,11 @@ import * as fs from 'fs';
 import * as find from 'find';
 import markademic from 'markademic';
 import { yellow } from 'chalk';
+import * as RSS from 'rss';
 import { database } from '../../../backend/src/db';
 import { askQuestion } from './question';
 import { getCover, makePermalink } from './misc';
-
+import { PortfolioItem } from '../../../backend/src/schema';
 let root = path.join(__dirname, '..', '..', 'blog');
 
 type IPortfolioItem = {
@@ -96,10 +97,10 @@ async function askQuestions(file: string) {
   // Populate the answers object.
   for (var question of questions)
     await askQuestion(question)
-    .then(answer => {
-      answers[question.key] = answer;
-    })
-    .catch(err => {console.error(err)});
+      .then(answer => {
+        answers[question.key] = answer;
+      })
+      .catch(err => { console.error(err) });
 
   return answers;
 }
@@ -111,7 +112,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
   await database.then(async db => {
 
     var portfolioCollection = db.collection('portfolio');
-    var filesCollection = db.collection('files');
+    var redirectCollection = db.collection('redirect');
 
     // Find a references.json file next to file
     let citationsPath = path.join(file, '..', 'references.json');
@@ -129,6 +130,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
         rerouteLinks: (link) => path.join(answers.permalink, link)
       }),
       mtime: fs.statSync(file).mtime,
+      lastUpdated: new Date(),
       cover: getCover(file, answers.permalink),
       main: '/blog/main.js',
       file
@@ -144,7 +146,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     for (var sf of staticFiles) {
       var filePermalink = path.join(entry.permalink, path.relative(lastPath, sf)).replace(/\\/g, '/');
 
-      await filesCollection.update({ file: sf }, { file: sf, permalink: filePermalink }, { upsert: true })
+      await redirectCollection.update({ to: sf }, { from: filePermalink, to: sf }, { upsert: true })
         .then(r => console.log(`Updated file ${sf}.`))
         .catch(e => console.log(e));
 
@@ -156,30 +158,10 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
   });
 }
 
-/**
- * Run through every indexed file and portfolio item to see if it still exists. 
- */
-function clean() {
-  database.then(async (db) => {
-
-    var files = db.collection('files');
-    var posts = db.collection('posts');
-
-    var cleanFiles = col => col.find()
-      .toArray()
-      .catch(err => console.error(err))
-      .then(res => {
-        for (var f of res) {
-          fs.exists(f.file, exists => {
-            if (!exists)
-              files.remove(f);
-          });
-        }
-      });
-
-    await cleanFiles(files);
-    await cleanFiles(posts);
-
+async function generateXML(tag) {
+  await database.then(async db => {
+    let portfolioCol = await db.collection('portfolio');
+    let blogs = await portfolioCol.find({ permalink: /^\/blog/ });
   });
 }
 
@@ -187,13 +169,12 @@ function clean() {
  * Clean the database of any missing files in the portfolio,
  * then Check each file if it's been modified or doesn't exist,
  * And write it to the database 'protfolio' collection 
- * while writing static files to 'files' collection
+ * while writing static files to 'redirect' collection
  * Finally index neseted elements in 'indexes' collection.
  */
 async function buildBlog() {
   console.log('📔 ' + yellow('Alain.xyz Blog Builder\n'))
   let files = find.fileSync(/\.md$/, root);
-  clean();
 
   for (var file of files) {
 
@@ -207,6 +188,7 @@ async function buildBlog() {
       console.log('Writing new post!')
       await writeToDb(file, await askQuestions(file));
     }
+
   }
 
   return;

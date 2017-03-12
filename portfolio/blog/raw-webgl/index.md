@@ -1,6 +1,6 @@
-WebGL is an adaptation of the [OpenGL ES 2.0 Spec](https://www.khronos.org/opengles/) to JavaScript, and started off as a collaboration of the Khronos Group and Mozilla. OpenGL is a library designed from a collaboration of multiple companies as a cross platform rendering API.
+WebGL is an adaptation of the [OpenGL ES 2.0 Spec](https://www.khronos.org/opengles/) to JavaScript, and started off as a collaboration of the Khronos Group and Mozilla.
 
-At its core, WebGL is a state machine that lets you tell it how and where it will draw triangles/points/lines, so it's your job as a engine developer to organize when and how the state of the application will change.
+At its core, WebGL is a state machine that lets you as the developer tell it how and where it will draw triangles/points/lines, so it's your job as a engine developer to organize when and how the state of the application will change.
 
 To help introduce WebGL I've written out a simple application which you can find on my [codepen](http://codepen.io/alaingalvan/pen/OMEqKa). This is a simplified rendering system similar to APIs like [Three.js](https://threejs.org/), but I've taken some shortcuts in its design like using the singleton pattern.
 
@@ -8,7 +8,7 @@ To help introduce WebGL I've written out a simple application which you can find
 
 Here's the final running program, review the source and fork it however you would like!
 
-<iframe height='480' scrolling='no' title='Raw WebGL' src='//codepen.io/alaingalvan/embed/OMEqKa/?height=265&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/alaingalvan/pen/OMEqKa/'>Raw WebGL</a> by Alain Galvan (<a href='http://codepen.io/alaingalvan'>@alaingalvan</a>) on <a href='http://codepen.io'>CodePen</a>.
+<iframe height='480' scrolling='no' title='Raw WebGL' src='//codepen.io/alaingalvan/embed/OMEqKa/?height=480&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/alaingalvan/pen/OMEqKa/'>Raw WebGL</a> by Alain Galvan (<a href='http://codepen.io/alaingalvan'>@alaingalvan</a>) on <a href='http://codepen.io'>CodePen</a>.
 </iframe>
 
 ## Abstraction

@@ -1,28 +1,33 @@
 import { APIRequest, APIResponse } from './actions';
 import { createReducer } from './utils';
 
+
 const initialState = {
-    subapp: null,       // Current SubApplication
-    portfolio: [],      // Cached SubApplications
-    isFetching: false,  // Loading
-    error: '',          // API Errors
-    hideMenu: false     // Hide Header
+    subapp: null,           // Current SubApplication
+    portfolio: [],          // Cached SubApplications
+    fetchingSubapp: false,  // Loading
+    error: '',              // API Errors
+    fullscreen: false,      // Fullscreen Application
+    showSidebar: false      // Show Sidebar
 };
 
 // Keep Portfolio Cache a max of 100 subapps long.
 let cachePortfoliosubapps = (subapps: APIResponse[], portfolio: APIResponse[]) => {
 
+    if (!Array.isArray(subapps))
+        return portfolio;
+
     let cache = [...portfolio];
 
     // check to see if it's in the cache
     // if it is in the cache, replace it if the data field is empty.
-    for (var subapp of subapps) {
-        var index = cache.findIndex((v) => v.permalink === subapp.permalink);
+    for (let subapp of subapps) {
+        let index = cache.findIndex((v) => v.permalink === subapp.permalink);
         if (index > -1) {
             if (subapp['data'] !== undefined)
                 cache[index] = subapp;
         } else {
-            cache = [...cache, subapp].sort((a, b) => -(new Date(a.publishDate).getTime()) + new Date(b.publishDate).getTime());
+            cache = [...cache, subapp].sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
         }
     }
 
@@ -34,37 +39,46 @@ export default createReducer(initialState, {
     FETCHED_SUBAPP: (state, payload: { req: APIRequest, res: APIResponse[] }) => {
 
         let portfolio = cachePortfoliosubapps(payload.res, state.portfolio);
-        
+
         return {
             ...state,
             portfolio,
             subapp: portfolio.find((subapp) => subapp.permalink === payload.req.permalink),
-            isFetching: false
+            fetchingSubapp: false
         };
     },
 
     FETCHING_SUBAPP: (state, payload) =>
         ({
             ...state,
-            isFetching: true,
+            fetchingSubapp: true,
             subapp: null
         }),
 
     SET_SUBAPP: (state, payload) =>
         ({
             ...state,
-            subapp: state.portfolio.find((e) => e.permalink === payload.permalink)
+            subapp: state.portfolio.find((e) => e.permalink === payload.permalink),
+            fetchingSubapp: false
         }),
 
     ERROR: (state, payload) =>
         ({
             ...state,
-            error: payload.error
+            error: payload.error,
+            subapp: null,
+            fetchingSubapp: false
         }),
 
-    HIDE_MENU: (state, payload) =>
+    FULLSCREEN: (state, payload) =>
         ({
             ...state,
-            hideMenu: !state.hideMenu
+            fullscreen: !state.fullscreen
+        }),
+
+    SIDEBAR: (state, payload) =>
+        ({
+            ...state,
+            showSidebar: !state.showSidebar
         })
 });

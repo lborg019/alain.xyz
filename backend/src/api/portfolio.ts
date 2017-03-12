@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { database } from '../db';
 
-type API = {
+
+/**
+ * API Request Schema
+ */
+export type APISanitized = {
   // Skip the x number of posts
   skip: number,
   // Limit the number of posts to this amount
@@ -9,13 +13,24 @@ type API = {
   // Find post with this exact permalink
   permalink?: string | RegExp,
   // Find posts where these tags are present
-  tags?: { $in: string[] }
+  tags?: {
+    $in: string[]
+  }
+}
+
+/**
+ * 
+ */
+export type APIRequest = {
+  permalink?: string,
+  data?: boolean,
+  tags?: string[]
 }
 
 /**
  * Sanitizes the API's Input.
  */
-const sanitize: (any) => API = (reqBody) => {
+function sanitize(reqBody): APISanitized {
   let {
     skip,
     limit,
@@ -42,7 +57,7 @@ const sanitize: (any) => API = (reqBody) => {
   };
 
   try {
-    let cleanReq: API = {
+    let cleanReq: APISanitized = {
       skip: inRange(skip, 0, 1000, 0),
       limit: inRange(limit, 1, 30, 15),
       permalink: makeRegexPath(permalink),
@@ -68,14 +83,16 @@ const sanitize: (any) => API = (reqBody) => {
  * An API Endpoint requesting blog posts.
  */
 export default (req: Request, res: Response) => {
+
   // Get POST parameters
-  let apiReq: API = sanitize(req.body);
+  let apiReq: APISanitized = sanitize(req.body);
 
   // Design Query
   let query = {
     ...apiReq,
     publishDate: { $lte: new Date() }
   };
+
   delete query.limit;
   delete query.skip;
 
@@ -96,12 +113,13 @@ export default (req: Request, res: Response) => {
       tags: 1,
       data: 1,
       main: 1,
-      publishDate: 1
+      publishDate: 1,
+      lastUpdated: 1
     }
 
     let data = c.find(query, projection)
       .sort({
-        publishDate: 1
+        publishDate: -1
       })
       .skip(apiReq.skip)
       .limit(apiReq.limit)

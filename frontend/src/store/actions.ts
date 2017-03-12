@@ -26,14 +26,18 @@ export type APIResponse = {
   }
 }
 
-export const failure = (error: string) => ({
+export const failure = (error = 'Couldn\'t find that page...') => ({
   type: 'ERROR',
   payload: { error }
 });
 
-export const hideMenu = () => ({
-  type: 'HIDE_MENU'
+export const toggleSidebar = () => ({
+  type: 'SIDEBAR'
 });
+
+export const toggleFullscreen = () => ({
+  type: 'FULLSCREEN'
+})
 
 const fetchingSubapp = () => ({
   type: 'FETCHING_SUBAPP'
@@ -51,11 +55,12 @@ export const setSubapp = (permalink: string) => ({
 
 export const fetchSubapp = (req: APIRequest) =>
   dispatch => {
-    transport('/api/v1/portfolio', req)
-      .then(checkHttpStatus)
-      .then(parseJSON)
-      .then(res => dispatch(fetchedSubapp(req, res)))
-      .catch((err) => dispatch(failure(err.message)));
-
-    return fetchingSubapp();
+    let fail = err => dispatch(failure());
+    dispatch(fetchingSubapp());
+    return transport('/api/v1/portfolio', req)
+      .catch(fail)
+      .then(checkHttpStatus, fail)
+      .then(parseJSON, fail)
+      .then(res => dispatch(fetchedSubapp(req, res)), fail);
+    }
   };

@@ -12,15 +12,15 @@ Currently Vulkan 1.0 currently supports the following operating Systems:
 
 And languages such as:
 
-- [C](https://vulkan.lunarg.com/) - The offcially supported language for Vulkan.
+- [C](https://vulkan.lunarg.com/) - The officially supported language for Vulkan.
+
 - [C++](https://github.com/khronosgroup/vulkan-hpp) - Through [**Vulkan-Hpp**](https://github.com/KhronosGroup/Vulkan-Hpp) the official Vulkan C++ library.
-- [Rust](https://github.com/tomaka/vulkano) - Through [**Volkano**](https://github.com/tomaka/vulkano), an intuitive Rust wrapper with a heavy focus on compile time saftety.
-- [JavaScript/OCaml](https://github.com/hyperfuse/Vulkan-Shim) - Through [**Vulkan-Shim**](https://github.com/hyperfuse/Vulkan-Shim), a shim for WebGL on browsers and FFI for native targets.
+
+- [Rust](https://github.com/tomaka/vulkano) - Through [**Vulkano**](https://github.com/tomaka/vulkano), an intuitive Rust wrapper with a heavy focus on compile time safety.
+
 - [Python](https://github.com/bglgwyng/pyVulkan) - Through [**pyVulkan**](https://github.com/bglgwyng/pyVulkan), a Python FFI to the C implementation of Vulkan.
 
-I've prepared a [repo](http://github.com/alaingalvan/raw-vulkan) with a some C++ examples. We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
-
-In the processes we'll clarify exactly what it will take to build a low level graphics abstraction that we can build on top of.
+I've prepared a [Github Repo](http://github.com/alaingalvan/raw-vulkan) with all the code we'll be going over; We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
 ## Setup
 
@@ -44,9 +44,12 @@ conan build
 Conan handles downloading/installing all your dependencies:
 
 - [Vulkan SDK](https://vulkan.lunarg.com/) - The official Vulkan SDK distributed by LunarG.
-- [Vulkan C++ API](https://github.com/KhronosGroup/Vulkan-Hpp) - Runtimeless C++ bindings that add compile time type safety and ease of use.
+
+- [Vulkan C++ API](https://github.com/KhronosGroup/Vulkan-Hpp) - C++ bindings that add compile time type safety and ease of use.
+
 - [WSIWindow](https://github.com/renelindsay/Vulkan-WSIWindow) - LunarG's cross platform Window creation library.
-- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows uses to write `glsl` like C++ code, with types for vectors, matricies, etc.
+
+- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows uses to write `glsl` like C++ code, with types for vectors, matrices, etc.
 
 ## Overview
 
@@ -68,7 +71,7 @@ In this application we will need to do the following:
 
 8. Create a primary **Render Pass** to be used in your swapchain and surface. This will also let us group our depth and color attachments.
 
-9. Create **Synchronization** primatives like semaphores to determine when we're finished presenting and finished rendering, and fences to check the start of the render loop, or to determine when memory has finished being written to.
+9. Create **Synchronization** primitives like semaphores to determine when we're finished presenting and finished rendering, and fences to check the start of the render loop, or to determine when memory has finished being written to.
 
 10. Create a **Command Pool** from your logical device.
 
@@ -173,7 +176,7 @@ auto gpu = physicalDevices[0];
 
 ![Logical Devices](assets/logical-device.svg)
 
-You can then create a logical device from a physical device handle. A logical device can be loaded with its own extensions/layers, can be set to work with graphics, gpgpu computations, handle sparse memory and/or memory transfers by creating queues for that device.
+You can then create a logical device from a physical device handle. A logical device can be loaded with its own extensions/layers, can be set to work with graphics, GPGPU computations, handle sparse memory and/or memory transfers by creating queues for that device.
 
 A logical device is your interface to the GPU, and allows you to allocate data and queue up tasks.
 
@@ -318,7 +321,7 @@ Bear in mind, it's your responsibility to manage things like window size, canvas
 
 ## Color Formats
 
-Knowing what Color formats your GPU supports will play a crutial role in determining what you can display and what kind of buffers you can allocate.
+Knowing what Color formats your GPU supports will play a crucial role in determining what you can display and what kind of buffers you can allocate.
 
 ```cpp
 // Check to see if we can display rgb colors.
@@ -831,7 +834,7 @@ Any fast changes of state will happen in the dynamic state objects.
 
 ### Shaders
 
-Shaders must be passed to Vulkan as SPIR-V binary, so any compiler that can make SPIR-V is allowed. Shaders are precompiled, loaded into memory, transfered to a shader module, bundled in a set of pipelineShaderStages, which is then put into a graphics pipeline.
+Shaders must be passed to Vulkan as SPIR-V binary, so any compiler that can make SPIR-V is allowed. Shaders are precompiled, loaded into memory, transferred to a shader module, bundled in a set of pipelineShaderStages, which is then put into a graphics pipeline.
 
 Shaders are compiled using the `glslangvalidator` bundled with the Vulkan SDK provided by LunarG.
 
@@ -932,7 +935,7 @@ A common pattern for building a command buffer is:
 5. Repeat 2 Through 4 as Needed
 6. End Render Pass
 
-Different command buffer pools allow muti cpu command buffer recording, thus you could allocate a thread for each core on the CPU, and split rendering tasks across each core. This could be used to distribute rendering individual objects, differed rendering passes, physics calculations with compute buffers, etc.
+Different command buffer pools allow multiple threads performing generating command buffers, thus you could allocate a thread for each core on the CPU, and split rendering tasks across each core. This could be used to distribute rendering individual objects, differed rendering passes, physics calculations with compute buffers, etc.
 
 ```cpp
 auto renderArea = vk::Rect2D(vk::Offset2D(), vk::Extent2D(width, height));
@@ -994,8 +997,6 @@ for (int32_t i = 0; i < commandBuffers.size(); ++i)
 ```
 
 ## Rendering Loop
-
-The key to the render loop is presenting
 
 ```cpp
 MSG msg;

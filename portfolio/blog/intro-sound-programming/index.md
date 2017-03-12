@@ -6,7 +6,7 @@
 
 **Sound** is a series of compressions and decompressions in the air.
 
-Instantaneous acoustic pressure (current sound) is the ambient atmospheric pressure plus perturbation (basically noise) caused by sound wave at a determined instant in time.
+Instantaneous acoustic pressure (current sound) is the ambient atmospheric pressure plus perturbation (basically noise) caused by a sound wave at a determined instant in time.
 
 
 \[ P_{inst} = P_{atmos} + P_{sound} \]
@@ -110,7 +110,7 @@ So, a 16-bit stereo (two-channel) audio file will have 32-bit frames (16 bits pe
 
 ## Practical Example - Polyphony
 
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/llfSDj?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
+<iframe width="100%" height="480" frameborder="0" src="https://www.shadertoy.com/embed/llfSDj?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
 
 The key takeaway here is the fact that you're rendering sin waves to play frequencies like 440 Hz, or A5 on the keyboard. 
 

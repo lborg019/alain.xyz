@@ -2,68 +2,109 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Icon } from '../components';
 import { fetchSubapp } from '../store/actions';
+import { mobileQuery } from '../store'
+import { timeSince } from '../utils';
 
-const styles = {
-  articleContainer: {
-    width: '100vw',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  article: {
-    width: '100vw',
-    maxWidth: 960,
-    padding: 16
-  },
-  blogPost: {
-    display: 'flex',
-    height: 320,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    padding: '1.5em',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
-  }
+const BlogPost = ({ cover, title, description, permalink, publishDate, lastUpdated, tags, style = {} }) => {
+
+  let published = new Date(publishDate);
+  let publishedStr = published.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
+
+  let updated = new Date(lastUpdated);
+  
+  // Get Time elapsed string
+  let updatedStr = timeSince(updated);
+
+  return (
+    <Link to={permalink} style={{ ...styles.blogPost, ...style, backgroundImage: `url('${cover}')` }}>
+      <section style={{
+        backgroundImage: 'linear-gradient(rgba(33, 37, 43, 0), rgba(33, 37, 43, .5) 40%, rgb(33, 37, 43))', 
+        width: '100%', 
+        padding: '1.5em'
+        }}>
+        <h2 style={{ color: '#fff'}}>{title}</h2>
+        <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)'}}>
+          <Icon type='date' style={{marginRight: '.5em'}}/>
+          {published.toLocaleDateString()} @ {publishedStr} {updatedStr ? `| Updated ${updatedStr} ago` : null}
+          </p>
+        <p style={{lineHeight: '1.25em', color: '#fff'}}>{description}</p>
+      </section>
+    </Link>
+  );
 }
 
-const BlogPost = ({ cover, title, description, permalink }) =>
-  <Link to={permalink} style={{ ...styles.blogPost, backgroundImage: `url('${cover}')` }}>
-    <section style={{ textAlign: 'right' }}>
-      <h1>{title}</h1>
-      <p>{description}</p>
-    </section>
-  </Link>;
-
-
 @connect(
-  (store) => ({
-    portfolio: store.portfolio
+  ({ portfolio }) => ({
+    portfolio
   }),
-  (dispatch) => ({
+  dispatch => ({
     fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
   })
 )
-class Blog extends React.Component<any, any> {
+export class Blog extends React.Component<any, any> {
 
   componentWillMount() {
     this.props.fetchSubapp({
       permalink: '/blog/*'
     });
+
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      document.title = 'Alain Galvan | Blog';
+      scrollTo(0,0);
+    }
+  
   }
 
   render() {
+
+    let { portfolio } = this.props;
+    let blog = portfolio.filter((post) => post.permalink.slice(0, 5) === '/blog');
+    let [first, ...rest] = blog;
+
     return (
-      <div style={styles.articleContainer}>
-        <div style={styles.article}>
+      <div style={styles.root}>
+        <div style={{...styles.article, padding: 0}}>
+          {first ? <BlogPost style={{ height: 480, width: '100%' }} {...first} /> : null}
           {
-            this.props.portfolio
-              .filter((post) => post.permalink.slice(0, 5) === '/blog')
-              .map((post, key) => <BlogPost key={key} {...post} />)
+            rest.map((post, key) => <BlogPost style={{ width:  mobileQuery ? '100%' : '50%' }} key={key} {...post} />)
           }
         </div>
       </div>);
   }
 }
 
-export { Blog }
+const styles = {
+  root: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    userSelect: 'none',
+    flexDirection: 'column',
+    color: '#fff'
+  },
+  rss: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    padding: '1em'
+  },
+  article: {
+    display: 'flex',
+    flex: '0 1 auto',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 1280
+  },
+  blogPost: {
+    display: 'flex',
+    height: 280,
+    alignItems: 'flex-end',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    //margin: '2%',
+    //borderRadius: '.5em'
+  }
+}

@@ -1,47 +1,88 @@
 import { Request, Response } from 'express';
-import { database } from './db';
 
+import * as React from 'react';
+import { StaticRouter } from 'react-router';
+import { template, render as jsxRender } from 'rapscallion';
+import { renderStatic as cssRender } from 'glamor-server';
+
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import * as serialize from 'serialize-javascript';
+
+import App from '../../frontend/src/app';
+import reducers from '../../frontend/src/store/reducers';
+
+import { database } from './db';
+import { Redirect, PortfolioItem } from './schema';
+import { makeRegexPath } from './api/utils';
 /**
- * Prerenders a given page with React.
+ * Queries Database for portfolio items
+ * Sends portfolio items
  */
 export function renderPage(req: Request, res: Response) {
-  let meta = {
-    permalink: '/',
-    title: 'Alain Galvan | Graphics Research Assistant @ FIU',
-    description: 'The portfolio of Alain Galvan, Graphics Research Assistant @ Florida International University.',
-    cover: '/assets/brand/website-screenshot.jpg'
-  };
 
-  let query = {
-    permalink: req.originalUrl
-  };
+  let { originalUrl } = req;
 
-  database.then((db) => {
-    db.collection('portfolio').find(query)
+  // Set page meta tags
+
+  database.then(async db => {
+
+    let portfolioCol = db.collection('portfolio');
+
+    // Query Portfolio and grab 10 items.
+    let portfolio = await portfolioCol
+      .find<PortfolioItem>({ permalink: originalUrl })
       .limit(1)
-      .toArray((errCol, data) => {
-        if (!errCol && data.length >= 1)
-          meta = data[0];
+      .toArray()
+      .catch(err => console.error(err));
 
-        page(meta, req, res);
-      });
+    page(req, res, portfolio || []);
+
   });
 }
 
-function page(meta, req: Request, res: Response) {
+/**
+ * Render Page with Rapscallion
+ */
+function page(req: Request, res: Response, data: PortfolioItem[]) {
 
-  // This context object contains the results of the render
+  let meta: Meta = data.length === 1
+    ? { ...META, ...data[0] }
+    : META;
+
+  const state = {
+    portfolio: data
+  };
+
+  const store = createStore(reducers, state, compose(applyMiddleware(thunk)));
+
+
+  // React Router
   const context: any = {};
 
-  let markup = 
-  `<div style="display: flex; width: 100vw; height: 100vh">
-  <svg viewBox="0 0 160 112" class="ag-loading">
-    <path d="M8,72l50.3-50.3c3.1-3.1,8.2-3.1,11.3,0L152,104"></path>
-  </svg>
-</div>`;
+  const app = (
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={context}>
+        {App}
+      </StaticRouter>
+    </Provider>
+  );
 
-    res.contentType('text/html').send(
-      `<!--
+
+  // context.url will contain the URL to redirect to if a <Redirect> was used
+  if (context.url) {
+
+    res.writeHead(302, {
+      Location: context.url
+    });
+
+    return res.end();
+
+  } else {
+
+    const componentRenderer = jsxRender(app);
+    const responseRenderer = template`<!--
             ..\`
           ......\`
         ..........\`
@@ -52,20 +93,20 @@ function page(meta, req: Request, res: Response) {
                       \`.....\`
                         \`.....\`
                           \`.....\`
- Alain.xyz
- Built with <3 in React and TypeScript
+ ✔️ Alain.xyz
+ Built with ❤️️ in Miami, Florida
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <title>${meta.title}</title>
   <!--Search Engines-->
-  <meta name="author" content="Alain Galvan"/>
+  <meta name="author" content="${meta.authors[0]}"/>
   <meta name="description" content="${meta.description}"/>
-  <meta name="keywords" content="shadertoy, shader toy, fractals, demoscene, computer graphics, mathematics, rendering, demo, 3D, realtime, shader, raytracing, webgl, glsl"/>
+  <meta name="keywords" content="${meta.tags.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
   <!--Twitter-->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:site" content="@Alainxyz"/>
@@ -75,27 +116,85 @@ function page(meta, req: Request, res: Response) {
   <!--Facebook-->
   <meta property="og:title" content="${meta.title}"/>
   <meta property="og:description" content="${meta.description}"/>
-  <meta property="og:url" content="https://Alain.xyz${meta.permalink}"/>
+  <meta property="og:url" content="https://alain.xyz${meta.permalink}"/>
   <meta property="og:site_name" content="Alain.xyz"/>
   <meta property="og:image" content="https://alain.xyz${meta.cover}"/>
   <meta property="fb:app_id" content="1404536383143308"/>
   <!--Icons/Mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
   <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
-  <link rel="stylesheet" href="/assets/main.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <!--Chrome-->
+  <meta name="theme-color" content="#171a1e">
+  <link rel="manifest" href="/assets/manifest.webmanifest">
+  <!--Safari-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Alain.xyz">
+  <link rel="apple-touch-icon-precomposed" href="assets/brand/icon/512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/icon/180.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="assets/brand/icon/167.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/brand/icon/152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/brand/icon/120.png">
+  <link rel="apple-touch-icon" sizes="80x80" href="assets/brand/icon/80.png">
+  <!--Windows-->
+  <meta name="application-name" content="Alain.xyz">
+  <meta name="msapplication-square70x70logo" content="assets/brand/icon/70.png" />
+  <meta name="msapplication-square150x150logo" content="assets/brand/icon/150.png" />
+  <meta name="msapplication-wide310x150logo" content="assets/brand/icon/310x150.png">
+  <meta name="msapplication-square310x310logo" content="assets/brand/icon/310.png">
+  <meta name="msapplication-TileImage" content="assets/brand/icon/512.png">
+  <meta name="msapplication-TileColor" content="#21252b">
+  <meta name="msapplication-tap-highlight" content="no"/>
+  <!--Styles-->
+  <link rel="stylesheet" href="/assets/build/main.min.css"/>
+  <style type="text/css"></style>
 </head>
 
 <body>
-  <div id="app">
-    ${markup}
-  </div>
+  <div id="app">${app}</div>
 
   <!--Load App-->
-  <script src="/assets/system.min.js"></script>
-  <script src="/assets/vendor.min.js"></script>
-  <script src="/assets/main.min.js"></script>
+  <script>
+    // React
+    //document.querySelector("#app").setAttribute("data-react-checksum", "{}")
+    // Redux
+    window._initialState=${serialize(state)};
+    // Glamor
+    window._glam = {};
+  </script>
+  <script type="text/javascript" src="/assets/build/system.min.js"></script>
+  <script type="text/javascript" src="/assets/build/vendor.min.js"></script>
+  <script type="text/javascript" src="/assets/build/main.min.js"></script>
 </body>
 
 </html>
-`);
+`
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    responseRenderer
+      .toStream()
+      .pipe(res);
+
+  }
+
+
+}
+
+const META = {
+  permalink: '/',
+  title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
+  description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
+  cover: '/assets/brand/website-screenshot.jpg',
+  tags: ['alain', 'galvan', 'miami', 'florida', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
+  authors: ['Alain Galvan']
+};
+
+const MAXITEMS = 10;
+
+type Meta = {
+  title: string,
+  description: string,
+  cover: string
+  tags: string[],
+  permalink: string,
+  authors: string[]
 }

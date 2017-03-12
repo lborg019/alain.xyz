@@ -1,4 +1,5 @@
-export * from './hero';
+export * from './mobilebar';
+export * from './sidebar';
 export * from './icon';
 export * from './loading';
-export * from './react-router-transition';
+export * from './slideshow';

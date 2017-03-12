@@ -11,6 +11,9 @@ My personal portfolio system build on top of the latest versions of:
 - [Express](https://expressjs.com/)
 - [MongoDB](http://mongodb.org/)
 - [React](https://facebook.github.io/react/)
+- [Redux](http://http://redux.js.org)
+- [Lerna](https://lernajs.io/)
+- [Webpack](https://webpack.js.org)
 - [SystemJS](https://github.com/systemjs/systemjs)
 - [PostCSS](https://github.com/postcss/postcss)
 
@@ -41,8 +44,8 @@ docker-compose up
 ### Local
 
 ```bash
+# After installing lerna will handle the rest.
 npm i
-npm start
 ```
 
 ## How it Works
@@ -55,7 +58,7 @@ The site is comprised of 3 primary modules:
 └─ portfolio/ # Personal Portfolio 
 ```
 
-[website-img]: brand/website-screenshot.jpg
+[website-img]: brand/screenshots/branding-overview.png
 [website-url]: https://alain.xyz
 [release-img]: https://img.shields.io/badge/release-0.5.0-4dbfcc.svg?style=flat-square
 [license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square

@@ -6,6 +6,7 @@ import * as precss from 'precss';
 import * as autoprefixer from 'autoprefixer';
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 import WebpackSystemJSExportPlugin from 'webpack-systemjs-export-plugin';
+import * as OfflinePlugin from 'offline-plugin';
 
 let env = process.env['NODE_ENV'];
 let isProduction = env && env.match(/production/);
@@ -17,16 +18,16 @@ let config = {
     vendor: [
       'react',
       'react-dom',
-      'react-motion',
       'react-redux',
       'react-router',
+      'react-router-dom',
       'redux',
       'redux-thunk',
       'isomorphic-fetch'
     ]
   },
   output: {
-    path: path.join(__dirname, 'assets'),
+    path: path.join(__dirname, 'assets', 'build'),
     filename: '[name].min.js'
   },
   resolve: {
@@ -68,7 +69,15 @@ let config = {
             }
           ]
         })
-      }
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
+      },
     ]
   },
 
@@ -84,7 +93,6 @@ let config = {
       public: [
         'react',
         'react-dom',
-        'react-motion',
         'react-redux',
         'react-router',
         'react-router-dom',
@@ -92,6 +100,9 @@ let config = {
         'redux-thunk',
         'isomorphic-fetch'
       ]
+    }),
+    new OfflinePlugin({
+      publicPath: '/assets/build'
     })
   ]
 };
@@ -123,7 +134,7 @@ if (!argv.reduce((prev, cur) => prev || (cur === '--watch'), false)) {
     if (err)
       return console.error(err);
     else
-      console.log("✔️️ Frontend Compiled Successfully.")
+      console.log('✔️️ Frontend Compiled Successfully.')
   });
 }
 else {
@@ -131,5 +142,8 @@ else {
   compiler.watch({}, (err, stats) => {
     if (err)
       return console.error(err);
+    else
+      console.log('✔️️ Frontend Compiled Successfully, 👓 still watching...')
+
   });
 }

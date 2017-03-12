@@ -1,18 +1,4 @@
-Unity is the most popular game engine in the world, used by Nintendo, Square Enix, and many independent developers to quickly build cross platform games. 
-
-This is a high level overview of how Unity is designed and how you can build on top of it.
-
-## Editor Design
-
-![Unity Editor](assets/editor.png)
-
-Each pane in Unity is given it's own OS Window and Rendering Context, and are simply positioned/sized by the engine's window management system.
-
-Rendering updates to the window depend on user interactions (Reactive model), otherwise it simply doesn't refresh rendering.
-
-![Unity UI Draw Calls](assets/unityui.gif)
-
-Rendering the UI is a few draw calls, with text batched into a single call.
+Unity is the most popular game engine in the world, used by Nintendo, Square Enix, and many independent developers to quickly build cross platform games.
 
 ## File Hierarchy
 
@@ -107,6 +93,20 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 ```
+
+## Editor Design
+
+![Unity Editor](assets/editor.png)
+
+Each pane in Unity is given it's own OS Window and Rendering Context, and are simply positioned/sized by the engine's window management system.
+
+Rendering updates to the window depend on user interactions (Reactive model), otherwise it simply doesn't refresh rendering.
+
+![Unity UI Draw Calls](assets/unityui.gif)
+
+Rendering the UI is a few draw calls, with text batched into a single call.
+
+
 
 ## C# Runtime
 

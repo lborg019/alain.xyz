@@ -1,4 +1,4 @@
-[Eric Neibler](http://ericniebler.com/) on [Cppcast](http://cppcast.com/2015/12/eric-niebler/) described the current state of programming in C++ as being "stuck in the 60s", this system bound by concatination of text. C++ [Modules](http://kennykerr.ca/2015/12/03/getting-started-with-modules-in-c/) are coming to the standard make that less of a pain, but that's still not available yet.
+[Eric Neibler](http://ericniebler.com/) on [Cppcast](http://cppcast.com/2015/12/eric-niebler/) described the current state of programming in C++ as being "stuck in the 60s", this system bound by concatenation of text. C++ [Modules](http://kennykerr.ca/2015/12/03/getting-started-with-modules-in-c/) are coming to the standard make that less of a pain, but that's still not available yet.
 
 The alternative of course is using your favorite IDE's compiler options and get lost inside the options, mess up somewhere and scratch your head and wonder why. Then there's tools like CMake which try their best to abstract things, but the fact is, [C++ build systems suck](https://www.youtube.com/watch?v=KPi0AuVpxLI).
 
@@ -9,15 +9,16 @@ Unreal decided to opt for an approach similar to [GulpJS](http://gulpjs.com/), w
 [UnrealBuildTool](https://docs.unrealengine.com/latest/INT/Programming/UnrealBuildSystem/index.html) generates makefiles, manages dependencies, preprocesses files for UE4 metadata and compiles the code. Every portion of Unreal Engine 4 is a module, even their core:
 
 ```bash
-|- UnrealEngine/Engine/Source/Runtime/Core/
-  |- Private/
-    |- Windows/         # Windows cpp files.
-    |- iOS/             # iOS cpp files.
-    |- CorePrivatePCH.h # Precompiled header
-  |- public/
-    |- Core.h           # Shared Precompiled header
-  |- Core.Build.cs      # Manages per system includes, dll loading, macros
+├─ UnrealEngine/Engine/Source/Runtime/Core/
+│   ├─ Private/
+│   │   ├─ Windows/         # Windows cpp files.
+│   │   ├─ iOS/             # iOS cpp files.
+│   │   └─ CorePrivatePCH.h # Precompiled header
+│   └─ Public/
+│      └─ Core.h            # Shared Precompiled header
+└─ Core.Build.cs            # Manages per system includes, dll loading, macros
 ```
+
 So `Core.Build.cs` holds everything related to the building of the core module of Unreal, and there's `*.Build.cs` files for every other module (HTML5, JSON, Matinee, you name it).
 
 ### Your Game

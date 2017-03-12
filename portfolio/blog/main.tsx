@@ -1,6 +1,57 @@
 import * as React from 'react';
+import { Icon } from 'main';
+
+export default class BlogPost extends React.Component<any, any> {
+
+  private root = null;
+
+  componentDidMount() {
+    if (window && this.root) {
+      window.scrollTo(0, 0);
+      document.title = this.props.config.title;
+    }
+  }
+
+  render() {
+
+    if (!this.props.config)
+      return null;
+
+    let { title, description, cover, meta, publishDate, tags, data } = this.props.config;
+
+    let date = new Date(publishDate);
+    return (
+      <div ref={r => this.root = r} style={styles.root}>
+        <figure style={{
+          ...styles.figure,
+          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '15vh' : '45vh' }, rgba(33,37,43,1)), url(${cover})`,
+		      left: window && innerWidth < 1024 ? 0 : -350
+        }} />
+        <section style={{
+          ...styles.section,
+              transform: `translate(0, -${window && innerWidth < 1024 ? 65 : 40}vh)`
+          }}>
+          <div style={{ padding: '0.5em 1.5em' }}>
+            <h1 style={{ color: '#fff' }}>{title}</h1>
+            <p>{description}</p>
+            <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)' }}>
+              <Icon type='date' style={{ marginRight: '.5em' }} />
+              {date.toLocaleDateString()} @ {date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}
+            </p>
+          </div>
+          <div style={styles.articleContainer}>
+            <article style={styles.article} dangerouslySetInnerHTML={{ __html: data }} />
+          </div>
+        </section>
+      </div>
+    );
+  }
+}
 
 const styles = {
+  root: {
+    width: '100%'
+  },
   figure: {
     display: 'flex',
     alignItems: 'center',
@@ -10,7 +61,7 @@ const styles = {
     height: '100vh',
     position: 'relative',
     zIndex: 1,
-    top: -120,
+    left: -350,
     backgroundSize: 'cover',
     backgroundPosition: 'center'
   },
@@ -20,46 +71,20 @@ const styles = {
     textAlign: 'center'
   },
   article: {
-    width: '100vw',
+    width: '100%',
     maxWidth: 960,
-    padding: 16
+    padding: '1.5em'
   },
   articleContainer: {
-    width: '100vw',
+    width: '100%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
   },
   section: {
     display: 'flex',
-    transform: 'translateY(-40vh)',
+    flexDirection: 'column',
+    transform: 'translate(0, -40vh)',
     position: 'relative',
     zIndex: 10
-  }
-}
-
-export default class BlogPost extends React.Component<any, any> {
-
-  render() {
-
-    if (!this.props.config)
-      return null;
-
-    let {title, description, cover, publishDate, meta, tags, data} = this.props.config;
-    return (
-      <div>
-        <figure style={{ ...styles.figure, backgroundImage: `linear-gradient(rgba(33,37,43,0) 80vh, rgba(33,37,43,1)), url(${cover})` }}>
-          <figcaption style={styles.figcaption}>
-            <h1>{title}</h1>
-            <p>{description}</p>
-          </figcaption>
-        </figure>
-        <section style={styles.section}>
-          <div style={styles.articleContainer}>
-            <article style={styles.article} dangerouslySetInnerHTML={{ __html: data }} />
-          </div>
-        </section>
-      </div>
-    );
   }
 }

@@ -10,7 +10,7 @@ export function createReducer(initialState, reducerMap) {
     };
 }
 
-export const transport = (api, body) =>
+export const transport = (api: string, body: Object) =>
     fetch(api, {
         method: 'post',
         credentials: 'include',
@@ -26,7 +26,7 @@ export function checkHttpStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     } else {
-        var error = new Error(response.error);
+        var error = new Error('Resource not found.');
         throw error;
     }
 }
@@ -34,3 +34,16 @@ export function checkHttpStatus(response) {
 export function parseJSON(response) {
     return response.json();
 }
+
+/**
+ * Media Queries
+ */
+let mobileQuery = false;
+let tabletQuery = false;
+
+if (typeof window !== 'undefined') {
+    mobileQuery = window && innerWidth < 768;
+    tabletQuery = window && innerWidth < 1024;
+}
+
+export { mobileQuery, tabletQuery };

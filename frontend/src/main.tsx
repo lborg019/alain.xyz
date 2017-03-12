@@ -1,42 +1,48 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom/es';
+import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 import './css';
 import App from './app';
 import reducers from './store/reducers';
- 
-// Debug
-const NODE_ENV = typeof process !== 'undefined' ? process.env.NODE_ENV : 'development';
 
-// State
-declare var devToolsExtension;
+// Service Worker
+OfflinePluginRuntime.install();
+
+// Glamor CSS
+// hydrate(_glam);
+
+// Redux State
+const composeEnhancers = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
+  ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  : compose;
 
 const store = createStore(
   reducers,
-  compose(
+  _initialState || {},
+  composeEnhancers(
     applyMiddleware(thunk)
-    //,devToolsExtension()
-    )
-  );
+  )
+);
 
-
-// Render
+// React Render
 const target = document.getElementById('app');
 
 const node = (
-    <Provider store={store}>
-      <BrowserRouter>
-        {App}
-      </BrowserRouter>
-    </Provider>
+  <Provider store={store}>
+    <BrowserRouter>
+      {App}
+    </BrowserRouter>
+  </Provider>
 );
 
 ReactDOM.render(node, target);
 
-// Expose
+// Expose App Runtime
 export * from './components';
-export * from './store/actions';
+export * from './store';
+export { App };

@@ -25,9 +25,9 @@ async function compileSubapp() {
     let libname = path.join('alainxyz-subapp', relativeRoot).replace(/\\/g, '-');
 
     let config = {
+      warnings: true,
       globalEvaluationScope: false,
       format: 'commonjs',
-      defaultJSExtensions: true,
       typescriptOptions: {
         module: 'system',
         target: 'es5',
@@ -55,7 +55,7 @@ async function compileSubapp() {
             'react-router-dom',
             'react-redux',
             'redux',
-            'alain-xyz'
+            'main'
           ],
           meta: {
             '*.ts': {
@@ -72,7 +72,7 @@ async function compileSubapp() {
           format: 'cjs'
         },
         ts: {
-          format: 'cjs'
+          format: 'systemjs'
         }
       },
       map: {
@@ -114,7 +114,7 @@ async function compileSubapp() {
         'react-router',
         'react-redux',
         'redux',
-        'alain-xyz',
+        'main',
         'plugin-typescript',
         'typescript',
         'fs',
@@ -129,9 +129,9 @@ async function compileSubapp() {
     //index them according to their folder name. 
     await database
       .then(db => {
-        var filesCollection = db.collection('files');
+        var filesCollection = db.collection('redirect');
         var p = '/' + path.relative(root, subappjs).replace(/\\/g, '/');
-        filesCollection.update({ file: subappjs }, { file: subappjs, permalink: p }, { upsert: true });
+        filesCollection.update({ file: subappjs }, { to: subappjs, from: p }, { upsert: true });
         console.log(gray(`    Indexing Build: \n    file: ${subappjs}\n    permalink: ${p}\n`));
       });
   }
