@@ -1,0 +1,87 @@
+\documentclass[10pt,a4paper]{article}
+\include{structure}
+\hyphenation{Some-long-word}
+\begin{document} 
+
+\maintitle{\includegraphics[scale=0.03]{../appicon.jpg} Alain Galvan}
+\noindent\href{mailto:hi@Alain.xyz}{Hi@Alain.xyz}\bull
+\textsmaller{+}1 (305) 302-9275 \bull
+\href{https://alain.xyz}{Alain.xyz} \bull Miami, United States
+
+\spacedhrule{0.9em}{-0.4em}
+
+%---------------------------------------------------------------------------------
+%	SUMMARY SECTION
+%---------------------------------------------------------------------------------
+
+\begin{multicols}{2}
+
+\noindent\makebox[\linewidth]{
+\begin{tikzpicture} 
+\begin{scope}
+    \clip [rounded corners=2.5cm] (0,0) rectangle coordinate (centerpoint) (5,5cm); 
+    \node [inner sep=0pt] at (centerpoint) {\includegraphics[width=6.0cm]{../frontend/assets/brand/alaingalvan.jpg}}; 
+\end{scope}
+\end{tikzpicture}
+}
+
+\vspace{-1.3em}
+
+\roottitle{Hi AMD!}
+
+\noindent \textit{I'm a graduate research assistant for \acr{FIU}'s OpenHID Lab, a Human Computer Interaction (\acr{HCI}) lab part of the High Performance Database Research Center (\acr{HPDRC}), where my research focuses on low level graphics programming, in addition to solving graphics related problems for other researchers in the lab. \\ \\ I'm currently pursuing a PhD in Computer Science with a focus in Computer Graphics Software Architecture.} \\
+
+I believe I would be the perfect fit for \acr{AMD}'s Summer Internship position in Orlando, Florida!
+
+\roottitle{Graphics Research}
+
+Every facet of computer graphics fascinates me, from GPU hardware architecture to the low level graphics APIs like Vulkan and WebGL, all the way up to the application layer and building libraries and abstractions. \\
+
+I'm an avid reader of publications from ACM, IEEE, and books like \textit{Physically Based Rendering by Matt Pharr et al.}, \textit{Game Engine Programming by Jason Gregory}, and even transcribed a series of posts on the graphics pipeline into an ebook. 
+
+\vspace{1.3em}
+
+\noindent \includegraphics[width=\linewidth]{../portfolio/research/realtime-celestial-rendering/assets/cover.jpg}
+
+\vspace{1.3em}
+
+In the OpenHID Research lab I was always looking for ways to incorporate real time rendering research like Eric Bruneton's Real time atmospheric scattering to the Human Computer Interaction (\acr{HCI}) studies I was responsible for.\\
+
+To that end I've published 2 papers to the \acr{IEEE 3DUI} 2017 Conference in Los Angeles about real-time celestial rendering and the results of a Gesture Elicitation Study focused on 3D environments.
+
+
+\vspace{1.3em}
+
+\noindent \includegraphics[width=\linewidth]{../portfolio/libraries/coronal/assets/cover.jpg}
+
+
+\vspace{1.3em}
+
+For \textit{Open Source} I've written a \acr{GLTF} Rendering library called \textbf{Coronal} (pictured above), a small TypeScript library that combines Reactive and Functional Programming Techniques with WebGL. 
+
+
+
+\vspace{1.3em}
+
+\noindent \includegraphics[width=\linewidth]{../portfolio/blog/raw-vulkan/assets/cover.jpg}
+
+
+\vspace{1.3em}
+
+I published a well received article on writing Vulkan Abstractions that I'm adapting into a tutorial video in the style of \textit{Kurzgesagt - In a Nutshell} titled \textbf{Raw Vulkan}, as well as several other articles on Sound Programming, Game Engine Architecture, Building Web Applications and Much more. \\
+
+I also volunteer! I'm a guitarist, bassist, \& Backup Pianist for The Princeton Church of Homestead, as well as a speaker for \acr{FIU} and the Miami Game Developer Meetup. 
+
+\roottitle{Portfolio \& Contact}
+
+Please visit my Portfolio to see all my work, or check out some of the communities I participate in: \\ \\
+\noindent
+\noindent \bull Portfolio | \href{https://alain.xyz}{Alain.xyz} \\
+\bull Github | \href{https://github.com/alaingalvan}{Github.com/AlainGalvan} \\
+\bull LinkedIn | \href{https://linkedin.com/in/alaingalvan}{LinkedIn.com/in/AlainGalvan} \\
+\bull Twitter | \href{https://twitter.com/alainxyz}{@Alainxyz} \\
+\bull Phone | \textsmaller{+}1 (305) 302-9275
+
+\end{multicols}
+
+\end{document}
