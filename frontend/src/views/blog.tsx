@@ -5,10 +5,17 @@ import { bindActionCreators } from 'redux';
 import { Icon } from '../components';
 import { fetchSubapp } from '../store/actions';
 import { mobileQuery } from '../store'
+import { timeSince } from '../utils';
 
-const BlogPost = ({ cover, title, description, permalink, publishDate, tags, style = {} }) => {
+const BlogPost = ({ cover, title, description, permalink, publishDate, lastUpdated, tags, style = {} }) => {
 
-  let date = new Date(publishDate);
+  let published = new Date(publishDate);
+  let publishedStr = published.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
+
+  let updated = new Date(lastUpdated);
+  
+  // Get Time elapsed string
+  let updatedStr = timeSince(updated);
 
   return (
     <Link to={permalink} style={{ ...styles.blogPost, ...style, backgroundImage: `url('${cover}')` }}>
@@ -20,7 +27,7 @@ const BlogPost = ({ cover, title, description, permalink, publishDate, tags, sty
         <h2 style={{ color: '#fff'}}>{title}</h2>
         <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)'}}>
           <Icon type='date' style={{marginRight: '.5em'}}/>
-          {date.toLocaleDateString()} @ {date.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' })}
+          {published.toLocaleDateString()} @ {publishedStr} {updatedStr ? `| Updated ${updatedStr} ago` : null}
           </p>
         <p style={{lineHeight: '1.25em', color: '#fff'}}>{description}</p>
       </section>

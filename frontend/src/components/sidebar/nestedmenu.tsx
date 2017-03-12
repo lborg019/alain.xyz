@@ -9,17 +9,17 @@ export class NestedMenu extends React.Component<any, any> {
   static defaultProps = {
     structure: {
       about: 'about',
-      portfolio: {
+/*      portfolio: {
         //buisnesses: '?tag=businesses',
-        research: '?tag=research',
+        research: '/research',
         //courses: '?tag=courses',
         //books: '?tag=books',
-        apps: '?tag=apps',
-        libraries: '?tag=libraries',
+        apps: '/apps',
+        libraries: '/libraries',
         //podcast: '?tag=podcast',
         //art: '?tag=art',
         //music: '?tag=music'
-      },
+      },*/
       blog: 'blog'
     },
     root: '',
@@ -50,7 +50,11 @@ export class NestedMenu extends React.Component<any, any> {
 
             let isObj = typeof obj === 'object';
 
-            let to = root + '/' + (isObj ? v : structure[v]);
+            let to = isObj
+              ? root + '/' + v
+              : obj[0] === '/'
+                ? obj
+                : root + '/' + obj;
 
             let p = {
 

@@ -189,12 +189,6 @@ async function buildBlog() {
       await writeToDb(file, await askQuestions(file));
     }
 
-    // @TODO
-    // Generate XML takes a tag and generates an XML file for that tag.
-    // There can also be a global XML tag if the entry is 0.
-    console.log('Gererating XML Feed!')
-    generateXML('blog');
-
   }
 
   return;

@@ -14,7 +14,7 @@ Our goal is to build a well crafted library similar to [Cinder](https://libcinde
 
 - Loading objects or scenes designed in [Blender](https://www.blender.org/) in the `.gltf` format.
 
-## Obsidian - The Modern C++ Vulkan Renderer
+## Obsidian - Vulkan PBR GLTF Rendering Engine
 
 ```bash
 conan install obsidian@hyperfuse/stable
@@ -57,4 +57,6 @@ class MyActor : BaseActor
 I'm leaning towards **no** for the render loop, simply due to the need to constantly refresh being so crucial to the application. 
 
 2. Should there be a virtual scene graph similar to React's virtual dom?
+
+
 
