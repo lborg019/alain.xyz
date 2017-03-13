@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "raw-vulkan.js",
-  "scripts": {
-    "test": "ava"
-  },
   "author": "Alain Galvan",
   "license": "MIT"
 }

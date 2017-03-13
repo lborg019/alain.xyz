@@ -14,8 +14,7 @@
   },
   "scripts": {
     "develop": "set DEBUG=express:* & set NODE_ENV=development & ts-node -F -D src/main.ts",
-    "production": "set DEBUG=false & set NODE_ENV=production & ts-node -F -D src/main.ts&",
-    "start": "npm run production"
+    "start": "set DEBUG=false & set NODE_ENV=production & ts-node -F -D src/main.ts&"
   },
   "private": true,
   "dependencies": {

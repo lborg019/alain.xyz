@@ -1,0 +1,12 @@
+{
+  "name": "raw-webgl",
+  "description": "An ES2017 WebGL2 Rendering Library",
+  "main": "index.md",
+  "keywords": [
+    "webgl",
+    "tutorial",
+    "github",
+    "ts",
+    "js"
+  ]
+}

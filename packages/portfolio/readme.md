@@ -41,15 +41,47 @@ This portfolio is indexed by the Alain.xyz Builder, compiling markdown, building
 
 ## Contributing
 
-If you want to add to publish to the blog, you'll want to do a pull request. Please make sure to write your name in the article!
+If you want to add a new item to my portfolio (maybe publish a blog post), just send a pull request!
 
 ### Guidelines
 
-1. Covers must be:
-  - 1080p
-  - Have no logo or readable text at the center of the image.
-  - Have a balanced color gradient, avoiding whites.
+1. Covers must be 1080p.
+2. Post must include a package.json file.
 
+#### Package.json Example
+
+```json
+{
+  "name": "raw-vulkan",
+  "description": "",
+  "main": "raw-vulkan.js",
+  "author": "Alain Galvan",
+  "license": "MIT",
+  "alainxyz": {
+    "badges": [],
+    "title": "Raw Vulkan",
+    "permalink": "talks/raw-vulkan"
+  }
+}
+
+```
+
+The following is a map of how a portfolio item's package.json file maps to the database schema:
+
+```ts
+// General schema
+// Depending on the portfolio item, there's more specifics
+let {
+  description,
+  author,
+  keywords: tags,
+  alainxyz: {
+    title,
+    permalink,
+    publishDate
+  }
+} = require(loc + '/package.json')
+```
 
 ## How it Works
 

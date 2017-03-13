@@ -4,7 +4,8 @@
   "description": "My personal website.",
   "scripts": {
     "postinstall": "lerna bootstrap --npm-client=yarn",
-    "run": "lerna run start"
+    "build": "lerna run build",
+    "start": "cd packages/backend && npm start"
   },
   "repository": {
     "type": "git",
