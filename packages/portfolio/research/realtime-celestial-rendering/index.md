@@ -10,13 +10,13 @@ Not that it isn't possible with the custom node in Unreal's Material Editor, but
 
 >Step By Step Process:
 >1. Create Shader Plugin
->  * Use Unreal Plugin Wizard
->  * Create a subclass of the FGlobalShader Class
->  * Write your .usf (Unreal Shader Format) file.
->  * Bind Uniforms
+>  - Use Unreal Plugin Wizard
+>  - Create a subclass of the FGlobalShader Class
+>  - Write your .usf (Unreal Shader Format) file.
+>  - Bind Uniforms
 >2. Execute Shader in Game Engine
->  * create a `new YourShaderPlugin(params)` object.
->  * Update the render target whenever you would like.
+>  - create a `new YourShaderPlugin(params)` object.
+>  - Update the render target whenever you would like.
 
 ### Cubemap Textures
 

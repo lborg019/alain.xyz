@@ -1,4 +1,4 @@
-![Latest Cover](blog/the-making-of-alain-xyz/assets/cover.png)
+![Latest Cover](blog/javascript-at-2017/assets/cover.jpg)
 
 # [Alain.xyz](http://alain.xyz/portfolio) Portfolio
 
