@@ -27,25 +27,10 @@ A few of the projects that influenced the design of this app were:
 
 ## Setup
 
-### Docker
-
-Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/).
-
 ```bash
-# Install Docker and Docker Compose.
-wget -qO- https://get.docker.com/ | sh
-sudo apt-get -y install python-pip
-sudo pip install docker-compose
-
-# Begin setup
-docker-compose up
-```
-
-### Local
-
-```bash
+# Use yarn or npm
 # After installing lerna will handle the rest.
-npm i
+yarn
 ```
 
 ## How it Works
@@ -53,9 +38,10 @@ npm i
 The site is comprised of 3 primary modules:
 
 ```bash
+├─ daemon/    # Server Daemon
 ├─ backend/   # Express HTTP Server
 ├─ frontend/  # React Frontend Application
-└─ portfolio/ # Personal Portfolio 
+└─ portfolio/ # Personal Portfolio
 ```
 
 [website-img]: brand/screenshots/branding-overview.png

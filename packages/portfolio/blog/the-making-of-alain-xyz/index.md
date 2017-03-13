@@ -22,8 +22,7 @@ Here's some of the dependencies I'm building on top of:
 
 2. [MongoDB](http://mongodb.org/) - A simple to use NoSQL Database.
 
-3. [Express]() - Node.js' De'facto HTTP Server.
-    - [Helmet]() - Security header middleware.
+3. [Express](https://expressjs.com/) - Node.js' De'facto HTTP Server.
 
 ### Client
 
@@ -138,10 +137,6 @@ Similar to Latex References, to place references, simply write `[^yourrefname]`,
 In addition, you can write complex math equations with KaTex like The emission-absorption optical model from the book [Real Time Volume Rendering by Klaus Engel et al.](http://www.real-time-volume-graphics.org/):
 
 \[I(D) = I_0 e^{-\int_{s_0}^{D} \kappa(t) dt} + \int_{s_0}^D q(s) e^{-\int_{s_0}^{D} \kappa(d) dt} \; ds\]
-
-The system even supports tooltips thanks to [Hint.css](https://kushagragour.in/lab/hint/):
-
-<span class="hint--right" aria-label="The Integral from the light source to the camera at distance D">\(I_0\)</span>\( = ... \)
 
 ## `<About/>` - An Online Resume
 
