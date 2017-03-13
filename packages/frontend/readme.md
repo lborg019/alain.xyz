@@ -13,7 +13,7 @@ My personal website frontend.
 [release-img]: https://img.shields.io/badge/release-0.4.0-4dbfcc.svg?style=flat-square
 [license-img]: http://img.shields.io/:license-mit-blue.svg?style=flat-square
 [license-url]: https://opensource.org/licenses/MIT
-[david-url]: https://david-dm.org/alaingalvan/alain.xyz?path=frontend
-[david-img]: https://david-dm.org/alaingalvan/alain.xyz.svg?path=frontend&style=flat-square
-[david-dev-url]: https://david-dm.org/alaingalvan/alain.xyz?path=frontend#info=devDependencies
-[david-dev-img]: https://david-dm.org/alaingalvan/alain.xyz/dev-status.svg?path=frontend&style=flat-square
+[david-url]: https://david-dm.org/alaingalvan/alain.xyz?path=packages/frontend
+[david-img]: https://david-dm.org/alaingalvan/alain.xyz.svg?path=packages/frontend&style=flat-square
+[david-dev-url]: https://david-dm.org/alaingalvan/alain.xyz?path=packages/frontend#info=devDependencies
+[david-dev-img]: https://david-dm.org/alaingalvan/alain.xyz/dev-status.svg?path=packages/frontend&style=flat-square
