@@ -1,0 +1,8 @@
+{
+  "name": "daemon",
+  "version": "0.5.0",
+  "description": "Daemon for Alain.xyz.",
+  "main": "src/main.js",
+  "author": "Alain Galvan",
+  "license": "MIT"
+}
