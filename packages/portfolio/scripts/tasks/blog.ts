@@ -66,11 +66,11 @@ async function askQuestions(file: string) {
 
   let questions = [
     {
-      key: 'permalink',
+      key: 'url',
       default: permalink
     },
     {
-      key: 'title',
+      key: 'name',
       default: title
     },
     {
@@ -78,7 +78,7 @@ async function askQuestions(file: string) {
       default: ''
     },
     {
-      key: 'tags',
+      key: 'keywords',
       default: 'blog',
       cb: (ans) => ans.toLowerCase().split(' ')
     },
