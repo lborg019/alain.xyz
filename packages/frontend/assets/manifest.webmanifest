@@ -2,7 +2,7 @@
   "short_name": "Alain.xyz",
   "name": "Alain.xyz",
   "description": "The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.",
-  "start_url": ".",
+  "start_url": "/",
   "icons": [{
       "src": "/assets/brand/icon/144.png",
       "sizes": "144x144",

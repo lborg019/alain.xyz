@@ -4,5 +4,8 @@
   "description": "Daemon for Alain.xyz.",
   "main": "src/main.js",
   "author": "Alain Galvan",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": ""
+  }
 }

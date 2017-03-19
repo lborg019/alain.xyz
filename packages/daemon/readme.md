@@ -21,4 +21,4 @@ Which receives the events, and:
 
 1. `git pull` the repo.
 2. `lerna run build` to build bundles, populate database with changes.
-3. `npm start` to start the server.
+3. `npm start` to restart the server.

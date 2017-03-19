@@ -75,14 +75,12 @@ Two organizational patterns I've noticed are:
 This has been done for years in Game Engines like [Game Maker Studio](http://www.yoyogames.com/studio/workflow/dev-env), [Unity](https://www.assetstore.unity3d.com/en/#!/content/29140), [Unreal Engine](https://docs.unrealengine.com/latest/INT/Resources/ContentExamples/), and with web apps like [Prepros](https://github.com/Subash/Prepros/tree/master/application/app), [Adobe Brackets](https://github.com/adobe/brackets/tree/master/src). When working with teams creating different portions of the same component, this model worked really well.
 
 ```bash
-|- sprites/
-  |- player/
-    |- spr_player_idle_left # Sorta like CSS BEM
-|- backgrounds/
-|- sounds/
-|- scripts/
-|- objects/
-|- rooms/
+├─ sprites/
+├─ backgrounds/
+├─ sounds/
+├─ scripts/
+├─ objects/
+└─ rooms/
 ```
 
 #### Sorted by Component - Wordpress Calypso
@@ -90,16 +88,16 @@ This has been done for years in Game Engines like [Game Maker Studio](http://www
 Makes your file structure look more like a dependency tree, and has been adopted by a number of programmers, from Unity developer [Keijiro Takahashi](https://github.com/keijiro/KvantSwarm/tree/master/Assets) to [Mark Dalgleish](http://markdalgleish.com/) in his talk *The End of Global CSS*, to the [Wordpress Calypso](https://github.com/Automattic/wp-calypso/tree/a265f8b02335a7af03ff028b1c79e2b5b40fd5e0/client/components), their new React/Express frontend app.
 
 ```bash
-|- client/
-  |- components/
-      |- gravatar/
-        |- index.jsx
-        |- style.scss
-      |- site-selector-modal/
-      |- ...
-  |- auth/
-  |- post-editor/
-  |- ...
+├─ client/
+├─ components/
+│   ├─ gravatar/
+│   │  ├─ index.jsx
+│   │  └─ style.scss
+│   └─ site-selector-modal/
+│      └─  ...
+├─ auth/
+├─ post-editor/
+└─ ...
 ```
 
 #### Sorted by Task - Angular 2.0 Beta Structure
@@ -107,19 +105,19 @@ Makes your file structure look more like a dependency tree, and has been adopted
 Angular 2 organized it's files in regular folders, with a corresponding `.ts` file for the folder they want to export.
 
 ```bash
-|- src
-  |- common/
-    |- directives/
-    |- forms/
-    |- pipes/
-    |-directives.ts # export all of directives/, could also be done with an index.ts file.
-    |- ...
-  |- core/
-  |- ...
-|- common.ts # export * from 'common'
-|- core.ts
-|- ...
-|- tsconfig.json
+├─ src
+│  ├─ common/
+│  │  ├─ directives/
+│  │  ├─ forms/
+│  │  ├─ pipes/
+│  │  ├─directives.ts # export all of directives/, could also be done with an index.ts file.
+│  │  └─ ...
+│  ├─ core/
+│  └─ ...
+├─ common.ts
+├─ core.ts
+├─ ...
+└─ tsconfig.json
 ```
 
 ### Generators & Boilerplates
@@ -128,8 +126,8 @@ You can get a lot more done a lot faster if you automatically generate your code
 
 **Ruby** has had generators for a long time, so it's only natural for the features of that language to bleed into JavaScript.
 
- * [Yeoman](http://yeoman.io/) - Scaffold out your application with some yeoman generators, making say, angular directives from one command vs googling an implementation and forking that.
- * [SlushJS](http://slushjs.github.io/) - Another Scaffolding tool based on GulpJS.
+- [Yeoman](http://yeoman.io/) - Scaffold out your application with some yeoman generators, making say, angular directives from one command vs googling an implementation and forking that.
+- [SlushJS](http://slushjs.github.io/) - Another Scaffolding tool based on GulpJS.
 
 ## Routes
 
@@ -157,37 +155,23 @@ The fact is, __Web Obesity__ is a big problem. [Maciej Ceglowski's *The Website 
 You can use automators like [Gulp](http://gulpjs.com/), [Grunt](http://gruntjs.com/), [GNU Make](http://www.gnu.org/software/make/manual/make.html), or [Chron Jobs](http://www.themechanism.com/voice/2012/08/28/getting-node-js-and-cron-to-play-nicely/) to process/deploy your files automatically, but there is [some debate on using automators](https://medium.com/@preslavrachev/gulp-vs-grunt-why-one-why-the-other-f5d3b398edc4#.rfcpoz3vy).
 
 1. **Verify** your Code and **Lint** it!
-
-    [JSCS](https://github.com/jscs-dev/node-jscs) is a module that's used by Three, jQuery, Ember, Angular 1, and more to make sure your code is formatted and follows certain standards established by a given project.
-
+    - [JSCS](https://github.com/jscs-dev/node-jscs) is a module that's used by Three, jQuery, Ember, Angular 1, and more to make sure your code is formatted and follows certain standards established by a given project.
 2. **Compile** your preprocessor languages.
+    - I'm using PostCSS and Typescript, and compile it all with gulp.
 
-    I'm using PostCSS and Typescript, and compile it all with gulp.
-
-    I'm using PostCSS along with:
-     * [Autoprefixer](https://github.com/postcss/autoprefixer)
-     * [CSS Next](https://github.com/cssnext/postcss-cssnext)
-     * [Style Guide Generator](https://github.com/morishitter/postcss-style-guide)
-
+    - I'm using PostCSS along with:
+      - [Autoprefixer](https://github.com/postcss/autoprefixer)
+      - [CSS Next](https://github.com/cssnext/postcss-cssnext)
+      - [Style Guide Generator](https://github.com/morishitter/postcss-style-guide)
 
 3. **Combine** and Minify.
-
-    Compile `.ts` / `.js` with the Typescript Compiler in Gulp by itself, or use [browserify](http://browserify.org/) and [uglifyJS](http://lisperator.net/uglifyjs/) with [this workflow](https://github.com/remojansen/modern-workflow-demo).
-
-
+    - Compile `.ts` / `.js` with the Typescript Compiler in Gulp by itself, or use [browserify](http://browserify.org/) and [uglifyJS](http://lisperator.net/uglifyjs/) with [this workflow](https://github.com/remojansen/modern-workflow-demo).
 
 For the smallest .jpeg, .png, .svg files, as well as sprite sheets, you'll need a system that can compress, [texture atlas (if applicable)](http://www.creativeshrimp.com/game-level-texturing-texture-atlas-part-35.html), and [mipmap](https://msdn.microsoft.com/en-us/library/windows/desktop/bb206251%28v=vs.85%29.aspx) your images. [Responsive Images, a talk Jason Grigsby gave on "The Web Ahead"](http://5by5.tv/webahead/99) goes over new browser features to tackle mipmap routing.
 
- * [Imagemin](https://github.com/imagemin/imagemin) - a bundled image compressor that compresses `.gif`, `.jpeg`, `.png`, and `.svg` files.
- 
- * [Sharp](https://github.com/lovell/sharp) - a tool to shrink your images down.
+- [Imagemin](https://github.com/imagemin/imagemin) - a bundled image compressor that compresses `.gif`, `.jpeg`, `.png`, and `.svg` files.
 
-You could also compile your whole app to static files on the server for [SEO](http://static.googleusercontent.com/media/www.google.com/en//webmasters/docs/search-engine-optimization-starter-guide.pdf):
-
- * [Angular 2 Seed](https://github.com/mgechev/angular2-seed) - A seed project to build static Angular 2 apps.
-
- * [Jekyll](https://jekyllrb.com/) - Github's solution to repo pages.
-
+- [Sharp](https://github.com/lovell/sharp) - a tool to shrink your images down.
 
 ## Conclusion
 
@@ -196,39 +180,43 @@ This guide sorta scratches the surface, but then there's developing mobile/deskt
 The Web Community is huge and friendly, always working on new features, libraries, posts and talks! Here's a few resources to wrap up:
 
 *Watching* __Conferences Talks__ from:
-* [JSConf](http://jsconf.com/)
-* [ngConf](http://www.ng-conf.org/)
-* [nodeConf](http://nodeconf.com/)
-* [Wix Tech Talks](https://www.youtube.com/user/WixTechTalks)
-* [
-O'Reilly](https://www.youtube.com/user/OreillyMedia)
-* [Google Developers](https://www.youtube.com/user/GoogleDevelopers)
+
+- [JSConf](http://jsconf.com/)
+- [ngConf](http://www.ng-conf.org/)
+- [nodeConf](http://nodeconf.com/)
+- [Wix Tech Talks](https://www.youtube.com/user/WixTechTalks)
+- [O'Reilly](https://www.youtube.com/user/OreillyMedia)
+- [Google Developers](https://www.youtube.com/user/GoogleDevelopers)
 
 *Reading* **Blog Posts** from:
-* [Facbook Engineering Blog](https://code.facebook.com/posts)
-* [Google Developers](https://medium.com/google-developers)
-* [Codepen Blog](http://blog.codepen.io/)
-* [Tumblr Developers](http://developers.tumblr.com/)
-* [Scotch.io](https://scotch.io/)
+
+- [Facbook Engineering Blog](https://code.facebook.com/posts)
+- [Google Developers](https://medium.com/google-developers)
+- [Codepen Blog](http://blog.codepen.io/)
+- [Tumblr Developers](http://developers.tumblr.com/)
+- [Scotch.io](https://scotch.io/)
 
 *Reading* **Books** like:
-* [Elequent Javascript](http://eloquentjavascript.net/) by [Marijn Haverbeke](https://marijnhaverbeke.nl/)
-* [Programming Javascript Applications](http://chimera.labs.oreilly.com/books/1234000000262) by [Eric Elliott](https://ericelliottjs.com/)
-* [GitBook](https://www.gitbook.com/explore) - A Free Book Community
+
+- [Elequent Javascript](http://eloquentjavascript.net/) by [Marijn Haverbeke](https://marijnhaverbeke.nl/)
+- [Programming Javascript Applications](http://chimera.labs.oreilly.com/books/1234000000262) by [Eric Elliott](https://ericelliottjs.com/)
+- [GitBook](https://www.gitbook.com/explore) - A Free Book Community
 
 *Listening* to **Podcasts** like:
-* [Codepen Radio](http://blog.codepen.io/radio/)
-* [ShopTalk](http://shoptalkshow.com/)
-* [Javascript Jabber](https://devchat.tv/js-jabber/)
-* [The Web Ahead](http://5by5.tv/webahead)
-javascript air
+
+- [Codepen Radio](http://blog.codepen.io/radio/)
+- [ShopTalk](http://shoptalkshow.com/)
+- [Javascript Jabber](https://devchat.tv/js-jabber/)
+- [The Web Ahead](http://5by5.tv/webahead)
 
 *Working* on **Projects** and talking in communities like:
-* [Codepen](http://codepen.io)
-* [r/web_design](http://reddit.com/r/web_design/)
-* [r/webdev](http://reddit.com/r/webdev/)
+
+- [Codepen](http://codepen.io)
+- [r/web_design](http://reddit.com/r/web_design/)
+- [r/webdev](http://reddit.com/r/webdev/)
 
 *Grabbing* **Free Resources** from places like:
-* [Let's Encrypt](https://letsencrypt.org/) - Free SSL Certificates
-* [FbStart](https://fbstart.com/) -  new program from Facebook designed to help early stage mobile startups build and grow their apps.
-* [Github Education](https://education.github.com/) - Dozens of free resources from great companies to help students learn.
+
+- [Let's Encrypt](https://letsencrypt.org/) - Free SSL Certificates
+- [FbStart](https://fbstart.com/) -  new program from Facebook designed to help early stage mobile startups build and grow their apps.
+- [Github Education](https://education.github.com/) - Dozens of free resources from great companies to help students learn.

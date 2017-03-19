@@ -1,10 +1,21 @@
 > Things people tell me that they know: "full-stack JavaScript is the Future", "everyone should know C", "Rust is the best language for Systems Programming"... Most people hear stuff like this, and say to themselves, is that true? ~ [Haseeb Qureshi, Converge: Why Engineers Disagree About Everything (Talk)](https://softwareengineeringdaily.com/2017/02/24/convergence-with-haseeb-qureshi/)
 
-Migrating between C++, JavaScript and Rust today has never been easier, languages seem to be converging, recent updates to each language added features exclusive to other languages. 
+Migrating between C++, JavaScript and Rust today has never been easier, language features/semantics seem to be converging, recent updates to each language added features exclusive to other languages.
 
-- **ECMAScript 2017** now features shared memory and atomics.
+#### Semantics
+
+```js
+// JS         // C++         // Rust
+let x = 4;    auto x = 4;    let x = 4;
+```
+
+#### Features
+
+- **ECMAScript 2017** (JS) now features shared memory and atomics.
+
 - **C++ 17** now features array destructuring, and `auto` became much more powerful.
-- **Rust** now has a TypeScript-like [Language Server](https://github.com/rust-lang-nursery/rls).
+
+- **Rust** now has a TypeScript-like [Language Server](https://github.com/rust-lang-nursery/rls), which is similar to Visual Studio's C++ Intelisense.
 
 ### Table of Contents
 

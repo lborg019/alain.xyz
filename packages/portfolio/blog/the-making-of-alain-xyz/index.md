@@ -52,7 +52,7 @@ Here's some of the dependencies I'm building on top of:
 
 ## Getting Started
 
-> Complexity Anchors your thinking - If you think you need a giant toolchain to produce a website, then you're going to only produce websites you can make with these giant toolchains. ~ Maciej Ceglowski
+> "Complexity Anchors your thinking - If you think you need a giant toolchain to produce a website, then you're going to only produce websites you can make with these giant toolchains." ~ Maciej Ceglowski
 
 The fastest way to get something rolling is to fork some boilerplate code, here's a few I found:
 
@@ -72,11 +72,11 @@ There's a *lot of questions* involved in making a website from a architectural p
 
 3. What kind of database should you use? What about [Polyglot Persistence](http://www.jamesserra.com/archive/2015/07/what-is-polyglot-persistence/), [Micro-Services](http://www.martinfowler.com/microservices/)?
 
-4. Should you containerize your app with [Docker](http://docker.com/) or dedicate the entire Virtual Machine to your app with [IncludeOS](http://www.includeos.org/)? 
+4. Should you containerize your app with [Docker](http://docker.com/) or dedicate the entire Virtual Machine to your app with [IncludeOS](http://www.includeos.org/)?
 
 5. How do you balance looks and performance?
 
-The list goes on and on. 
+The list goes on and on.
 
 ## `<Portfolio/>` - The Cream rises to the top
 
@@ -86,14 +86,27 @@ It should be saturated, updated often, and should only consist of your best work
 
 A portfolio could be made of many things:
 
- - Art
- - Music
- - Games
- - Books
- - Articles
- - Pictures of your Cat
-
-But a portfolio should be an **exclusive place**. *Therefore In my portfolio I only feature **finished projects**, no individual art pieces, articles, songs*. Collaborative works like big projects should have specifics pointed out.
+```bash
+# Business
+├─ businesses/ # 🏬 Physical Products
+# Writings
+├─ research/   # 📄 Research Papers
+├─ talks/      # 🗨️ Conference Presentations
+├─ books/      # 📘 Books
+├─ readings/   # 👓 Reviews/Notes/Audio Clips
+├─ blog/       # 📰 Blog Articles
+# Code
+├─ apps/       # 🅰️️ Applications
+├─ libraries/  # 📚 Libraries
+# Audio
+├─ podcasts/   # 🎤 Podcasts
+├─ music/      # 🎵 Music
+# Art
+├─ art/        # 🎨 Paintings
+├─ video/      # 🎥 Shows, Movies, etc
+# Builder
+└─ scripts/    # 🔳 Alain.xyz Builder
+```
 
 ## `<Blog/>` - A Connected Website
 
@@ -107,20 +120,20 @@ I want to make you comfortable, go to Tumblr if you want, we have repost buttons
 
 ### Prior Art - Blogs
 
- * [StackEdit](https://github.com/benweet/stackedit) are really on top of their game when it comes to writing markdown posts, supporting Footnotes, Syntax Highlighting, Mathjax, UML diagrams, etc.
+- [StackEdit](https://github.com/benweet/stackedit) are really on top of their game when it comes to writing markdown posts, supporting Footnotes, Syntax Highlighting, Mathjax, UML diagrams, etc.
 
- * [Ghost](https://github.com/TryGhost/Ghost) - A blogging tool used by Graze, Nasa, Bitcoin, Envato to name a few. They have built in collaboration support too!
+- [Ghost](https://github.com/TryGhost/Ghost) - A blogging tool used by Graze, Nasa, Bitcoin, Envato to name a few. They have built in collaboration support too!
 
- * [Wordpress Calypso](https://github.com/Automattic/wp-calypso) just came out, Wordpress coming to 2016 with node, express, react and flux!
+- [Wordpress Calypso](https://github.com/Automattic/wp-calypso) just came out, Wordpress coming to 2016 with node, express, react and flux!
 
- * [CodeSchool](https://www.codeschool.com/courses/shaping-up-with-angular-js) offers amazing high quality courses with built in exam questions, similar to [TreeHouse](https://teamtreehouse.com/), [Udemy](http://udemy.com/), [Edx](https://www.edx.org/).
- 
- * [Pluralsight](https://www.pluralsight.com) has an amazing course system that very polished, and they're the parent company of tons of online schools, from CodeSchool to Digital tutors.
- 
- * [The Graphics Codex](http://graphicscodex.com/) offers an amazing ebook experience that features:
- 	* A symbol table at the end of every chapter
-	* Brevity and plenty of illustrations (this is a graphics book lol)
-	* An amazing apendix similar to [Angular.io](https://angular.io/docs/ts/latest/quickstart.html#!#appendices).
+- [CodeSchool](https://www.codeschool.com/courses/shaping-up-with-angular-js) offers amazing high quality courses with built in exam questions, similar to [TreeHouse](https://teamtreehouse.com/), [Udemy](http://udemy.com/), [Edx](https://www.edx.org/).
+
+- [Pluralsight](https://www.pluralsight.com) has an amazing course system that very polished, and they're the parent company of tons of online schools, from CodeSchool to Digital tutors.
+
+- [The Graphics Codex](http://graphicscodex.com/) offers an amazing ebook experience that features:
+  - A symbol table at the end of every chapter
+  - Brevity and plenty of illustrations (this is a graphics book lol)
+  - An amazing appendix similar to [Angular.io](https://angular.io/docs/ts/latest/quickstart.html#!#appendices).
 
 > The goal of this blog is to be a place where you can learn by any means, articles (tutorials), podcasts, presentations, books, courses, **or whatever medium makes it easier for you the reader to learn**.
 
