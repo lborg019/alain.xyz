@@ -30,6 +30,8 @@ export function renderPage(req: Request, res: Response) {
 
     let portfolioCol = db.collection('portfolio');
 
+    // Redirect permalink to query
+
     // Query Portfolio and grab 10 items.
     let portfolio = await portfolioCol
       .find<PortfolioItem>({ permalink: originalUrl })
@@ -47,7 +49,7 @@ export function renderPage(req: Request, res: Response) {
  */
 function page(req: Request, res: Response, data: PortfolioItem[]) {
 
-  let meta: Meta = data.length === 1
+  let meta = data.length === 1
     ? { ...META, ...data[0] }
     : META;
 
@@ -94,7 +96,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
                         \`.....\`
                           \`.....\`
  ✔️ Alain.xyz
- Built with ❤️️ in Miami, Florida
+ Made with ❤️️ in Miami, Florida
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
@@ -106,7 +108,9 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <!--Search Engines-->
   <meta name="author" content="${meta.authors[0]}"/>
   <meta name="description" content="${meta.description}"/>
-  <meta name="keywords" content="${meta.tags.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
+  <meta name="keywords" content="${meta.keywords.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
+  <link rel="canonical" itemprop="url" href="https://alain.xyz${meta.permalink}"/>
+  <link rel="alternate" type="application/rss+xml" title="${meta.title}" href="https://alain.xyz/rss"/>
   <!--Twitter-->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:site" content="@Alainxyz"/>
@@ -162,9 +166,13 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
     // Glamor
     window._glam = {};
   </script>
+  <!--Vendor-->
   <script type="text/javascript" src="/assets/build/system.min.js"></script>
   <script type="text/javascript" src="/assets/build/vendor.min.js"></script>
+  <!--Main-->
   <script type="text/javascript" src="/assets/build/main.min.js"></script>
+  <!--Structured Data-->
+  <script type="application/ld+json">${''}</script>
 </body>
 
 </html>
@@ -184,17 +192,8 @@ const META = {
   title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
   description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
   cover: '/assets/brand/website-screenshot.jpg',
-  tags: ['alain', 'galvan', 'miami', 'florida', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
+  keywords: ['alain', 'galvan', 'miami', 'florida', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
   authors: ['Alain Galvan']
 };
 
 const MAXITEMS = 10;
-
-type Meta = {
-  title: string,
-  description: string,
-  cover: string
-  tags: string[],
-  permalink: string,
-  authors: string[]
-}
