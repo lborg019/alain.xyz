@@ -49,7 +49,7 @@ async function checkIfModified(file: string): Promise<IModifiedFileStatus> {
   if (data.length < 1)
     return { doesNotExist: true, isModified: false };
 
-  return { doesNotExist: false, isModified: (data[0].mtime.getTime() !== mtime.getTime()), data: data[0] };
+  return { doesNotExist: false, isModified: (data[0].dateModified.getTime() !== mtime.getTime()), data: data[0] };
 }
 
 /**
@@ -66,11 +66,11 @@ async function askQuestions(file: string) {
 
   let questions = [
     {
-      key: 'permalink',
+      key: 'url',
       default: permalink
     },
     {
-      key: 'title',
+      key: 'name',
       default: title
     },
     {
@@ -78,12 +78,12 @@ async function askQuestions(file: string) {
       default: ''
     },
     {
-      key: 'tags',
+      key: 'keywords',
       default: 'blog',
       cb: (ans) => ans.toLowerCase().split(' ')
     },
     {
-      key: 'publishDate',
+      key: 'datePublished',
       default: new Date().toISOString(),
       cb: ans => {
         var d = new Date(ans);

@@ -1,16 +1,19 @@
 /**
  * Portfolio Item Schema
+ * Conforms to Schema.org Creative Work Open Schema
+ * https://schema.org/CreativeWork
  */
 export type PortfolioItem = {
-  permalink: string,
-  cover: string,
-  icon: string,
-  authors: string[],
-  title: string,
+  name: string,
+  author: string,
   description: string,
-  tags: string[],
-  publishDate: Date,
-  lastUpdated: Date,
+  keywords: string[],
+  datePublished: Date,
+  dateModified: Date,
+  permalink: string,
+  image: string,
+  icon: string,
+
   // Analytics
   views: number,
   social: {

@@ -100,17 +100,23 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
-<html lang="en">
-
+<html itemscope itemtype="http://schema.org/Article" lang="en-US">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>${meta.title}</title>
   <!--Search Engines-->
   <meta name="author" content="${meta.authors[0]}"/>
   <meta name="description" content="${meta.description}"/>
+<<<<<<< HEAD
   <meta name="keywords" content="${meta.keywords.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
   <link rel="canonical" itemprop="url" href="https://alain.xyz${meta.permalink}"/>
   <link rel="alternate" type="application/rss+xml" title="${meta.title}" href="https://alain.xyz/rss"/>
+=======
+  <meta name="keywords" content="${meta.tags.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
+  <meta itemprop="image" content="${meta.cover}">
+  <link rel="canonical" href="https://alain.xyz/${meta.permalink}">
+>>>>>>> 3e9f383f4d206bbb7e723f27913cc33709bf85f8
   <!--Twitter-->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:site" content="@Alainxyz"/>

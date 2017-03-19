@@ -3,8 +3,8 @@
   "version": "0.5.0",
   "description": "My personal website.",
   "scripts": {
-    "postinstall": "lerna bootstrap --npm-client=yarn",
-    "run": "lerna run start"
+    "start": "yarn || npm i",
+    "postinstall": "lerna bootstrap --npm-client=yarn"
   },
   "repository": {
     "type": "git",
