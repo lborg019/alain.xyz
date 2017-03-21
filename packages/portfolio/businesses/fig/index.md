@@ -1,12 +1,12 @@
-Introducing **Fig**, an open source project offering high quality home improvement products and services. 
+Introducing **Fig**, an open source project offering high quality home improvement products and services.
 
-Creating a physical product today has never been easier, there's so many tools and resources available to bring ideas to market. 
+Creating a physical product today has never been easier, there's so many tools and resources available to bring ideas to market.
 
 ### Engineering
 
 - [Blender](https://www.blender.org/) - **Open Source** | 3D CAD software
 
-- [Altium](http://www.altium.com/altium-designer/overview) - **$120 per Year** | Curcuit Board CAD
+- [Altium](http://www.altium.com/altium-designer/overview) - **$120 per Year** | Circuit Board CAD
 
 ### IOT Computers
 
@@ -16,7 +16,7 @@ Creating a physical product today has never been easier, there's so many tools a
 
 #### Videos
 
-- [EEV Blog](https://www.youtube.com/channel/UC2DjFE7Xf11URZqWBigcVOQ) - A blog detailing the idiosyncrasies of being an electrical engineer. 
+- [EEV Blog](https://www.youtube.com/channel/UC2DjFE7Xf11URZqWBigcVOQ) - A blog detailing the idiosyncrasies of being an electrical engineer.
 
 - [GreatScott!](https://www.youtube.com/user/greatscottlab) - a variety of custom electrical engineering projects. 
 

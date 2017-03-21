@@ -17,33 +17,6 @@ Powered by:
 
 Depending on the response, the SPA has the option of rendering a given string of HTML, loading a mp3 file or even loading a javascript file (to say fetch a React Component from the backend).
 
-```ts
-type APIRequest = {
-  permalink?: string,
-  data?: boolean,
-  tags?: string[],
-  meta?: {
-    likes?: number,
-    views?: number,
-    social?: { name: string, url: string }[]
-  }
-}
-
-type APIResponse = {
-  permalink: string,
-  title: string,
-  description: string,
-  main: string,
-  data: string,
-  tags: string[],
-  publishDate: Date,
-  meta?: {
-    likes: number,
-    views: number,
-    social: { name: string, url: string }[]
-  }
-}
-```
 ## Setup
 
 Make sure to have Node, then:

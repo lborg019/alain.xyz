@@ -28,6 +28,14 @@ export type PortfolioItem = {
   data: any
 }
 
+type Thing = {
+  name: string,
+  description: string,
+  image: string,
+  url: string,
+  keywords: string[]
+}
+
 /**
  * Redirection Schema | 
  * Ex: { from: '/blog/raw-vulkan/cover.jpg', to: 'D:/Pictures/...'}

@@ -4,7 +4,7 @@ npm i react-anime -S
 
 React Anime is a super easy animation library for React built on top of [anime.js](https://github.com/juliangarnier/anime).
 
-To use it, place an `<Anime>` component and what you want to animate inside. No need to worry about callbacks or changes to the animation, Anime will handle all the rest. 
+To use it, place an `<Anime>` component and what you want to animate inside. No need to worry about callbacks or changes to the animation, Anime will handle all the rest.
 
 ## Features
 
@@ -28,7 +28,7 @@ That means the velocity vector for your animation changed:
 There's two ways you could really go about dealing with this:
 
 1. **Naive** - Restart the animation with the new animation vector.
-2. **Best** - You can pause the current animation and interpolate the new previous point with the new end point. The problem with this is deciding how to deal with *time*. 
+2. **Best** - You can pause the current animation and interpolate the new previous point with the new end point. The problem with this is deciding how to deal with *time*.
 
 ### React Motion
 

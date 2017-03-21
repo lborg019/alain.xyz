@@ -108,15 +108,10 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <!--Search Engines-->
   <meta name="author" content="${meta.authors[0]}"/>
   <meta name="description" content="${meta.description}"/>
-<<<<<<< HEAD
   <meta name="keywords" content="${meta.keywords.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
   <link rel="canonical" itemprop="url" href="https://alain.xyz${meta.permalink}"/>
   <link rel="alternate" type="application/rss+xml" title="${meta.title}" href="https://alain.xyz/rss"/>
-=======
-  <meta name="keywords" content="${meta.tags.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
   <meta itemprop="image" content="${meta.cover}">
-  <link rel="canonical" href="https://alain.xyz/${meta.permalink}">
->>>>>>> 3e9f383f4d206bbb7e723f27913cc33709bf85f8
   <!--Twitter-->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:site" content="@Alainxyz"/>

@@ -31,11 +31,11 @@ There's several ways to map a cubemap texture, linearly, boxlike, panoramic (wha
 The **Render Hardware Interface (RHI)** is Unreal's rendering abstraction layer that communicates with OpenGL or DirectX, and this, combined with a cross compiler for HLSL code, let's you write platform independent shaders. It's from here and related systems like the RenderCore, Renderer, and ShaderCore where we'll be getting our data structures/macros. Here's a few of the headers involved with the **RHI**.
 
 ```bash
-|- UnrealEngine/Engine/Source/Runtime/RHI/Public
-	|- RHICommandList.h 	# Manages Rendering Queue
-	|- RHIResources.h		# Stores Abstract Graphics Data Structures
-|- UnrealEngine/Engine/Source/Runtime/RenderCore/Public
-    |- RenderingThread.h 	# Rendering requests are Enqueued Here
+├─ UnrealEngine/Engine/Source/Runtime/RHI/
+│  ├─ RHICommandList.h    # Manages Rendering Queue
+│  └─ RHIResources.h      # Stores Abstract Graphics Data Structures
+└─ UnrealEngine/Engine/Source/Runtime/RenderCore/Public/
+   └─ RenderingThread.h   # Rendering requests are Enqueued Here
 ```
 
 The **RHI** manages a rendering queue, handles all render requests. You need to make requests to the RHI to render onto your rendertarget.
@@ -43,61 +43,61 @@ The **RHI** manages a rendering queue, handles all render requests. You need to 
 ```cpp
 void FCubeRenderTargetShader::RunShader(UTextureRenderTargetCube* RenderTarget, float time) {
 
-	//Setup ECubeFace Struct (Just a basis matrix of the current face)
+  //Setup ECubeFace Struct (Just a basis matrix of the current face)
 
-	for (int32 faceidx = 0; faceidx < (int32)ECubeFace::CubeFace_MAX; faceidx++)
-	{
-		const ECubeFace TargetFace = (ECubeFace)faceidx;
-		const FMatrix ViewRotationMatrix = FLocal::CalcCubeFaceTransform(TargetFace);
+  for (int32 faceidx = 0; faceidx < (int32)ECubeFace::CubeFace_MAX; faceidx++)
+  {
+    const ECubeFace TargetFace = (ECubeFace)faceidx;
+    const FMatrix ViewRotationMatrix = FLocal::CalcCubeFaceTransform(TargetFace);
 
-		ENQUEUE_UNIQUE_RENDER_COMMAND_THREEPARAMETER(
-			FPixelShaderRunner,
-			FCubeRenderTargetShader*, PixelShader, this,
-			ECubeFace, TargetFace, TargetFace,
-			FMatrix, ViewRotationMatrix, ViewRotationMatrix,
-			{
-				PixelShader->RunShaderInternal(FResolveParams(FResolveRect(), TargetFace), ViewRotationMatrix);
-			});
-	}
+    ENQUEUE_UNIQUE_RENDER_COMMAND_THREEPARAMETER(
+      FPixelShaderRunner,
+      FCubeRenderTargetShader*, PixelShader, this,
+      ECubeFace, TargetFace, TargetFace,
+      FMatrix, ViewRotationMatrix, ViewRotationMatrix,
+      {
+        PixelShader->RunShaderInternal(FResolveParams(FResolveRect(), TargetFace), ViewRotationMatrix);
+      });
+  }
 }
 
 void FCubeRenderTargetShader::RunShaderInternal(const FResolveParams& ResolveParams, const FMatrix mat, UTextureRenderTargetCube* CurRenderTarget)
 {
-		//Set Uniforms
-		VariableParameters.ViewMatrix = mat;
+    //Set Uniforms
+    VariableParameters.ViewMatrix = mat;
 
-		check(IsInRenderingThread());
-		FRHICommandListImmediate& RHICmdList = GRHICommandList.GetImmediateCommandList();
+    check(IsInRenderingThread());
+    FRHICommandListImmediate& RHICmdList = GRHICommandList.GetImmediateCommandList();
 
-		//Create temp rendertarget for the face.
-		auto& RenderTarget = CurRenderTarget->GetRenderTargetResource()->GetRenderTargetTexture();
-		FPooledRenderTargetDesc Desc(FPooledRenderTargetDesc::Create2DDesc(
-			FIntPoint(CurRenderTarget->GetSurfaceWidth(), CurRenderTarget->GetSurfaceHeight()),
-			RenderTarget.GetReference()->GetFormat(),
-			FClearValueBinding::None,
-			TexCreate_None,
-			TexCreate_RenderTargetable,
-			false));
+    //Create temp rendertarget for the face.
+    auto& RenderTarget = CurRenderTarget->GetRenderTargetResource()->GetRenderTargetTexture();
+    FPooledRenderTargetDesc Desc(FPooledRenderTargetDesc::Create2DDesc(
+      FIntPoint(CurRenderTarget->GetSurfaceWidth(), CurRenderTarget->GetSurfaceHeight()),
+      RenderTarget.GetReference()->GetFormat(),
+      FClearValueBinding::None,
+      TexCreate_None,
+      TexCreate_RenderTargetable,
+      false));
 
-		SetRenderTarget(RHICmdList, RenderTarget, NULL);
-		RHICmdList.SetBlendState(TStaticBlendState<>::GetRHI());
-		RHICmdList.SetRasterizerState(TStaticRasterizerState<>::GetRHI());
-		RHICmdList.SetDepthStencilState(TStaticDepthStencilState<false, CF_Always>::GetRHI());
+    SetRenderTarget(RHICmdList, RenderTarget, NULL);
+    RHICmdList.SetBlendState(TStaticBlendState<>::GetRHI());
+    RHICmdList.SetRasterizerState(TStaticRasterizerState<>::GetRHI());
+    RHICmdList.SetDepthStencilState(TStaticDepthStencilState<false, CF_Always>::GetRHI());
 
-		static FGlobalBoundShaderState BoundShaderState;
-		TShaderMapRef<FVertexShaderExample> VertexShader(GetGlobalShaderMap(FeatureLevel));
-		TShaderMapRef<FPixelShaderDeclaration> PixelShader(GetGlobalShaderMap(FeatureLevel));
+    static FGlobalBoundShaderState BoundShaderState;
+    TShaderMapRef<FVertexShaderExample> VertexShader(GetGlobalShaderMap(FeatureLevel));
+    TShaderMapRef<FPixelShaderDeclaration> PixelShader(GetGlobalShaderMap(FeatureLevel));
 
-		SetGlobalBoundShaderState(RHICmdList, FeatureLevel, BoundShaderState, GTextureVertexDeclaration.VertexDeclarationRHI, *VertexShader, *PixelShader);
-		PixelShader->SetUniformBuffers(RHICmdList, ConstantParameters, VariableParameters);
+    SetGlobalBoundShaderState(RHICmdList, FeatureLevel, BoundShaderState, GTextureVertexDeclaration.VertexDeclarationRHI, *VertexShader, *PixelShader);
+    PixelShader->SetUniformBuffers(RHICmdList, ConstantParameters, VariableParameters);
 
-		//draw Surface Quad
+    //draw Surface Quad
 
-		//Copy onto the RenderTargetCube
-		RHICmdList.CopyToResolveTarget(CurRenderTarget->GetRenderTargetResource()->GetRenderTargetTexture(), CurRenderTarget->GetRenderTargetResource()->TextureRHI, false, ResolveParams);
+    //Copy onto the RenderTargetCube
+    RHICmdList.CopyToResolveTarget(CurRenderTarget->GetRenderTargetResource()->GetRenderTargetTexture(), CurRenderTarget->GetRenderTargetResource()->TextureRHI, false, ResolveParams);
 
-		bIsPixelShaderExecuting = false;
-	}
+    bIsPixelShaderExecuting = false;
+  }
 ```
 
 ### Making Plugins
@@ -107,13 +107,13 @@ To make managing custom shaders easier, it's a good idea to create a plugin for 
 Here's the file structure of the plugin:
 
 ```bash
-|- Public
-	|- CubeRenderTargetShader.h 	#Class that is called from in game actors.
-	|- PixelShaderDeclaration.h
-	|- PixelShaderPrivatePCH.h
-|- Private
-	|- CubeRenderTargetShader.cpp
-	|- PixelShaderDeclaration.cpp
+├─ Public/
+│  ├─ CubeRenderTargetShader.h
+│  ├─ PixelShaderDeclaration.h
+│  └─ PixelShaderPrivatePCH.h
+└─ Private/
+   ├─ CubeRenderTargetShader.cpp
+   └─ PixelShaderDeclaration.cpp
 ```
 
 ## Writing your Shader
@@ -158,12 +158,12 @@ To run the shader in game, it was a simple matter of making an actor that execut
 ```cpp
 void ASpaceSky::Tick(float DeltaSeconds)
 {
-	Super::Tick(DeltaSeconds);
+  Super::Tick(DeltaSeconds);
 
-	//Run
-	if (NULL != PixelShading)
-	{
-		PixelShading->RunShader(RenderTargetCube, InputTexture);
-	}
+  //Run
+  if (NULL != PixelShading)
+  {
+    PixelShading->RunShader(RenderTargetCube, InputTexture);
+  }
 }
 ```

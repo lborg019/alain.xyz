@@ -24,7 +24,7 @@ A **palette** is a color ramp, from low to high, and should be characterized by 
 
 Most artists start with an average color for the piece that they're doing, then add highlights and shadows to that.
 
-![Chaos Zero Timelapse by Alain Galvan](assets/chaos-zero.gif)  
+![Chaos Zero Timelapse by Alain Galvan](assets/chaos-zero.gif)
 
 A good idea is to use complementary colors to help blend colors together. Purple or Teal work well for shadows, whereas yellows and whites work for specular highlights.
 

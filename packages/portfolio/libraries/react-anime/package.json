@@ -1,9 +1,10 @@
 {
   "name": "react-anime",
-  "description": "An ES2017 WebGL2 Rendering Library",
+  "description": "A super easy animation library for React built on top of anime.js.",
   "main": "index.md",
   "keywords": [
     "library",
+    "libraries",
     "npm",
     "github",
     "ts",

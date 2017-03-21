@@ -37,10 +37,10 @@ guid: 61e3a4077f0adfe4ab171bb5876d2cf9
 timeCreated: 1485466431
 licenseType: Free
 DefaultImporter:
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-``` 
+  userData:
+  assetBundleName:
+  assetBundleVariant:
+```
 
 ### Engine State
 

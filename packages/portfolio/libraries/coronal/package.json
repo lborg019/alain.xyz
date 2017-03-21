@@ -1,6 +1,6 @@
 {
   "name": "coronal",
-  "description": "An ES2017 WebGL2 Rendering Library",
+  "description": "☀️ A modern 3D rendering library for quickly building games and apps.",
   "main": "index.md",
   "keywords": [
     "library",
@@ -12,7 +12,8 @@
   "homepage": "https://coronal.io",
   "alainxyz": {
     "title": "Coronal",
-    "badges": [{
+    "badges": [
+      {
         "name": "npm",
         "url": "https://www.npmjs.com/package/coronal"
       },
