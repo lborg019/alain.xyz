@@ -39,6 +39,14 @@ Visit [The Node Foundation](https://nodejs.org) and down load the *current* vers
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
 
+```bash
+# Installing Packages
+npm i <package-name>
+
+# Running Programs
+node <javascript-file-name>
+```
+
 ## C++
 
 C++ is a mature language that has a lot of heritage. Developed by *Bjarne Stroustrup* in Bell Labs as an extension to C, it became its own language once people coming from C began to see how much more maintainable their codebases were with class hierarchies and template metaprogramming.
