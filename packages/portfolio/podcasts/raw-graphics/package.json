@@ -1,0 +1,14 @@
+{
+  "name": "podcasts/raw-graphics",
+  "description": "A brand new podcast about graphics: real time rendering, art, raytracing, gpgpu computing, and machine learning. ",
+  "main": "main.ts",
+  "keywords": [
+    "podcast",
+    "podcasts",
+    "raw",
+    "graphics",
+    "machine",
+    "learning",
+    "gpgpu"
+  ]
+}

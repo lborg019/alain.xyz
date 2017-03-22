@@ -1,5 +1,5 @@
 {
-  "name": "react-anime",
+  "name": "libraries/react-anime",
   "description": "A super easy animation library for React built on top of anime.js.",
   "main": "index.md",
   "keywords": [

@@ -1,5 +1,5 @@
 {
-  "name": "coronal",
+  "name": "libraries/coronal",
   "description": "☀️ A modern 3D rendering library for quickly building games and apps.",
   "main": "index.md",
   "keywords": [

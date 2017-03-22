@@ -1,6 +1,6 @@
 {
-  "name": "raw-webgl",
-  "description": "An ES2017 WebGL2 Rendering Library",
+  "name": "blog/raw-webgl",
+  "description": "An overview on how to make a WebGL application from a low level perspective.",
   "main": "index.md",
   "keywords": [
     "webgl",

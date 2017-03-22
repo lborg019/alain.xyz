@@ -1,6 +1,4 @@
-Pixel art is a part of the legacy of game development, all early games were pixel art.
-
-Pokemon had pixel art in every game up until their X/Y series, Sonic's last pixel art game was Sonic Advance 3, Ragnarok Online tried to mix 3D and Pixel Art.
+Pixel art is a large part of the legacy of game development. Every Pokemon game up until their X/Y series was rendered entirely with pixel art, Ragnarok Online (2000) was one of the first commercial works to feature 3D rendering along side pixel art characters. Even when early games tried to push the limits of 3D rendering such as Doom or Quake, they relied on Pixel Art based billboards to render their characters. 
 
 ## Limitations & Guidelines
 
