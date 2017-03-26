@@ -24,7 +24,9 @@ The Mandelbrot Benchmark ([Gouy, Isaac. The Computer Benchmark Game](http://benc
 > 
 > 2. There's no better benchmark than your app, the Mandelbrot fractal is great but there are variations in performance across benchmarks, so look at the others!
 
-A far cry to what people thought it would be at it's conception. JavaScript was designed in 10 days by [Brendan Eich](https://twitter.com/brendaneich?lang=en), had varying levels of browser support, and Adobe Flash was looking to be a much better web platform. But things have calmed down since then and the language is regularly maintained by the ECMA standard body, stable across browsers, beat Flash and even took some of ActionScript's language features (a classic case of too early for it's time).
+A far cry to what people thought the language would become at its early years.
+
+JavaScript was designed in 10 days by [Brendan Eich](https://twitter.com/brendaneich?lang=en), had varying levels of browser support, and Adobe Flash was looking to be a much better web platform. But things have calmed down since then and the language is regularly maintained by the ECMA standard body, stable across browsers, beat Flash and even took some of ActionScript's language features (a classic case of too early for it's time).
 
 The following is a quick overview of all the new features of JavaScript as of 2017, we'll be looking at:
 

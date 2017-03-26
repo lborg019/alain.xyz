@@ -1,6 +1,6 @@
-Vulkan is a new low level Graphics API released February 2016 by the [Khronos Group](https://khronos.org) that maps directly to the design of modern GPUs. OpenGL was designed in 1992 when GPUs were far more simple, but since then they have become programmable computational units of their own with a focus on processing large sets of data quicker than CPUs.
+Vulkan is a new low level Graphics API released February 2016 by the [Khronos Group](https://khronos.org) that maps directly to the design of modern GPUs. GPUs were originally simple ASICs, but since then they have become programmable computational units of their own with a focus on throughput over latency. Older APIs like OpenGL or DirectX were designed for hardware that's drastically changed since the early 90s when they were first released, so Vulkan was designed from scratch to match the way GPUs are engineered today.
 
-Currently Vulkan 1.0 currently supports the following operating Systems:
+Currently Vulkan 1.0 supports the following operating Systems:
 
 - Windows
 - Linux
@@ -12,7 +12,7 @@ Currently Vulkan 1.0 currently supports the following operating Systems:
 
 And languages such as:
 
-- [C](https://vulkan.lunarg.com/) - The officially supported language for Vulkan.
+- [C](https://vulkan.lunarg.com/) - The official language for Vulkan.
 
 - [C++](https://github.com/khronosgroup/vulkan-hpp) - Through [**Vulkan-Hpp**](https://github.com/KhronosGroup/Vulkan-Hpp) the official Vulkan C++ library.
 
@@ -22,26 +22,29 @@ And languages such as:
 
 I've prepared a [Github Repo](http://github.com/alaingalvan/raw-vulkan) with all the code we'll be going over; We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
 
+By the end of this post you should know every Vulkan construct needed to render a triangle, and will be able to use that knowledge to build rendering libraries, visualization demos, games and apps. 
+
+---
+
 ## Setup
 
 First install [Conan](https://www.conan.io/downloads), A C++ package manager as easy to use as `npm`, then type the following in your [terminal](https://hyper.is/).
 
 ```bash
-# Clone the starter repo
+# 📋 Clone the starter repo
 git clone https://github.com/alaingalvan/raw-vulkan
 cd raw-vulkan/1-hello-triangle/cpp
 
-# Install dependencies
+# ⬇️ Install dependencies
 conan install
 
-# After modifying the code, you can build it with:
-# This compiles your shaders, & then compiles the app
+# 🔨 Compiles your shaders, & then compiles the app
 conan build
 ```
 
 ### Dependencies
 
-Conan handles downloading/installing all your dependencies:
+Conan handles downloading/installing all your dependencies, for this app we're using:
 
 - [Vulkan SDK](https://vulkan.lunarg.com/) - The official Vulkan SDK distributed by LunarG.
 
@@ -55,37 +58,37 @@ Conan handles downloading/installing all your dependencies:
 
 In this application we will need to do the following:
 
-1. Create a **Vulkan Instance** to access inner functions of the Vulkan API.
+1. *Create* a **Vulkan Instance** to access inner functions of the Vulkan API.
 
-2. Pick the best **Physical Device** from every device that supports Vulkan on your machine.
+2. *Pick* the best **Physical Device** from every device that supports Vulkan on your machine.
 
-3. Create a **Logical Device** from your physical device to interface with Vulkan.
+3. *Create* a **Logical Device** from your physical device to interface with Vulkan.
 
-4. Create **Window** using the WSIWindow library. This will also create a **Surface** for our application to use later. 
+4. *Create* **Window** using the WSIWindow library. This will also create a **Surface** for our application to use later. 
 
-5. Create a **Swapchain** from your logical device. This will manage changing frames and hold the surface specific **Color Attachment**.
+5. *Create* a **Swapchain** from your logical device. This will manage changing frames and hold the surface specific **Color Attachment**.
 
-6. Create a **Depth Attachment** that will go into our render pass.
+6. *Create* a **Depth Attachment** that will go into our render pass.
 
-7. Create a set of **Frame Buffers** for each image in your swapchain.
+7. *Create* a set of **Frame Buffers** for each image in your swapchain.
 
-8. Create a primary **Render Pass** to be used in your swapchain and surface. This will also let us group our depth and color attachments.
+8. *Create* a primary **Render Pass** to be used in your swapchain and surface. This will also let us group our depth and color attachments.
 
-9. Create **Synchronization** primitives like semaphores to determine when we're finished presenting and finished rendering, and fences to check the start of the render loop, or to determine when memory has finished being written to.
+9. *Create* **Synchronization** primitives like semaphores to determine when we're finished presenting and finished rendering, and fences to check the start of the render loop, or to determine when memory has finished being written to.
 
-10. Create a **Command Pool** from your logical device.
+10. *Create* a **Command Pool** from your logical device.
 
-11. Create a **Vertex Buffer** and **Index Buffer** for your geometry. 
+11. *Create* a **Vertex Buffer** and **Index Buffer** for your geometry. 
 
-12. Copy to **GPU Local Memory** the data for your vertex, index, and uniform buffers.
+12. *Copy* to **GPU Local Memory** the data for your vertex, index, and uniform buffers.
 
-13. Load **SPIR-V** shader binaries for our Vertex and Fragment shaders.
+13. *Load* **SPIR-V** shader binaries for our Vertex and Fragment shaders.
 
-14. Create a **Graphics Pipeline** to represent the entire state of the Graphics Pipeline for that triangle.
+14. *Create* a **Graphics Pipeline** to represent the entire state of the Graphics Pipeline for that triangle.
 
-15. Create **Commands** for each command buffer to set the GPU's state to render the triangles.
+15. *Create* **Commands** for each command buffer to set the GPU's state to render the triangles.
 
-16. Use an **Update Loop** to switch between different frames in your swapchain as well as to poll input devices/window events.
+16. *Use* an **Update Loop** to switch between different frames in your swapchain as well as to poll input devices/window events.
 
 ## Instances
 
@@ -100,6 +103,8 @@ Similar to the OpenGL context, a Vulkan application begins when you create an **
 You'll want to begin by determining which extensions/layers you want, and compare that with which are available to you by Vulkan.
 
 ```cpp
+// 🔍 Find the best Instance Extensions
+
 auto installedExtensions = vk::enumerateInstanceExtensionProperties();
 
 std::vector<const char*> wantedExtensions =
@@ -120,6 +125,8 @@ for (auto &w : wantedExtensions) {
   }
 }
 
+// 🔎 Find the best Instance Layers
+
 auto installedLayers = vk::enumerateInstanceLayerProperties();
 
 std::vector<const char*> wantedLayers =
@@ -137,6 +144,8 @@ for (auto &w : wantedLayers) {
     }
   }
 }
+
+// ⚪ Create an Instance
 
 auto appInfo = vk::ApplicationInfo(
   "MyApp",
@@ -170,7 +179,7 @@ auto physicalDevices = instance.enumeratePhysicalDevices();
 auto gpu = physicalDevices[0];
 ```
 
-> **Note** - Multi-GPU processing isn't supported yet on Vulkan (unless 1.1.x is already out when you read this) so this would be useful for choosing the fastest device to use.
+> **Note** - This is useful for choosing the fastest device to use, however you could use the upcoming `KHX_device_group` extension presented at [GDC 2017](https://www.khronos.org/assets/uploads/developers/library/2017-gdc/GDC_Vulkan-on-Desktop_Feb17.pdf) to help with multi-gpu processing.
 
 ## Logical Devices
 
@@ -181,9 +190,10 @@ You can then create a logical device from a physical device handle. A logical de
 A logical device is your interface to the GPU, and allows you to allocate data and queue up tasks.
 
 ```cpp
+// 🔍 Find the best GPU Extensions
+
 auto gpuExtensions = gpu.enumerateDeviceExtensionProperties();
 
-// Init Device Extension/Validation layers
 std::vector<const char*> wantedDeviceExtensions =
 {
   VK_KHR_SWAPCHAIN_EXTENSION_NAME,
@@ -200,6 +210,8 @@ for (auto &w : wantedDeviceExtensions) {
     }
   }
 }
+
+// 🔎 Find the best GPU Layer
 
 auto gpuLayers = gpu.enumerateDeviceLayerProperties();
 
@@ -219,6 +231,7 @@ for (auto &w : wantedLayers) {
   }
 }
 
+// 🔍 Find the queues on that GPU that support graphics
 
 auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
 auto gpuFeatures = gpu.getFeatures();
@@ -247,6 +260,8 @@ for (auto& queuefamily : gpuQueueProps)
 
 }
 
+// Create a device
+
 auto device = gpu.createDevice(
   vk::DeviceCreateInfo(
     vk::DeviceCreateFlags(),
@@ -263,6 +278,8 @@ auto device = gpu.createDevice(
 
 ## Queue
 
+![Queue](assets/queue.svg)
+
 Once you have a virtual device, you can access the queues you requested when you created it:
 
 ```cpp
@@ -273,11 +290,9 @@ auto graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
 
 ## Window Surface Interface
 
+![Window](assets/window.svg)
+
 Each OS has their own specific window generation system, so Vulkan uses layers and platform specific adapters to interface with them.
-
-You'll need to keep in mind things like window size, canvas size (supersampling), DPI and retina support, nested windows, window management and spawning multiple windows.
-
-Or, you could just rely on a library developed by LunarG to do just this.
 
 A **surface** is an adapter abstraction to describe an area that will render Vulkan to a window, it's the binding between Vulkan and your OS's windowing system.
 
@@ -285,6 +300,8 @@ For the sake of simplicity, we'll let **WSIWindow** serve as a cross platform wi
 
 ```cpp
 #include "WSIWindow.h"
+
+// 💻📱 Create an OS agnostic window class
 
 class MyWindow : public WSIWindow 
 {
@@ -324,7 +341,7 @@ Bear in mind, it's your responsibility to manage things like window size, canvas
 Knowing what Color formats your GPU supports will play a crucial role in determining what you can display and what kind of buffers you can allocate.
 
 ```cpp
-// Check to see if we can display rgb colors.
+// 🔴 Check to see if we can display rgb colors.
 auto surfaceFormats = gpu.getSurfaceFormatsKHR(surface);
 
 vk::Format surfaceColorFormat;
@@ -340,8 +357,7 @@ surfaceColorSpace = surfaceFormats[0].colorSpace;
 
 auto formatProperties = gpu.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
 
-// Since all depth formats may be optional, we need to find a suitable depth format to use
-// Start with the highest precision packed format
+// 🔵 Find a suitable depth format to use, starting with the best format
 std::vector<vk::Format> depthFormats = {
   vk::Format::eD32SfloatS8Uint,
   vk::Format::eD32Sfloat,
@@ -381,6 +397,7 @@ For defered rendering solutions, Vulkan makes render passes first class, letting
 - **Subpass Dependency** - an execution or memory dependency between different subpasses. This would be for example, the `sampler2D` that you would access in a post-processing system that is waterfalled down the chain of effects. This list also determines the order that subpasses are used.
 
 ```cpp
+// 📎 Create a list of what attachments will be in the output frame buffer
 std::vector<vk::AttachmentDescription> attachmentDescriptions =
 {
   vk::AttachmentDescription(
@@ -407,15 +424,18 @@ std::vector<vk::AttachmentDescription> attachmentDescriptions =
   )
 };
 
+// 🌈 Create a list of what attachments are color based
 std::vector<vk::AttachmentReference> colorReferences =
 {
   vk::AttachmentReference(0, vk::ImageLayout::eColorAttachmentOptimal)
 };
 
+// 🌑 Create a list of what attachments are depth based
 std::vector<vk::AttachmentReference> depthReferences = {
   vk::AttachmentReference(1, vk::ImageLayout::eDepthStencilAttachmentOptimal)
 };
 
+// 🔸 Create a subpass that targets the color references we listed above
 std::vector<vk::SubpassDescription> subpasses =
 {
   vk::SubpassDescription(
@@ -432,6 +452,7 @@ std::vector<vk::SubpassDescription> subpasses =
   )
 };
 
+// 🖇️ Create a list of what subpasses can use what other subpasses
 std::vector<vk::SubpassDependency> dependencies =
 {
   vk::SubpassDependency(
@@ -454,6 +475,7 @@ std::vector<vk::SubpassDependency> dependencies =
   )
 };
 
+// 🈴 Create a render pass with the attachments / subpasses we want.
 auto renderpass = device.createRenderPass(
   vk::RenderPassCreateInfo(
     vk::RenderPassCreateFlags(),
@@ -469,6 +491,8 @@ auto renderpass = device.createRenderPass(
 
 
 ## Swapchain
+
+![Swapchain Diagram](assets/swapchain.svg)
 
 A **Swapchain** is a structure that manages the allocation of frame buffers to be cycled through by your application. It's here that your application sets up V-Sync via double buffering or triple buffering.
 
@@ -543,6 +567,8 @@ They're use for example, in the creation of Frame Buffers, but can also be used 
 
 
 ## Frame Buffers
+
+![Swapchain Diagram](assets/framebuffers.svg)
 
 A frame buffer in Vulkan is a container of Image Views.
 
@@ -668,18 +694,20 @@ for (int i = 0; i < swapchainImages.size(); i++)
 
 ## Synchronization
 
-Vulkan was designed with conccurency in mind, so you're free to use Mutexes, and built in Vulkan Semaphores and Fences for GPU level Synchronization.
+![Semaphore](assets/semaphore.svg)
+
+Vulkan was designed with concurrency in mind, so you're free to use mutexes, and built in Vulkan Semaphores and Fences for GPU level Synchronization.
 
 Semaphores coordinate operations within the graphics queue and ensure correct command ordering.
 
 ```cpp
-// Semaphore used to ensures that image presentation is complete before starting to submit again
+// 🎌 Semaphore used to ensures that image presentation is complete before starting to submit again
 auto presentCompleteSemaphore = device.createSemaphore(vk::SemaphoreCreateInfo());
 
-// Semaphore used to ensures that all commands submitted have been finished before submitting the image to the queue
+// 🎌 Semaphore used to ensures that all commands submitted have been finished before submitting the image to the queue
 auto renderCompleteSemaphore = device.createSemaphore(vk::SemaphoreCreateInfo());
 
-// Fence for command buffer completion
+// 🚧 Fence for command buffer completion
 std::vector<vk::Fence> waitFences;
 waitFences.resize(swapchainBuffers.size());
 for (int i = 0; i < waitFences.size(); i++)
@@ -690,11 +718,15 @@ for (int i = 0; i < waitFences.size(); i++)
 
 ## Command Pool
 
+![Pool of Commands](assets/command-pool.svg)
+
 A **command pool** is a means of allocating command buffers. Any number of command buffers can be made from command pools, with you as the developer responsible for managing when and how they're created and what is loaded in each.
 
 A command pool cannot be used in multiple threads, but you can create one for each thread and manage them on a per thread level.
 
 ```cpp
+// 🏊 Create a command pool
+
 auto commandPoolInfo = vk::CommandPoolCreateInfo(
   vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),
   graphicsFamilyIndex
@@ -718,6 +750,8 @@ You should try to have the minimum number of command buffers possible in your ap
 We'll come back to the command buffers we made here later in our app.
 
 ## Descriptor Pool
+
+![Descriptor Pool](assets/descriptor-pool.svg)
 
 A descriptor pool is a means of allocating Descriptor Sets, a set of data structures containing implementation-specific descriptions of resources. to make a descriptor pool, you need to describe exactly how many of each type of descriptor you need to allocate.
 
@@ -755,7 +789,9 @@ The fundamental problem of graphics is how to manage large sets of data. A verte
 
 ## Descriptor Sets
 
-**Descriptor Sets** store the resources bound to the minding points in a shader. It connects the binding points of a shader with the buffers and images used for those bindings.
+![Descriptor Pool](assets/descriptor-sets.svg)
+
+**Descriptor Sets** store the resources bound to the binding points in a shader. It connects the binding points of a shader with the buffers and images used for those bindings.
 
 In React Fiber there's the idea of a frequently updated view and a not frequently updated view. Unreal Engine 4 shares this with two global uniform families for frequently (called variable parameters) and not frequently (constant parameters) updated uniforms. Descriptor Sets are where you would make this distinction in Vulkan.
 
@@ -799,6 +835,8 @@ Access to descriptor sets from a pipeline is accomplished through a pipeline lay
 
 ## Pipeline State Objects
 
+![Different Pipeline State Objects](assets/pipeline-state-objects.svg)
+
 Pipelines are basically a mix of hardware and software functions that do a particular task on the GPU, in Vulkan, there's 2 types:
 
 - Graphics Pipelines
@@ -806,7 +844,7 @@ Pipelines are basically a mix of hardware and software functions that do a parti
 
 ### Graphics Pipeline
 
-![RenderDoc Example](assets/renderdoc.gif)
+![RenderDoc Example](assets/graphics-pipeline.svg)
 
 - **Color Blending** - The function that controls how two objects draw on top of each other.
 
@@ -852,6 +890,7 @@ Vulkan's GLSL code is the same as OpenGL 4.5:
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
+// Uniforms now come in the form of input layouts
 layout (location = 0) in vec3 inPos;
 layout (location = 1) in vec3 inColor;
 
@@ -897,6 +936,8 @@ void main()
 Shaders are loaded into **Pipeline Layouts** which are then executed by a command buffer.
 
 ```cpp
+// 📈 Create your shader module handles
+
 auto vertModule = device.createShaderModule(
   vk::ShaderModuleCreateInfo(
     vk::ShaderModuleCreateFlags(),
@@ -915,6 +956,8 @@ auto fragModule = device.createShaderModule(
 ```
 
 ## Command Buffer
+
+![Windows Program Execution](assets/windows-exe.gif)
 
 A **command buffer** is a container of GPU commands, this is where you would see commands similar to OpenGL's state commands:
 
@@ -1069,6 +1112,8 @@ if (fpsTimer > 1000.0)
 
 ## Program Execution
 
+![Windows Program Execution](assets/windows-exe.gif)
+
 A Vulkan program executes as follows:
 
 1. **Load the Library** - Your application loads the Vulkan library provided by your graphics card driver. This can be handled by the *Vulkan SDK's Loading Layer*, or by using system specific calls like Win32's `LoadLibrary("C:/Windows/SysWOW64/vulkan-1-1-0-30-0.dll")`.
@@ -1110,3 +1155,7 @@ There can be a lot that goes into rendering a single frame, the following is fro
       |- 17) vkQueueSubmit(1)[0] vkBeginCommandBuffer(ID 172)
       |- 18) vkQueuePresentKHR()
 ```
+
+## Conclusion
+
+If you're interested in more, show your support by reposting/retweeting this blog post or sending me a message at [@Alainxyz](https://twitter.com/Alainxyz).

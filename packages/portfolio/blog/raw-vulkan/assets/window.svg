@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 720 400" style="enable-background:new 0 0 720 400;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#CB3D4F;}
+	.st1{display:none;}
+	.st2{display:inline;}
+	.st3{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st4{fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;}
+</style>
+<g id="Layer_3">
+	<g>
+		<rect x="40" y="20" class="st0" width="640" height="30.667"/>
+	</g>
+</g>
+<g id="Layer_2">
+	<g>
+		<path class="st0" d="M679,21v358H41V21H679 M680,20H40v360h640V20L680,20z"/>
+	</g>
+</g>
+<g id="Layer_4">
+	<g id="Layer_1" class="st1">
+		<g class="st2">
+			
+				<image style="overflow:visible;" width="1314" height="784" xlink:href="../../../../../../../../Pictures/window.png"  transform="matrix(1 0 0 1 -618 8)">
+			</image>
+		</g>
+	</g>
+	<line class="st3" x1="559.75" y1="35.333" x2="569.75" y2="35.333"/>
+	<rect x="605.5" y="30.25" class="st3" width="9" height="9"/>
+	<line class="st3" x1="651.5" y1="30.5" x2="660.5" y2="39.25"/>
+	<line class="st4" x1="660.5" y1="30.5" x2="651.5" y2="39.5"/>
+</g>
+</svg>

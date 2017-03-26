@@ -1,0 +1,15 @@
+{
+  "name": "javascript-at-2017",
+  "description": "An ES2017 WebGL2 Rendering Library",
+  "main": "index.md",
+  "keywords": [
+    "webgl",
+    "tutorial",
+    "github",
+    "ts",
+    "js"
+  ],
+  "schema": {
+
+  } 
+}
