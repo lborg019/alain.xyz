@@ -1,6 +1,8 @@
 Vulkan is a new low level Graphics API released February 2016 by the [Khronos Group](https://khronos.org) that maps directly to the design of modern GPUs. GPUs were originally simple ASICs, but since then they have become programmable computational units of their own with a focus on throughput over latency. Older APIs like OpenGL or DirectX were designed for hardware that's drastically changed since the early 90s when they were first released, so Vulkan was designed from scratch to match the way GPUs are engineered today.
 
-Currently Vulkan 1.0 supports the following operating Systems:
+![Supported Systems](assets/nintendo-switch.svg)
+
+Currently Vulkan 1.0.x supports the following platforms:
 
 - Windows
 - Linux
@@ -20,9 +22,15 @@ And languages such as:
 
 - [Python](https://github.com/bglgwyng/pyVulkan) - Through [**pyVulkan**](https://github.com/bglgwyng/pyVulkan), a Python FFI to the C implementation of Vulkan.
 
-I've prepared a [Github Repo](http://github.com/alaingalvan/raw-vulkan) with all the code we'll be going over; We're going to walk through writing the simplest Vulkan app possible, a program that creates a triangle, processes it with a shader, and displays it on a window.
+With Vulkan you'll be able to do:
 
-By the end of this post you should know every Vulkan construct needed to render a triangle, and will be able to use that knowledge to build rendering libraries, visualization demos, games and apps. 
+1. Realtime Rendering - 
+
+2. Machine Learning - Vulkan features a compute pipeline to make it easy to perform GPGPU intensive tasks like machine learning.
+
+I've prepared a [Github Repo](http://github.com/alaingalvan/raw-vulkan) with all the code we'll be going over; We're going to walk through writing the simplest Vulkan app possible, a program that *creates* a triangle, *processes* it with a shader, and *displays* it on a window.
+
+By the end of this post you should know every Vulkan construct needed to render a triangle, and will be able to use that knowledge to build libraries, demos, games, and apps. 
 
 ---
 
@@ -982,6 +990,7 @@ Different command buffer pools allow multiple threads performing generating comm
 
 ```cpp
 auto renderArea = vk::Rect2D(vk::Offset2D(), vk::Extent2D(width, height));
+
 std::vector<vk::ClearValue> clearValues =
 {
   vk::ClearColorValue(
