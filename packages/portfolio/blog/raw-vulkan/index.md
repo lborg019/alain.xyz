@@ -24,9 +24,13 @@ And languages such as:
 
 With Vulkan you'll be able to do:
 
-1. Realtime Rendering - 
+1. **Realtime Rendering** - Standard rendering used for 3D environments, UIs, web browsers, etc.
 
-2. Machine Learning - Vulkan features a compute pipeline to make it easy to perform GPGPU intensive tasks like machine learning.
+3. **GPGPU Computations** - That includes things like *machine learning*, *raytracing*, *physics*, etc.
+
+## Lecture 1 - Hello Triangle
+
+![Hello Triangle Screenshot](assets/hello-triangle.svg)
 
 I've prepared a [Github Repo](http://github.com/alaingalvan/raw-vulkan) with all the code we'll be going over; We're going to walk through writing the simplest Vulkan app possible, a program that *creates* a triangle, *processes* it with a shader, and *displays* it on a window.
 
@@ -56,11 +60,9 @@ Conan handles downloading/installing all your dependencies, for this app we're u
 
 - [Vulkan SDK](https://vulkan.lunarg.com/) - The official Vulkan SDK distributed by LunarG.
 
-- [Vulkan C++ API](https://github.com/KhronosGroup/Vulkan-Hpp) - C++ bindings that add compile time type safety and ease of use.
-
 - [WSIWindow](https://github.com/renelindsay/Vulkan-WSIWindow) - LunarG's cross platform Window creation library.
 
-- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows uses to write `glsl` like C++ code, with types for vectors, matrices, etc.
+- [GLM](http://glm.g-truc.net/0.9.8/index.html) - A C++ library that allows users to write `glsl` like C++ code, with types for vectors, matrices, etc.
 
 ## Overview
 
