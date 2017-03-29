@@ -39,6 +39,10 @@ Visit [The Node Foundation](https://nodejs.org) and download the *current* versi
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
 
+There's also TypeScript and Flow, tools that add additions to the JavaScript langauge that add static type checking.
+
+**Recomended** - Use a Type checker like [TypeScript](http://www.typescriptlang.org/) or [Flow](https://flow.org/) for your code.
+
 ### File Structure
 
 ```
@@ -208,6 +212,25 @@ use std::fs;
 pub fn myexport(code: &str) -> u32 {
     return 0;
 }
+```
+
+### Destructuring
+
+```js
+let arr = [1, 2, 3, 4, 5];
+
+// Grab 1, and [2, 3, 4, 5]
+let [first, ...rest] = arr;
+```
+
+C++ 17 recently added destructuring as a native language feature:
+
+```cpp
+
+```
+
+```rust
+
 ```
 
 ### Enums
@@ -399,3 +422,12 @@ import fs from 'fs';
 import path from 'path';
 ```
 
+## Conclusion & Further Reading
+
+Getting afull grasp of a programming language to the point where you're able to write anything takes time, however reading each language's manual will help tremendously.
+
+The [TypeScript Handbook](http://www.typescriptlang.org/docs/handbook/basic-types.html) gives a clear introduction to the newest JavaScript features as well as teaching best practices with the TypeScript toolset.
+
+[The C++ Programming Language](https://www.amazon.com/C-Programming-Language-4th/dp/0321563840) book by the author of the language, Bjorne Strustrup, is a great summary of the entire language.
+
+Rust features advanced variable binding patterns that come from functional programming, so be sure to review the [chapter on patterns](https://doc.rust-lang.org/book/patterns.html#bindings).
