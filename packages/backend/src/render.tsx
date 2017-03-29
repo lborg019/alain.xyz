@@ -82,7 +82,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
     return res.end();
 
   } else {
-
+    const schema = '';
     const componentRenderer = jsxRender(app);
     const responseRenderer = template`<!--
             ..\`
@@ -100,9 +100,10 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
-<html itemscope itemtype="http://schema.org/Article" lang="en-US">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
+  <!--Main-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>${meta.title}</title>
   <!--Search Engines-->
@@ -150,9 +151,10 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <meta name="msapplication-TileImage" content="assets/brand/icon/512.png">
   <meta name="msapplication-TileColor" content="#21252b">
   <meta name="msapplication-tap-highlight" content="no"/>
+  <!--Schema-->
+  <script type="application/ld+json">${schema}</script>
   <!--Styles-->
   <link rel="stylesheet" href="/assets/build/main.min.css"/>
-  <style type="text/css"></style>
 </head>
 
 <body>
@@ -172,20 +174,16 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <script type="text/javascript" src="/assets/build/vendor.min.js"></script>
   <!--Main-->
   <script type="text/javascript" src="/assets/build/main.min.js"></script>
-  <!--Structured Data-->
-  <script type="application/ld+json">${''}</script>
 </body>
 
 </html>
-`
+`;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     responseRenderer
       .toStream()
       .pipe(res);
 
   }
-
-
 }
 
 const META = {
@@ -196,5 +194,3 @@ const META = {
   keywords: ['alain', 'galvan', 'miami', 'florida', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
   authors: ['Alain Galvan']
 };
-
-const MAXITEMS = 10;
