@@ -31,13 +31,25 @@ let x = 4;    auto x = 4;    let x = 4;
 
 ## JavaScript
 
-*Brendon Eich* is known as a bit of an apologist because of this, nevertheless, thanks to no small effort on the part of the many people contributing to the evolution of the language, modern JavaScript is a pleasure to develop in.
+*Brendon Eich* is known as a bit of an apologist because of some bad decisions early on with the language, nevertheless, thanks to no small effort on the part of the many people contributing to the evolution of the language, modern JavaScript is a pleasure to develop in.
 
 ### Installation
 
-Visit [The Node Foundation](https://nodejs.org) and down load the *current* version of Node.
+Visit [The Node Foundation](https://nodejs.org) and download the *current* version of Node.
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
+
+### File Structure
+
+```
+├─ src/
+│  ├─ api/
+│  │  └─ index.js
+│  └─ main.js
+└─ package.json
+```
+
+### Execution
 
 ```bash
 # Installing Packages
@@ -52,6 +64,12 @@ node <javascript-file-name>
 C++ is a mature language that has a lot of heritage. Developed by *Bjarne Stroustrup* in Bell Labs as an extension to C, it became its own language once people coming from C began to see how much more maintainable their codebases were with class hierarchies and template metaprogramming.
 
 ### Installation
+
+#### Windows
+
+Download [Visual Studio 2017 Community Edition](https://www.visualstudio.com).
+
+#### Linux
 
 ```bash
 apt-get install gcc
@@ -83,109 +101,92 @@ curl https://sh.rustup.rs -sSf | sh
 
 From there you can easily find integrations with code editors like [VS Code](https://github.com/KalitaAlexey/vscode-rust) or [Atom](https://atom.io/packages/language-rust).
 
-## Modules
+### File Structure
 
 In Rust, any folder can be a module if it has a `Cargo.toml` file (which is basically an `.ini` file similar to NPM's `package.json`), and often you'll see a script to handle building the package as well.
 
 ```bash
 ├─ src/
-│   └─ ...
+│  ├─ api/
+│  │  └─ mod.rs # Same as index.js in commonjs
+│  └─ main.rs
 ├─ Cargo.toml
-└─ build.rs
+└─ build.rs     # (Optional) Same as build script in node
 ```
 
 ```yml
 [package]
-name = "vulcan-test"
-version = "0.1.4"
-authors = ["user6553591 <https://www.reddit.com/message/compose/?to=user6553591>"]
+name = "multitouch-fabric-visualizer"
+version = "0.1.0"
+authors = ["Alain Galvan <hi@alain.xyz>"]
 build = "build.rs"
 
 [dependencies]
-vulkano = "^0.3.1"
-vulkano-win = "^0.3.1"
-cgmath = "^0.12.0"
-image = "^0.10.4"
-winit = "^0.5.6"
-time = "^0.1.35"
-toml = "^0.2.1"
-obj-rs = "^0.4.16"
+serial = "0.3.4"
+cpal = "0.4.4"
+winit = "0.5.2"
+vulkano = "0.3.2"
+vulkano-win = "0.3.2"
 
 [build-dependencies]
-vk-sys = "^0.2.1"
-vulkano-shaders = "^0.3.1"
-
-[profile.release]
-lto = true
+vk-sys = "^0.2.2"
+vulkano-shaders = "0.3.2"
 ```
 
-```rust
-extern crate vulkano_shaders;
-
-fn main() {
-    // building the shaders used in the examples
-    vulkano_shaders::build_glsl_shaders([
-        ("assets/build/shaders/vs.glsl", vulkano_shaders::ShaderType::Vertex),
-        ("assets/build/shaders/fs.glsl", vulkano_shaders::ShaderType::Fragment),
-    ].iter().cloned());
-}
-```
-
-And you can run programs like a CLI similar to `npm` via cargo.
-
-## Compiling
-
-We live in a world where compiling to multiple platforms is *extremely important*. Rust supports Windows, Mac, Linux, iOS, Android, and Web, this section is designed to clear up how to compile to each of these platforms.
-
-### Rustup - The Rust Toolchain
-
-[Rustup](https://blog.rust-lang.org/2016/05/13/rustup.html) brings first class support for cross platform compilation to rust.
-
-| OS | Target Name |
-|:------:|:-----------:|
-| Windows | `x86_64-pc-windows-msvc` |
-| Mac | `x86_64-apple-darwin` |
-| Linux | `x86_64-unknown-linux-gnu` |
-| Android | `arm-linux-androideabi` |
-| iOS | `aarch64-apple-ios`     |
-| Arm Linux | `aarch64-unknown-linux-gnu` |
-
-For more details visit [Rust's platform support documentation](https://doc.rust-lang.org/stable/book/getting-started.html#platform-support).
-
-Simply add your target and then compile your target with `cargo`.
+### Execution
 
 ```bash
-rustup target add # Target Name
-cargo run --target= # Target Name
+#Installing packages requires you to edit your Cargo.toml file.
+
+# Check for errors 
+# Recomended: Use Rust Language Server
+# https://github.com/editor-rs/vscode-rust/blob/master/doc/rls_mode/main.md
+cargo check
+
+# Run program
+cargo run
+
+# Compile Executable
+cargo build
 ```
-
-#### Android
-
-For android there's already a CLI called [`cargo-apk`](https://github.com/tomaka/android-rs-glue) that helps automate creating an `.apk` for you. Just download the Android SDK and NDK, and install it as one of your `build-dependencies`.
 
 ## Semantics
 
 Lets compare Rust semantics with JS and C++:
 
-### Imports, Exports, Namespaces
+### Imports, Namespaces, Exports
 
 ```js
 // TypeScript
+
+// Import (Package `fs` is included with node)
 import fs from 'fs';
 
+// Namespace
+const { readFileSync } = fs;
+
+// Export
 export function myexport(code: string): number {
     return 0;
 }
 ```
 
+Until C++ Modules come along, the following is the standard way of modularizing code:
+
 ```cpp
 // C++
+
+// Import
 #include "ifstream"
 //Need the following imports for types
 #include "stdio.h"
 #include "string"
 
-uint32_t myexport(std::string code)
+// Namespace
+using namespace std;
+
+// any declaration is exported by default
+uint32_t myexport(string code)
 {
     return 0;
 }
@@ -193,9 +194,17 @@ uint32_t myexport(std::string code)
 
 ```rust
 // Rust
-use std::fs;
-mod file;
 
+// Import
+// External package from cargo
+extern crate winit;
+// Local module
+mod localmodule;
+
+// Namespace
+use std::fs;
+
+// Export
 pub fn myexport(code: &str) -> u32 {
     return 0;
 }
@@ -367,7 +376,7 @@ void lol(T what)
 }
 ```
 
-JavaScript always treats references as pointers similar to C++, unless you actually copy them with object spread. There's no such thing as advanced metaprogramming in JS, but you do have Generics in TypeScript and Flow.
+JavaScript always treats references as pointers similar to C++, unless you actually copy them with object spread (`{...obj}`). There's no such thing as templates in JS, but you do have Generics in TypeScript and Flow.
 
 ```js
 function lol<T>(T what) {
