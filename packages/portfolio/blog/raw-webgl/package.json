@@ -8,5 +8,20 @@
     "github",
     "ts",
     "js"
-  ]
+  ],
+  "foil": {
+    "references": {
+      "learningwebgl": {
+        "link": [{
+          "url": "http://learningwebgl.com/"
+        }]
+      },
+      "shaderific": {
+        "link": [{
+          "url": "http://www.shaderific.com/glsl/"
+        }]
+      }
+    }
+
+  }
 }

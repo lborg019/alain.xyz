@@ -1,15 +1,9 @@
 {
-  "name": "javascript-at-2017",
-  "description": "An ES2017 WebGL2 Rendering Library",
+  "name": "blog/javascript-at-2017",
+  "description": "What are the latest updates to ECMAScript and Node.js in 2017?",
   "main": "index.md",
-  "keywords": [
-    "webgl",
-    "tutorial",
-    "github",
-    "ts",
-    "js"
-  ],
-  "schema": {
+  "tags": ["blog", "javascript", "js", "ecmascript", "2017", "ecma", "node", "node.js"],
+  "foil": {
 
   } 
 }

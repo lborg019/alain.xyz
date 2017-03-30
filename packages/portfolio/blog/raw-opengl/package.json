@@ -1,0 +1,22 @@
+{
+  "name": "blog/raw-opengl",
+  "keywords": [
+    "blog",
+    "opengl"
+  ],
+  "foil": {
+    "references": {
+      "opendotgl": {
+        "title": "Open.GL",
+        "author": [{
+          "name": "Overvoorde, Alexander"
+        }],
+        "type": "website",
+        "year": "2015",
+        "link": [{
+          "url": "https://open.gl/"
+        }]
+      }
+    } 
+  }
+}

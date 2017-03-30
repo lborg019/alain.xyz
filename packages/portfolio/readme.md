@@ -57,7 +57,8 @@ If you want to add a new item to my portfolio (maybe publish a blog post), just 
   "main": "raw-vulkan.js",
   "author": "Alain Galvan",
   "license": "MIT",
-  "alainxyz": {
+  // 🌟 Foil Portfolio Engine
+  "foil": {
     "badges": [],
     "title": "Raw Vulkan",
     "permalink": "talks/raw-vulkan"
@@ -75,9 +76,8 @@ let {
   description,
   author,
   keywords: tags,
-  alainxyz: {
+  foil: {
     title,
-    permalink,
     publishDate
   }
 } = require(loc + '/package.json')

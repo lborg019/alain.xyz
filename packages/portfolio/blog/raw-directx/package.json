@@ -1,5 +1,8 @@
 {
-  "directxatgdc2016": {
+  "foil": {
+    "references": [
+      {
+    "id": "directxatgdc2016",
     "title": "DirectX 12 Advancements @GDC 2016",
     "author": [{
       "name": "McMullen, Max"
@@ -9,5 +12,8 @@
     "link": [{
       "url": "https://www.youtube.com/watch?v=dcDDvoauaz0&index=12&list=PL-ZzkbB7kcKjoE3-q_-6eL49XRqqcWZeJ"
     }]
+  }
+
+    ]
   }
 }
