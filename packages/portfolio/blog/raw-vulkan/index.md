@@ -573,9 +573,6 @@ auto depthImageView = device.createImageView(
 );
 ```
 
-They're use for example, in the creation of Frame Buffers, but can also be used in descriptor sets to denote a texture resource,
-
-
 ## Frame Buffers
 
 ![Swapchain Diagram](assets/framebuffers.svg)
@@ -801,9 +798,13 @@ The fundamental problem of graphics is how to manage large sets of data. A verte
 
 ![Descriptor Pool](assets/descriptor-sets.svg)
 
-**Descriptor Sets** store the resources bound to the binding points in a shader. It connects the binding points of a shader with the buffers and images used for those bindings.
+**Descriptor Sets** store the resources bound to the binding points in a shader (Basically Uniforms). They connect the binding points of a shader with the buffers and images used for those bindings.
 
 In React Fiber there's the idea of a frequently updated view and a not frequently updated view. Unreal Engine 4 shares this with two global uniform families for frequently (called variable parameters) and not frequently (constant parameters) updated uniforms. Descriptor Sets are where you would make this distinction in Vulkan.
+
+Descriptor sets are composed of **Descriptor Set Layouts**, which are then composed of **Descriptor Set Bindings**, the individual bindings a uniform struct has. 
+
+In Vulkan, Uniforms must be contiguous structs of data that are multiples of 128 bits (So SIMD vector sized blocks). 
 
 ```cpp
 // Binding 0: Uniform buffer (Vertex shader)
