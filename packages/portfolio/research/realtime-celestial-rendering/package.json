@@ -1,6 +1,6 @@
 {
   "main": "../main.ts",
-  "name": "realtime-celestial-rendering",
+  "name": "research/realtime-celestial-rendering",
   "author": "Alain Galvan",
   "description": "A method of rendering starry skies in real time that doubles as indirect lighting for physically based rendering.",
   "keywords": [

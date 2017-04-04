@@ -1,11 +1,9 @@
 /**
  * Portfolio Item Schema
- * Conforms to Schema.org Creative Work Open Schema
- * https://schema.org/CreativeWork
  */
 export type PortfolioItem = {
-  name: string,
-  author: string,
+  title: string,
+  authors: string[],
   description: string,
   keywords: string[],
   datePublished: Date,
@@ -26,14 +24,6 @@ export type PortfolioItem = {
   // App Data
   main: string,
   data: any
-}
-
-type Thing = {
-  name: string,
-  description: string,
-  image: string,
-  url: string,
-  keywords: string[]
 }
 
 /**
