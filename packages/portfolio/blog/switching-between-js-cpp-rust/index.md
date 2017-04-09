@@ -142,7 +142,7 @@ vulkano-shaders = "0.3.2"
 ```bash
 #Installing packages requires you to edit your Cargo.toml file.
 
-# Check for errors 
+# Check for errors
 # Recomended: Use Rust Language Server
 # https://github.com/editor-rs/vscode-rust/blob/master/doc/rls_mode/main.md
 cargo check
@@ -156,9 +156,9 @@ cargo build
 
 ## Semantics
 
-Lets compare Rust semantics with JS and C++:
-
 ### Imports, Namespaces, Exports
+
+With node, every JavaScript file is treated as an isolated module, and the `index.js` file of a given folder indicates the folder's root JavaScript file.
 
 ```js
 // TypeScript
@@ -169,13 +169,16 @@ import fs from 'fs';
 // Namespace
 const { readFileSync } = fs;
 
-// Export
+// Export 
 export function myexport(code: string): number {
     return 0;
 }
+
+// Export all from module
+export * from './localmodule';
 ```
 
-Until C++ Modules come along, the following is the standard way of modularizing code:
+Until C++ Modules come along, the following is the standard way of modularizing code. There's no strict path rules in C++.
 
 ```cpp
 // C++
@@ -196,22 +199,182 @@ uint32_t myexport(string code)
 }
 ```
 
+Modules in **Rust** follow the convention of having `mod.rs` indicate the root module of a given folder, and every submodule must be declared with the keyword `mod`.
+
 ```rust
 // Rust
-
 // Import
 // External package from cargo
 extern crate winit;
-// Local module
+
+// Local module (must be declared)
 mod localmodule;
 
 // Namespace
-use std::fs;
+use std::*;
 
 // Export
 pub fn myexport(code: &str) -> u32 {
     return 0;
 }
+
+// Export from local module
+pub use self::localmodule::*;
+```
+
+### Enums
+
+Enums don't exist in JavaScript, but are available in TypeScript:
+
+```ts
+// TypeScript
+export enum Enums {
+    One,
+    Two
+}
+```
+
+```cpp
+// C++
+enum Enums {
+    One,
+    Two
+}
+```
+
+```rust
+// Rust
+pub enum Enums {
+    One,
+    Two
+}
+```
+
+### Structs
+
+JavaScript doesn't have types, so no need to define structs. Types aren't limited to being just structs in TypeScript though.
+
+```ts
+// TypeScript / Flow
+type Structs = {
+  property: number;
+}
+```
+
+```cpp
+// C++
+struct Structs
+{
+    uint32_t property;
+}
+```
+
+```rust
+// Rust
+pub struct Structs {
+    property: u32
+}
+```
+
+### Classes
+
+```js
+// JavaScript
+class MyClass {
+
+    constructor() {
+        this.member = 0;
+    }
+
+    mutateMember() {
+        this.member += 1;
+    }
+}
+
+let o = new MyClass();
+```
+
+Normally in C++ you would declare your class in a header file, and write the implementation in a cpp file. Alternatively you can use just a header and write the implementation as inline statements.
+
+```cpp
+// C++
+class MyClass
+{
+
+    uint32_t member;
+
+    MyClass() : member(0)
+    {
+
+    }
+
+    void mutateMember() {
+        member += 1;
+    }
+
+};
+
+// Header Only
+
+inline 
+```
+
+```rust
+// Rust
+pub struct MyClass {
+    member: u32;
+}
+
+impl MyClass {
+     pub fn new() {
+
+     }
+
+     pub fn mutate_member(&self) {
+
+    }
+}
+```
+
+### Functions
+
+```js
+// JS
+function myFunction() {
+    return 0;
+}
+
+let lambda = () => null;
+```
+
+```cpp
+// C++
+uint32_t myFunction() {
+    return 0;
+}
+
+auto lambda = []()
+{
+    return null;
+};
+
+```
+
+The brackets  (`[]`) portion of a C++ lambda where identifiers are placed is two pipes `| |` in Rust:
+
+```rust
+// Rust
+fn my_function() -> u32 {
+    0;
+}
+
+fn ten_times<F>(f: F) where F: Fn(i32) {
+    for index in 0..10 {
+        f(index);
+    }
+}
+
+ten_times(|j| println!("hello, {}", j));
 ```
 
 ### Destructuring
@@ -233,89 +396,12 @@ C++ 17 recently added destructuring as a native language feature:
 
 ```
 
-### Enums
-
-Enums don't exist in JavaScript, but are available in TypeScript:
-
-```ts
-// TypeScript
-export enum Enums {
-    One,
-    Two
-}
-```
-
-```cpp
-enum Enums {
-    One,
-    Two
-}
-```
-
-```rust
-pub enum OomError {
-    One,
-    Two
-}
-```
-
-### Structs
-
-JavaScript doesn't have types, so no need to define structs. Types aren't limited to being just structs in TypeScript though.
+### Duck Typing
 
 ```ts
 // TypeScript / Flow
-type Structs = {
-  property: number;
-}
-```
-
-```cpp
-struct Structs 
-{
-    uint32_t property;
-}
-```
-
-```rust
-pub struct Structs {
-    property: u32
-}
-```
-
-### Functions
-
-```js
-// JS
-let lambda = () => null;
-```
-
-```cpp
-// C++
-auto lambda = []() 
-{
-    return null;
-};
-
-```
-
-The brackets  (`[]`) portion of a C++ lambda where identifiers are placed is two pipes `| |` in Rust:
-
-```rust
-fn ten_times<F>(f: F) where F: Fn(i32) {
-    for index in 0..10 {
-        f(index);
-    }
-}
-
-ten_times(|j| println!("hello, {}", j));
-```
-
-### Duck Typing
-
-```rust
-trait Renderable {
-    fn render(&self) -> void;
+type Renderable = {
+  render: () => void
 }
 ```
 
@@ -323,10 +409,9 @@ trait Renderable {
 // C++ Doesn't have Duck Typing :(
 ```
 
-```ts
-// TypeScript / Flow
-type Renderable = {
-  render: () => void
+```rust
+trait Renderable {
+    fn render(&self) -> void;
 }
 ```
 
@@ -411,10 +496,13 @@ function lol<T>(T what) {
 
 ```rust
 // Implementation
+use std::io;
+use std::path;
 ```
 
 ```cpp
 #include "ifstream"
+#include "path"
 ```
 
 ```js
@@ -424,7 +512,7 @@ import path from 'path';
 
 ## Conclusion & Further Reading
 
-Getting afull grasp of a programming language to the point where you're able to write anything takes time, however reading each language's manual will help tremendously.
+Getting a full grasp of a programming language to the point where you're able to write anything takes time, however reading each language's manual will help tremendously.
 
 The [TypeScript Handbook](http://www.typescriptlang.org/docs/handbook/basic-types.html) gives a clear introduction to the newest JavaScript features as well as teaching best practices with the TypeScript toolset.
 
