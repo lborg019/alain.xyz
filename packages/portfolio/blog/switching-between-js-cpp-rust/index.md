@@ -282,8 +282,8 @@ pub struct Structs {
 // JavaScript
 class MyClass {
 
-    constructor() {
-        this.member = 0;
+    constructor(member = 0) {
+        this.member = member;
     }
 
     mutateMember() {
@@ -301,9 +301,9 @@ Normally in C++ you would declare your class in a header file, and write the imp
 class MyClass
 {
 
-    uint32_t member;
+    uint32_t member = 0;
 
-    MyClass() : member(0)
+    MyClass(uint32 pMember) : member(pMember)
     {
 
     }
@@ -314,9 +314,6 @@ class MyClass
 
 };
 
-// Header Only
-
-inline 
 ```
 
 ```rust
@@ -326,12 +323,15 @@ pub struct MyClass {
 }
 
 impl MyClass {
-     pub fn new() {
 
-     }
+    pub fn new() -> MyClass {
+        MyClass {
+            member: 0
+        }
+    }
 
-     pub fn mutate_member(&self) {
-
+    pub fn mutate_member(mut &self) {
+        self.member += 1;
     }
 }
 ```
@@ -519,3 +519,22 @@ The [TypeScript Handbook](http://www.typescriptlang.org/docs/handbook/basic-type
 [The C++ Programming Language](https://www.amazon.com/C-Programming-Language-4th/dp/0321563840) book by the author of the language, Bjorne Strustrup, is a great summary of the entire language.
 
 Rust features advanced variable binding patterns that come from functional programming, so be sure to review the [chapter on patterns](https://doc.rust-lang.org/book/patterns.html#bindings).
+
+### Talks
+
+- [Rust 101 - E. Dunham, Linux Conf Australia 2017](https://www.youtube.com/watch?v=FMqydRampuo)
+
+### Podcasts
+
+- [New Rustacean](http://www.newrustacean.com/)
+
+### Books
+
+- [The Rust Programming Language](https://doc.rust-lang.org/book/)
+- [Rust Guidelines](https://aturon.github.io/README.html)
+- [Rust by Example](http://rustbyexample.com/)
+
+### Communities
+
+- [Rust Discord Group](https://discord.me/rust-lang)
+- [r/rust Subreddit](https://www.reddit.com/r/rust/)
