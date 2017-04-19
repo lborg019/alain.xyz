@@ -13,7 +13,7 @@ let x = 4;    auto x = 4;    let x = 4;
 
 - **ECMAScript 2017** (JS) now features shared memory and atomics.
 
-- **C++ 17** now features array destructuring, and `auto` became much more powerful.
+- **C++ 17** now features array destructuring, and upcoming features like modules will make the language even closer to higher order languages.
 
 - **Rust** now has a TypeScript-like [Language Server](https://github.com/rust-lang-nursery/rls), which is similar to Visual Studio's C++ Intelisense.
 
@@ -39,9 +39,9 @@ Visit [The Node Foundation](https://nodejs.org) and download the *current* versi
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
 
-There's also TypeScript and Flow, tools that add additions to the JavaScript langauge that add static type checking.
+There's also TypeScript and Flow, tools that add additions to the JavaScript language that add static type checking.
 
-**Recomended** - Use a Type checker like [TypeScript](http://www.typescriptlang.org/) or [Flow](https://flow.org/) for your code.
+> **Recomended** - Use a Type checker like [TypeScript](http://www.typescriptlang.org/) or [Flow](https://flow.org/) for your code.
 
 ### File Structure
 
@@ -316,6 +316,8 @@ class MyClass
 
 ```
 
+In Rust, there is on keyword `class`, instead you can create class-like constructs through implementation blocks (`impl`), which are sort of like `cpp` files. 
+
 ```rust
 // Rust
 pub struct MyClass {
@@ -393,7 +395,16 @@ C++ 17 recently added destructuring as a native language feature:
 ```
 
 ```rust
+struct Point {
+    x: i32,
+    y: i32,
+}
 
+let origin = Point { x: 0, y: 0 };
+
+match origin {
+    Point { x, y } => println!("({},{})", x, y),
+}
 ```
 
 ### Duck Typing

@@ -10,7 +10,6 @@ export type PortfolioItem = {
   dateModified: Date,
   permalink: string,
   image: string,
-  icon: string,
 
   // Analytics
   views: number,
