@@ -11,7 +11,7 @@ let x = 4;    auto x = 4;    let x = 4;
 
 #### Features
 
-- **ECMAScript 2017** (JS) now features shared memory and atomics.
+- **ECMAScript 2017** (JS) now features shared memory and atomics, and even things like threads are possible through *service workers*.
 
 - **C++ 17** now features array destructuring, and upcoming features like modules will make the language even closer to higher order languages.
 
@@ -39,9 +39,9 @@ Visit [The Node Foundation](https://nodejs.org) and download the *current* versi
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
 
-There's also TypeScript and Flow, tools that add additions to the JavaScript language that add static type checking.
+There's also TypeScript and Flow, tools that add static type checking to the JavaScript language.
 
-> **Recomended** - Use a Type checker like [TypeScript](http://www.typescriptlang.org/) or [Flow](https://flow.org/) for your code.
+> **Recommended** - Use a Type checker like [TypeScript](http://www.typescriptlang.org/) or [Flow](https://flow.org/) for your code.
 
 ### File Structure
 
@@ -69,14 +69,25 @@ C++ is a mature language that has a lot of heritage. Developed by *Bjarne Strous
 
 ### Installation
 
+No matter what platform you're developing on, you'll want to have the following tools:
+
+- [CMake](https://cmake.org) - The most popular package toolchain for C++, abstracts your project away from your IDE and makes compiling libraries easier.
+- [Conan](https://conan.io) - The most popular C++ package manager, makes dependency management in C++ much easier.
+
 #### Windows
 
 Download [Visual Studio 2017 Community Edition](https://www.visualstudio.com).
+
+#### OSX
+
+Download [XCode]().
 
 #### Linux
 
 ```bash
 apt-get install gcc
+# or
+apt-get install clang
 ```
 
 ## Rust
@@ -118,6 +129,8 @@ In Rust, any folder can be a module if it has a `Cargo.toml` file (which is basi
 └─ build.rs     # (Optional) Same as build script in node
 ```
 
+Here's a sample `Cargo.toml` file:
+
 ```yml
 [package]
 name = "multitouch-fabric-visualizer"
@@ -151,7 +164,7 @@ cargo check
 cargo run
 
 # Compile Executable
-cargo build
+cargo build # Use the --release flag for a production build
 ```
 
 ## Semantics
@@ -228,7 +241,7 @@ Enums don't exist in JavaScript, but are available in TypeScript:
 
 ```ts
 // TypeScript
-export enum Enums {
+enum Enums {
     One,
     Two
 }
@@ -244,7 +257,7 @@ enum Enums {
 
 ```rust
 // Rust
-pub enum Enums {
+enum Enums {
     One,
     Two
 }
@@ -257,7 +270,7 @@ JavaScript doesn't have types, so no need to define structs. Types aren't limite
 ```ts
 // TypeScript / Flow
 type Structs = {
-  property: number;
+  property: number
 }
 ```
 
@@ -271,7 +284,7 @@ struct Structs
 
 ```rust
 // Rust
-pub struct Structs {
+struct Structs {
     property: u32
 }
 ```
@@ -294,7 +307,7 @@ class MyClass {
 let o = new MyClass();
 ```
 
-Normally in C++ you would declare your class in a header file, and write the implementation in a cpp file. Alternatively you can use just a header and write the implementation as inline statements.
+Normally in C++ you would declare your class in a header `.h` or `.hpp` file, and write the implementation in a `.cpp` file. Alternatively you can use just a header and write the implementation as inline statements, or write the implementation in the class, but you'll need to juggle when you declare variables/functions.
 
 ```cpp
 // C++
@@ -316,7 +329,7 @@ class MyClass
 
 ```
 
-In Rust, there is on keyword `class`, instead you can create class-like constructs through implementation blocks (`impl`), which are sort of like `cpp` files. 
+In Rust, there is no keyword `class`, instead you can create class-like constructs through a struct to represent your state, and implementation blocks (`impl`), which are sort of like `cpp` files. 
 
 ```rust
 // Rust
@@ -340,6 +353,8 @@ impl MyClass {
 
 ### Functions
 
+JavaScript features 2 function types, the first being a `function` bound to the global scope unless specified otherwise, and the second being bound to the scope of where the function was declared, **Fat Arrow Functions**.
+
 ```js
 // JS
 function myFunction() {
@@ -348,6 +363,8 @@ function myFunction() {
 
 let lambda = () => null;
 ```
+
+In C++ lambdas are denoted with a scope capture `[...scopevars]`, followed by the standard parenthesis for arguments and curly brace for the body of the function.
 
 ```cpp
 // C++
@@ -362,7 +379,7 @@ auto lambda = []()
 
 ```
 
-The brackets  (`[]`) portion of a C++ lambda where identifiers are placed is two pipes `| |` in Rust:
+In Rust lambdas follows the signature `|...params| { body }`, with the curly braces around the body being optional.
 
 ```rust
 // Rust
@@ -382,29 +399,64 @@ ten_times(|j| println!("hello, {}", j));
 ### Destructuring
 
 ```js
+// Array Destructuring
 let arr = [1, 2, 3, 4, 5];
 
 // Grab 1, and [2, 3, 4, 5]
 let [first, ...rest] = arr;
+
+// Object Destructuring
+let obj = {
+    x: 1,
+    y: 2,
+    z: 3
+};
+
+// Grab variables from obj
+let {x, y, z} = obj;
 ```
 
 C++ 17 recently added destructuring as a native language feature:
 
 ```cpp
+std::vector<uint32_t> arr = { 1, 2, 3, 4, 5 };
 
+auto [first, ...rest] = arr;
+
+// Object Destructuring
+struct Obj {
+    uint32_t x;
+    uint32_t y;
+    uint32_t z;
+};
+
+auto obj = Obj {
+    1,
+    2,
+    3
+};
+
+auto { x, y, z } = obj;
 ```
 
+Rust has intuitive destructuring for Structs and arrays:
+
 ```rust
-struct Point {
-    x: i32,
-    y: i32,
+// Array Destructuring
+let arr = [0, 1, 2, 3, 4, 5];
+
+let [first, ...rest] = arr;
+
+// Object Destructuring
+struct Obj {
+    x: u32,
+    y: u32,
+    z: u32
 }
 
-let origin = Point { x: 0, y: 0 };
+let obj = Obj { x: 0, y: 0, y: 0 };
 
-match origin {
-    Point { x, y } => println!("({},{})", x, y),
-}
+let { x, y, z } = obj;
 ```
 
 ### Duck Typing
@@ -416,76 +468,58 @@ type Renderable = {
 }
 ```
 
+C++ Doesn't have Duck Typing, however interfaces are possible through casting.
+
 ```cpp
-// C++ Doesn't have Duck Typing :(
+
 ```
 
 ```rust
 trait Renderable {
-    fn render(&self) -> void;
+    fn render(&self) -> ();
 }
 ```
 
 ### Pointers
 
+Heap allocated data is normally addressed through pointers, though these can also be used to *reference* existing data. 
+
+JavaScript Objects are by default either data or mutable References, but the concept of pointers or a heap doesn't exist in the language.
+
 ```js
-// JavaScript Objects are by default Mutable References
 let five = { value: 5 };
 ```
+
+C++ pointers are unsafe addresses that may or may not be referencing existing data. Smart pointers help avoid the problem of not referencing data by only freeing memory when there's no more references to the data they're pointing to.
 
 ```cpp
 #include <memory>
 
 // Raw Pointers
+size_t* four;
 
 // Smart Pointers
-std::shared_ptr<Base> five;
+std::shared_ptr<uint32_t> five;
+
+std::unique_ptr<uint32_t> six;
 ```
+
+Rust pointers are smart by default through Rust's ownership system.
 
 ```rust
-// Rust pointers are smart by default
-
-// Unless specified otherwise
-
-// Alternatively there's Arcs
-use std::sync::Arc;
-use std::thread;
-
-let five = Arc::new(5);
+let five: Box<u32> = 5;
+let five_borrow = &five; // A is now borrowing five.
 ```
 
-### Templates
+### Templates/Generics
 
-By default everything in rust is copied unless you specify otherwise.
+There's no such thing as templates/generics in JS, but you do have Generics in TypeScript and Flow.
 
-```rust
-struct Val {
-    val: f64
-}
+```js
+function lol<T>(what: T) {
 
-struct GenVal<T>{
-    gen_val: T
-}
-
-// impl of Val
-impl Val {
-    fn value(&self) -> &f64 { &self.val }
-}
-
-// impl of GenVal for a generic type `T`
-impl <T> GenVal<T> {
-    fn value(&self) -> &T { &self.gen_val }
-}
-
-fn main() {
-    let x = Val { val: 3.0 };
-    let y = GenVal { gen_val: 3i32 };
-
-    println!("{}, {}", x.value(), y.value());
 }
 ```
-
-What's interesting here is that the `mut` keyword is similar to GLSL's `inout` keyword! In C++, you can use `const` to describe immutable structures, which is not the default.
 
 ```cpp
 template<typename T>
@@ -495,13 +529,13 @@ void lol(T what)
 }
 ```
 
-JavaScript always treats references as pointers similar to C++, unless you actually copy them with object spread (`{...obj}`). There's no such thing as templates in JS, but you do have Generics in TypeScript and Flow.
-
-```js
-function lol<T>(T what) {
+```rust
+fn lol<T>(what: T) {
 
 }
 ```
+
+
 
 ### Common Modules
 
@@ -525,9 +559,19 @@ import path from 'path';
 
 Getting a full grasp of a programming language to the point where you're able to write anything takes time, however reading each language's manual will help tremendously.
 
+### JavaScript
+
 The [TypeScript Handbook](http://www.typescriptlang.org/docs/handbook/basic-types.html) gives a clear introduction to the newest JavaScript features as well as teaching best practices with the TypeScript toolset.
 
+For more resources, check out my post on [developing javascript applications](https://alain.xyz/blog/designing-a-web-app).
+
+### C++
+
 [The C++ Programming Language](https://www.amazon.com/C-Programming-Language-4th/dp/0321563840) book by the author of the language, Bjorne Strustrup, is a great summary of the entire language.
+
+For more resources, check out my post on [designing C++ libraries.](https://alain.xyz/blog/designing-a-cpp-library).
+
+### Rust
 
 Rust features advanced variable binding patterns that come from functional programming, so be sure to review the [chapter on patterns](https://doc.rust-lang.org/book/patterns.html#bindings).
 

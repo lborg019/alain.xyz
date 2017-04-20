@@ -90,7 +90,7 @@ export default (req: Request, res: Response) => {
   // Design Query
   let query = {
     ...apiReq,
-    publishDate: { $lte: new Date() }
+    datePublished: { $lte: new Date() }
   };
 
   delete query.limit;
@@ -113,13 +113,13 @@ export default (req: Request, res: Response) => {
       tags: 1,
       data: 1,
       main: 1,
-      publishDate: 1,
-      lastUpdated: 1
+      datePublished: 1,
+      dateModified: 1
     }
 
     let data = c.find(query, projection)
       .sort({
-        publishDate: -1
+        datePublished: -1
       })
       .skip(apiReq.skip)
       .limit(apiReq.limit)
