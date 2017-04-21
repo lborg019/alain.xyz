@@ -2,10 +2,9 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as find from 'find';
 import markademic from 'markademic';
-import { yellow } from 'chalk';
+import { red, yellow } from 'chalk';
 import * as RSS from 'rss';
 import { database } from '../../../backend/src/db';
-import { askQuestion } from './question';
 import { getCover, makePermalink } from './misc';
 import { PortfolioItem } from '../../../backend/src/schema';
 let root = path.join(__dirname, '..', '..', 'blog');
@@ -52,57 +51,29 @@ async function checkIfModified(file: string): Promise<IModifiedFileStatus> {
   return { doesNotExist: false, isModified: (data[0].dateModified.getTime() !== mtime.getTime()), data: data[0] };
 }
 
-/**
- * Asks a set of questions based on a given file.
- */
-async function askQuestions(file: string) {
+async function readPackage(file: string) {
+  let packagePath = path.join(file, '..', 'package.json');
 
-  let permalink = '/blog' + makePermalink(file, root);
+  if (fs.existsSync(packagePath)) {
+    let packageData = require(packagePath);
 
-  let title = path.basename(permalink).replace(/-/g, ' ')
-    .toLowerCase()
-    .replace(/^.|\s\S/g, (a) => a.toUpperCase())
-    .replace(/(\sA\s)|(\sOf\s)|(\sFor\s)|(\sAnd\s)/g, (a) => a.toLowerCase());
+    packageData = {
+      ...packageData, 
+      ...packageData.foil, 
+      permalink: '/'+ packageData.name,
+      datePublished: new Date(packageData.foil.datePublished)
+    };
+    
+    delete packageData.foil;
+    delete packageData.name;
 
-  let questions = [
-    {
-      key: 'url',
-      default: permalink
-    },
-    {
-      key: 'name',
-      default: title
-    },
-    {
-      key: 'description',
-      default: ''
-    },
-    {
-      key: 'keywords',
-      default: 'blog',
-      cb: (ans) => ans.toLowerCase().split(' ')
-    },
-    {
-      key: 'datePublished',
-      default: new Date().toISOString(),
-      cb: ans => {
-        var d = new Date(ans);
-        if (d === undefined) throw new Error('Please enter a valid date!');
-        return d;
-      }
-    }
-  ];
+    console.log('Reading data from %s.\n', packagePath);
 
-  let answers: any = {};
-  // Populate the answers object.
-  for (var question of questions)
-    await askQuestion(question)
-      .then(answer => {
-        answers[question.key] = answer;
-      })
-      .catch(err => { console.error(err) });
-
-  return answers;
+    return packageData;
+  }
+  else {
+    throw new Error(red("There's no package.json coresponding to this .md file!"));
+  }
 }
 
 /**
@@ -129,8 +100,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
         //citations,
         rerouteLinks: (link) => path.join(answers.permalink, link)
       }),
-      mtime: fs.statSync(file).mtime,
-      lastUpdated: new Date(),
+      dateModified: fs.statSync(file).mtime,
       cover: getCover(file, answers.permalink),
       main: '/blog/main.js',
       file
@@ -186,7 +156,7 @@ async function buildBlog() {
     }
     if (status.doesNotExist) {
       console.log('Writing new post!')
-      await writeToDb(file, await askQuestions(file));
+      await writeToDb(file, await readPackage(file));
     }
 
   }

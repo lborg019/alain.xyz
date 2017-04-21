@@ -12,6 +12,7 @@
   "foil": {
     "title": "Raw WebGL",
     "main": "../main.tsx",
+    "datePublished": "2016-12-10T00:30:00.000Z",
     "references": {
       "learningwebgl": {
         "link": [

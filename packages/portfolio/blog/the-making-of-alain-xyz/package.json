@@ -11,7 +11,8 @@
   ],
   "main": "index.md",
   "foil": {
-    "title": "Raw Vulkan",
-    "main": "../main.tsx"
+    "title": "The Making of Alain.xyz",
+    "main": "../main.tsx",
+    "datePublished": "2016-08-04T00:30:00.000Z"
   }
 }

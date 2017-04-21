@@ -7,7 +7,7 @@ Accept-Charset: utf-8
 
 On git push
 On Blog Build
-If that blog post is due to be published (publishDate < new Date()), 
+If that blog post is due to be published (datePublished < new Date()), 
 and the key social: { medium doesn't exist}
 POST to api.medium.com/v1/users/alaingalvan/posts
 with auth header

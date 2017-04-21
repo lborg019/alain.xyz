@@ -18,7 +18,8 @@ export type APIResponse = {
   main: string,
   data: string,
   tags: string[],
-  publishDate: Date,
+  datePublished: Date,
+  dateModified: Date,
   meta?: {
     likes: number,
     views: number,
@@ -62,5 +63,4 @@ export const fetchSubapp = (req: APIRequest) =>
       .then(checkHttpStatus, fail)
       .then(parseJSON, fail)
       .then(res => dispatch(fetchedSubapp(req, res)), fail);
-    }
-  };
+    };

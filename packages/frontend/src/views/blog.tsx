@@ -7,12 +7,12 @@ import { fetchSubapp } from '../store/actions';
 import { mobileQuery } from '../store'
 import { timeSince } from '../utils';
 
-const BlogPost = ({ cover, title, description, permalink, publishDate, lastUpdated, tags, style = {} }) => {
+const BlogPost = ({ cover, title, description, permalink, datePublished, dateModified, tags, style = {} }) => {
 
-  let published = new Date(publishDate);
+  let published = new Date(datePublished);
   let publishedStr = published.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
 
-  let updated = new Date(lastUpdated);
+  let updated = new Date(dateModified);
   
   // Get Time elapsed string
   let updatedStr = timeSince(updated);
@@ -103,8 +103,6 @@ const styles = {
     height: 280,
     alignItems: 'flex-end',
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    //margin: '2%',
-    //borderRadius: '.5em'
+    backgroundPosition: 'center'
   }
 }

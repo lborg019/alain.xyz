@@ -78,7 +78,7 @@ let {
   keywords: tags,
   foil: {
     title,
-    publishDate
+    datePublished
   }
 } = require(loc + '/package.json')
 ```

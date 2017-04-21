@@ -53,9 +53,9 @@ export class Portfolio extends React.Component<Props, any> {
   }
 }
 
-const Post = ({ cover, title, description, permalink, publishDate, tags, style = {} }) => {
+const Post = ({ cover, title, description, permalink, datePublished, tags, style = {} }) => {
 
-  let date = new Date(publishDate);
+  let date = new Date(datePublished);
 
   return (
     <Link to={permalink} style={{ ...style, backgroundImage: `url('${cover}')` }}>

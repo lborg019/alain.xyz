@@ -73,7 +73,7 @@ export class Slideshow extends React.Component<any, any> {
               ...styles.link,
               ...responsive
             }}
-              to={permalink}
+              href={permalink}
               key={i}>
               <figure style={{
                 ...styles.figure,
@@ -105,21 +105,21 @@ const slideshow = [
     title: 'Coronal',
     description: 'An ES2017 WebGL2 Rendering Library',
     tags: ['library'],
-    permalink: '/libraries/coronal'
+    permalink: 'https://github.com/hyperfuse/coronal'
   },
   {
     cover: 'assets/brand/realtime-celestial-rendering.png',
     title: 'Celestial Rendering for 3D Navigation',
     description: 'Realtime Stary Skies for PBR Environments with Animated Radiance Maps',
     tags: ['research'],
-    permalink: '/research/celestial-rendering-for-3d-navigation'
+    permalink: 'https://github.com/OpenHID/realtime-celestial-rendering'
   },
   {
     cover: 'assets/brand/website-screenshot.jpg',
     title: 'The Making of Alain.xyz',
     description: 'Design overview of the decisions in making this website.',
     tags: ['blog'],
-    permalink: '/blog/the-making-of-alain-xyz'
+    permalink: 'https://alain.xyz/blog/the-making-of-alain-xyz'
   }
 ]
 

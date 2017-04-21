@@ -11,6 +11,7 @@
   "foil": {
     "title": "Raw Vulkan",
     "main": "../main.tsx",
+    "datePublished": "2016-09-05T00:30:00.000Z",
     "references": {
       "quilez2008-df": {
         "title": "Modeling with Distance Functions",
