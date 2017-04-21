@@ -90,7 +90,7 @@ export default (req: Request, res: Response) => {
   // Design Query
   let query = {
     ...apiReq,
-    //datePublished: { $lte: new Date() }
+    datePublished: { $lte: new Date() }
   };
 
   delete query.limit;
