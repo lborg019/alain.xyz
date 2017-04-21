@@ -112,19 +112,19 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
   <meta name="keywords" content="${meta.keywords.reduce((prev, cur, i) => prev + (i !== 0 ? ', ' : '') + cur, '')}"/>
   <link rel="canonical" itemprop="url" href="https://alain.xyz${meta.permalink}"/>
   <link rel="alternate" type="application/rss+xml" title="${meta.title}" href="https://alain.xyz/rss"/>
-  <meta itemprop="image" content="${meta.image}">
+  <meta itemprop="image" content="${meta.cover}">
   <!--Twitter-->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:site" content="@Alainxyz"/>
   <meta name="twitter:title" content="${meta.title}"/>
   <meta name="twitter:description" content="${meta.description}"/>
-  <meta name="twitter:image" content="https://alain.xyz${meta.image}"/>
+  <meta name="twitter:image" content="https://alain.xyz${meta.cover}"/>
   <!--Facebook-->
   <meta property="og:title" content="${meta.title}"/>
   <meta property="og:description" content="${meta.description}"/>
   <meta property="og:url" content="https://alain.xyz${meta.permalink}"/>
   <meta property="og:site_name" content="Alain.xyz"/>
-  <meta property="og:image" content="https://alain.xyz${meta.image}"/>
+  <meta property="og:image" content="https://alain.xyz${meta.cover}"/>
   <meta property="fb:app_id" content="1404536383143308"/>
   <!--Icons/Mobile-->
   <link rel="shortcut icon" href="/assets/brand/icon.ico"/>
@@ -188,7 +188,7 @@ const META = {
   permalink: '/',
   title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
   description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
-  image: '/assets/brand/website-screenshot.jpg',
+  cover: '/assets/brand/website-screenshot.jpg',
   keywords: ['alain', 'galvan', 'miami', 'florida', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
   authors: ['Alain Galvan']
 };
