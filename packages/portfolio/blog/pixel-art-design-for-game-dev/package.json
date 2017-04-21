@@ -14,5 +14,9 @@
     "nintendo",
     "gameboy",
     "design"
-  ]
+  ],
+  "foil": {
+    "title": "Pixel Art Design for Game Development",
+    "main": "../main.tsx"
+  }
 }

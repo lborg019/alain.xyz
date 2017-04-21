@@ -1,0 +1,19 @@
+{
+  "name": "blog/designing-a-web-app",
+  "description": "What does it take to develop modern web applications, what are the best practices and tools/languages you should use?",
+  "main": "index.md",
+  "tags": [
+    "blog",
+    "javascript",
+    "js",
+    "ecmascript",
+    "2017",
+    "ecma",
+    "node",
+    "node.js"
+  ],
+  "foil": {
+    "title": "Designing a Web Application",
+    "main": "../main.tsx"
+  }
+}

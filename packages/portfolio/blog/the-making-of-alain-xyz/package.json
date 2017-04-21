@@ -1,3 +1,17 @@
 {
-  "name": "blog/the-making-of-alain-xyz"
+  "name": "blog/the-making-of-alain-xyz",
+  "author": "Alain Galvan",
+  "description": "Thoughts and design decisions behind the making of Alain.xyz.",
+  "tags": [
+    "blog",
+    "alain",
+    "galvan",
+    "making",
+    "of"
+  ],
+  "main": "index.md",
+  "foil": {
+    "title": "Raw Vulkan",
+    "main": "../main.tsx"
+  }
 }

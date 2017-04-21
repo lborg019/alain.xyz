@@ -69,7 +69,7 @@ export class Slideshow extends React.Component<any, any> {
             }
 
           return (
-            <Link style={{
+            <a style={{
               ...styles.link,
               ...responsive
             }}
@@ -78,7 +78,7 @@ export class Slideshow extends React.Component<any, any> {
               <figure style={{
                 ...styles.figure,
                 backgroundImage: `linear-gradient(rgba(33,37,43,0), rgba(33,37,43,1)), url(${cover})`,
-                left: tabletQuery ? 0 : -350
+                left: tabletQuery ? 0 : -350,
                 height: tabletQuery ? ( i > 0 ? '192px' : '320px') : '100vh'
               }}>
                 <div style={{textAlign: 'center', padding: '1em'}}>
@@ -90,7 +90,7 @@ export class Slideshow extends React.Component<any, any> {
                   <p style={styles.p}>{description}</p>
                 </div>
               </figure>
-            </Link >
+            </a>
           );
 
         })}

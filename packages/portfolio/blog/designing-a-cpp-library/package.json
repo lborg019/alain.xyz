@@ -1,6 +1,6 @@
 {
-  "name": "blog/javascript-at-2017",
-  "description": "What are the latest updates to ECMAScript and Node.js in 2017?",
+  "name": "blog/designing-a-cpp-library",
+  "description": "What should you do to create an easy to consume C++ library?",
   "main": "index.md",
   "tags": [
     "blog",
@@ -13,7 +13,7 @@
     "node.js"
   ],
   "foil": {
-    "title": "JavaScript @ 2017",
+    "title": "Designing a C++ Library",
     "main": "../main.tsx"
   }
 }

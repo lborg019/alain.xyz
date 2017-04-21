@@ -1,3 +1,16 @@
 {
-  "name": "blog/unreal-engine-architecture"
+  "name": "blog/unreal-engine-architecture",
+  "author": "Alain Galvan",
+  "description": "A high level overview of Unreal Engine 4's Engine Architecture.",
+  "tags": [
+    "blog",
+    "unreal",
+    "engine",
+    "tutorial"
+  ],
+  "main": "index.md",
+  "foil": {
+    "title": "Unreal Engine Architecture",
+    "main": "../main.tsx"
+  }
 }

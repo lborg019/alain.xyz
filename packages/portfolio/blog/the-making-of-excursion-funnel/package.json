@@ -1,6 +1,16 @@
 {
   "name": "blog/the-making-of-excursion-funnel",
+  "author": "Alain Galvan",
+  "description": "The making of my Shadertoy Siggraph 2015 Entry 'Excursion Funnel'.",
+  "tags": [
+    "blog",
+    "shadertoy",
+    "raymarching"
+  ],
+  "main": "index.md",
   "foil": {
+    "title": "Raw Vulkan",
+    "main": "../main.tsx",
     "references": {
       "quilez2008-df": {
         "title": "Modeling with Distance Functions",

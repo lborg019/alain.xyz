@@ -1,19 +1,28 @@
 {
+  "name": "blog/raw-directx",
+  "description": "An overview of the DirectX 12 API and how to use it to build PC/Xbox games.",
+  "keywords": [
+    "blog",
+    "directx"
+  ],
   "foil": {
     "references": [
       {
-    "id": "directxatgdc2016",
-    "title": "DirectX 12 Advancements @GDC 2016",
-    "author": [{
-      "name": "McMullen, Max"
-    }],
-    "type": "video",
-    "year": "2016",
-    "link": [{
-      "url": "https://www.youtube.com/watch?v=dcDDvoauaz0&index=12&list=PL-ZzkbB7kcKjoE3-q_-6eL49XRqqcWZeJ"
-    }]
-  }
-
+        "id": "directxatgdc2016",
+        "title": "DirectX 12 Advancements @GDC 2016",
+        "author": [
+          {
+            "name": "McMullen, Max"
+          }
+        ],
+        "type": "video",
+        "year": "2016",
+        "link": [
+          {
+            "url": "https://www.youtube.com/watch?v=dcDDvoauaz0&index=12&list=PL-ZzkbB7kcKjoE3-q_-6eL49XRqqcWZeJ"
+          }
+        ]
+      }
     ]
   }
 }

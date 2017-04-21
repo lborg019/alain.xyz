@@ -10,18 +10,23 @@
     "js"
   ],
   "foil": {
+    "title": "Raw WebGL",
+    "main": "../main.tsx",
     "references": {
       "learningwebgl": {
-        "link": [{
-          "url": "http://learningwebgl.com/"
-        }]
+        "link": [
+          {
+            "url": "http://learningwebgl.com/"
+          }
+        ]
       },
       "shaderific": {
-        "link": [{
-          "url": "http://www.shaderific.com/glsl/"
-        }]
+        "link": [
+          {
+            "url": "http://www.shaderific.com/glsl/"
+          }
+        ]
       }
     }
-
   }
 }

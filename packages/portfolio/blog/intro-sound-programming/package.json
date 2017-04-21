@@ -2,8 +2,15 @@
   "name": "blog/intro-sound-programming",
   "description": "A tutorial on how to program your own synth with WebAudio.",
   "main": "index.md",
-  "tags": ["blog", "synth", "audio", "programming", "tutorial"],
+  "tags": [
+    "blog",
+    "synth",
+    "audio",
+    "programming",
+    "tutorial"
+  ],
   "foil": {
-
-  } 
+    "title": "Intro to Sound Programming",
+    "main": "../main.tsx"
+  }
 }

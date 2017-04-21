@@ -1,3 +1,20 @@
 {
-  "name": "blog/ue4-working-with-3rd-party-libraries"
+  "name": "blog/ue4-working-with-3rd-party-libraries",
+  "author": "Alain Galvan",
+  "description": "A tutorial on how to use 3rd party libraries in Unreal Engine 4.",
+  "tags": [
+    "blog",
+    "unreal",
+    "engine",
+    "4",
+    "c++",
+    "boost",
+    "lib",
+    "tutorial"
+  ],
+  "main": "index.md",
+  "foil": {
+    "title": "Unreal Engine 4 - Working with 3rd Party Libraries",
+    "main": "../main.tsx"
+  }
 }
