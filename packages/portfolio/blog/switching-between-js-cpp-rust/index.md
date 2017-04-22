@@ -17,19 +17,25 @@ let x = 4;    auto x = 4;    let x = 4;
 
 - **Rust** now has a TypeScript-like [Language Server](https://github.com/rust-lang-nursery/rls), which is similar to Visual Studio's C++ Intelisense.
 
+Performance across each language is also getting closer:
+
+1. JavaScript's WebAssembly proposal is bringing with it a huge boost in performance, and regular JavaScript is among the fastest untyped languages out there. (Ruby, Python, etc.)
+
+2. C++ through it's long history of focusing on performance, has always been extremely fast. 
+
+3. Rust is fast, at times even better than C/C++ in performance, according to [The Computer Language Benchmarks Game K-Nucleotide benchmark](http://benchmarksgame.alioth.debian.org/u64q/knucleotide.html).
+
 ### Table of Contents
 
 1. **Installation** - Get off the ground and programming immediately.
 
-2. **Semantics** - An overview of the semantics of Rust in comparison to C++.
+2. **Modules** - Creating and installing modules, and how to structure your modules/applications.
 
-3. **Modules** - Creating and installing modules.
-
-4. **Cross Platform Compilation** - Targeting Windows, Mac, Linux, Android, iOS, Web, etc.
-
-5. **Foreign Function Interfaces** - Methods of inlining and interfacing with other languages.
+3. **Semantics** - An overview of the semantics of each language.
 
 ## JavaScript
+
+![C++ Logo](assets/js-logo.svg)
 
 *Brendon Eich* is known as a bit of an apologist because of some bad decisions early on with the language, nevertheless, thanks to no small effort on the part of the many people contributing to the evolution of the language, modern JavaScript is a pleasure to develop in.
 
@@ -65,6 +71,8 @@ node <javascript-file-name>
 
 ## C++
 
+![C++ Logo](assets/cpp-logo.svg)
+
 C++ is a mature language that has a lot of heritage. Developed by *Bjarne Stroustrup* in Bell Labs as an extension to C, it became its own language once people coming from C began to see how much more maintainable their codebases were with class hierarchies and template metaprogramming.
 
 ### Installation
@@ -78,10 +86,6 @@ No matter what platform you're developing on, you'll want to have the following 
 
 Download [Visual Studio 2017 Community Edition](https://www.visualstudio.com).
 
-#### OSX
-
-Download [XCode]().
-
 #### Linux
 
 ```bash
@@ -90,7 +94,13 @@ apt-get install gcc
 apt-get install clang
 ```
 
+#### OSX
+
+Download [XCode](https://developer.apple.com/download/).
+
 ## Rust
+
+![Rust Logo](assets/rust-logo.svg)
 
 Rust has become pretty popular, with exciting research projects ranging from using it to build web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
 
@@ -364,7 +374,7 @@ function myFunction() {
 let lambda = () => null;
 ```
 
-In C++ lambdas are denoted with a scope capture `[...scopevars]`, followed by the standard parenthesis for arguments and curly brace for the body of the function.
+In C++ lambdas are denoted with a scope capture `[...scopevars]`, followed by the standard parenthesis for arguments and curly brace for the body of the function `() { }`.
 
 ```cpp
 // C++
@@ -423,20 +433,7 @@ std::vector<uint32_t> arr = { 1, 2, 3, 4, 5 };
 
 auto [first, ...rest] = arr;
 
-// Object Destructuring
-struct Obj {
-    uint32_t x;
-    uint32_t y;
-    uint32_t z;
-};
-
-auto obj = Obj {
-    1,
-    2,
-    3
-};
-
-auto { x, y, z } = obj;
+// Object Destructuring isn't possible
 ```
 
 Rust has intuitive destructuring for Structs and arrays:
