@@ -11,7 +11,7 @@ import * as buildScripts from './tasks';
 
   // Start Build Process
   console.log(
-    cyan('🔳 Alain.xyz Builder v0.4.0')
+    cyan('🔳 Alain.xyz Builder v0.5.0')
   )
 
   // Run each task

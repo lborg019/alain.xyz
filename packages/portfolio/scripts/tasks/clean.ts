@@ -1,6 +1,7 @@
 import * as fs from 'fs';
-import { database } from '../../../backend/src/db';
 import { Collection } from 'mongodb';
+import { database } from '../../../backend/src/db';
+
 /**
  * Run through every indexed file and portfolio item to see if it still exists. 
  */

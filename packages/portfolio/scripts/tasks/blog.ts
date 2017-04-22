@@ -4,17 +4,18 @@ import * as find from 'find';
 import markademic from 'markademic';
 import { red, yellow } from 'chalk';
 import * as RSS from 'rss';
+
 import { database } from '../../../backend/src/db';
 import { getCover, makePermalink } from './misc';
 import { PortfolioItem } from '../../../backend/src/schema';
+
 let root = path.join(__dirname, '..', '..', 'blog');
 
 type IPortfolioItem = {
   title: string,
   permalink: string,
   description: string,
-  tags: string[],
-  data: any
+  tags: string[]
 }
 
 type IModifiedFileStatus = {
@@ -27,8 +28,11 @@ type IModifiedFileStatus = {
  * Check if a given file is in the database and the current file is modified.
  */
 async function checkIfModified(file: string): Promise<IModifiedFileStatus> {
+
   var data = await new Promise<any[]>((res, rej) => {
+
     database.then(db => {
+
       var c = db.collection('portfolio');
 
       // Check if the default permalink is in the database.
@@ -43,29 +47,49 @@ async function checkIfModified(file: string): Promise<IModifiedFileStatus> {
     });
   });
 
-  var mtime = fs.statSync(file).mtime;
+  var { mtime } = fs.statSync(file);
 
   if (data.length < 1)
-    return { doesNotExist: true, isModified: false };
+    return {
+      doesNotExist: true,
+      isModified: false
+    };
 
-  return { doesNotExist: false, isModified: (data[0].dateModified.getTime() !== mtime.getTime()), data: data[0] };
+  return {
+    doesNotExist: false,
+    isModified: (data[0].dateModified.getTime() !== mtime.getTime()),
+    data: data[0]
+  };
 }
 
+/**
+ * Read the package.json file next to the markdown file
+ */
 async function readPackage(file: string) {
+
   let packagePath = path.join(file, '..', 'package.json');
 
   if (fs.existsSync(packagePath)) {
-    let packageData = require(packagePath);
 
-    packageData = {
-      ...packageData, 
-      ...packageData.foil, 
-      permalink: '/'+ packageData.name,
-      datePublished: new Date(packageData.foil.datePublished)
+    let {
+      name,
+      description,
+      author,
+      tags,
+      foil: {
+        title,
+        datePublished,
+      }
+    } = require(packagePath);
+
+    let packageData = {
+      title,
+      description,
+      authors: [author],
+      tags,
+      permalink: '/'+ name,
+      datePublished: new Date(datePublished)
     };
-    
-    delete packageData.foil;
-    delete packageData.name;
 
     console.log('Reading data from %s.\n', packagePath);
 
@@ -84,13 +108,6 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
 
     var portfolioCollection = db.collection('portfolio');
     var redirectCollection = db.collection('redirect');
-
-    // Find a references.json file next to file
-    let citationsPath = path.join(file, '..', 'references.json');
-    let citations;
-
-    if (fs.existsSync(citationsPath))
-      citations = JSON.parse(fs.readFileSync(citationsPath).toString());
 
     // Place all answers in object.
     let entry = {
@@ -111,7 +128,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     let lastPath = path.dirname(file);
 
     var staticFiles = find.fileSync(lastPath)
-      .filter((f) => !(f.endsWith('md') || f.endsWith('json')));
+      .filter(f => !(f.endsWith('md') || f.endsWith('json')));
 
     for (var sf of staticFiles) {
       var filePermalink = path.join(entry.permalink, path.relative(lastPath, sf)).replace(/\\/g, '/');
@@ -123,7 +140,7 @@ async function writeToDb(file: string, answers: IPortfolioItem) {
     }
 
     await portfolioCollection.update({ file }, entry, { upsert: true })
-      .then(r => console.log(`Added ${answers.title} to the Database`))
+      .then(r => console.log(`Added ${answers.title} to the Database.`))
       .catch(e => console.log(e));
   });
 }
@@ -142,8 +159,8 @@ async function generateXML(tag) {
  * while writing static files to 'redirect' collection
  * Finally index neseted elements in 'indexes' collection.
  */
-async function buildBlog() {
-  console.log('📔 ' + yellow('Alain.xyz Blog Builder\n'))
+async function buildPackage() {
+  console.log('📔 ' + yellow('Alain.xyz Package Builder\n'))
   let files = find.fileSync(/\.md$/, root);
 
   for (var file of files) {
@@ -165,4 +182,4 @@ async function buildBlog() {
 }
 
 
-export { buildBlog };
+export { buildPackage };
