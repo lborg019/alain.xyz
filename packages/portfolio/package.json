@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "A Repo pointing to the different items in the alain.xyz portfolio.",
   "scripts": {
+    "start": "npm run build",
     "build": "ts-node -F -D scripts/build"
   },
   "repository": {

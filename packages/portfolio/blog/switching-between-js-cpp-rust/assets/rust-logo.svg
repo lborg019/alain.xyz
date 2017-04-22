@@ -5,16 +5,15 @@
 <style type="text/css">
 	.st0{fill:url(#SVGID_1_);}
 </style>
-<radialGradient id="SVGID_1_" cx="318.9" cy="163.0875" r="143.8813" gradientTransform="matrix(1 0 0 -1 0 322)" gradientUnits="userSpaceOnUse">
-	<stop  offset="0.6564" style="stop-color:#000000"/>
-	<stop  offset="0.7285" style="stop-color:#030200"/>
-	<stop  offset="0.7817" style="stop-color:#0C0600"/>
-	<stop  offset="0.8288" style="stop-color:#1C0F00"/>
-	<stop  offset="0.8724" style="stop-color:#331A00"/>
-	<stop  offset="0.9136" style="stop-color:#502900"/>
-	<stop  offset="0.953" style="stop-color:#743B00"/>
-	<stop  offset="0.9902" style="stop-color:#9E5100"/>
-	<stop  offset="1" style="stop-color:#AA5700"/>
+<radialGradient id="SVGID_1_" cx="318.9" cy="556.9125" r="143.8813" gradientTransform="matrix(1 0 0 1 0 -398)" gradientUnits="userSpaceOnUse">
+	<stop  offset="0.6564" style="stop-color:#212222"/>
+	<stop  offset="0.7389" style="stop-color:#242321"/>
+	<stop  offset="0.7987" style="stop-color:#2D271F"/>
+	<stop  offset="0.8514" style="stop-color:#3D2D1A"/>
+	<stop  offset="0.8998" style="stop-color:#533514"/>
+	<stop  offset="0.9455" style="stop-color:#70400C"/>
+	<stop  offset="0.9885" style="stop-color:#934D03"/>
+	<stop  offset="1" style="stop-color:#9E5100"/>
 </radialGradient>
 <path class="st0" d="M310,48.9c0-4.7,3.8-8.6,8.6-8.6c4.7,0,8.6,3.8,8.6,8.6s-3.8,8.6-8.6,8.6S310,53.7,310,48.9 M207.9,126.4
 	c0-4.7,3.8-8.6,8.6-8.6c4.7,0,8.6,3.8,8.6,8.6c0,4.7-3.8,8.6-8.6,8.6S207.9,131.2,207.9,126.4 M412.1,126.8c0-4.7,3.8-8.6,8.6-8.6
