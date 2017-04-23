@@ -61,20 +61,27 @@ async function buildPackage() {
 
       for (let file of fileList) {
 
-        let foilModule = {
-          permalink,
-          description,
-          author,
-          tags
-        };
+        // resolve file directory
+        let fd = path.resolve(path.join(pack, '..'), file);
 
-        var status = await checkIfModified(f);
+        // check if that's not a folder
+        if (!fs.statSync(fd).isDirectory()) {
 
-        // If the file is modified or doesn't exist, try compiling it
-        // Then add it to the portfolio database.
-        if (status.isModified || status.doesNotExist) {
-          let compiledModule = await compile(foilModule);
-          await writeToDb(compiledModule);
+          let foilModule = {
+            permalink,
+            description,
+            author,
+            tags
+          };
+
+          var status = await checkIfModified(file);
+
+          // If the file is modified or doesn't exist, try compiling it
+          // Then add it to the portfolio database.
+          if (status.isModified || status.doesNotExist) {
+            let compiledModule = await compile(foilModule);
+            await writeToDb(compiledModule);
+          }
         }
       }
     }
@@ -82,6 +89,44 @@ async function buildPackage() {
 
   return;
 }
+
+/**
+ * Check if a given file is in the database and the current file is modified.
+ */
+async function checkIfModified(file: string): Promise<IModifiedFileStatus> {
+
+  var data = await new Promise<any[]>((res, rej) => {
+
+    database.then(db => {
+      var c = db.collection('portfolio');
+
+      // Check if the default permalink is in the database.
+      c.find({ file: file })
+        .toArray()
+        .then((d) =>
+          res(d)
+        )
+        .catch((e) =>
+          rej(e)
+        );
+    });
+  });
+
+  var { mtime } = fs.statSync(file);
+
+  if (data.length < 1)
+    return {
+      doesNotExist: true,
+      isModified: false
+    };
+
+  return {
+    doesNotExist: false,
+    isModified: (data[0].dateModified.getTime() !== mtime.getTime()),
+    data: data[0]
+  };
+}
+
 
 
 export { buildPackage };
