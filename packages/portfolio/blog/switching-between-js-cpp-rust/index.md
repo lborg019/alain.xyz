@@ -489,45 +489,6 @@ trait Renderable {
 }
 ```
 
-<!--### Pointers
-
-Heap allocated data is normally addressed through pointers, though these can also be used to *reference* existing data. 
-
-JavaScript Objects are by default either data or mutable References, but the concept of pointers or a heap doesn't exist in the language.
-
-```js
-// 💛 JS
-let five = { value: 5 };
-
-// refFive holds a reference to value.
-let refFive = five.value;
-```
-
-C++ pointers are unsafe addresses that may or may not be referencing existing data. Smart pointers help avoid the problem of not referencing data by only freeing memory when there's no more references to the data they're pointing to.
-
-```cpp
-// 💙 C++
-
-#include <memory>
-
-// Raw Pointers
-uint32_t* four;
-
-// Smart Pointers
-std::shared_ptr<uint32_t> five = std::make_shared(5);
-
-std::unique_ptr<uint32_t> six = std::make_unique(6);
-```
-
-Rust pointers are smart by default through Rust's ownership system.
-
-```rust
-// 💖 Rust
-let five: Box<u32> = 5;
-let five_borrow = &five; // A is now borrowing five.
-```
--->
-
 ### Templates/Generics
 
 There's no such thing as templates/generics in JS, but you do have Generics in TypeScript and Flow.
