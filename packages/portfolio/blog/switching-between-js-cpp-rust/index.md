@@ -184,7 +184,7 @@ cargo build # Use the --release flag for a production build
 With node, every JavaScript file is treated as an isolated module, and the `index.js` file of a given folder indicates the folder's root JavaScript file.
 
 ```js
-// TypeScript
+// 💛 TypeScript
 
 // Import (Package `fs` is included with node)
 import fs from 'fs';
@@ -204,7 +204,7 @@ export * from './localmodule';
 Until C++ Modules come along, the following is the standard way of modularizing code. There's no strict path rules in C++.
 
 ```cpp
-// C++
+// 💙 C++
 
 // Import
 #include "ifstream"
@@ -225,7 +225,7 @@ uint32_t myexport(string code)
 Modules in **Rust** follow the convention of having `mod.rs` indicate the root module of a given folder, and every submodule must be declared with the keyword `mod`.
 
 ```rust
-// Rust
+// 💖 Rust
 // Import
 // External package from cargo
 extern crate winit;
@@ -250,7 +250,7 @@ pub use self::localmodule::*;
 Enums don't exist in JavaScript, but are available in TypeScript:
 
 ```ts
-// TypeScript
+// 💛 TypeScript
 enum Enums {
     One,
     Two
@@ -258,7 +258,7 @@ enum Enums {
 ```
 
 ```cpp
-// C++
+// 💙 C++
 enum Enums {
     One,
     Two
@@ -266,7 +266,7 @@ enum Enums {
 ```
 
 ```rust
-// Rust
+// 💖 Rust
 enum Enums {
     One,
     Two
@@ -278,14 +278,14 @@ enum Enums {
 JavaScript doesn't have types, so no need to define structs. Types aren't limited to being just structs in TypeScript though.
 
 ```ts
-// TypeScript / Flow
+// 💛 TypeScript / Flow
 type Structs = {
   property: number
 }
 ```
 
 ```cpp
-// C++
+// 💙 C++
 struct Structs
 {
     uint32_t property;
@@ -293,7 +293,7 @@ struct Structs
 ```
 
 ```rust
-// Rust
+// 💖 Rust
 struct Structs {
     property: u32
 }
@@ -302,7 +302,7 @@ struct Structs {
 ### Classes
 
 ```js
-// JavaScript
+// 💛 JavaScript
 class MyClass {
 
     constructor(member = 0) {
@@ -320,7 +320,7 @@ let o = new MyClass();
 Normally in C++ you would declare your class in a header `.h` or `.hpp` file, and write the implementation in a `.cpp` file. Alternatively you can use just a header and write the implementation as inline statements, or write the implementation in the class, but you'll need to juggle when you declare variables/functions.
 
 ```cpp
-// C++
+// 💙 C++
 class MyClass
 {
 
@@ -342,7 +342,7 @@ class MyClass
 In Rust, there is no keyword `class`, instead you can create class-like constructs through a struct to represent your state, and implementation blocks (`impl`), which are sort of like `cpp` files. 
 
 ```rust
-// Rust
+// 💖 Rust
 pub struct MyClass {
     member: u32;
 }
@@ -366,7 +366,7 @@ impl MyClass {
 JavaScript features 2 function types, the first being a `function` bound to the global scope unless specified otherwise, and the second being bound to the scope of where the function was declared, **Fat Arrow Functions**.
 
 ```js
-// JS
+// 💛 JS
 function myFunction() {
     return 0;
 }
@@ -377,7 +377,7 @@ let lambda = () => null;
 In C++ lambdas are denoted with a scope capture `[...scopevars]`, followed by the standard parenthesis for arguments and curly brace for the body of the function `() { }`.
 
 ```cpp
-// C++
+// 💙 C++
 uint32_t myFunction() {
     return 0;
 }
@@ -392,7 +392,7 @@ auto lambda = []()
 In Rust lambdas follows the signature `|...params| { body }`, with the curly braces around the body being optional.
 
 ```rust
-// Rust
+// 💖 Rust
 fn my_function() -> u32 {
     0;
 }
@@ -409,7 +409,7 @@ ten_times(|j| println!("hello, {}", j));
 ### Destructuring
 
 ```js
-// JavaScript
+// 💛 JS
 
 // Array Destructuring
 let arr = [1, 2, 3, 4, 5];
@@ -431,7 +431,7 @@ let {x, y, z} = obj;
 C++ 17 recently added destructuring as a native language feature:
 
 ```cpp
-// C++
+// 💙 C++
 
 std::vector<uint32_t> arr = { 1, 2, 3, 4, 5 };
 
@@ -444,7 +444,7 @@ auto [first, second, third] = arr;
 Rust has intuitive destructuring for Structs and arrays:
 
 ```rust
-//Rust
+// 💖 Rust
 
 // Array Destructuring
 let arr = [0, 1, 2, 3, 4, 5];
@@ -466,7 +466,7 @@ let { x, y, z } = obj;
 ### Duck Typing
 
 ```ts
-// TypeScript / Flow
+// 💛 TypeScript / Flow
 type Renderable = {
   render: () => void
 }
@@ -475,7 +475,7 @@ type Renderable = {
 C++ Doesn't have Duck Typing, however interfaces are possible through classical inheritance.
 
 ```cpp
-// C++
+// 💙 C++
 class Renderable {
 public:
    virtual void render();
@@ -483,6 +483,7 @@ public:
 ```
 
 ```rust
+// 💖 Rust
 trait Renderable {
     pub fn render(&self) -> ();
 }
@@ -495,7 +496,7 @@ Heap allocated data is normally addressed through pointers, though these can als
 JavaScript Objects are by default either data or mutable References, but the concept of pointers or a heap doesn't exist in the language.
 
 ```js
-// JavaScript
+// 💛 JS
 let five = { value: 5 };
 
 // refFive holds a reference to value.
@@ -505,6 +506,8 @@ let refFive = five.value;
 C++ pointers are unsafe addresses that may or may not be referencing existing data. Smart pointers help avoid the problem of not referencing data by only freeing memory when there's no more references to the data they're pointing to.
 
 ```cpp
+// 💙 C++
+
 #include <memory>
 
 // Raw Pointers
@@ -519,6 +522,7 @@ std::unique_ptr<uint32_t> six = std::make_unique(6);
 Rust pointers are smart by default through Rust's ownership system.
 
 ```rust
+// 💖 Rust
 let five: Box<u32> = 5;
 let five_borrow = &five; // A is now borrowing five.-->
 ```
@@ -528,12 +532,14 @@ let five_borrow = &five; // A is now borrowing five.-->
 There's no such thing as templates/generics in JS, but you do have Generics in TypeScript and Flow.
 
 ```js
+// 💛 JS
 function lol<T>(what: T) {
 
 }
 ```
 
 ```cpp
+// 💙 C++
 template<typename T>
 void lol(T what)
 {
@@ -542,6 +548,7 @@ void lol(T what)
 ```
 
 ```rust
+// 💖 Rust
 fn lol<T>(what: T) {
 
 }
@@ -551,20 +558,22 @@ fn lol<T>(what: T) {
 
 ### Common Modules
 
-```rust
-// Implementation
-use std::io;
-use std::path;
+```js
+// 💛 JS
+import fs from 'fs';
+import path from 'path';
 ```
 
 ```cpp
+// 💙 C++
 #include "ifstream"
 #include "path"
 ```
 
-```js
-import fs from 'fs';
-import path from 'path';
+```rust
+// 💖 Rust
+use std::io;
+use std::path;
 ```
 
 ## Conclusion & Further Reading
