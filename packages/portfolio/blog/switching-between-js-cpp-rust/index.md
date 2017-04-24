@@ -409,6 +409,8 @@ ten_times(|j| println!("hello, {}", j));
 ### Destructuring
 
 ```js
+// JavaScript
+
 // Array Destructuring
 let arr = [1, 2, 3, 4, 5];
 
@@ -429,16 +431,21 @@ let {x, y, z} = obj;
 C++ 17 recently added destructuring as a native language feature:
 
 ```cpp
+// C++
+
 std::vector<uint32_t> arr = { 1, 2, 3, 4, 5 };
 
-auto [first, ...rest] = arr;
+// Rest operator isn't available
+auto [first, second, third] = arr;
 
-// Object Destructuring isn't possible
+// Object Destructuring isn't avaiable either
 ```
 
 Rust has intuitive destructuring for Structs and arrays:
 
 ```rust
+//Rust
+
 // Array Destructuring
 let arr = [0, 1, 2, 3, 4, 5];
 
@@ -465,26 +472,34 @@ type Renderable = {
 }
 ```
 
-C++ Doesn't have Duck Typing, however interfaces are possible through casting.
+C++ Doesn't have Duck Typing, however interfaces are possible through classical inheritance.
 
 ```cpp
-
+// C++
+class Renderable {
+public:
+   virtual void render();
+}
 ```
 
 ```rust
 trait Renderable {
-    fn render(&self) -> ();
+    pub fn render(&self) -> ();
 }
 ```
 
-### Pointers
+<!--### Pointers
 
 Heap allocated data is normally addressed through pointers, though these can also be used to *reference* existing data. 
 
 JavaScript Objects are by default either data or mutable References, but the concept of pointers or a heap doesn't exist in the language.
 
 ```js
+// JavaScript
 let five = { value: 5 };
+
+// refFive holds a reference to value.
+let refFive = five.value;
 ```
 
 C++ pointers are unsafe addresses that may or may not be referencing existing data. Smart pointers help avoid the problem of not referencing data by only freeing memory when there's no more references to the data they're pointing to.
@@ -493,19 +508,19 @@ C++ pointers are unsafe addresses that may or may not be referencing existing da
 #include <memory>
 
 // Raw Pointers
-size_t* four;
+uint32_t* four;
 
 // Smart Pointers
-std::shared_ptr<uint32_t> five;
+std::shared_ptr<uint32_t> five = std::make_shared(5);
 
-std::unique_ptr<uint32_t> six;
+std::unique_ptr<uint32_t> six = std::make_unique(6);
 ```
 
 Rust pointers are smart by default through Rust's ownership system.
 
 ```rust
 let five: Box<u32> = 5;
-let five_borrow = &five; // A is now borrowing five.
+let five_borrow = &five; // A is now borrowing five.-->
 ```
 
 ### Templates/Generics
