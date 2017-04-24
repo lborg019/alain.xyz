@@ -524,8 +524,9 @@ Rust pointers are smart by default through Rust's ownership system.
 ```rust
 // 💖 Rust
 let five: Box<u32> = 5;
-let five_borrow = &five; // A is now borrowing five.-->
+let five_borrow = &five; // A is now borrowing five.
 ```
+-->
 
 ### Templates/Generics
 
