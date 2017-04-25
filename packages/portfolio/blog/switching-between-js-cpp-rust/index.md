@@ -19,7 +19,7 @@ let x = 4;    auto x = 4;    let x = 4;
 
 Performance across each language is also getting closer:
 
-1. JavaScript's WebAssembly proposal is bringing with it a huge boost in performance, and regular JavaScript is among the fastest untyped languages out there. (Ruby, Python, etc.)
+1. JavaScript's WebAssembly proposal is bringing with it a huge boost in performance, and regular JavaScript is among the fastest dynamically typed languages out there. (Ruby, Python, etc.)
 
 2. C++ through it's long history of focusing on performance, has always been extremely fast. 
 
@@ -355,7 +355,7 @@ impl MyClass {
         }
     }
 
-    pub fn mutate_member(mut &self) {
+    pub fn mutate_member(&mut self) {
         self.member += 1;
     }
 }
@@ -394,7 +394,7 @@ In Rust lambdas follows the signature `|...params| { body }`, with the curly bra
 ```rust
 // 💖 Rust
 fn my_function() -> u32 {
-    0;
+    0
 }
 
 fn ten_times<F>(f: F) where F: Fn(i32) {
@@ -460,10 +460,10 @@ struct Obj {
 
 let obj = Obj { x: 0, y: 0, y: 0 };
 
-let { x, y, z } = obj;
+let Obj { x, y, z } = obj;
 ```
 
-### Duck Typing
+### Interfaces
 
 ```ts
 // 💛 TypeScript / Flow
@@ -472,7 +472,7 @@ type Renderable = {
 }
 ```
 
-C++ Doesn't have Duck Typing, however interfaces are possible through classical inheritance.
+C++ interfaces are possible through classical inheritance.
 
 ```cpp
 // 💙 C++
@@ -485,7 +485,7 @@ public:
 ```rust
 // 💖 Rust
 trait Renderable {
-    pub fn render(&self) -> ();
+    pub fn render(&self);
 }
 ```
 
