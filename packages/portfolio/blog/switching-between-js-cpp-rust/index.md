@@ -1,8 +1,8 @@
 > Things people tell me that they know: "full-stack JavaScript is the Future", "everyone should know C", "Rust is the best language for Systems Programming"... Most people hear stuff like this, and say to themselves, is that true? ~ [Haseeb Qureshi, Converge: Why Engineers Disagree About Everything (Talk)](https://softwareengineeringdaily.com/2017/02/24/convergence-with-haseeb-qureshi/)
 
-Migrating between C++, JavaScript and Rust today has never been easier, language features/semantics seem to be converging, recent updates to each language added features exclusive to other languages.
+Migrating between C++, JavaScript and Rust today has never been easier, language features/syntax seem to be converging, recent updates to each language added features exclusive to other languages.
 
-#### Semantics
+#### Syntax
 
 ```js
 // JS         // C++         // Rust
@@ -31,7 +31,7 @@ Performance across each language is also getting closer:
 
 2. **Modules** - Creating and installing modules, and how to structure your modules/applications.
 
-3. **Semantics** - An overview of the semantics of each language.
+3. **Syntax** - An overview of the syntax differences of each language.
 
 ## JavaScript
 
@@ -177,7 +177,7 @@ cargo run
 cargo build # Use the --release flag for a production build
 ```
 
-## Semantics
+## Syntax
 
 ### Imports, Namespaces, Exports
 
