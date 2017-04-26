@@ -41,7 +41,19 @@ Performance across each language is also getting closer:
 
 ### Installation
 
-Visit [The Node Foundation](https://nodejs.org) and download the *current* version of Node.
+Download and install the Node Version Manager for your machine:
+
+- [Windows](https://github.com/coreybutler/nvm-windows)
+- [Linux / OSX](https://github.com/creationix/nvm)
+
+Then open up a terminal such as [Hyper]() and type:
+
+```bash
+nvm install node
+nvm use node
+```
+
+Or you can visit [The Node Foundation](https://nodejs.org) and download the *current* version of Node.
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
 
@@ -207,10 +219,10 @@ Until C++ Modules come along, the following is the standard way of modularizing 
 // 💙 C++
 
 // Import
-#include "ifstream"
+#include "istream"
 //Need the following imports for types
 #include "stdio.h"
-#include "string"
+#include <string>
 
 // Namespace
 using namespace std;
@@ -259,10 +271,10 @@ enum Enums {
 
 ```cpp
 // 💙 C++
-enum Enums {
+enum class Enums {
     One,
     Two
-}
+};
 ```
 
 ```rust
@@ -289,7 +301,7 @@ type Structs = {
 struct Structs
 {
     uint32_t property;
-}
+};
 ```
 
 ```rust
@@ -317,7 +329,9 @@ class MyClass {
 let o = new MyClass();
 ```
 
-Normally in C++ you would declare your class in a header `.h` or `.hpp` file, and write the implementation in a `.cpp` file. Alternatively you can use just a header and write the implementation as inline statements, or write the implementation in the class, but you'll need to juggle when you declare variables/functions.
+Normally in C++ you would declare your class in a header `.h` or `.hpp` file, and write the implementation in a `.cpp` file. 
+
+Alternatively you can use just a header and write the implementation as inline statements, or write the implementation in the class, but you'll need to juggle when you declare variables/functions due to there not being declaration hoisting.
 
 ```cpp
 // 💙 C++
@@ -326,7 +340,7 @@ class MyClass
 
     uint32_t member = 0;
 
-    MyClass(uint32 pMember) : member(pMember)
+    MyClass(uint32_t pMember) : member(pMember)
     {
 
     }
@@ -343,7 +357,7 @@ In Rust, there is no keyword `class`, instead you can create class-like construc
 
 ```rust
 // 💖 Rust
-pub struct MyClass {
+struct MyClass {
     member: u32;
 }
 
@@ -382,6 +396,7 @@ uint32_t myFunction() {
     return 0;
 }
 
+// If there's no args in the function, you can omit the ()
 auto lambda = []()
 {
     return null;
@@ -433,7 +448,7 @@ C++ 17 recently added destructuring as a native language feature:
 ```cpp
 // 💙 C++
 
-std::vector<uint32_t> arr = { 1, 2, 3, 4, 5 };
+std::array<uint32_t, 5> arr = { 1, 2, 3, 4, 5 };
 
 // Rest operator isn't available
 auto [first, second, third] = arr;
