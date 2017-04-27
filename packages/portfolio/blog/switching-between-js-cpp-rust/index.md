@@ -363,13 +363,13 @@ struct MyClass {
 
 impl MyClass {
 
-    pub fn new() -> MyClass {
+    fn new() -> MyClass {
         MyClass {
             member: 0
         }
     }
 
-    pub fn mutate_member(&mut self) {
+    fn mutate_member(&mut self) {
         self.member += 1;
     }
 }
