@@ -11,6 +11,7 @@ function closeConnection(code) {
   database.then(async (db) => {
     console.log('🍃 Closing MongoDB Connection.');
     db.close();
+    process.exit();
   });
 }
 

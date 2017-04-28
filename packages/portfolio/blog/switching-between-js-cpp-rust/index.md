@@ -1,8 +1,8 @@
 > Things people tell me that they know: "full-stack JavaScript is the Future", "everyone should know C", "Rust is the best language for Systems Programming"... Most people hear stuff like this, and say to themselves, is that true? ~ [Haseeb Qureshi, Converge: Why Engineers Disagree About Everything (Talk)](https://softwareengineeringdaily.com/2017/02/24/convergence-with-haseeb-qureshi/)
 
-Migrating between C++, JavaScript and Rust today has never been easier, language features/semantics seem to be converging, recent updates to each language added features exclusive to other languages.
+Migrating between C++, JavaScript and Rust today has never been easier, language features/syntax seem to be converging, recent updates to each language added features exclusive to other languages.
 
-#### Semantics
+#### Syntax
 
 ```js
 // JS         // C++         // Rust
@@ -17,25 +17,43 @@ let x = 4;    auto x = 4;    let x = 4;
 
 - **Rust** now has a TypeScript-like [Language Server](https://github.com/rust-lang-nursery/rls), which is similar to Visual Studio's C++ Intelisense.
 
+Performance across each language is also getting closer:
+
+1. JavaScript's WebAssembly proposal is bringing with it a huge boost in performance, and regular JavaScript is among the fastest dynamically typed languages out there. (Ruby, Python, etc.)
+
+2. C++ through it's long history of focusing on performance, has always been extremely fast. 
+
+3. Rust is fast, at times even better than C/C++ in performance, according to [The Computer Language Benchmarks Game K-Nucleotide benchmark](http://benchmarksgame.alioth.debian.org/u64q/knucleotide.html).
+
 ### Table of Contents
 
 1. **Installation** - Get off the ground and programming immediately.
 
-2. **Semantics** - An overview of the semantics of Rust in comparison to C++.
+2. **Modules** - Creating and installing modules, and how to structure your modules/applications.
 
-3. **Modules** - Creating and installing modules.
-
-4. **Cross Platform Compilation** - Targeting Windows, Mac, Linux, Android, iOS, Web, etc.
-
-5. **Foreign Function Interfaces** - Methods of inlining and interfacing with other languages.
+3. **Syntax** - An overview of the syntax differences of each language.
 
 ## JavaScript
+
+![C++ Logo](assets/js-logo.svg)
 
 *Brendon Eich* is known as a bit of an apologist because of some bad decisions early on with the language, nevertheless, thanks to no small effort on the part of the many people contributing to the evolution of the language, modern JavaScript is a pleasure to develop in.
 
 ### Installation
 
-Visit [The Node Foundation](https://nodejs.org) and download the *current* version of Node.
+Download and install the Node Version Manager for your machine:
+
+- [Windows](https://github.com/coreybutler/nvm-windows)
+- [Linux / OSX](https://github.com/creationix/nvm)
+
+Then open up a terminal such as [Hyper]() and type:
+
+```bash
+nvm install node
+nvm use node
+```
+
+Or you can visit [The Node Foundation](https://nodejs.org) and download the *current* version of Node.
 
 Alternatively you can visit a code editing website like [Codepen](https://codepen.io/pen), but bear in mind there are missing features between browser and server versions of JS.
 
@@ -65,6 +83,8 @@ node <javascript-file-name>
 
 ## C++
 
+![C++ Logo](assets/cpp-logo.svg)
+
 C++ is a mature language that has a lot of heritage. Developed by *Bjarne Stroustrup* in Bell Labs as an extension to C, it became its own language once people coming from C began to see how much more maintainable their codebases were with class hierarchies and template metaprogramming.
 
 ### Installation
@@ -78,10 +98,6 @@ No matter what platform you're developing on, you'll want to have the following 
 
 Download [Visual Studio 2017 Community Edition](https://www.visualstudio.com).
 
-#### OSX
-
-Download [XCode]().
-
 #### Linux
 
 ```bash
@@ -90,7 +106,13 @@ apt-get install gcc
 apt-get install clang
 ```
 
+#### OSX
+
+Download [XCode](https://developer.apple.com/download/).
+
 ## Rust
+
+![Rust Logo](assets/rust-logo.svg)
 
 Rust has become pretty popular, with exciting research projects ranging from using it to build web browsers like [Servo](https://servo.org/) to even entire [operating systems](http://www.redox-os.org/) and [game engines](http://www.piston.rs/).
 
@@ -167,14 +189,14 @@ cargo run
 cargo build # Use the --release flag for a production build
 ```
 
-## Semantics
+## Syntax
 
 ### Imports, Namespaces, Exports
 
 With node, every JavaScript file is treated as an isolated module, and the `index.js` file of a given folder indicates the folder's root JavaScript file.
 
 ```js
-// TypeScript
+// 💛 TypeScript
 
 // Import (Package `fs` is included with node)
 import fs from 'fs';
@@ -194,13 +216,13 @@ export * from './localmodule';
 Until C++ Modules come along, the following is the standard way of modularizing code. There's no strict path rules in C++.
 
 ```cpp
-// C++
+// 💙 C++
 
 // Import
-#include "ifstream"
+#include "istream"
 //Need the following imports for types
 #include "stdio.h"
-#include "string"
+#include <string>
 
 // Namespace
 using namespace std;
@@ -215,7 +237,7 @@ uint32_t myexport(string code)
 Modules in **Rust** follow the convention of having `mod.rs` indicate the root module of a given folder, and every submodule must be declared with the keyword `mod`.
 
 ```rust
-// Rust
+// 💖 Rust
 // Import
 // External package from cargo
 extern crate winit;
@@ -240,7 +262,7 @@ pub use self::localmodule::*;
 Enums don't exist in JavaScript, but are available in TypeScript:
 
 ```ts
-// TypeScript
+// 💛 TypeScript
 enum Enums {
     One,
     Two
@@ -248,15 +270,15 @@ enum Enums {
 ```
 
 ```cpp
-// C++
-enum Enums {
+// 💙 C++
+enum class Enums {
     One,
     Two
-}
+};
 ```
 
 ```rust
-// Rust
+// 💖 Rust
 enum Enums {
     One,
     Two
@@ -268,22 +290,22 @@ enum Enums {
 JavaScript doesn't have types, so no need to define structs. Types aren't limited to being just structs in TypeScript though.
 
 ```ts
-// TypeScript / Flow
+// 💛 TypeScript / Flow
 type Structs = {
   property: number
 }
 ```
 
 ```cpp
-// C++
+// 💙 C++
 struct Structs
 {
     uint32_t property;
-}
+};
 ```
 
 ```rust
-// Rust
+// 💖 Rust
 struct Structs {
     property: u32
 }
@@ -292,7 +314,7 @@ struct Structs {
 ### Classes
 
 ```js
-// JavaScript
+// 💛 JavaScript
 class MyClass {
 
     constructor(member = 0) {
@@ -307,16 +329,18 @@ class MyClass {
 let o = new MyClass();
 ```
 
-Normally in C++ you would declare your class in a header `.h` or `.hpp` file, and write the implementation in a `.cpp` file. Alternatively you can use just a header and write the implementation as inline statements, or write the implementation in the class, but you'll need to juggle when you declare variables/functions.
+Normally in C++ you would declare your class in a header `.h` or `.hpp` file, and write the implementation in a `.cpp` file. 
+
+Alternatively you can use just a header and write the implementation as inline statements, or write the implementation in the class, but you'll need to juggle when you declare variables/functions due to there not being declaration hoisting.
 
 ```cpp
-// C++
+// 💙 C++
 class MyClass
 {
 
     uint32_t member = 0;
 
-    MyClass(uint32 pMember) : member(pMember)
+    MyClass(uint32_t pMember) : member(pMember)
     {
 
     }
@@ -332,20 +356,20 @@ class MyClass
 In Rust, there is no keyword `class`, instead you can create class-like constructs through a struct to represent your state, and implementation blocks (`impl`), which are sort of like `cpp` files. 
 
 ```rust
-// Rust
-pub struct MyClass {
+// 💖 Rust
+struct MyClass {
     member: u32;
 }
 
 impl MyClass {
 
-    pub fn new() -> MyClass {
+    fn new() -> MyClass {
         MyClass {
             member: 0
         }
     }
 
-    pub fn mutate_member(mut &self) {
+    fn mutate_member(&mut self) {
         self.member += 1;
     }
 }
@@ -356,7 +380,7 @@ impl MyClass {
 JavaScript features 2 function types, the first being a `function` bound to the global scope unless specified otherwise, and the second being bound to the scope of where the function was declared, **Fat Arrow Functions**.
 
 ```js
-// JS
+// 💛 JS
 function myFunction() {
     return 0;
 }
@@ -364,14 +388,15 @@ function myFunction() {
 let lambda = () => null;
 ```
 
-In C++ lambdas are denoted with a scope capture `[...scopevars]`, followed by the standard parenthesis for arguments and curly brace for the body of the function.
+In C++ lambdas are denoted with a scope capture `[...scopevars]`, followed by the standard parenthesis for arguments and curly brace for the body of the function `() { }`.
 
 ```cpp
-// C++
+// 💙 C++
 uint32_t myFunction() {
     return 0;
 }
 
+// If there's no args in the function, you can omit the ()
 auto lambda = []()
 {
     return null;
@@ -382,9 +407,9 @@ auto lambda = []()
 In Rust lambdas follows the signature `|...params| { body }`, with the curly braces around the body being optional.
 
 ```rust
-// Rust
+// 💖 Rust
 fn my_function() -> u32 {
-    0;
+    0
 }
 
 fn ten_times<F>(f: F) where F: Fn(i32) {
@@ -399,6 +424,8 @@ ten_times(|j| println!("hello, {}", j));
 ### Destructuring
 
 ```js
+// 💛 JS
+
 // Array Destructuring
 let arr = [1, 2, 3, 4, 5];
 
@@ -419,29 +446,21 @@ let {x, y, z} = obj;
 C++ 17 recently added destructuring as a native language feature:
 
 ```cpp
-std::vector<uint32_t> arr = { 1, 2, 3, 4, 5 };
+// 💙 C++
 
-auto [first, ...rest] = arr;
+std::array<uint32_t, 5> arr = { 1, 2, 3, 4, 5 };
 
-// Object Destructuring
-struct Obj {
-    uint32_t x;
-    uint32_t y;
-    uint32_t z;
-};
+// Rest operator isn't available
+auto [first, second, third] = arr;
 
-auto obj = Obj {
-    1,
-    2,
-    3
-};
-
-auto { x, y, z } = obj;
+// Object Destructuring isn't avaiable either
 ```
 
 Rust has intuitive destructuring for Structs and arrays:
 
 ```rust
+// 💖 Rust
+
 // Array Destructuring
 let arr = [0, 1, 2, 3, 4, 5];
 
@@ -456,59 +475,33 @@ struct Obj {
 
 let obj = Obj { x: 0, y: 0, y: 0 };
 
-let { x, y, z } = obj;
+let Obj { x, y, z } = obj;
 ```
 
-### Duck Typing
+### Interfaces
 
 ```ts
-// TypeScript / Flow
+// 💛 TypeScript / Flow
 type Renderable = {
   render: () => void
 }
 ```
 
-C++ Doesn't have Duck Typing, however interfaces are possible through casting.
+C++ interfaces are possible through classical inheritance.
 
 ```cpp
-
-```
-
-```rust
-trait Renderable {
-    fn render(&self) -> ();
+// 💙 C++
+class Renderable {
+public:
+   virtual void render();
 }
 ```
 
-### Pointers
-
-Heap allocated data is normally addressed through pointers, though these can also be used to *reference* existing data. 
-
-JavaScript Objects are by default either data or mutable References, but the concept of pointers or a heap doesn't exist in the language.
-
-```js
-let five = { value: 5 };
-```
-
-C++ pointers are unsafe addresses that may or may not be referencing existing data. Smart pointers help avoid the problem of not referencing data by only freeing memory when there's no more references to the data they're pointing to.
-
-```cpp
-#include <memory>
-
-// Raw Pointers
-size_t* four;
-
-// Smart Pointers
-std::shared_ptr<uint32_t> five;
-
-std::unique_ptr<uint32_t> six;
-```
-
-Rust pointers are smart by default through Rust's ownership system.
-
 ```rust
-let five: Box<u32> = 5;
-let five_borrow = &five; // A is now borrowing five.
+// 💖 Rust
+trait Renderable {
+    pub fn render(&self);
+}
 ```
 
 ### Templates/Generics
@@ -516,12 +509,14 @@ let five_borrow = &five; // A is now borrowing five.
 There's no such thing as templates/generics in JS, but you do have Generics in TypeScript and Flow.
 
 ```js
+// 💛 JS
 function lol<T>(what: T) {
 
 }
 ```
 
 ```cpp
+// 💙 C++
 template<typename T>
 void lol(T what)
 {
@@ -530,6 +525,7 @@ void lol(T what)
 ```
 
 ```rust
+// 💖 Rust
 fn lol<T>(what: T) {
 
 }
@@ -539,20 +535,22 @@ fn lol<T>(what: T) {
 
 ### Common Modules
 
-```rust
-// Implementation
-use std::io;
-use std::path;
+```js
+// 💛 JS
+import fs from 'fs';
+import path from 'path';
 ```
 
 ```cpp
+// 💙 C++
 #include "ifstream"
 #include "path"
 ```
 
-```js
-import fs from 'fs';
-import path from 'path';
+```rust
+// 💖 Rust
+use std::io;
+use std::path;
 ```
 
 ## Conclusion & Further Reading

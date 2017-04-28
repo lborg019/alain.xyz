@@ -288,7 +288,7 @@ auto device = gpu.createDevice(
 
 ## Queue
 
-![Queue](assets/queue.svg)
+<!--![Queue](assets/queue.svg)-->
 
 Once you have a virtual device, you can access the queues you requested when you created it:
 
@@ -502,7 +502,7 @@ auto renderpass = device.createRenderPass(
 
 ## Swapchain
 
-![Swapchain Diagram](assets/swapchain.svg)
+<!--![Swapchain Diagram](assets/swapchain.svg)-->
 
 A **Swapchain** is a structure that manages the allocation of frame buffers to be cycled through by your application. It's here that your application sets up V-Sync via double buffering or triple buffering.
 
@@ -575,7 +575,7 @@ auto depthImageView = device.createImageView(
 
 ## Frame Buffers
 
-![Swapchain Diagram](assets/framebuffers.svg)
+<!--![Swapchain Diagram](assets/framebuffers.svg)-->
 
 A frame buffer in Vulkan is a container of Image Views.
 
@@ -701,7 +701,7 @@ for (int i = 0; i < swapchainImages.size(); i++)
 
 ## Synchronization
 
-![Semaphore](assets/semaphore.svg)
+<!--![Semaphore](assets/semaphore.svg)-->
 
 Vulkan was designed with concurrency in mind, so you're free to use mutexes, and built in Vulkan Semaphores and Fences for GPU level Synchronization.
 
@@ -725,7 +725,7 @@ for (int i = 0; i < waitFences.size(); i++)
 
 ## Command Pool
 
-![Pool of Commands](assets/command-pool.svg)
+<!--![Pool of Commands](assets/command-pool.svg)-->
 
 A **command pool** is a means of allocating command buffers. Any number of command buffers can be made from command pools, with you as the developer responsible for managing when and how they're created and what is loaded in each.
 
@@ -758,7 +758,7 @@ We'll come back to the command buffers we made here later in our app.
 
 ## Descriptor Pool
 
-![Descriptor Pool](assets/descriptor-pool.svg)
+<!--![Descriptor Pool](assets/descriptor-pool.svg)-->
 
 A descriptor pool is a means of allocating Descriptor Sets, a set of data structures containing implementation-specific descriptions of resources. to make a descriptor pool, you need to describe exactly how many of each type of descriptor you need to allocate.
 
@@ -796,7 +796,7 @@ The fundamental problem of graphics is how to manage large sets of data. A verte
 
 ## Descriptor Sets
 
-![Descriptor Pool](assets/descriptor-sets.svg)
+<!--![Descriptor Pool](assets/descriptor-sets.svg)-->
 
 **Descriptor Sets** store the resources bound to the binding points in a shader (Basically Uniforms). They connect the binding points of a shader with the buffers and images used for those bindings.
 
@@ -846,7 +846,7 @@ Access to descriptor sets from a pipeline is accomplished through a pipeline lay
 
 ## Pipeline State Objects
 
-![Different Pipeline State Objects](assets/pipeline-state-objects.svg)
+<!--![Different Pipeline State Objects](assets/pipeline-state-objects.svg)-->
 
 Pipelines are basically a mix of hardware and software functions that do a particular task on the GPU, in Vulkan, there's 2 types:
 
@@ -855,7 +855,7 @@ Pipelines are basically a mix of hardware and software functions that do a parti
 
 ### Graphics Pipeline
 
-![RenderDoc Example](assets/graphics-pipeline.svg)
+<!--![RenderDoc Example](assets/graphics-pipeline.svg)-->
 
 - **Color Blending** - The function that controls how two objects draw on top of each other.
 
@@ -968,7 +968,7 @@ auto fragModule = device.createShaderModule(
 
 ## Command Buffer
 
-![Windows Program Execution](assets/windows-exe.gif)
+<!--![Windows Program Execution](assets/windows-exe.gif)-->
 
 A **command buffer** is a container of GPU commands, this is where you would see commands similar to OpenGL's state commands:
 
@@ -1124,7 +1124,7 @@ if (fpsTimer > 1000.0)
 
 ## Program Execution
 
-![Windows Program Execution](assets/windows-exe.gif)
+<!--![Windows Program Execution](assets/windows-exe.gif)-->
 
 A Vulkan program executes as follows:
 

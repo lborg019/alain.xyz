@@ -1,16 +1,34 @@
-Introducing **Fig**, an open source project offering high quality home improvement products and services.
+> There's a new, dystopian risk to using internet-connected gadgets: If you complain, the company that made it might remotely kill your product. After [a customer] complained about [a company] online and left a negative review, he got an unpleasant surprise — [the company] had bricked their device. - [Business Insider](http://www.businessinsider.com/iot-garage-door-opener-garadget-kills-customers-device-bad-amazon-review-2017-4)
 
-Creating a physical product today has never been easier, there's so many tools and resources available to bring ideas to market.
+There's a lot of investor interest in the IOT market, however products developed in this space suffer from the *John Deer Effect*: the idea that *you don't own the product you paid for, you're **licensing it***. 
 
-### Engineering
+Introducing **Fig**, an IOT company offering *open source*, high quality home improvement products and services. Every aspect of our products, from the schematics to the source code, is available to consumers who have the liberty to fix and maintain their product as they see fit.
+
+We find that the benefits of offering this freedom outweigh the potential downfalls of having a lack of intellectual property that competitors could take advantage of, or for scalpers to take our product and resell it. 
+
+## Fig Table
+
+The Fig Table is a affordable customizable standing desk, fully programmable and controllable through a mobile app, desktop app, or even a terminal.
+
+## Fig Smart Camera
+
+Competitors like Nest charge 10 dollars a month to hold your data in the cloud, when you can easily pay 1 dollar a month to use amazon S3 storage, or even just have your own hard drive in your network you back security data to. 
+
+## Conclusion
+
+Creating a physical product today has never been easier, there's so many tools, software stacks, and hardware vendors you can depend on!
+
+### Design / Engineering
 
 - [Blender](https://www.blender.org/) - **Open Source** | 3D CAD software
 
 - [Altium](http://www.altium.com/altium-designer/overview) - **$120 per Year** | Circuit Board CAD
 
-### IOT Computers
+### IOT Computers / Microcontrollers
 
-- [Raspberry Pi](https://www.amazon.com/CanaKit-Raspberry-Micro-Supply-Listed/dp/B01C6FFNY4/ref=pd_lpo_147_tr_t_3?_encoding=UTF8&psc=1&refRID=DTKWYDD6P2ZJSTQF5JMM) - **$41** | A low powered linux computer, with USB, Bluetooth, Wifi, and HDMI I/O, plus 32 GPIO pins.
+- [Raspberry Pi W](https://www.raspberrypi.org/products/pi-zero-w/) - **$10** | A low powered linux computer, with USB, Wifi, HDMI, plus 32 GPIO pins.
+
+- [Arduino](https://www.arduino.cc/)
 
 - [Omega](https://onion.io/store/) - **$19** | A similar device to the Pi, but smaller and cheaper.
 
@@ -19,147 +37,3 @@ Creating a physical product today has never been easier, there's so many tools a
 - [EEV Blog](https://www.youtube.com/channel/UC2DjFE7Xf11URZqWBigcVOQ) - A blog detailing the idiosyncrasies of being an electrical engineer.
 
 - [GreatScott!](https://www.youtube.com/user/greatscottlab) - a variety of custom electrical engineering projects. 
-
-## Fig Table
-
-For a long time I wanted a standing desk that I would be able to control from the command line:
-
-```bash
-# Move the table down 4cm
-fig-table -4
-```
-
-To do this, I built a CLI that runs through a Node.js module:
-
-### Client CLI
-
-```js
-#!/usr/bin/env node
-
-const process = require('process');
-const http = require('http');
-const fs = require('fs');
-
-
-var helpMessage =
-  `
-fig-table Node.js CLI
-
-Usage:
-    fig-table <number>            Move table up by x centemeters
-    fig-table [options]
-
-Options:
-    -h, --help                    Display this message
-    -v, --version                 Print version info and exit
-    -c, --config <ip-address>     Configure the app with a unique ip.`;
-
-// Map of regex key to command function.
-const commandMap = {
-
-  '--help': () => {
-    console.log(helpMessage)
-  },
-
-  '-h': () => commandMap['--help'](),
-
-  '--version': () => {
-    console.log(JSON.parse(fs.readFileSync('../package.json').version));
-  },
-
-  '-v': () => commandMap['--version'](),
-
-  '--config': (args) => {
-    if (args.length > 0 && args[1].match(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/))
-      return console.error('Error: Please enter a valid IPv4 address.');
-
-    fs.writeFileSync('./config.json', JSON.stringify({ ip: args[0] }), { encoding: 'utf8' });
-
-  },
-
-  '-c': () => commandMap['--config'](),
-
-  '(?:\d*\.)?\d+': (args) => {
-
-    if (!fs.existsSync('./config.json'))
-      return console.error('Error: Please configure application first (e.g. fig-table -c 255.255.255.255)');
-
-    var {ip} = JSON.parse(fs.readFileSync('./config.json'));
-
-    var postData = JSON.stringify({
-      'vector': args[0],
-      'time': 100
-    });
-
-    var options = {
-      hostname: ip,
-      port: 80,
-      path: '/api',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(postData)
-      }
-    };
-
-    var req = http.request(options, (res) => {
-
-      res.setEncoding('utf8');
-
-      res.on('data', (chunk) => {
-        console.log(`${chunk}`);
-      });
-    });
-
-    req.on('error', (e) => {
-      console.log(`problem with request: ${e.message}`);
-    });
-
-    // write data to request body
-    req.write(postData);
-    req.end();
-  }
-
-}
-
-
-// Start Processing Command Line Arguments
-
-for (var i = 0; i < process.argv.length; i++) {
-
-  // Check if there's a key in the Command Map 
-  // that matches the command line argument
-  var match = Object.keys(commandMap).reduce(
-    (prev, cur) => prev | RegExp(cur).exec(process.argv[i]),
-    null);
-
-  if (match) {
-    match([...process.argv].splice(0, i-1));
-    break;
-  }
-  else if (i === process.argv.length - 1) {
-    commandMap['-h']();
-  }
-}
-```
-
-### Server
-
-For a server, I decided to use Rust since this would allow me to easily build a binary for the Pi's ARM Linux architecture with one command:
-
-```bash
-cargo build --target=aarch64-unknown-linux-gnu
-```
-
-From there, deploying is as easy as:
-
-```bash
-# Download the server binary
-wget http://github.com/alaingalvan/fig-standing-desk/raw/server/dist/fig-table-server
-# Change the permissions to make it executable
-sudo chmod 777 ./fig-table-server
-# Run it
-./fig-table-server
-```
-
-And you could go further by making the program a service that runs at startup, setting up a docker instance to periodically listen to github and download the latest server from the master branch automatically, hot swap servers.
