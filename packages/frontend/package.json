@@ -23,10 +23,10 @@
   ],
   "private": true,
   "devDependencies": {
-    "@types/node": "^7.0.13",
-    "@types/react": "^15.0.22",
+    "@types/node": "^7.0.14",
+    "@types/react": "^15.0.23",
     "@types/react-dom": "^15.5.0",
-    "@types/react-redux": "^4.4.39",
+    "@types/react-redux": "^4.4.40",
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack": "^2.2.15",
     "autoprefixer": "^6.7.7",
@@ -38,12 +38,12 @@
     "style-loader": "^0.16.1",
     "ts-loader": "^2.0.3",
     "ts-node": "^3.0.2",
-    "typescript": "^2.2.2",
+    "typescript": "^2.3.1",
     "webpack": "^2.4.1",
     "webpack-systemjs-export-plugin": "git+ssh://git@github.com/alaingalvan/webpack-systemjs-export-plugin.git"
   },
   "dependencies": {
-    "@types/isomorphic-fetch": "^0.0.33",
+    "@types/isomorphic-fetch": "^0.0.34",
     "isomorphic-fetch": "^2.2.1",
     "offline-plugin": "^4.7.0",
     "react": "^15.5.4",

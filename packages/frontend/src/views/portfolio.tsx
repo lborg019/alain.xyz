@@ -53,12 +53,12 @@ export class Portfolio extends React.Component<Props, any> {
   }
 }
 
-const Post = ({ cover, title, description, permalink, datePublished, tags, style = {} }) => {
+const Post = ({ image, title, description, permalink, datePublished, tags, style = {} }) => {
 
   let date = new Date(datePublished);
 
   return (
-    <Link to={permalink} style={{ ...style, backgroundImage: `url('${cover}')` }}>
+    <Link to={permalink} style={{ ...style, backgroundImage: `url('${image}')` }}>
       <section style={{
         backgroundImage: 'linear-gradient(rgba(33, 37, 43, 0), rgba(33, 37, 43, .5) 40%, rgb(33, 37, 43))', 
         width: '100%', 

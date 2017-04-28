@@ -1,10 +1,10 @@
 > There's a new, dystopian risk to using internet-connected gadgets: If you complain, the company that made it might remotely kill your product. After [a customer] complained about [a company] online and left a negative review, he got an unpleasant surprise — [the company] had bricked their device. - [Business Insider](http://www.businessinsider.com/iot-garage-door-opener-garadget-kills-customers-device-bad-amazon-review-2017-4)
 
-There's a lot of investor interest in the IOT market, however products developed in this space suffer from the *John Deer Effect*: the idea that *you don't own the product you paid for, you're **licensing it***. 
+There's a lot of venture capitalists interested in the IOT market, however products developed in this space suffer from the *John Deer Effect*: the idea that *you don't own the product you paid for, you're **licensing it***. 
 
-Introducing **Fig**, an IOT company offering *open source*, high quality home improvement products and services. Every aspect of our products, from the schematics to the source code, is available to consumers who have the liberty to fix and maintain their product as they see fit.
+Introducing **Fig**, an IOT company offering *open source*, high quality home improvement products and services. Every aspect of our products, from the schematics to the source code, is MIT licensed and available to consumers who have the liberty to fix and maintain their product as they see fit.
 
-We find that the benefits of offering this freedom outweigh the potential downfalls of having a lack of intellectual property that competitors could take advantage of, or for scalpers to take our product and resell it. 
+We find that the benefits of offering this freedom outweigh the potential downfalls of losing money through the *Walled Garden* proprietary approach that our competitors take advantage of, or for scalpers to take our product and resell it. 
 
 ## Fig Table
 

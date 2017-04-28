@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Icon } from './icon';
 import { tabletQuery, mobileQuery } from '../store';
 
-@connect(
-  ({ portfolio }) => ({ portfolio })
-)
+//@connect(
+//  ({ portfolio }) => ({ portfolio })
+//)
 export class Slideshow extends React.Component<any, any> {
   state = {
     index: 0,
@@ -43,10 +43,10 @@ export class Slideshow extends React.Component<any, any> {
         {slides.map((v, i) => {
 
           let {
-            cover,
+            image,
             title,
             description,
-            tags,
+            keywords,
             permalink
             } = v;
 
@@ -77,7 +77,7 @@ export class Slideshow extends React.Component<any, any> {
               key={i}>
               <figure style={{
                 ...styles.figure,
-                backgroundImage: `linear-gradient(rgba(33,37,43,0), rgba(33,37,43,1)), url(${cover})`,
+                backgroundImage: `linear-gradient(rgba(33,37,43,0), rgba(33,37,43,1)), url(${image})`,
                 left: tabletQuery ? 0 : -350,
                 height: tabletQuery ? ( i > 0 ? '192px' : '320px') : '100vh'
               }}>
@@ -86,7 +86,7 @@ export class Slideshow extends React.Component<any, any> {
                   <h1 style={{
                     ...styles.h1,
                     fontSize: tabletQuery ? '1.5rem' : undefined
-                  }}><Icon type={tags[0]} /> {title}</h1>
+                  }}><Icon type={keywords[0]} /> {title}</h1>
                   <p style={styles.p}>{description}</p>
                 </div>
               </figure>
@@ -101,24 +101,24 @@ export class Slideshow extends React.Component<any, any> {
 
 const slideshow = [
   {
-    cover: 'assets/brand/hadley-attractor.png',
+    image: 'assets/brand/hadley-attractor.png',
     title: 'Coronal',
     description: 'An ES2017 WebGL2 Rendering Library',
-    tags: ['library'],
+    keywords: ['library'],
     permalink: 'https://github.com/hyperfuse/coronal'
   },
   {
-    cover: 'assets/brand/realtime-celestial-rendering.png',
+    image: 'assets/brand/realtime-celestial-rendering.png',
     title: 'Celestial Rendering for 3D Navigation',
     description: 'Realtime Stary Skies for PBR Environments with Animated Radiance Maps',
-    tags: ['research'],
+    keywords: ['research'],
     permalink: 'https://github.com/OpenHID/realtime-celestial-rendering'
   },
   {
-    cover: 'assets/brand/website-screenshot.jpg',
+    image: 'assets/brand/website-screenshot.jpg',
     title: 'The Making of Alain.xyz',
     description: 'Design overview of the decisions in making this website.',
-    tags: ['blog'],
+    keywords: ['blog'],
     permalink: 'https://alain.xyz/blog/the-making-of-alain-xyz'
   }
 ]
@@ -143,7 +143,7 @@ const styles = {
     position: 'relative',
     zIndex: 1,
     left: -350,
-    backgroundSize: 'cover',
+    backgroundSize: 'image',
     backgroundPosition: 'center'
   },
   h1: {

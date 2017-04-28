@@ -1,6 +1,9 @@
 # [Alain.xyz](https://alain.xyz) Backend
 
-![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url] [![devDependency Status][david-dev-img]][david-dev-url]
+![Release][release-img]
+[![License][license-img]][license-url]
+[![Dependency Status][david-img]][david-url]
+[![devDependency Status][david-dev-img]][david-dev-url]
 
 My personal website backend, designed as a thin API and wrapper to the frontend.
 

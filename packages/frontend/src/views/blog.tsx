@@ -7,7 +7,7 @@ import { fetchSubapp } from '../store/actions';
 import { mobileQuery } from '../store'
 import { timeSince } from '../utils';
 
-const BlogPost = ({ cover, title, description, permalink, datePublished, dateModified, tags, style = {} }) => {
+const BlogPost = ({ image, title, description, permalink, datePublished, dateModified, tags, style = {} }) => {
 
   let published = new Date(datePublished);
   let publishedStr = published.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
@@ -18,7 +18,7 @@ const BlogPost = ({ cover, title, description, permalink, datePublished, dateMod
   let updatedStr = timeSince(updated);
 
   return (
-    <Link to={permalink} style={{ ...styles.blogPost, ...style, backgroundImage: `url('${cover}')` }}>
+    <Link to={permalink} style={{ ...styles.blogPost, ...style, backgroundImage: `url('${image}')` }}>
       <section style={{
         backgroundImage: 'linear-gradient(rgba(33, 37, 43, 0), rgba(33, 37, 43, .5) 40%, rgb(33, 37, 43))', 
         width: '100%', 

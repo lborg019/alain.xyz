@@ -57,12 +57,12 @@ async function buildPackage() {
       } = foil;
 
       // For every foil file in the package, check if it's modified
-      let fileList = [file, ...files];
+      let fileList = new Set(
+        [file, ...files]
+          .map(f => path.resolve(path.join(pack, '..'), f))
+      );
 
       for (let file of fileList) {
-
-        // resolve file directory
-        let fd = path.resolve(path.join(pack, '..'), file);
 
         // check if that's not a folder
         if (!fs.statSync(fd).isDirectory()) {

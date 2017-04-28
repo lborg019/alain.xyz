@@ -2,7 +2,9 @@
 
 # ![Icon](packages/frontend/assets/brand/icon.ico) [Alain.xyz](https://alain.xyz)
 
-![Release][release-img] [![License][license-img]][license-url] [![Dependency Status][david-img]][david-url]
+![Release][release-img]
+[![License][license-img]][license-url]
+[![Dependency Status][david-img]][david-url]
 
 My personal portfolio system build on top of the latest versions of:
 

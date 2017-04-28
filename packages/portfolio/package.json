@@ -14,10 +14,10 @@
   "license": "MIT",
   "dependencies": {
     "@types/chalk": "^0.4.31",
-    "@types/mongodb": "^2.1.43",
-    "@types/node": "^7.0.13",
-    "@types/react": "^15.0.22",
-    "@types/react-redux": "^4.4.39",
+    "@types/mongodb": "^2.2.0",
+    "@types/node": "^7.0.14",
+    "@types/react": "^15.0.23",
+    "@types/react-redux": "^4.4.40",
     "@types/redux": "^3.6.0",
     "@types/rss": "^0.0.27",
     "chalk": "^1.1.3",
@@ -29,6 +29,6 @@
     "rss": "^1.2.2",
     "systemjs-builder": "^0.16.4",
     "ts-node": "^3.0.2",
-    "typescript": "^2.2.2"
+    "typescript": "^2.3.1"
   }
 }
