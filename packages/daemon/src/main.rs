@@ -2,47 +2,42 @@
 extern crate nickel;
 extern crate rustc_serialize;
 
-use nickel::{Nickel, HttpRouter};
+#[macro_use]
+extern crate serde_derive;
+extern crate serde;
+extern crate serde_json;
 
-#[derive(RustcDecodable, RustcEncodable)]
+use nickel::{Nickel, HttpRouter, Request, Response};
+use std::process::Command;
+
+#[derive(Serialize, Deserialize)]
 struct Secret {
     secret: String,
 }
 
 #[derive(RustcDecodable, RustcEncodable)]
-struct APIRequest {
-    direction: f32,
-    time: u32,
-}
+struct APIRequest {}
 
 fn main() {
 
     let mut server = Nickel::new();
 
-    let mut router = Nickel::router();
+    let config: Secret = serde_json::from_str(include_str!("secret.json")).unwrap();
 
-    let config: Secret = json::from_str(include!("secret.json"));
+    server.post("/",  middleware! { | req, res | { 
+      let header = req.origin.headers.get_raw("X-GitHub-Delivery").unwrap().get(0).unwrap().to_vec();
 
-    router.post("/",
-                middleware! { |request, response|
-      
-      for header in request.headers {
-          match header {
-              x_github_delivery(payload) => {
-                  if payload == config.secret {
-                    process::command("git pull origin && cd ../portfolio && npm start");
-                    format!("")
-                  }
-              }
-              _ => return format!("")
-          }
+      let github_header = String::from_utf8(header).unwrap();
+
+      if github_header == config.secret {
+          Command::new("cd ../ && cd portfolio && npm start")
+                      .output()
+            .expect("failed to execute process");
       }
-      
-      let data = request.json_as::<APIRequest>().unwrap();
 
+      format!("")
+      }
     });
-
-    server.utilize(router);
 
     server.listen("localhost:3030");
 }

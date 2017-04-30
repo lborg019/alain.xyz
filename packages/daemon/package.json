@@ -7,6 +7,6 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "npm start",
-    "start": "cargo run"
+    "start": "cargo run --release"
   }
 }
