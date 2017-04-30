@@ -2,7 +2,7 @@
   "name": "blog/unreal-engine-architecture",
   "author": "Alain Galvan",
   "description": "A high level overview of Unreal Engine 4's Engine Architecture.",
-  "tags": [
+  "keywords": [
     "blog",
     "unreal",
     "engine",

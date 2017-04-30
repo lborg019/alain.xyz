@@ -17,7 +17,7 @@ export default class BlogPost extends React.Component<any, any> {
     if (!this.props.config)
       return null;
 
-    let { title, description, image, meta, datePublished, tags, data } = this.props.config;
+    let { title, description, image, meta, datePublished, keywords, data } = this.props.config;
 
     let date = new Date(datePublished);
     return (

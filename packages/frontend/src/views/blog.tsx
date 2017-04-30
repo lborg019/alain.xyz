@@ -7,7 +7,7 @@ import { fetchSubapp } from '../store/actions';
 import { mobileQuery } from '../store'
 import { timeSince } from '../utils';
 
-const BlogPost = ({ image, title, description, permalink, datePublished, dateModified, tags, style = {} }) => {
+const BlogPost = ({ image, title, description, permalink, datePublished, dateModified, keywords, style = {} }) => {
 
   let published = new Date(datePublished);
   let publishedStr = published.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });

@@ -17,7 +17,7 @@ the following json data
   content,
   contentFormat: 'markdown',
   canonicalUrl: `https://alain.xyz/${permalink}`,
-  tags,
+  keywords,
   publishStatus: 'public'
 }
 */

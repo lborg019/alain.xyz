@@ -2,7 +2,7 @@
   "name": "blog/ue4-working-with-3rd-party-libraries",
   "author": "Alain Galvan",
   "description": "A tutorial on how to use 3rd party libraries in Unreal Engine 4.",
-  "tags": [
+  "keywords": [
     "blog",
     "unreal",
     "engine",

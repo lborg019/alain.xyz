@@ -2,7 +2,7 @@
   "name": "podcasts/raw-graphics",
   "author": "Alain Galvan",
   "description": "A podcast all about graphics: real time rendering, art, raytracing, gpgpu computing, and machine learning.",
-  "main": "main.ts",
+  "main": "../main.tsx",
   "keywords": [
     "podcast",
     "podcasts",
@@ -11,9 +11,6 @@
     "machine",
     "learning",
     "gpgpu"
-  ],
-  "files": [
-    ""
   ],
   "foil": {
     "title": "Raw Graphics",

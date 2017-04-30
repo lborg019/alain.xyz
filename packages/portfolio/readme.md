@@ -50,7 +50,7 @@ If you want to add a new item to my portfolio (maybe publish a blog post), just 
 
 #### Package.json Example
 
-```json
+```js
 {
   "name": "raw-vulkan",
   "description": "",
@@ -75,7 +75,7 @@ The following is a map of how a portfolio item's package.json file maps to the d
 let {
   description,
   author,
-  keywords: tags,
+  keywords,
   foil: {
     title,
     datePublished
@@ -89,7 +89,7 @@ Every portfolio item is it's own **Sub-Application** loaded on demand by the cor
 
 The main application starts by querying the backend for a given portfolio item bound by a permalink:
 
-```json
+```js
 {
   "permalink": "blog/the-making-of-alain-xyz",
   "main": "blog/post.js",

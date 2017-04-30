@@ -1,6 +1,7 @@
 {
   "name": "blog/raw-opengl",
   "description": "An overview on how to write modern OpenGL applications.",
+  "main": "index.md",
   "keywords": [
     "blog",
     "opengl"

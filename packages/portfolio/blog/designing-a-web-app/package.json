@@ -2,7 +2,7 @@
   "name": "blog/designing-a-web-app",
   "description": "What does it take to develop modern web applications, what are the best practices and tools/languages you should use?",
   "main": "index.md",
-  "tags": [
+  "keywords": [
     "blog",
     "javascript",
     "js",

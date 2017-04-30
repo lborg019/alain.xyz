@@ -2,7 +2,7 @@
   "name": "blog/javascript-at-2017",
   "description": "What are the latest updates to ECMAScript and Node.js in 2017?",
   "main": "index.md",
-  "tags": [
+  "keywords": [
     "blog",
     "javascript",
     "js",

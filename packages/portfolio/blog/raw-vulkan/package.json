@@ -2,7 +2,7 @@
   "name": "blog/raw-vulkan",
   "author": "Alain Galvan",
   "description": "An overview on how to program a Vulkan application from the ground up.",
-  "tags": [
+  "keywords": [
     "blog",
     "vulkan",
     "hello",

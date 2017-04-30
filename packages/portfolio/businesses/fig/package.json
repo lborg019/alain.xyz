@@ -1,8 +1,8 @@
 {
   "name": "businesses/fig",
   "description": "An open source IOT company.",
-  "main": "index.tsx",
-  "tags": [
+  "main": "index.md",
+  "keywords": [
     "company"
   ],
   "foil": {

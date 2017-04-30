@@ -2,7 +2,7 @@
   "name": "blog/the-making-of-excursion-funnel",
   "author": "Alain Galvan",
   "description": "The making of my Shadertoy Siggraph 2015 Entry 'Excursion Funnel'.",
-  "tags": [
+  "keywords": [
     "blog",
     "shadertoy",
     "raymarching"

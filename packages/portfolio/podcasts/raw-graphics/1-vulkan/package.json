@@ -2,7 +2,7 @@
   "name": "podcasts/raw-graphics/1-vulkan",
   "author": "Alain Galvan",
   "description": "A podcast all about graphics: real time rendering, art, raytracing, gpgpu computing, and machine learning.",
-  "main": "main.ts",
+  "main": "index.mp3",
   "keywords": [
     "podcast",
     "podcasts",

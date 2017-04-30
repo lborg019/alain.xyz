@@ -2,7 +2,7 @@
   "name": "blog/unity-engine-architecture",
   "author": "Alain Galvan",
   "description": "A high level overview of Unity 3D's Engine Architecture.",
-  "tags": [
+  "keywords": [
     "blog",
     "unity",
     "engine",
