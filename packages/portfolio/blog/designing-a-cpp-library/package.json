@@ -2,7 +2,7 @@
   "name": "blog/designing-a-cpp-library",
   "description": "What should you do to create an easy to consume C++ library?",
   "main": "index.md",
-  "tags": [
+  "keywords": [
     "blog",
     "javascript",
     "js",
@@ -14,7 +14,7 @@
   ],
   "foil": {
     "title": "Designing a C++ Library",
-    "main": "../main.tsx",
+    "main": "blog/main.js",
     "datePublished": "2016-10-01T00:30:00.000Z"
   }
 }

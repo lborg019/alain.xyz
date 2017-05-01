@@ -17,14 +17,14 @@ export default class BlogPost extends React.Component<any, any> {
     if (!this.props.config)
       return null;
 
-    let { title, description, cover, meta, datePublished, tags, data } = this.props.config;
+    let { title, description, image, meta, datePublished, keywords, data } = this.props.config;
 
     let date = new Date(datePublished);
     return (
       <div ref={r => this.root = r} style={styles.root}>
         <figure style={{
           ...styles.figure,
-          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '15vh' : '45vh' }, rgba(33,37,43,1)), url(${cover})`,
+          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '15vh' : '45vh' }, rgba(33,37,43,1)), url(${image})`,
 		      left: window && innerWidth < 1024 ? 0 : -350
         }} />
         <section style={{

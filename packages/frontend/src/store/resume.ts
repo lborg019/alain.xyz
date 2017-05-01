@@ -44,7 +44,6 @@ export default {
   experience: [{
     position: 'Graduate Graphics Research Assistant',
     company: 'Florida International University',
-    cover: '',
     startTime: new Date('06/06/2013'),
     endTime: '',
     description: "I'm responsible for creating an Unreal Engine 4 research project adding a procedurally generated skybox system and Windows 8 multitouch support. This project was further developed into a gesture elicitation experiment system, as well as a paper published to a conference. In addition, I serve as a Teacher's Assistant for Web Application Development creating assignments/exams/grading, and give workshops on Khronos Standards (OpenGL, OpenCL, WebGL, WebCL), Unreal Engine 4, HTML5 and Node.js."

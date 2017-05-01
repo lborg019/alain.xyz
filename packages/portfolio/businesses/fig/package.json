@@ -1,0 +1,13 @@
+{
+  "name": "businesses/fig",
+  "description": "An open source IOT company.",
+  "main": "index.md",
+  "keywords": [
+    "company"
+  ],
+  "foil": {
+    "title": "Fig",
+    "main": "blog/main.js",
+    "datePublished": "2016-09-01T00:30:00.000Z"
+  }
+}

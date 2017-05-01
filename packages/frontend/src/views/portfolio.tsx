@@ -29,13 +29,13 @@ export class Portfolio extends React.Component<Props, any> {
     category = category.substr(1, category.length);
     this.setState(() => ({ category }));
 
-    this.props.fetchSubapp({ tags: [category] });
+    this.props.fetchSubapp({ keywords: [category] });
   }
 
   render() {
     let { category } = this.state;
     let { portfolio } = this.props;
-    let blog = portfolio.filter((post) => post.tags.indexOf(category) !== -1);
+    let blog = portfolio.filter((post) => post.keywords.indexOf(category) !== -1);
     let [first, ...rest] = blog;
     let a = [];
 
@@ -53,12 +53,12 @@ export class Portfolio extends React.Component<Props, any> {
   }
 }
 
-const Post = ({ cover, title, description, permalink, datePublished, tags, style = {} }) => {
+const Post = ({ image, title, description, permalink, datePublished, keywords, style = {} }) => {
 
   let date = new Date(datePublished);
 
   return (
-    <Link to={permalink} style={{ ...style, backgroundImage: `url('${cover}')` }}>
+    <Link to={permalink} style={{ ...style, backgroundImage: `url('${image}')` }}>
       <section style={{
         backgroundImage: 'linear-gradient(rgba(33, 37, 43, 0), rgba(33, 37, 43, .5) 40%, rgb(33, 37, 43))', 
         width: '100%', 

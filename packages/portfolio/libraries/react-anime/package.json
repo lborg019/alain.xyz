@@ -13,6 +13,7 @@
   "homepage": "https://hyperfuse.github.io/react-anime",
   "alainxyz": {
     "title": "React Anime",
+    "main": "blog/main.js",
     "badges": [{
         "name": "npm",
         "url": "https://www.npmjs.com/package/react-anime"

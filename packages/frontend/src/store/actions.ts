@@ -3,7 +3,7 @@ import { transport, checkHttpStatus, parseJSON } from './utils';
 export type APIRequest = {
   permalink?: string,
   data?: boolean,
-  tags?: string[],
+  keywords?: string[],
   meta?: {
     likes?: number,
     views?: number,
@@ -17,7 +17,7 @@ export type APIResponse = {
   description: string,
   main: string,
   data: string,
-  tags: string[],
+  keywords: string[],
   datePublished: Date,
   dateModified: Date,
   meta?: {

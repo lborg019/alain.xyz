@@ -12,8 +12,8 @@ export type APISanitized = {
   limit: number,
   // Find post with this exact permalink
   permalink?: string | RegExp,
-  // Find posts where these tags are present
-  tags?: {
+  // Find posts where these keywords are present
+  keywords?: {
     $in: string[]
   }
 }
@@ -24,7 +24,7 @@ export type APISanitized = {
 export type APIRequest = {
   permalink?: string,
   data?: boolean,
-  tags?: string[]
+  keywords?: string[]
 }
 
 /**
@@ -35,7 +35,7 @@ function sanitize(reqBody): APISanitized {
     skip,
     limit,
     permalink,
-    tags
+    keywords
   } = reqBody;
 
   let inRange = (v, a, b, def) => (v > a && v < b) ? v : def;
@@ -61,7 +61,7 @@ function sanitize(reqBody): APISanitized {
       skip: inRange(skip, 0, 1000, 0),
       limit: inRange(limit, 1, 30, 15),
       permalink: makeRegexPath(permalink),
-      tags: isArray(tags)
+      keywords: isArray(keywords)
     };
 
     // Remove Undefined Keys
@@ -110,7 +110,7 @@ export default (req: Request, res: Response) => {
       description: 1,
       cover: 1,
       meta: 1,
-      tags: 1,
+      keywords: 1,
       data: 1,
       main: 1,
       datePublished: 1,

@@ -1,6 +1,7 @@
 {
   "name": "blog/raw-opengl",
   "description": "An overview on how to write modern OpenGL applications.",
+  "main": "index.md",
   "keywords": [
     "blog",
     "opengl"
@@ -8,6 +9,7 @@
   "foil": {
     "title": "Raw OpenGL",
     "datePublished": "2020-02-10T00:36:34.267Z",
+    "main": "blog/main.js",
     "references": {
       "opendotgl": {
         "title": "Open.GL",
@@ -20,6 +22,6 @@
           "url": "https://open.gl/"
         }]
       }
-    } 
+    }
   }
 }

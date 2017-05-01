@@ -21,7 +21,7 @@ for (var song of songs) {
             let query = { file: song };
             /* 
             let entry = {
-                cover: getCover(song, answers.permalink),
+                image: getCover(song, answers.permalink),
                 content: answers.permalink + '.mp3',
                 mtime: fs.statSync(song).mtime,
                 file: song

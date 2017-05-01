@@ -399,7 +399,7 @@ uint32_t myFunction() {
 // If there's no args in the function, you can omit the ()
 auto lambda = []()
 {
-    return null;
+    return nullptr;
 };
 
 ```
@@ -453,7 +453,7 @@ std::array<uint32_t, 5> arr = { 1, 2, 3, 4, 5 };
 // Rest operator isn't available
 auto [first, second, third] = arr;
 
-// Object Destructuring isn't avaiable either
+
 ```
 
 Rust has intuitive destructuring for Structs and arrays:
