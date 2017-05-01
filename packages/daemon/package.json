@@ -6,6 +6,7 @@
   "author": "Alain Galvan",
   "license": "MIT",
   "scripts": {
-    "start": ""
+    "postinstall": "npm start",
+    "start": "cargo run --release"
   }
 }

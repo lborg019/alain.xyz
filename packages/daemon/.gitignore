@@ -1,0 +1,3 @@
+secret.json
+target
+!target/release/daemon
