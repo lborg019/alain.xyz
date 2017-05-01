@@ -15,7 +15,7 @@
   "main": "index.md",
   "foil": {
     "title": "Raw Vulkan",
-    "main": "../main.tsx",
+    "main": "blog/main.js",
     "datePublished": "2016-12-15T00:30:00.000Z",
     "references": {
       "vulkanonnvidia": {

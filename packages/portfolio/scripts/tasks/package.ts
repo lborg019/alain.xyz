@@ -53,11 +53,11 @@ async function buildPackage() {
         main,
         title,
         datePublished,
-        image = getCover(file, permalink)
+        image,
       } = foil;
 
       // For every foil file in the package, check if it's modified
-      let fileList = [file].map(f => path.resolve(path.join(pack, '..'), f));
+      let fileList = [file].map(f => path.join(pack, '..', f));
 
       for (let file of fileList) {
 
@@ -72,7 +72,8 @@ async function buildPackage() {
             dateModified: fs.statSync(file).mtime,
             file,
             permalink: '/' + permalink,
-            image,
+            image: getCover(file, permalink),
+            main,
             authors: [author]
           };
 
@@ -148,7 +149,7 @@ async function compile(foil) {
   for (let rule of rules) {
     // @TODO - Replace with deep comparison
     let compare = Object.keys(rule).reduce((prev, cur) => {
-      let reg = new RegExp(rule[cur]);
+      let reg = new RegExp(rule.test[cur]);
       return prev && reg.test(foil[cur]);
     }, true);
 
@@ -156,7 +157,6 @@ async function compile(foil) {
       return rule.loader(foil);
     }
   }
-
   return foil;
 }
 
@@ -167,9 +167,8 @@ async function writeToDb(foil) {
   await database.then(async db => {
 
     var portfolioCollection = db.collection('portfolio');
+
     var redirectCollection = db.collection('redirect');
-
-
 
     // Index all files in permalink namespace.
 

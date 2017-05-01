@@ -24,7 +24,7 @@
         "name": "unreal"
       }
     ],
-    "main": "../main.tsx",
+    "main": "blog/main.js",
     "datePublished": "2017-03-18T09:30:00.000Z"
   }
 }
