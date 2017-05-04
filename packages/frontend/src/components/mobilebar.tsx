@@ -53,7 +53,7 @@ const styles = {
     stroke: '#fff',
     strokeWidth: 2,
     strokeMiterlimit: 10
-  }
+  },
   logo: {
     height: 48,
     transform: 'translateY(1em)'
