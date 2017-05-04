@@ -13,8 +13,8 @@
     "url": "https://github.com/alaingalvan/alain.xyz.git"
   },
   "scripts": {
-    "develop": "set DEBUG=express:* & set NODE_ENV=development & ts-node -F -D src/main.ts",
-    "start": "set DEBUG=false & set NODE_ENV=production & ts-node -F -D src/main.ts&"
+    "develop": "cross-env DEBUG=express:* & cross-env NODE_ENV=development & ts-node -F -D src/main.ts",
+    "start": "cross-env DEBUG=false & cross-env NODE_ENV=production & ts-node -F -D src/main.ts&"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +29,7 @@
     "alain-xyz-frontend": "^0.5.0",
     "body-parser": "^1.17.1",
     "compression": "^1.6.2",
+    "cross-env": "4.0.0",
     "express": "^4.15.2",
     "helmet": "^3.5.0",
     "mongodb": "^2.2.26",

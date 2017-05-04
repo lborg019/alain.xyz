@@ -134,7 +134,7 @@ if (!argv.reduce((prev, cur) => prev || (cur === '--watch'), false)) {
     if (err)
       return console.error(err);
     else
-      console.log('✔️️ Frontend Compiled Successfully.')
+      console.log('✔️️ Frontend Compiled Successfully. %s', isProduction ? 'Production build outputed.': 'Dev build outputed.')
   });
 }
 else {

@@ -12,16 +12,20 @@
   version "0.4.31"
   resolved "https://registry.yarnpkg.com/@types/chalk/-/chalk-0.4.31.tgz#a31d74241a6b1edbb973cf36d97a2896834a51f9"
 
-"@types/mongodb@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-2.2.0.tgz#715adcf0e1d615f2f3100d3b879124e799fe1b4c"
+"@types/mongodb@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-2.2.2.tgz#3edd247936c2fdb4e1cbeca6a0affec9fa656b56"
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^7.0.14":
+"@types/node@*":
   version "7.0.14"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.14.tgz#1470fa002a113316ac9d9ad163fc738c7a0de2a4"
+
+"@types/node@^7.0.16":
+  version "7.0.16"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.16.tgz#e3440e3ce4d4931616ac418cc4dc16cd94b80092"
 
 "@types/react-redux@^4.4.40":
   version "4.4.40"
@@ -817,9 +821,9 @@ traverse-chain@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/traverse-chain/-/traverse-chain-0.1.0.tgz#61dbc2d53b69ff6091a12a168fd7d433107e40f1"
 
-ts-node@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-3.0.2.tgz#cfc9516c831b920d7efbe16005915062b1294f8c"
+ts-node@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-3.0.3.tgz#2ffa0f371915cc8aa13b78ea42b4c0de42aeb0d5"
   dependencies:
     arrify "^1.0.0"
     chalk "^1.1.1"
@@ -843,9 +847,9 @@ typescript@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.0.tgz#626f2fc70087d2480f21ebb12c1888288c8614e3"
 
-typescript@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.1.tgz#e3361fb395c6c3f9c69faeeabc9503f8bdecaea1"
+typescript@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.2.tgz#f0f045e196f69a72f06b25fd3bd39d01c3ce9984"
 
 uglify-js@^2.6.1:
   version "2.7.5"

@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Icon } from './icon';
 import { tabletQuery, mobileQuery } from '../store';
 
-//@connect(
-//  ({ portfolio }) => ({ portfolio })
-//)
+@connect(
+  ({ portfolio }) => ({ portfolio })
+)
 export class Slideshow extends React.Component<any, any> {
   state = {
     index: 0,
