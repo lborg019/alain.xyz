@@ -7,7 +7,7 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
-use nickel::{Nickel, HttpRouter, MediaType, Response};
+use nickel::{Nickel, HttpRouter};
 use nickel::status::StatusCode;
 use std::process::Command;
 
