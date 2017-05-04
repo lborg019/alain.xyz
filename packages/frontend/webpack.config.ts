@@ -45,7 +45,7 @@ let config = {
         options: {
           transpileOnly: true,
           compilerOptions: {
-            module: 'es2015'
+            module: 'commonjs'
           }
         }
       },
