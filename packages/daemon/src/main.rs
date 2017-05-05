@@ -20,13 +20,11 @@ fn main() {
 
     let mut server = Nickel::new();
 
-
-
     // Load the secret from ./secret.json
     let config: Secret = serde_json::from_str(include_str!("secret.json"))
         .expect("secret.json requires a 'secret' key that matches github repo!");
 
-    server.post("/", middleware! { | req, mut res | {
+    server.post("**", middleware! { | req, mut res | {
       
       // Check if the Github secret exists
       let header = match req.origin.headers.get_raw("X-GitHub-Delivery") {
@@ -43,8 +41,8 @@ fn main() {
       let data = match req.param("ref") {
           Some(r) => r,
           None => return {
-                          res.set(StatusCode::BadRequest);
-              res.send("")
+              res.set(StatusCode::BadRequest);
+              res.send("\{ \"error\": \"ref parameter is missing!\" \}")
           }
       };
 
@@ -53,13 +51,13 @@ fn main() {
           if data == "refs/heads/master" {
             Command::new("git pull && cd ../ && cd portfolio && npm start")
                         .output()
-                .expect("Failed to execute process");
+                .expect("Failed to pull from git!");
           }
       }
       else {
           return {
               res.set(StatusCode::BadRequest);
-              res.send("")
+              res.send("\{ \"error\": \"Github secret doesn't match local secret!\" \}")
           }
       }
                 }
