@@ -14,8 +14,8 @@
   "dependencies": {
     "@types/chalk": "^0.4.31",
     "@types/mongodb": "^2.2.2",
-    "@types/node": "^7.0.16",
-    "@types/react": "^15.0.23",
+    "@types/node": "^7.0.18",
+    "@types/react": "^15.0.24",
     "@types/react-redux": "^4.4.40",
     "@types/redux": "^3.6.0",
     "@types/rss": "^0.0.27",
@@ -27,7 +27,7 @@
     "plugin-typescript": "git+https://github.com/alaingalvan/plugin-typescript.git",
     "rss": "^1.2.2",
     "systemjs-builder": "^0.16.4",
-    "ts-node": "^3.0.3",
+    "ts-node": "^3.0.4",
     "typescript": "^2.3.2"
   }
 }
