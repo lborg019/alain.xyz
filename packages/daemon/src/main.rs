@@ -42,7 +42,7 @@ fn main() {
           Some(r) => r,
           None => return {
               res.set(StatusCode::BadRequest);
-              res.send("\{ \"error\": \"ref parameter is missing!\" \}")
+              res.send("{{ \"error\": \"ref parameter is missing!\" }}")
           }
       };
 
@@ -57,12 +57,12 @@ fn main() {
       else {
           return {
               res.set(StatusCode::BadRequest);
-              res.send("\{ \"error\": \"Github secret doesn't match local secret!\" \}")
+              res.send("{{ \"error\": \"Github secret doesn't match local secret!\" }}")
           }
       }
                 }
       res.set(StatusCode::Ok);
-      format!("")
+      format!("{{}}")
       
     });
 
