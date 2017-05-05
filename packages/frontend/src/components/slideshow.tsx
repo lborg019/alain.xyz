@@ -140,7 +140,7 @@ const styles = {
     position: 'relative',
     zIndex: 1,
     left: -350,
-    backgroundSize: 'image',
+    backgroundSize: 'cover',
     backgroundPosition: 'center'
   },
   h1: {
