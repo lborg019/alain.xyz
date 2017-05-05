@@ -72,7 +72,7 @@ async function buildPackage() {
             dateModified: fs.statSync(file).mtime,
             file,
             permalink: '/' + permalink,
-            image: getCover(file, permalink),
+            image: '/' + getCover(file, permalink),
             main,
             authors: [author]
           };

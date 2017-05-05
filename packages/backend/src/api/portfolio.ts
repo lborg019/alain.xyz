@@ -102,31 +102,32 @@ export default (req: Request, res: Response) => {
 
   database.then(
     db => {
-    let c = db.collection('portfolio');
+      let c = db.collection('portfolio');
 
-    let projection = {
-      permalink: 1,
-      title: 1,
-      description: 1,
-      image: 1,
-      meta: 1,
-      keywords: 1,
-      data: 1,
-      main: 1,
-      datePublished: 1,
-      dateModified: 1
-    }
+      let projection = {
 
-    let data = c.find(query, projection)
-      .sort({
-        datePublished: -1
-      })
-      .skip(apiReq.skip)
-      .limit(apiReq.limit)
-      .toArray((err, data) => {
-        if (err || data.length === 0)
-          return failure();
-        success(data);
-      });
-  });
+        title: 1,
+        description: 1,
+        keywords: 1,
+        datePublished: 1,
+        dateModified: 1,
+        permalink: 1,
+        image: 1,
+        main: 1,
+        authors: 1,
+        data: 1,
+      }
+
+      let data = c.find(query, projection)
+        .sort({
+          datePublished: -1
+        })
+        .skip(apiReq.skip)
+        .limit(apiReq.limit)
+        .toArray((err, data) => {
+          if (err || data.length === 0)
+            return failure();
+          success(data);
+        });
+    });
 }
