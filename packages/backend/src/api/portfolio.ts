@@ -108,7 +108,7 @@ export default (req: Request, res: Response) => {
       permalink: 1,
       title: 1,
       description: 1,
-      cover: 1,
+      image: 1,
       meta: 1,
       keywords: 1,
       data: 1,
