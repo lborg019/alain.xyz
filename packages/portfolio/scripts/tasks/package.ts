@@ -73,7 +73,7 @@ async function buildPackage() {
             file,
             permalink: '/' + permalink,
             image: '/' + getCover(file, permalink),
-            main,
+            main: '/' + main,
             authors: [author]
           };
 
