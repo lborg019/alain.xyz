@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
+
 import { Home, Portfolio, Subapp, About, Blog, NotFound } from './views';
-import { Slideshow } from './components/slideshow';
+import { Slideshow } from './components';
 
 const App = (
   <div>

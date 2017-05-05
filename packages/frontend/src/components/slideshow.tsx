@@ -155,5 +155,3 @@ const styles = {
     paddingTop: '.5em'
   }
 }
-
-export default Slideshow;
