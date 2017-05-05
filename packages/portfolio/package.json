@@ -28,6 +28,6 @@
     "rss": "^1.2.2",
     "systemjs-builder": "^0.16.4",
     "ts-node": "^3.0.4",
-    "typescript": "^2.3.2"
+    "typescript": "^2.2.1"
   }
 }

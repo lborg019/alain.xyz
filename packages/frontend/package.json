@@ -39,7 +39,7 @@
     "style-loader": "^0.17.0",
     "ts-loader": "^2.0.3",
     "ts-node": "^3.0.4",
-    "typescript": "^2.3.2",
+    "typescript": "^2.2.1",
     "webpack": "^2.5.0",
     "webpack-systemjs-export-plugin": "git+ssh://git@github.com/alaingalvan/webpack-systemjs-export-plugin.git"
   },
