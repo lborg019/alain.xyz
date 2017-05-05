@@ -109,7 +109,7 @@ const slideshow = [
     title: 'Celestial Rendering for 3D Navigation',
     description: 'Realtime Stary Skies for PBR Environments with Animated Radiance Maps',
     keywords: ['research'],
-    permalink: 'https://github.com/OpenHID/realtime-celestial-rendering'
+    permalink: 'https://alain.xyz/research/realtime-celestial-rendering'
   },
   {
     image: 'assets/brand/website-screenshot.jpg',
