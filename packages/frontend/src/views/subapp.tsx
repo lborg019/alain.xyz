@@ -20,7 +20,7 @@ import { transport } from '../store/utils';
         failure: bindActionCreators(failure, dispatch)
     })
 )
-export class Subapp extends React.Component<SubappProps, SubappState> {
+export class Subapp extends React.Component<any, SubappState> {
 
     static defaultProps = {
         portfolio: [],
