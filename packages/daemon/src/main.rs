@@ -30,7 +30,7 @@ fn main() {
             // Check if the Github secret exists
             let header = match req.headers.get_raw("X-GitHub-Delivery") {
                 Some(h) => h.get(0).unwrap().to_vec(),
-                None => return Ok(Response::with(status::NotFound)),
+                None => return Ok(Response::with(status::NotFound, "Missing Github Header.")),
             };
 
             let github_header = String::from_utf8(header).unwrap();
@@ -38,7 +38,7 @@ fn main() {
             // Check if the commit was to the master branch
             let data = match req.get::<bodyparser::Struct<APIRequest>>() {
                 Ok(r) => r.unwrap(),
-                Err(_) => return Ok(Response::with(status::NotFound)),
+                Err(_) => return Ok(Response::with(status::NotFound, "Couldn't deserialize API request.")),
             };
 
             // Check if local and request secret matches
@@ -49,7 +49,7 @@ fn main() {
                         .expect("Failed to pull from git!");
                 }
             } else {
-                return Ok(Response::with(status::NotFound));
+                return Ok(Response::with(status::NotFound, "Github header secret didn't match config secret."));
             }
 
             Ok(Response::with((status::Ok)))
