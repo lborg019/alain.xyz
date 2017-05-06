@@ -1,71 +1,59 @@
-#[macro_use]
-extern crate nickel;
-extern crate rustc_serialize;
-
+extern crate iron;
+extern crate bodyparser;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
-use nickel::{Nickel, HttpRouter};
-use nickel::status::StatusCode;
+use iron::prelude::*;
+use iron::status;
 use std::process::Command;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Deserialize)]
 struct Secret {
     secret: String,
 }
 
-fn main() {
+#[derive(Clone, Deserialize)]
+struct APIRequest {
+    #[serde(rename = "ref")]
+    refs: String,
+}
 
-    let mut server = Nickel::new();
+fn main() {
 
     // Load the secret from ./secret.json
     let config: Secret = serde_json::from_str(include_str!("secret.json"))
         .expect("secret.json requires a 'secret' key that matches github repo!");
 
-    server.post("**", middleware! { | req, mut res | {
-      
-      // Check if the Github secret exists
-      let header = match req.origin.headers.get_raw("X-GitHub-Delivery") {
-          Some(h) => h.get(0).unwrap().to_vec(),
-          None => return {
-              res.set(StatusCode::BadRequest);
-              res.send("")
-          }
-      };
+    Iron::new(move |req: &mut Request| {
+            // Check if the Github secret exists
+            let header = match req.headers.get_raw("X-GitHub-Delivery") {
+                Some(h) => h.get(0).unwrap().to_vec(),
+                None => return Ok(Response::with(status::NotFound)),
+            };
 
-      let github_header = String::from_utf8(header).unwrap();
+            let github_header = String::from_utf8(header).unwrap();
 
-      // Check if the commit was to the master branch
-      let data = match req.param("ref") {
-          Some(r) => r,
-          None => return {
-              res.set(StatusCode::BadRequest);
-              res.send("{{ \"error\": \"ref parameter is missing!\" }}")
-          }
-      };
+            // Check if the commit was to the master branch
+            let data = match req.get::<bodyparser::Struct<APIRequest>>() {
+                Ok(r) => r.unwrap(),
+                Err(_) => return Ok(Response::with(status::NotFound)),
+            };
 
-      // Check if local and request secret matches
-      if github_header == config.secret {
-          if data == "refs/heads/master" {
-            Command::new("git pull && cd ../ && cd portfolio && npm start")
+            // Check if local and request secret matches
+            if github_header == config.secret {
+                if data.refs == "refs/heads/master" {
+                    Command::new("git pull && cd ../ && cd portfolio && npm start")
                         .output()
-                .expect("Failed to pull from git!");
-          }
-      }
-      else {
-          return {
-              res.set(StatusCode::BadRequest);
-              res.send("{{ \"error\": \"Github secret doesn't match local secret!\" }}")
-          }
-      }
+                        .expect("Failed to pull from git!");
                 }
-      res.set(StatusCode::Ok);
-      format!("{{}}")
-      
-    });
+            } else {
+                return Ok(Response::with(status::NotFound));
+            }
 
-    server.listen("localhost:3030")
-        .expect("Couldn't start Daemon...");
+            Ok(Response::with((status::Ok)))
+        })
+        .http("localhost:3030")
+        .unwrap();
 }
