@@ -11,8 +11,6 @@ use iron::status;
 use crypto::mac::Mac;
 use serde_json::from_str;
 use std::process::Command;
-use std::io::Read;
-
 
 #[derive(Clone, Deserialize)]
 struct Secret {
@@ -43,11 +41,10 @@ fn main() {
             // Compare HMAC of body to header signature.
             let mut hmac = crypto::hmac::Hmac::new(crypto::sha2::Sha256::new(),
                                                    config.secret.as_bytes());
-            let mut payload_buf = vec![0u8; 1024 * 20];
-            let payload_size = &req.body.read(&mut payload_buf).unwrap();
-            let payload_str = String::from_utf8(payload_buf.to_vec()).unwrap();
 
-            hmac.input(&payload_buf);
+            let payload_str = req.get::<bodyparser::Raw>().unwrap().unwrap();
+
+            hmac.input(payload_str.as_bytes());
             let result = hmac.result();
             let computed_secret = result.code();
 
