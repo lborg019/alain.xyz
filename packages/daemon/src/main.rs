@@ -28,7 +28,7 @@ fn main() {
 
     Iron::new(move |req: &mut Request| {
             // Check if the Github secret exists
-            let header = match req.headers.get_raw("X-GitHub-Delivery") {
+            let header = match req.headers.get_raw("X-Hub-Signature") {
                 Some(h) => h.get(0).unwrap().to_vec(),
                 None => return Ok(Response::with((status::NotFound, "Missing Github Header."))),
             };
