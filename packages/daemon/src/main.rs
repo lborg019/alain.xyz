@@ -4,10 +4,13 @@ extern crate bodyparser;
 extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
+extern crate crypto;
 
 use iron::prelude::*;
 use iron::status;
+use crypto::mac::Mac;
 use std::process::Command;
+use std::io::Read;
 
 #[derive(Clone, Deserialize)]
 struct Secret {
@@ -21,35 +24,57 @@ struct APIRequest {
 }
 
 fn main() {
-
     // Load the secret from ./secret.json
     let config: Secret = serde_json::from_str(include_str!("secret.json"))
         .expect("secret.json requires a 'secret' key that matches github repo!");
 
+
     Iron::new(move |req: &mut Request| {
+
             // Check if the Github secret exists
-            let header = match req.headers.get_raw("X-Hub-Signature") {
-                Some(h) => h.get(0).unwrap().to_vec(),
+            let headers = req.headers.clone();
+            let header = match headers.get_raw("X-Hub-Signature") {
+                Some(h) => h.get(0).unwrap(),
                 None => return Ok(Response::with((status::NotFound, "Missing Github Header."))),
             };
 
-            let github_header = String::from_utf8(header).unwrap();
+            // Compare HMAC of body to header signature.
+            let mut hmac = crypto::hmac::Hmac::new(crypto::sha2::Sha256::new(),
+                                                   config.secret.as_bytes());
+            let mut payload_buf = vec![0u8; 1024 * 20];
+            let payload_size = &req.body.read(&mut payload_buf).unwrap();
 
-            // Check if the commit was to the master branch
+            if payload_size > &(1024 * 20) {
+                return Ok(Response::with((status::NotFound, "Payload too big!")));
+            }
+            hmac.input(&payload_buf);
+            let result = hmac.result();
+            let computed_secret = result.code();
+
+            // Get APIRequest 
             let data = match req.get::<bodyparser::Struct<APIRequest>>() {
                 Ok(r) => r.unwrap(),
-                Err(_) => return Ok(Response::with((status::NotFound, "Couldn't deserialize API request."))),
+                Err(_) => {
+                    return Ok(Response::with((status::NotFound,
+                                              "Couldn't deserialize API request.")))
+                }
             };
 
+            let computed_str = String::from_utf8(computed_secret.to_vec()).unwrap();
+            let header_str = String::from_utf8(header.to_vec()).unwrap();
+
+            println!("{:?} {:?}", header_str, computed_str);
+
             // Check if local and request secret matches
-            if github_header == config.secret {
+            if header_str == computed_str {
                 if data.refs == "refs/heads/master" {
                     Command::new("git pull && cd ../ && cd portfolio && npm start")
                         .output()
                         .expect("Failed to pull from git!");
                 }
             } else {
-                return Ok(Response::with((status::NotFound, "Github header secret didn't match config secret.")));
+                return Ok(Response::with((status::NotFound,
+                                          "Github header secret didn't match config secret.")));
             }
 
             Ok(Response::with((status::Ok)))
