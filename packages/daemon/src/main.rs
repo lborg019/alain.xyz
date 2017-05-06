@@ -9,8 +9,10 @@ extern crate crypto;
 use iron::prelude::*;
 use iron::status;
 use crypto::mac::Mac;
+use serde_json::from_str;
 use std::process::Command;
 use std::io::Read;
+
 
 #[derive(Clone, Deserialize)]
 struct Secret {
@@ -43,17 +45,15 @@ fn main() {
                                                    config.secret.as_bytes());
             let mut payload_buf = vec![0u8; 1024 * 20];
             let payload_size = &req.body.read(&mut payload_buf).unwrap();
+            let payload_str = String::from_utf8(payload_buf.to_vec()).unwrap();
 
-            if payload_size > &(1024 * 20) {
-                return Ok(Response::with((status::NotFound, "Payload too big!")));
-            }
             hmac.input(&payload_buf);
             let result = hmac.result();
             let computed_secret = result.code();
 
             // Get APIRequest 
-            let data = match req.get::<bodyparser::Struct<APIRequest>>() {
-                Ok(r) => r.unwrap(),
+            let data: APIRequest = match from_str(&payload_str) {
+                Ok(r) => r,
                 Err(_) => {
                     return Ok(Response::with((status::NotFound,
                                               "Couldn't deserialize API request.")))
