@@ -1,9 +1,9 @@
-use std;
+use std::io::{Error, ErrorKind};
 
 pub trait FromHex {
     /// Converts the value of `self`, interpreted as hexadecimal encoded data,
     /// into an owned vector of bytes, returning the vector.
-    fn from_hex(&self) -> Result<Vec<u8>, std::io::Error>;
+    fn from_hex(&self) -> Result<Vec<u8>, Error>;
 }
 
 impl FromHex for str {
@@ -32,7 +32,7 @@ impl FromHex for str {
     ///     println!("{}", result_str);
     /// }
     /// ```
-    fn from_hex(&self) -> Result<Vec<u8>, std::io::Error> {
+    fn from_hex(&self) -> Result<Vec<u8>, Error> {
         // This may be an overestimate if there is any whitespace
         let mut b = Vec::with_capacity(self.len() / 2);
         let mut modulus = 0;
@@ -51,7 +51,7 @@ impl FromHex for str {
                 }
                 _ => {
                     let ch = self[idx..].chars().next().unwrap();
-                    return Err(std::io::Error::new(std::io::ErrorKind::Other,
+                    return Err(Error::new(ErrorKind::Other,
                                                    "couldn't parse hex"));
                 }
             }
@@ -65,7 +65,7 @@ impl FromHex for str {
 
         match modulus {
             0 => Ok(b.into_iter().collect()),
-            _ => Err(std::io::Error::new(std::io::ErrorKind::Other, "couldn't parse hex")),
+            _ => Err(Error::new(ErrorKind::Other, "couldn't parse hex")),
         }
     }
 }

@@ -1,10 +1,10 @@
 # [Alain.xyz](https://alain.xyz) Daemon
 
-A service that automatically updates the server from github push events.
+A **Continuous Delivery** service that automatically updates the server from github push events.
 
 ## How It Works
 
-This repo receives push events at `http://github.alain.xyz`, a route that's mapped by nginx to this Daemon.
+Github sends a push event to an endpoint on `https://alain.xyz/api/v1/github`, which is mapped to the daemon on nginx.
 
 ```nginx
 location /api/v1/github {
@@ -17,8 +17,10 @@ location /api/v1/github {
     }
 ```
 
-Which receives the events, and:
+The daemon in turn:
 
-1. `git pull` the repo.
-2. `lerna run build` to build bundles, populate database with changes.
-3. `npm start` to restart the server.
+1. Does an HMAC SHA1 check to verify that this was indeed github. 
+2. `git pull` the repo.
+3. `npm start` if the push event included files in the portfolio (by checking `head_commit.modified`).
+4. `pkill node && npm start` if the push event included files in the backend.
+5. `npm start` if the push event included files in the frontend.
