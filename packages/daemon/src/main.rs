@@ -76,7 +76,8 @@ fn main() {
                         .output()
                         .expect("Failed to pull from git!");
                     Command::new("npm")
-                        .env("PATH", env::current_dir().unwrap().join("../portfolio").canonicalize().unwrap())
+                        .arg("--prefix")
+                        .arg(env::current_dir().unwrap().join("../portfolio").canonicalize().unwrap())
                         .arg("start")
                         .output()
                         .expect("Failed to run NPM script!");
