@@ -6,16 +6,17 @@ The Mandelbrot Benchmark ([Gouy, Isaac. The Computer Benchmark Game](http://benc
 
 | Language | Sec | Memory (KB) |
 |---|---|---|
-| C | 1.64 | 29,588 |
-| Rust | 1.93 | 52,848 |
+| C | 1.65 | 29,588 |
+| C++ | 1.73 | 34,064 |
+| Rust | 1.89 | 52,848 |
 | Swift | 3.32 | 42,428 |
 | Go | 5.64 | 31,052 |
-| Java | 5.89 | 89,504 |
-| OCaml | 13.78 | 7,800 |
-| 🚩 *Node.js* | **17.35** | 616,024 |
+| Java | 7.10 | 90,588 |
+| OCaml | 13.76 | 8,240 |
+| 🚩 *Node.js* | **17.95** | 641,352 |
 | Dart | 20.51 | 111,732 |
-| Hack (PHP) | 125.28	 | 116,064 |
-| *Python* | 250.62 | **52,752** |
+| Hack (PHP) | 31.24 | 125,920 |
+| *Python* | 273.43	| **53,416** |
 | Ruby | 7 min | 69,656 |
 | Erlang | 8 min | 1,303,564 |
 
