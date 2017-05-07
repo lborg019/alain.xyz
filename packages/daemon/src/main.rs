@@ -6,11 +6,15 @@ extern crate serde;
 extern crate serde_json;
 extern crate crypto;
 
+mod hex;
+
 use iron::prelude::*;
 use iron::status;
 use crypto::mac::Mac;
 use serde_json::from_str;
 use std::process::Command;
+use std::env;
+use hex::FromHex;
 
 #[derive(Clone, Deserialize)]
 struct Secret {
@@ -28,7 +32,6 @@ fn main() {
     let config: Secret = serde_json::from_str(include_str!("secret.json"))
         .expect("secret.json requires a 'secret' key that matches github repo!");
 
-
     Iron::new(move |req: &mut Request| {
 
             // Check if the Github secret exists
@@ -38,18 +41,25 @@ fn main() {
                 None => return Ok(Response::with((status::NotFound, "Missing Github Header."))),
             };
 
-            // Compare HMAC of body to header signature.
-            let mut hmac = crypto::hmac::Hmac::new(crypto::sha2::Sha256::new(),
-                                                   config.secret.as_bytes());
+            // Create HMAC result handler from Hex value
+            let header_str = String::from_utf8(header.to_vec()).unwrap();
+            let header_split: Vec<&str> = header_str.split("sha1=").collect();
+            let result = crypto::mac::MacResult::new(&header_split[1].from_hex().unwrap());
 
-            let payload_str = req.get::<bodyparser::Raw>().unwrap().unwrap();
+            // Compare HMAC of body to header signature.
+            let mut hmac = crypto::hmac::Hmac::new(crypto::sha1::Sha1::new(),
+                                                   config.secret.as_bytes());
+            let payload_str = match req.get::<bodyparser::Raw>() {
+                Ok(Some(body)) => body,
+                Ok(None) => return Ok(Response::with((status::NotFound, "Missing Request Body."))),
+                Err(_) => return Ok(Response::with((status::NotFound, "UTF8 Error"))),
+            };
 
             hmac.input(payload_str.as_bytes());
-            let result = hmac.result();
-            let computed_secret = result.code();
+            let computed_result = hmac.result();
 
-            // Get APIRequest 
-            let data: APIRequest = match from_str(&payload_str) {
+            // Get APIRequest
+            let data: APIRequest = match from_str(&payload_str.as_str()) {
                 Ok(r) => r,
                 Err(_) => {
                     return Ok(Response::with((status::NotFound,
@@ -57,17 +67,23 @@ fn main() {
                 }
             };
 
-            let computed_str = String::from_utf8(computed_secret.to_vec()).unwrap();
-            let header_str = String::from_utf8(header.to_vec()).unwrap();
-
-            println!("{:?} {:?}", header_str, computed_str);
-
             // Check if local and request secret matches
-            if header_str == computed_str {
+            if computed_result == result {
+
                 if data.refs == "refs/heads/master" {
-                    Command::new("git pull && cd ../ && cd portfolio && npm start")
+                    Command::new("git")
+                        .arg("pull")
                         .output()
                         .expect("Failed to pull from git!");
+                    Command::new("npm")
+                        .env("PATH", env::current_dir().unwrap().canonicalize().unwrap().join("../portfolio"))
+                        .arg("start")
+                        .output()
+                        .expect("Failed to run NPM script!");
+                }
+                else {
+                    return Ok(Response::with((status::NotFound,
+                                              "Push was not to master branch.")))
                 }
             } else {
                 return Ok(Response::with((status::NotFound,
