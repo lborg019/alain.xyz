@@ -10,9 +10,10 @@
     "js"
   ],
   "homepage": "https://coronal.io",
-  "alainxyz": {
+  "foil": {
     "title": "Coronal",
     "main": "blog/main.js",
+    "datePublished": "2016-09-01T00:30:00.000Z",
     "badges": [
       {
         "name": "npm",

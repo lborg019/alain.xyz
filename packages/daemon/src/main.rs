@@ -25,6 +25,12 @@ struct Secret {
 struct APIRequest {
     #[serde(rename = "ref")]
     refs: String,
+    head_commit: HeadCommit
+}
+
+#[derive(Clone, Deserialize)]
+struct HeadCommit {
+    modified: Vec<String>
 }
 
 fn main() {
@@ -75,6 +81,9 @@ fn main() {
                         .arg("pull")
                         .output()
                         .expect("Failed to pull from git!");
+                
+                // @TODO - Depending on what's changed, update each package accordingly.
+                
                     Command::new("npm")
                         .arg("--prefix")
                         .arg(env::current_dir().unwrap().join("../portfolio").canonicalize().unwrap())

@@ -1,0 +1,24 @@
+{
+  "name": "podcasts/raw-graphics/1-2d-sprite-renderer",
+  "author": "Alain Galvan",
+  "description": "This episode we review the design patterns and concepts that go into creating a 2D sprite rendering system similar to HTML5 Canvas or Game Maker Studio.",
+  "main": "index.mp3",
+  "keywords": [
+    "podcast",
+    "podcasts",
+    "raw",
+    "graphics",
+    "machine",
+    "learning",
+    "gpgpu",
+    "game",
+    "engine",
+    "2d",
+    "sprite"
+  ],
+  "foill": {
+    "title": "2D Sprite Renderer",
+    "datePublished": "2017-05-10T00:30:00.000Z",
+    "references": {}
+  }
+}
