@@ -85,6 +85,16 @@ fn main() {
                         .output()
                         .expect("Failed to pull from git!");
 
+					Command::new("yarn")
+						.arg("--prefix")
+						.arg(env::current_dir()
+							.unwrap()
+							.join("../../")
+							.canonicalize()
+							.unwrap())
+						.output()
+						.expect("Failed to run yarn!");
+						
                     // Depending on what's changed, update each package accordingly.
                     let files: Vec<String> = data.commits
                         .into_iter()
