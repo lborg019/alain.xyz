@@ -25,12 +25,14 @@ struct Secret {
 struct APIRequest {
     #[serde(rename = "ref")]
     refs: String,
-    head_commit: HeadCommit
+    commits: Vec<Commit>,
 }
 
 #[derive(Clone, Deserialize)]
-struct HeadCommit {
-    modified: Vec<String>
+struct Commit {
+    added: Vec<String>,
+    removed: Vec<String>,
+    modified: Vec<String>,
 }
 
 fn main() {
@@ -77,30 +79,79 @@ fn main() {
             if computed_result == result {
 
                 if data.refs == "refs/heads/master" {
+
                     Command::new("git")
                         .arg("pull")
                         .output()
                         .expect("Failed to pull from git!");
-                
-                // @TODO - Depending on what's changed, update each package accordingly.
-                
-                    Command::new("npm")
-                        .arg("--prefix")
-                        .arg(env::current_dir().unwrap().join("../portfolio").canonicalize().unwrap())
-                        .arg("start")
-                        .output()
-                        .expect("Failed to run NPM script!");
-                }
-                else {
-                    return Ok(Response::with((status::NotFound,
-                                              "Push was not to master branch.")))
+
+                    // Depending on what's changed, update each package accordingly.
+                    let files: Vec<String> = data.commits
+                        .into_iter()
+                        .fold(vec![], |mut acc, commit| {
+                            acc.extend(commit.added.iter().cloned());
+                            acc.extend(commit.removed.iter().cloned());
+                            acc.extend(commit.modified.iter().cloned());
+                            acc
+                        });
+
+                    // Update Frontend
+                    if files.iter().fold(false, |acc, file| file.contains("/frontend/") || acc) {
+                        Command::new("npm")
+                            .arg("--prefix")
+                            .arg(env::current_dir()
+                                .unwrap()
+                                .join("../frontend")
+                                .canonicalize()
+                                .unwrap())
+                            .arg("start")
+                            .output()
+                            .expect("Failed to run NPM script!");
+                    }
+
+                    // Update Backend
+                    if files.iter().fold(false, |acc, file| file.contains("/backend/") || acc) {
+                        
+                        Command::new("pkill")
+                            .arg("node")
+                            .output()
+                            .expect("Failed to run proccess kill!");
+
+                        Command::new("npm")
+                            .arg("--prefix")
+                            .arg(env::current_dir()
+                                .unwrap()
+                                .join("../backend")
+                                .canonicalize()
+                                .unwrap())
+                            .arg("start")
+                            .output()
+                            .expect("Failed to run NPM script!");
+                    }
+
+                    // Update Portfolio
+                    if files.iter().fold(false, |acc, file| file.contains("/portfolio/") || acc) {
+                        Command::new("npm")
+                            .arg("--prefix")
+                            .arg(env::current_dir()
+                                .unwrap()
+                                .join("../portfolio")
+                                .canonicalize()
+                                .unwrap())
+                            .arg("start")
+                            .output()
+                            .expect("Failed to run NPM script!");
+                    }
+
+                } else {
+                    return Ok(Response::with((status::NotFound, "Push was not to master branch.")));
                 }
             } else {
                 return Ok(Response::with((status::NotFound,
                                           "Github header secret didn't match config secret.")));
             }
 
-            Ok(Response::with((status::Ok)))
+            Ok(Response::with((status::Ok, "Updated successfully.")))
         })
         .http("localhost:3030")
         .unwrap();

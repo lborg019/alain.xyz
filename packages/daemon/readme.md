@@ -19,8 +19,8 @@ location /api/v1/github {
 
 The daemon in turn:
 
-1. Does an HMAC SHA1 check to verify that this was indeed github. 
+1. Does an *HMAC SHA1* check to verify that this was indeed github. 
 2. `git pull` the repo.
-3. `npm start` if the push event included files in the portfolio (by checking `head_commit.modified`).
+3. `npm start` if the push event included files in the portfolio (by checking `commits`).
 4. `pkill node && npm start` if the push event included files in the backend.
 5. `npm start` if the push event included files in the frontend.
