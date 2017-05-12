@@ -98,21 +98,21 @@ export class Slideshow extends React.Component<any, any> {
 
 const slideshow = [
   {
-    image: 'assets/brand/hadley-attractor.png',
+    image: '/libraries/coronal/assets/cover.jpg',
     title: 'Coronal',
     description: 'An ES2017 WebGL2 Rendering Library',
     keywords: ['library'],
-    permalink: 'https://github.com/hyperfuse/coronal'
+    permalink: 'https://alain.xyz/libraries/coronal'
   },
   {
-    image: 'assets/brand/realtime-celestial-rendering.png',
+    image: '/research/realtime-celestial-rendering/assets/cover.jpg',
     title: 'Celestial Rendering for 3D Navigation',
     description: 'Realtime Stary Skies for PBR Environments with Animated Radiance Maps',
     keywords: ['research'],
     permalink: 'https://alain.xyz/research/realtime-celestial-rendering'
   },
   {
-    image: 'assets/brand/website-screenshot.jpg',
+    image: '/blog/the-making-of-alain-xyz/assets/cover.jpg',
     title: 'The Making of Alain.xyz',
     description: 'Design overview of the decisions in making this website.',
     keywords: ['blog'],
