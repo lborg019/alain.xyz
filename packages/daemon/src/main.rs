@@ -120,7 +120,7 @@ fn main() {
                     }
 
                     // Update Backend
-                    if files.iter().fold(false, |acc, file| file.contains("/backend/") || acc) {
+                    if files.iter().fold(false, |acc, file| file.contains("/backend/") || file.contains("/frontend/")  acc) {
                         
                         Command::new("pkill")
                             .arg("node")
