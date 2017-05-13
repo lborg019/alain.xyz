@@ -86,8 +86,7 @@ fn main() {
                         .expect("Failed to pull from git!");
 
 					Command::new("yarn")
-						.arg("--prefix")
-						.arg(env::current_dir()
+						.cwd(env::current_dir()
 							.unwrap()
 							.join("../../")
 							.canonicalize()
@@ -105,8 +104,15 @@ fn main() {
                             acc
                         });
 
+                       let (has_frontend, has_backend, has_portfolio) = files.iter().fold((false, false, false), |acc, file| 
+                       (
+                        file.contains("/frontend/") || acc.0,
+                        file.contains("/backend/") || acc.1,
+                        file.contains("/portfolio/") || acc.2)
+                        );
+
                     // Update Frontend
-                    if files.iter().fold(false, |acc, file| file.contains("/frontend/") || acc) {
+                    if has_frontend {
                         Command::new("npm")
                             .arg("--prefix")
                             .arg(env::current_dir()
@@ -120,8 +126,7 @@ fn main() {
                     }
 
                     // Update Backend
-                    if files.iter().fold(false, |acc, file| file.contains("/backend/") || file.contains("/frontend/") || acc) {
-                        
+                    if has_backend || has_frontend {
                         Command::new("pkill")
                             .arg("node")
                             .output()
@@ -140,7 +145,7 @@ fn main() {
                     }
 
                     // Update Portfolio
-                    if files.iter().fold(false, |acc, file| file.contains("/portfolio/") || acc) {
+                    if has_portfolio {
                         Command::new("npm")
                             .arg("--prefix")
                             .arg(env::current_dir()
