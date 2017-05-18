@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router';
 
-import { Home, Portfolio, Subapp, About, Blog, NotFound } from './views';
+import { Home, Subapp, About, Blog, NotFound } from './views';
 import { Slideshow } from './components';
 
 const App = (
@@ -18,12 +18,5 @@ const App = (
       </Home>)} />
   </div>
 );
-
-const categories = [
-  'portfolio',
-  'apps',
-  'libraries',
-  'research'
-]
 
 export default App;

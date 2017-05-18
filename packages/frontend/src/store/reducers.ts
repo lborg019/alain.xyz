@@ -39,11 +39,16 @@ export default createReducer(initialState, {
     FETCHED_SUBAPP: (state, payload: { req: APIRequest, res: APIResponse[] }) => {
 
         let portfolio = cachePortfoliosubapps(payload.res, state.portfolio);
+        let cur_permalink = payload.req.permalink;
+
+        if (typeof window !== 'undefined') {
+            cur_permalink = window.location.pathname;
+        }
 
         return {
             ...state,
             portfolio,
-            subapp: portfolio.find((subapp) => subapp.permalink === payload.req.permalink),
+            subapp: portfolio.find((subapp) => subapp.permalink === cur_permalink),
             fetchingSubapp: false
         };
     },

@@ -7,7 +7,7 @@
 import { red, cyan, green, gray } from 'chalk';
 import * as buildScripts from './tasks';
 
-(async () => {
+async function main() {
 
   // Start Build Process
   console.log(
@@ -27,13 +27,10 @@ import * as buildScripts from './tasks';
       console.log(`\n❌ ${red(`Failed Task (${i + 1}/${scripts.length})!`)}\n`);
       console.error(err);
     });
-    
-    
   }
   console.log('\n💮 ' + gray(`Finished processing ${scripts.length} tasks!\n`));
 
-  // Close process
-  process.exit();
+  return process.exit();
+};
 
-})();
-
+main();

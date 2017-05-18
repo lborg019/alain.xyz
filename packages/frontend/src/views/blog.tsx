@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Icon } from '../components';
+import { Icon, grid } from '../components';
 import { fetchSubapp } from '../store/actions';
 import { mobileQuery } from '../store'
 import { timeSince } from '../utils';
@@ -63,41 +63,11 @@ export class Blog extends React.Component<any, any> {
     let blog = portfolio.filter((post) => post.permalink.slice(0, 5) === '/blog');
     let [first, ...rest] = blog;
 
-    return (
-      <div style={styles.root}>
-        <div style={{...styles.article, padding: 0}}>
-          {first ? <BlogPost style={{ height: 480, width: '100%' }} {...first} /> : null}
-          {
-            rest.map((post, key) => <BlogPost style={{ width:  mobileQuery ? '100%' : '50%' }} key={key} {...post} />)
-          }
-        </div>
-      </div>);
+    return grid(BlogPost, blog);
   }
 }
 
 const styles = {
-  root: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    userSelect: 'none',
-    flexDirection: 'column',
-    color: '#fff'
-  },
-  rss: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '1em'
-  },
-  article: {
-    display: 'flex',
-    flex: '0 1 auto',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 1280
-  },
   blogPost: {
     display: 'flex',
     height: 280,

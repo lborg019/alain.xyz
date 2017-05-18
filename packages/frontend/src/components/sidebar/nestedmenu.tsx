@@ -9,17 +9,11 @@ export class NestedMenu extends React.Component<any, any> {
   static defaultProps = {
     structure: {
       about: 'about',
-/*      portfolio: {
-        //buisnesses: '?tag=businesses',
+      portfolio: {
         research: '/research',
-        //courses: '?tag=courses',
-        //books: '?tag=books',
-        apps: '/apps',
-        libraries: '/libraries',
-        //podcast: '?tag=podcast',
-        //art: '?tag=art',
-        //music: '?tag=music'
-      },*/
+        courses: '/courses/vulkan-by-example',
+        apps: '/games'
+      },
       blog: 'blog'
     },
     root: '',

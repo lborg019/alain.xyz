@@ -6,7 +6,7 @@ To make this more manageable and portable, the shader was written in **HLSL** ra
 
 ![Custom Node](assets/ue4-material-custom.gif)
 
-Not that it isn't possible with the custom node in Unreal's Material Editor, but C++ gives you more programmatic freedom.
+Not that it isn't possible with the custom node in Unreal's Material Editor, but C++ gives you more programmatic freedom. Another direction could have been to use the option to convert Unreal materials to HLSL code.
 
 >Step By Step Process:
 >1. Create Shader Plugin
