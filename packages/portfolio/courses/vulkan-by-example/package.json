@@ -1,6 +1,10 @@
 {
   "name": "courses/vulkan-by-example",
   "description": "A example driven course teaching all aspects of the Vulkan API.",
+  "keywords": [
+    "apps",
+    "unreal"
+  ],
   "main": "main.tsx",
   "foil": {
     "title": "Vulkan by Example",

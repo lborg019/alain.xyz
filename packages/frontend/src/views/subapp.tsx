@@ -41,41 +41,25 @@ export class Subapp extends React.Component<any, SubappState> {
     private subComponent: any = null;
 
     componentWillMount() {
-
         let {
             subapp,
-            location,
-            loading,
-            error
+            location
         } = this.props;
 
-        this.checkLoadingState(loading, error);
-
-        // Base Check
-        if (error) {
-            this.subComponent = <Redirect to='/404' />
-            this.setState({ loading: false, mounted: true });
+        if (subapp !== null) {
+            if (subapp.permalink !== location.pathname) {
+                this.querySubapp(location.pathname);
+            }
+            else
+                this.attachSubapp(subapp);
 
         }
         else {
-            if (subapp !== null) {
-                if (subapp.permalink !== location.pathname) {
-                    this.querySubapp(location.pathname);
-                    console.log(location.pathname);
-                }
-                else
-                    this.attachSubapp(subapp);
-
-            }
-            else {
-                this.querySubapp(location.pathname);
-            }
-
+            this.querySubapp(location.pathname);
         }
     }
 
     componentWillReceiveProps(newProps) {
-
         let {
             subapp: prevSubapp,
             location: prevLocation,
@@ -110,10 +94,6 @@ export class Subapp extends React.Component<any, SubappState> {
             this.attachSubapp(subapp);
         }
 
-        console.log("changedloc: %s", changedLocation || changedPortfolio);
-        console.log("changedsub: %s", changedSubapp);
-
-
     }
 
     /**
@@ -134,10 +114,6 @@ export class Subapp extends React.Component<any, SubappState> {
      */
     querySubapp = (pathname: string) => {
 
-        console.log("QUERY %s", pathname);
-
-        //this.setState({ loading: true });
-
         let {
             fetchSubapp,
             portfolio,
@@ -146,14 +122,12 @@ export class Subapp extends React.Component<any, SubappState> {
         } = this.props;
 
         let cached = portfolio.find(({ permalink }) => permalink == pathname);
-        console.log(cached);
+
         if (cached) {
-            //let isCurSubapp = subapp !== null && subapp.permalink === cached.permalink;
-            //if (!isCurSubapp)
             setSubapp(cached.permalink);
         }
         else
-            fetchSubapp({ permalink: pathname, pathname });
+            fetchSubapp({ permalink: pathname });
     }
 
     /**
@@ -162,8 +136,6 @@ export class Subapp extends React.Component<any, SubappState> {
     attachSubapp = ({ main }: APIResponse) => {
 
         let { subapp, location, failure } = this.props;
-
-        console.log('ATTACHING');
 
         if (typeof SystemJS !== 'undefined')
             SystemJS.import(main)
@@ -189,7 +161,7 @@ export class Subapp extends React.Component<any, SubappState> {
             else
                 return <Loading />
         }
-        return <Redirect to='/404' />
+        return <div />
     }
 }
 
