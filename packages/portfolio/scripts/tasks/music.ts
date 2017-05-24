@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as id3 from 'id3js';
 
 import { database } from '../../../backend/src/db';
-import { getCover } from './misc';
+import { getAsset } from './misc';
 
 
 const root = path.join(__dirname, '..', '..', 'music');

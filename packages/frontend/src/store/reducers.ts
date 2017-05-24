@@ -3,12 +3,12 @@ import { createReducer } from './utils';
 
 
 const initialState = {
-    subapp: null,           // Current SubApplication
-    portfolio: [],          // Cached SubApplications
+    error: null,            // API Errors
     fetchingSubapp: false,  // Loading
-    error: '',              // API Errors
     fullscreen: false,      // Fullscreen Application
-    showSidebar: false      // Show Sidebar
+    portfolio: [],          // Cached SubApplications
+    showSidebar: false,     // Show Sidebar
+    subapp: null            // Current SubApplication
 };
 
 // Keep Portfolio Cache a max of 100 subapps long.
@@ -39,40 +39,35 @@ export default createReducer(initialState, {
     FETCHED_SUBAPP: (state, payload: { req: APIRequest, res: APIResponse[] }) => {
 
         let portfolio = cachePortfoliosubapps(payload.res, state.portfolio);
-        let cur_permalink = payload.req.permalink;
-
-        if (typeof window !== 'undefined') {
-            cur_permalink = window.location.pathname;
-        }
-
+        
         return {
             ...state,
-            portfolio,
-            subapp: portfolio.find((subapp) => subapp.permalink === cur_permalink),
-            fetchingSubapp: false
+            error: null,
+            portfolio
         };
     },
 
     FETCHING_SUBAPP: (state, payload) =>
         ({
             ...state,
-            fetchingSubapp: true,
-            subapp: null
+            error: null,
+            fetchingSubapp: false
         }),
 
     SET_SUBAPP: (state, payload) =>
         ({
             ...state,
-            subapp: state.portfolio.find((e) => e.permalink === payload.permalink),
-            fetchingSubapp: false
+            error: null,
+            fetchingSubapp: false,
+            subapp: state.portfolio.find((e) => e.permalink === payload.permalink) || null
         }),
 
     ERROR: (state, payload) =>
         ({
             ...state,
             error: payload.error,
-            subapp: null,
-            fetchingSubapp: false
+            fetchingSubapp: false,
+            subapp: null
         }),
 
     FULLSCREEN: (state, payload) =>

@@ -7,7 +7,7 @@ import * as RSS from 'rss';
 
 import { database } from '../../../backend/src/db';
 import { PortfolioItem } from '../../../backend/src/schema';
-import { getCover, makePermalink } from './misc';
+import { getAsset, makePermalink } from './misc';
 
 let root = path.join(__dirname, '..', '..');
 
@@ -40,7 +40,7 @@ async function buildPackage() {
     let {
       name: permalink,
       main: file = "index.md",
-      description,
+      description = '',
       author = "Alain Galvan",
       keywords = [],
       foil
@@ -65,9 +65,11 @@ async function buildPackage() {
         // check if that's not a folder
         if (!fs.statSync(file).isDirectory()) {
 
-          let img = getCover(file, permalink);
+          let img = getAsset(file, permalink);
+          let icon = getAsset(file, permalink, 'icon');
 
           let foilModule = {
+            ...foil,
             title,
             description,
             keywords,
@@ -75,10 +77,10 @@ async function buildPackage() {
             dateModified: fs.statSync(file).mtime,
             file,
             permalink: '/' + permalink,
-            image: img ? '/' + img : null,
+            image: '/' + img,
+            icon: '/' + icon,
             main: '/' + main,
-            authors: [author],
-            data: data || null
+            authors: [author]
           };
 
           var status = await checkIfModified(file);

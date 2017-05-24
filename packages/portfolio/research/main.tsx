@@ -11,24 +11,17 @@ import { Icon, grid, fetchSubapp, setSubapp } from 'main';
     setSubapp: bindActionCreators(setSubapp, dispatch)
   })
 ) as any)
-export default class Portfolio extends React.Component<any, any> {
-
-  static defaultProps = {
-    portfolio: []
-  }
+export default class Research extends React.Component<any, any> {
 
   componentWillMount() {
-
     let {
-      portfolio,
-      config: {
-        permalink,
-        data
-      }
-    } = this.props;
+      permalink,
+      data
+    } = this.props.config;
 
-    //this.props.fetchSubapp({ permalink: data });
+    this.props.fetchSubapp({ permalink: '/research/*'});
   }
+
 
   componentDidMount() {
     if (window) {
@@ -41,23 +34,21 @@ export default class Portfolio extends React.Component<any, any> {
 
     let {
       config,
-      portfolio
+      portfolio = []
     } = this.props;
 
     if (!config)
       return null;
 
-    let { data = [] } = this.props.config;
-
     // union the 2 sets.
 
-    let featuredPortfolio = portfolio.filter(p => data.indexOf(p.permalink) > -1);
+    let featuredPortfolio = portfolio.filter(post => post.permalink.slice(0, 10) === '/research/');
 
-    return grid(BlogPost, featuredPortfolio);
+    return grid(PublicationCell, featuredPortfolio);
   }
 }
 
-const BlogPost = ({ image, title, description, permalink, datePublished, dateModified, keywords, style = {} }) => {
+const PublicationCell = ({ image, title, icon, description, permalink, datePublished, dateModified, keywords, style = {} }) => {
 
   let published = new Date(datePublished);
   let publishedStr = published.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
@@ -69,14 +60,19 @@ const BlogPost = ({ image, title, description, permalink, datePublished, dateMod
       <section style={{
         backgroundImage: 'linear-gradient(rgba(33, 37, 43, 0), rgba(33, 37, 43, .5) 40%, rgb(33, 37, 43))',
         width: '100%',
-        padding: '1.5em'
+        padding: '1.5em',
+        display: 'flex',
+        alignItems: 'flex-end'
       }}>
-        <h2 style={{ color: '#fff' }}><Icon type={keywords[0]} />{title}</h2>
-        <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)' }}>
-          <Icon type='date' style={{ marginRight: '.5em' }} />
-          {published.toLocaleDateString()} @ {publishedStr}
-        </p>
-        <p style={{ lineHeight: '1.25em', color: '#fff' }}>{description}</p>
+      <img alt='Paper preview' style={{ height: '240px' }} src={icon}/>
+        <div style={{ paddingLeft: '1.5em' }}>
+          <h2 style={{ color: '#fff' }}><Icon type={keywords[0]}/>{title}</h2>
+          <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)' }}>
+            <Icon type='date' style={{ marginRight: '.5em' }} />
+            {published.toLocaleDateString()} @ {publishedStr}
+          </p>
+          <p style={{ lineHeight: '1.25em', color: '#fff' }}>{description}</p>
+        </div>
       </section>
     </Link>
   );

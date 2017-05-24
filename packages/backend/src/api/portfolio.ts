@@ -123,8 +123,6 @@ export default (req: Request, res: Response) => {
   delete query.limit;
   delete query.skip;
 
-  console.log(query);
-
   // Responses
   let failure = () => res.status(400).json({ error: "We can't find these posts. :(" });
   let success = msg => res.status(200).json(msg);
@@ -134,17 +132,7 @@ export default (req: Request, res: Response) => {
       let c = db.collection('portfolio');
 
       let projection = {
-
-        title: 1,
-        description: 1,
-        keywords: 1,
-        datePublished: 1,
-        dateModified: 1,
-        permalink: 1,
-        image: 1,
-        main: 1,
-        authors: 1,
-        data: 1,
+        file: 0
       }
 
       let data = c.find(query, projection)

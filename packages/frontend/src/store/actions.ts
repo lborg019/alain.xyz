@@ -1,7 +1,7 @@
 import { transport, checkHttpStatus, parseJSON } from './utils';
 
 export type APIRequest = {
-  permalink?: string,
+  permalink?: string | string[],
   data?: boolean,
   keywords?: string[],
   meta?: {
@@ -56,11 +56,15 @@ export const setSubapp = (permalink: string) => ({
 
 export const fetchSubapp = (req: APIRequest) =>
   dispatch => {
+
     let fail = err => dispatch(failure());
+
     dispatch(fetchingSubapp());
+
     return transport('/api/v1/portfolio', req)
       .catch(fail)
       .then(checkHttpStatus, fail)
       .then(parseJSON, fail)
       .then(res => dispatch(fetchedSubapp(req, res)), fail);
+
     };

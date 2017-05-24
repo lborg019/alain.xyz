@@ -16,6 +16,7 @@
   "main": "index.md",
   "foil": {
     "title": "Realtime Celestial Rendering",
+    "icon": "assets/icon.jpg",
     "badges": [{
         "name": "github",
         "url": "https://github.com/OpenHID/realtime-celestial-rendering"

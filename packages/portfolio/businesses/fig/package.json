@@ -1,9 +1,12 @@
 {
   "name": "businesses/fig",
-  "description": "An open source IOT company.",
+  "description": "An open source smart home company.",
   "main": "index.md",
   "keywords": [
-    "company"
+    "company",
+    "iot",
+    "research",
+    "security"
   ],
   "foil": {
     "title": "Fig",

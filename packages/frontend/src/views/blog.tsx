@@ -35,14 +35,14 @@ const BlogPost = ({ image, title, description, permalink, datePublished, dateMod
   );
 }
 
-@connect(
+@(connect(
   ({ portfolio }) => ({
     portfolio
   }),
   dispatch => ({
     fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
   })
-)
+) as any)
 export class Blog extends React.Component<any, any> {
 
   componentWillMount() {

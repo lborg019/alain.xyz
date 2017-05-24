@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon } from 'main';
 
-export default class VulkanByExample extends React.Component<any, any> {
+export default class CodeVR extends React.Component<any, any> {
 
   private root = null;
 
@@ -22,7 +22,6 @@ export default class VulkanByExample extends React.Component<any, any> {
     let date = new Date(datePublished);
     return (
       <div ref={r => this.root = r} style={styles.root}>
-        <h1>Vulkan by Example</h1>
       </div>
     );
   }

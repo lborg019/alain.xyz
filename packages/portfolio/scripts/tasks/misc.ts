@@ -8,11 +8,11 @@ import * as find from 'find';
 
 
 /**
- * Get the Cover asset (Whatever Format, from a given file path)
+ * Get an asset of a particular name (Whatever Format, from a given file path)
  */
-export function getCover(file: string, permalink: string) {
+export function getAsset(file: string, permalink: string, image = 'cover') {
   let dir = path.dirname(file);
-  let c = find.fileSync(/cover\.(\w*)/mg, dir);
+  let c = find.fileSync(new RegExp(image + '\.(\w*)','mg'), dir);
   return (c.length > 0) ? path.join(permalink, path.relative(dir, c[0])).replace(/\\/g, '/') : '';
 }
 

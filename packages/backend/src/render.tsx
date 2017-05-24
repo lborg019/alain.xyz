@@ -96,7 +96,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
                         \`.....\`
                           \`.....\`
  ✔️ Alain.xyz
- Made with ❤️️ in Miami, Florida
+ Made with 💗 in Miami, Florida
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>

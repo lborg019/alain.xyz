@@ -1,0 +1,10 @@
+{
+  "name": "games/codevr",
+  "description": " Program and explore real applications with virtual reality!",
+  "main": "main.tsx",
+  "foil": {
+    "title": "CodeVR",
+    "main": "games/codevr/main.js",
+    "datePublished": "2017-07-12T00:00:00.000Z"
+  }
+}

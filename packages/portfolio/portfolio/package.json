@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "description": "The portfolio view of Alain.xyz",
+  "description": "The professional portfolio of Alain Galvan.",
   "main": "main.tsx",
   "foil": {
     "title": "Alain.xyz | Portfolio",
