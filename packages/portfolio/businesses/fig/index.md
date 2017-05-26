@@ -36,4 +36,4 @@ Creating a physical product today has never been easier, there's so many tools, 
 
 - [EEV Blog](https://www.youtube.com/channel/UC2DjFE7Xf11URZqWBigcVOQ) - A blog detailing the idiosyncrasies of being an electrical engineer.
 
-- [GreatScott!](https://www.youtube.com/user/greatscottlab) - a variety of custom electrical engineering projects. 
+- [GreatScott!](https://www.youtube.com/user/greatscottlab) - a variety of custom electrical engineering projects.

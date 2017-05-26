@@ -17,12 +17,22 @@ export default class VulkanByExample extends React.Component<any, any> {
     if (!this.props.config)
       return null;
 
-    let { title, description, image, meta, datePublished, keywords, data } = this.props.config;
+    let {
+      title,
+      description,
+      image,
+      meta,
+      datePublished,
+      keywords,
+      data
+    } = this.props.config;
 
     let date = new Date(datePublished);
+
     return (
       <div ref={r => this.root = r} style={styles.root}>
         <h1>Vulkan by Example</h1>
+        <p>Vulkan</p>
       </div>
     );
   }

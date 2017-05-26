@@ -12,7 +12,7 @@ export class NestedMenu extends React.Component<any, any> {
       portfolio: {
         research: '/research',
         courses: '/courses/vulkan-by-example',
-        apps: '/games'
+        //apps: '/games'
       },
       blog: 'blog'
     },
@@ -59,7 +59,7 @@ export class NestedMenu extends React.Component<any, any> {
                   : 'rgba(23, 26, 30, 0.11)',
                 borderLeft: (pathname + search) === to
                   ? 'rgba(78, 160, 232, 1) .5em solid'
-                  : 'rgba(78, 160, 232, 0.33) .2em solid'
+                  : 'rgba(78, 160, 232, 0.05) .2em solid'
               },
 
               to,

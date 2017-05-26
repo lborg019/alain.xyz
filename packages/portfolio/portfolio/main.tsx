@@ -27,7 +27,7 @@ export default class Portfolio extends React.Component<any, any> {
       }
     } = this.props;
 
-    //this.props.fetchSubapp({ permalink: data });
+    this.props.fetchSubapp({ permalink: data });
   }
 
   componentDidMount() {

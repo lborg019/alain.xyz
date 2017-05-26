@@ -30,7 +30,8 @@ export default class RawGraphics extends React.Component<any, any> {
 
     return (
       <div ref={r => this.root = r} style={styles.root}>
-
+        <h2>Raw Graphics</h2>
+        <p>Podcast </p>
       </div>
     );
   }

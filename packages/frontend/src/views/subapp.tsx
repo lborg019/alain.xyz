@@ -161,7 +161,7 @@ export class Subapp extends React.Component<any, SubappState> {
             else
                 return <Loading />
         }
-        return <div />
+        return <Redirect to='/404' />;
     }
 }
 

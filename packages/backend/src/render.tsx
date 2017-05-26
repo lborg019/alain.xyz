@@ -34,7 +34,14 @@ export function renderPage(req: Request, res: Response) {
 
     // Query Portfolio and grab 10 items.
     let portfolio = await portfolioCol
-      .find<PortfolioItem>({ permalink: originalUrl })
+      .find({
+        permalink: originalUrl,
+        datePublished: {
+          $lte: new Date()
+        }
+      }, {
+        file: 0
+      })
       .limit(1)
       .toArray()
       .catch(err => console.error(err));

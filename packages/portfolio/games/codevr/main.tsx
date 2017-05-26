@@ -22,6 +22,7 @@ export default class CodeVR extends React.Component<any, any> {
     let date = new Date(datePublished);
     return (
       <div ref={r => this.root = r} style={styles.root}>
+        <h1>CodeVR </h1>
       </div>
     );
   }
