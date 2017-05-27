@@ -8,10 +8,10 @@
     "datePublished": "2017-05-12T00:00:00.000Z",
     "data": [
       "/games/codevr",
-      "/businesses/fig",
+      "/libraries/coronal",
+      "/libraries/react-anime",
       "/research/realtime-celestial-rendering",
-      "/podcasts/raw-graphics",
-      "/courses/vulkan-by-example"
+      "/podcasts/raw-graphics"
     ]
   }
 }

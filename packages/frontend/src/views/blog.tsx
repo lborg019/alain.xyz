@@ -25,18 +25,13 @@ const BlogPost = ({ image, title, description, permalink, datePublished, dateMod
         {published.toLocaleDateString()} @ {publishedStr} {updatedStr ? `| Updated ${updatedStr} ago` : null}
       </p>
       <div style={{ padding: `1.5em ${tabletQuery ? '0' : '3em'}` }}>
-        <section style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.13)',
-          backgroundImage: `url('${image}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+        <img src={image} style={{
           width: '100%',
-          height: '30vh',
           boxShadow: '0 4px 16px rgba(0, 0, 0, 0.36)'
         }}>
-        </section>
+        </img>
       </div>
-      <p style={{ lineHeight: '1.25em', color: '#fff', padding: '1em .5em', borderBottom: '2px solid #171a1e', fontWeight: 200 }}>{description}</p>
+      <p style={{ lineHeight: '1.25em', color: '#fff', padding: '1em 0.5em 2em 0.5em', borderBottom: '2px solid #171a1e', fontWeight: 200 }}>{description}</p>
     </Link>
   );
 }
