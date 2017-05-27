@@ -86,7 +86,7 @@ fn main() {
                         .expect("Failed to pull from git!");
 
 					Command::new("yarn")
-						.cwd(env::current_dir()
+						.current_dir(env::current_dir()
 							.unwrap()
 							.join("../../")
 							.canonicalize()
