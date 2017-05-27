@@ -50,7 +50,7 @@ impl FromHex for str {
                     continue;
                 }
                 _ => {
-                    let ch = self[idx..].chars().next().unwrap();
+                    let _ = self[idx..].chars().next().unwrap();
                     return Err(Error::new(ErrorKind::Other, "couldn't parse hex"));
                 }
             }
