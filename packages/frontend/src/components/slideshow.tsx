@@ -66,28 +66,27 @@ export class Slideshow extends React.Component<any, any> {
             }
 
           return (
-            <a style={{
+            <Link style={{
               ...styles.link,
               ...responsive
             }}
-              href={permalink}
+              to={permalink}
               key={i}>
               <figure style={{
                 ...styles.figure,
                 backgroundImage: `linear-gradient(rgba(33,37,43,0), rgba(33,37,43,1)), url(${image})`,
-                left: tabletQuery ? 0 : -350,
                 height: tabletQuery ? ( i > 0 ? '192px' : '320px') : '100vh'
-              }}>
+              } as any}>
                 <div style={{textAlign: 'center', padding: '1em'}}>
                   
                   <h1 style={{
                     ...styles.h1,
                     fontSize: tabletQuery ? '1.5rem' : undefined
-                  }}><Icon type={keywords[0]} /> {title}</h1>
+                  } as any}><Icon type={keywords[0]} /> {title}</h1>
                   <p style={styles.p}>{description}</p>
                 </div>
               </figure>
-            </a>
+            </Link>
           );
 
         })}
@@ -102,21 +101,21 @@ const slideshow = [
     title: 'Coronal',
     description: 'An ES2017 WebGL2 Rendering Library',
     keywords: ['library'],
-    permalink: 'https://alain.xyz/libraries/coronal'
+    permalink: '/libraries/coronal'
   },
   {
     image: '/research/realtime-celestial-rendering/assets/cover.jpg',
     title: 'Celestial Rendering for 3D Navigation',
     description: 'Realtime Stary Skies for PBR Environments with Animated Radiance Maps',
     keywords: ['research'],
-    permalink: 'https://alain.xyz/research/realtime-celestial-rendering'
+    permalink: '/research/realtime-celestial-rendering'
   },
   {
     image: '/blog/the-making-of-alain-xyz/assets/cover.jpg',
     title: 'The Making of Alain.xyz',
     description: 'Design overview of the decisions in making this website.',
     keywords: ['blog'],
-    permalink: 'https://alain.xyz/blog/the-making-of-alain-xyz'
+    permalink: '/blog/the-making-of-alain-xyz'
   }
 ]
 
@@ -135,11 +134,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    width: '100vw',
     height: '100vh',
     position: 'relative',
     zIndex: 1,
-    left: -350,
     backgroundSize: 'cover',
     backgroundPosition: 'center'
   },

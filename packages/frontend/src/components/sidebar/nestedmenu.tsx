@@ -9,17 +9,11 @@ export class NestedMenu extends React.Component<any, any> {
   static defaultProps = {
     structure: {
       about: 'about',
-/*      portfolio: {
-        //buisnesses: '?tag=businesses',
-        research: '/research',
-        //courses: '?tag=courses',
-        //books: '?tag=books',
-        apps: '/apps',
-        libraries: '/libraries',
-        //podcast: '?tag=podcast',
-        //art: '?tag=art',
-        //music: '?tag=music'
-      },*/
+      portfolio: {
+        //research: '/research',
+        //courses: '/courses/vulkan-by-example',
+        //apps: '/games'
+      },
       blog: 'blog'
     },
     root: '',
@@ -65,7 +59,7 @@ export class NestedMenu extends React.Component<any, any> {
                   : 'rgba(23, 26, 30, 0.11)',
                 borderLeft: (pathname + search) === to
                   ? 'rgba(78, 160, 232, 1) .5em solid'
-                  : 'rgba(78, 160, 232, 0.33) .2em solid'
+                  : 'rgba(78, 160, 232, 0.05) .2em solid'
               },
 
               to,

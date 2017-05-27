@@ -7,7 +7,7 @@ import * as RSS from 'rss';
 
 import { database } from '../../../backend/src/db';
 import { PortfolioItem } from '../../../backend/src/schema';
-import { getCover, makePermalink } from './misc';
+import { getAsset, makePermalink } from './misc';
 
 let root = path.join(__dirname, '..', '..');
 
@@ -40,7 +40,7 @@ async function buildPackage() {
     let {
       name: permalink,
       main: file = "index.md",
-      description,
+      description = '',
       author = "Alain Galvan",
       keywords = [],
       foil
@@ -54,6 +54,7 @@ async function buildPackage() {
         title,
         datePublished,
         image,
+        data
       } = foil;
 
       // For every foil file in the package, check if it's modified
@@ -64,7 +65,11 @@ async function buildPackage() {
         // check if that's not a folder
         if (!fs.statSync(file).isDirectory()) {
 
+          let img = getAsset(file, permalink);
+          let icon = getAsset(file, permalink, 'icon');
+
           let foilModule = {
+            ...foil,
             title,
             description,
             keywords,
@@ -72,7 +77,8 @@ async function buildPackage() {
             dateModified: fs.statSync(file).mtime,
             file,
             permalink: '/' + permalink,
-            image: '/' + getCover(file, permalink),
+            image: '/' + img,
+            icon: '/' + icon,
             main: '/' + main,
             authors: [author]
           };
@@ -135,24 +141,32 @@ async function checkIfModified(file: string): Promise<IModifiedFileStatus> {
  * an appropriate loader.
  */
 async function compile(foil) {
+
+  // @TODO - Move outside of module to config object passed to package compiler.
+
   const rules = [{
     test: { file: /\.md?$/ },
-    loader: (foil) => ({
+    loader: foil => ({
       ...foil,
       data: markademic({
         input: fs.readFileSync(foil.file).toString(),
         rerouteLinks: (link) => path.join(foil.permalink, link)
       })
     })
+  },
+  {
+    test: {
+      title: /Alain\.xyz \|/
+    },
+    loader: foil => foil
   }];
 
   for (let rule of rules) {
     // @TODO - Replace with deep comparison
-    let compare = Object.keys(rule).reduce((prev, cur) => {
+    let compare = Object.keys(rule.test).reduce((prev, cur) => {
       let reg = new RegExp(rule.test[cur]);
-      return prev && reg.test(foil[cur]);
-    }, true);
-
+      return prev || reg.test(foil[cur]);
+    }, false);
     if (compare) {
       return rule.loader(foil);
     }

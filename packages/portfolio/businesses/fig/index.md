@@ -2,9 +2,9 @@
 
 There's a lot of venture capitalists interested in the IOT market, however products developed in this space suffer from the *John Deer Effect*: the idea that *you don't own the product you paid for, you're **licensing it***. 
 
-Introducing **Fig**, an IOT company offering *open source*, high quality home improvement products and services. Every aspect of our products, from the schematics to the source code, is MIT licensed and available to consumers who have the liberty to fix and maintain their product as they see fit.
+Introducing **Fig**, an IOT company offering *open source*, high quality smart home products and services. Every aspect of our products, from the schematics to the source code, is dual **MIT/Apache-2.0** licensed and available to consumers who have the liberty to fix and maintain their product as they see fit.
 
-We find that the benefits of offering this freedom outweigh the potential downfalls of losing money through the *Walled Garden* proprietary approach that our competitors take advantage of, or for scalpers to take our product and resell it. 
+We find that the benefits of offering this freedom outweighs the potential downfalls of losing money through the *Walled Garden* proprietary approach that our competitors take advantage of, or for scalpers to take our product and resell it. 
 
 ## Fig Table
 
@@ -36,4 +36,4 @@ Creating a physical product today has never been easier, there's so many tools, 
 
 - [EEV Blog](https://www.youtube.com/channel/UC2DjFE7Xf11URZqWBigcVOQ) - A blog detailing the idiosyncrasies of being an electrical engineer.
 
-- [GreatScott!](https://www.youtube.com/user/greatscottlab) - a variety of custom electrical engineering projects. 
+- [GreatScott!](https://www.youtube.com/user/greatscottlab) - a variety of custom electrical engineering projects.

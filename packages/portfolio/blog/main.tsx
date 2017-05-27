@@ -24,8 +24,7 @@ export default class BlogPost extends React.Component<any, any> {
       <div ref={r => this.root = r} style={styles.root}>
         <figure style={{
           ...styles.figure,
-          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '15vh' : '45vh' }, rgba(33,37,43,1)), url(${image})`,
-		      left: window && innerWidth < 1024 ? 0 : -350
+          backgroundImage: `linear-gradient(rgba(33,37,43,0) ${ window && innerWidth < 1024 ? '15vh' : '45vh' }, rgba(33,37,43,1)), url(${image})`
         }} />
         <section style={{
           ...styles.section,
@@ -57,11 +56,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    width: '100vw',
     height: '100vh',
     position: 'relative',
     zIndex: 1,
-    left: -350,
     backgroundSize: 'cover',
     backgroundPosition: 'center'
   },

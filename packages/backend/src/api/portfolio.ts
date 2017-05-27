@@ -6,16 +6,24 @@ import { database } from '../db';
  * API Request Schema
  */
 export type APISanitized = {
-  // Skip the x number of posts
-  skip: number,
-  // Limit the number of posts to this amount
-  limit: number,
   // Find post with this exact permalink
-  permalink?: string | RegExp,
+  permalink: string | RegExp,
   // Find posts where these keywords are present
   keywords?: {
     $in: string[]
   }
+  // Skip the x number of posts
+  skip: number,
+  // Limit the number of posts to this amount
+  limit: number
+} | {
+  $or: {
+    permalink: string
+  }[],
+  // Skip the x number of posts
+  skip: number,
+  // Limit the number of posts to this amount
+  limit: number
 }
 
 /**
@@ -31,6 +39,7 @@ export type APIRequest = {
  * Sanitizes the API's Input.
  */
 function sanitize(reqBody): APISanitized {
+
   let {
     skip,
     limit,
@@ -38,9 +47,12 @@ function sanitize(reqBody): APISanitized {
     keywords
   } = reqBody;
 
+  // Define some helper functions
   let inRange = (v, a, b, def) => (v > a && v < b) ? v : def;
-  let isArray = (arr) => (typeof arr === 'object' && typeof arr[0] === 'string') ? { $in: arr } : undefined;
-  let makeRegexPath: ((s: string) => any) = (s) => {
+
+  let isArray = arr => (Array.isArray(arr) && arr.reduce((prev, cur) => prev && typeof cur === 'string', true)) ? { $in: arr } : undefined;
+
+  let makeRegexPath = (s: string) => {
     if (!(typeof s === 'string' && s.length < 256 && s.length > 0))
       return undefined;
 
@@ -48,7 +60,6 @@ function sanitize(reqBody): APISanitized {
     var validPathCheck = s.match(/\([^\0 !$`&*()+]\|\\\(\ |\!|\$|\`|\&|\*|\(|\)|\+\)\)\+/);
     if (validPathCheck !== null) {
       if (validPathCheck.length === 1 && s.match(/\*$/) !== null) {
-
         return new RegExp(s.replace('*', '\w*'));
       }
       return undefined;
@@ -57,13 +68,29 @@ function sanitize(reqBody): APISanitized {
   };
 
   try {
-    let cleanReq: APISanitized = {
-      skip: inRange(skip, 0, 1000, 0),
-      limit: inRange(limit, 1, 30, 15),
-      permalink: makeRegexPath(permalink),
-      keywords: isArray(keywords)
-    };
 
+    let cleanReq;
+
+    if (Array.isArray(permalink)) {
+
+      cleanReq = {
+        $or: permalink.map(p => ({
+          permalink: typeof p == 'string' ? p : '',
+          datePublished: { $lte: new Date() }
+        })),
+        limit: inRange(limit, 1, 30, 15),
+        skip: 0
+      };
+    }
+    else {
+      cleanReq = {
+        skip: inRange(skip, 0, 1000, 0),
+        limit: inRange(limit, 1, 30, 15),
+        permalink: makeRegexPath(permalink),
+        keywords: isArray(keywords),
+        datePublished: { $lte: new Date() }
+      };
+    }
     // Remove Undefined Keys
     Object.keys(cleanReq).map((k) => (cleanReq[k] === undefined) ? delete cleanReq[k] : null);
 
@@ -71,6 +98,7 @@ function sanitize(reqBody): APISanitized {
   }
   catch (e) {
     return {
+      permalink: '',
       skip: 0,
       limit: 15
     }
@@ -89,8 +117,7 @@ export default (req: Request, res: Response) => {
 
   // Design Query
   let query = {
-    ...apiReq,
-    datePublished: { $lte: new Date() }
+    ...apiReq
   };
 
   delete query.limit;
@@ -105,17 +132,7 @@ export default (req: Request, res: Response) => {
       let c = db.collection('portfolio');
 
       let projection = {
-
-        title: 1,
-        description: 1,
-        keywords: 1,
-        datePublished: 1,
-        dateModified: 1,
-        permalink: 1,
-        image: 1,
-        main: 1,
-        authors: 1,
-        data: 1,
+        file: 0
       }
 
       let data = c.find(query, projection)

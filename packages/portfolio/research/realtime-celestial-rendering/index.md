@@ -6,7 +6,7 @@ To make this more manageable and portable, the shader was written in **HLSL** ra
 
 ![Custom Node](assets/ue4-material-custom.gif)
 
-Not that it isn't possible with the custom node in Unreal's Material Editor, but C++ gives you more programmatic freedom.
+Not that it isn't possible with the custom node in Unreal's Material Editor, but C++ gives you more programmatic freedom. Another direction could have been to use the option to convert Unreal materials to HLSL code.
 
 >Step By Step Process:
 >1. Create Shader Plugin
@@ -38,7 +38,7 @@ The **Render Hardware Interface (RHI)** is Unreal's rendering abstraction layer 
    └─ RenderingThread.h   # Rendering requests are Enqueued Here
 ```
 
-The **RHI** manages a rendering queue, handles all render requests. You need to make requests to the RHI to render onto your rendertarget.
+The **RHI** manages a rendering queue, handles all render requests. You need to make requests to the RHI to render onto your render target.
 
 ```cpp
 void FCubeRenderTargetShader::RunShader(UTextureRenderTargetCube* RenderTarget, float time) {
@@ -139,8 +139,6 @@ END_UNIFORM_BUFFER_STRUCT(FPixelShaderVariableParameters)ers);
 //In your .cpp
 IMPLEMENT_UNIFORM_BUFFER_STRUCT(FPixelShaderConstantParameters, TEXT("PSConstants"));
 IMPLEMENT_UNIFORM_BUFFER_STRUCT(FPixelShaderVariableParameters, TEXT("PSVariables"));
-
-//...
 
 //Now let's implement the shader!
 IMPLEMENT_SHADER_TYPE(, FVertexShaderExample, TEXT("PixelShaderExample"), TEXT("MainVertexShader"), SF_Vertex);

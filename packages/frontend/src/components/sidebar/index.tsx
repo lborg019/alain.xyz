@@ -35,8 +35,14 @@ export class SideBar extends React.Component<any, any> {
           ...styles.root,
           transform: `translateX(-${left}px)`,
           padding: tabletQuery ? '2em' : '8em 2em',
-          background: tabletQuery ? 'rgb(23,26,30)' : 'rgba(23,26,30,0.22)'
+          background: 'rgb(23,26,30)'
         }}>
+        <a style={{ display: tabletQuery ? 'block' : 'none'}} onClick={toggleSidebar}>
+          <svg viewBox="0 0 64 64" style={{width: 48, paddingBottom: '1em'}}>
+          <line style={{fill: 'none', stroke:'currentcolor', strokeWidth: 1, strokeMiterlimit:10}} x1="20" y1="44" x2="44" y2="20"/>
+          <line style={{fill: 'none', stroke:'currentcolor', strokeWidth: 1, strokeMiterlimit:10}} x1="44" y1="44" x2="20" y2="20"/>
+          </svg>
+          </a>
         <div style={styles.title}>
           <LogoIcon style={styles.img} />
           <Link style={styles.logotype} to='/'>
@@ -59,7 +65,7 @@ type SideBarProps = {
   location: any
 };
 
-const styles = {
+const styles: any = {
   root: {
     cursor: 'default',
     height: '100vh',

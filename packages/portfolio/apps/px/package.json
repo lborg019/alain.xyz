@@ -1,0 +1,24 @@
+{
+  "name": "apps/px",
+  "author": "Alain Galvan",
+  "description": "A pixel art app for game developers and artists.",
+  "keywords": [
+    "apps",
+    "unreal"
+  ],
+  "main": "main.tsx",
+  "foil": {
+    "title": "Px",
+    "icon": "assets/icon.png",
+    "badges": [{
+        "name": "github",
+        "url": "https://github.com/OpenHID/realtime-celestial-rendering"
+      },
+      {
+        "name": "unreal"
+      }
+    ],
+    "main": "apps/px/main.js",
+    "datePublished": "2016-10-16T09:30:00.000Z"
+  }
+}

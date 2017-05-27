@@ -1,0 +1,17 @@
+{
+  "name": "courses/vulkan-by-example",
+  "description": "A example driven course teaching all aspects of the Vulkan API.",
+  "keywords": [
+    "research",
+    "course",
+    "vulkan",
+    "teach",
+    "tutorial"
+  ],
+  "main": "main.tsx",
+  "foil": {
+    "title": "Vulkan by Example",
+    "main": "courses/vulkan-by-example/main.js",
+    "datePublished": "2016-05-12T00:00:00.000Z"
+  }
+}

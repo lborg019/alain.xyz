@@ -112,6 +112,7 @@ async function compileSubapp() {
         'react',
         'react-dom',
         'react-router',
+        'react-router-dom',
         'react-redux',
         'redux',
         'main',

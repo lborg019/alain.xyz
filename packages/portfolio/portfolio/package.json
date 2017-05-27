@@ -1,0 +1,17 @@
+{
+  "name": "portfolio",
+  "description": "The professional portfolio of Alain Galvan.",
+  "main": "main.tsx",
+  "foil": {
+    "title": "Alain.xyz | Portfolio",
+    "main": "portfolio/main.js",
+    "datePublished": "2017-05-12T00:00:00.000Z",
+    "data": [
+      "/games/codevr",
+      "/libraries/coronal",
+      "/libraries/react-anime",
+      "/research/realtime-celestial-rendering",
+      "/podcasts/raw-graphics"
+    ]
+  }
+}

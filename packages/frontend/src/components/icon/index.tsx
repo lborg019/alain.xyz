@@ -39,6 +39,5 @@ export class Icon extends React.Component<IconProps, any> {
 }
 
 const styles = {
-  fill: 'currentcolor',
-  verticalAlign: 'middle'
+  fill: 'currentcolor'
 };

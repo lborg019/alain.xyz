@@ -2,94 +2,132 @@ import * as React from 'react';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { NotFound } from './notfound';
+
 import { Loading } from '../components/loading';
 import { fetchSubapp, setSubapp, failure, APIResponse } from '../store/actions';
-import { transport } from '../store/utils';
 
-
-@connect(
-    ({ subapp, fetchingSubapp, portfolio }) => ({
+@(connect(
+    ({
         subapp,
-        loading: fetchingSubapp,
-        portfolio
-    }),
+        fetchingSubapp,
+        portfolio,
+        error
+    }) => ({
+            error,
+            loading: fetchingSubapp,
+            portfolio,
+            subapp
+        }),
     dispatch => ({
+        failure: bindActionCreators(failure, dispatch),
         fetchSubapp: bindActionCreators(fetchSubapp, dispatch),
-        setSubapp: bindActionCreators(setSubapp, dispatch),
-        failure: bindActionCreators(failure, dispatch)
+        setSubapp: bindActionCreators(setSubapp, dispatch)
     })
-)
+) as any)
 export class Subapp extends React.Component<any, SubappState> {
 
     static defaultProps = {
         portfolio: [],
         subapp: null,
-        loading: true
+        loading: true,
+        error: null
     }
 
     public state = {
-        loading: true
+        loading: true,
+        mounted: false
     };
 
     private subComponent: any = null;
 
     componentWillMount() {
-
         let {
             subapp,
-            location,
-            loading
+            location
         } = this.props;
 
-        this.setState(() => ({ loading }));
+        if (subapp !== null) {
+            if (subapp.permalink !== location.pathname) {
+                this.querySubapp(location.pathname);
+            }
+            else
+                this.attachSubapp(subapp);
 
-        this.querySubapp(location);
-
-        if (subapp !== null)
-            this.attachSubapp(subapp);
+        }
+        else {
+            this.querySubapp(location.pathname);
+        }
     }
 
     componentWillReceiveProps(newProps) {
-        
+        let {
+            subapp: prevSubapp,
+            location: prevLocation,
+            portfolio: prevPortfolio
+        } = this.props;
+
         let {
             subapp,
+            portfolio,
             location,
-            loading
+            loading,
+            error,
         } = newProps;
 
-        this.setState(() => ({ loading }));
+        this.checkLoadingState(loading, error);
 
-        if (location && location !== this.props.location)
-            this.querySubapp(location);
+        let changedLocation = location !== prevLocation;
+        let changedSubapp = subapp !== prevSubapp;
+        let changedPortfolio = portfolio !== prevPortfolio;
 
-        if (subapp !== null)
+        // Base Case: Errors redirect to 404.
+        if (error) {
+            this.subComponent = <Redirect to='/404' />
+            this.setState({ loading: false, mounted: true });
+        }
+        // Query if the location changed
+        if (changedLocation || changedPortfolio) {
+            this.querySubapp(location.pathname || prevLocation.pathname);
+        }
+        // Attach if the subapp changed
+        if (changedSubapp) {
             this.attachSubapp(subapp);
+        }
+
     }
+
+    /**
+     * Checks the mounted/loading state of the component
+     */
+    checkLoadingState = (loading: boolean, error: string | null) => this.setState((prev) => ({
+        loading,
+        mounted: loading
+            ? false
+            : (error
+                ? true
+                : prev.mounted
+            )
+    }));
 
     /**
      * Query if the subapp exists in the Redux Store
      */
-    querySubapp = (location) => {
-
-        this.setState({ loading: true });
+    querySubapp = (pathname: string) => {
 
         let {
+            fetchSubapp,
             portfolio,
             setSubapp,
-            fetchSubapp
+            subapp
         } = this.props;
 
-        let isCached = (arr, path) => arr.find(
-            post => post.permalink === path
-        );
+        let cached = portfolio.find(({ permalink }) => permalink == pathname);
 
-        let cached = isCached(portfolio, location.pathname);
-
-        if (cached)
+        if (cached) {
             setSubapp(cached.permalink);
+        }
         else
-            fetchSubapp({ permalink: location.pathname });
+            fetchSubapp({ permalink: pathname });
     }
 
     /**
@@ -103,18 +141,18 @@ export class Subapp extends React.Component<any, SubappState> {
             SystemJS.import(main)
                 .then(({ default: AsyncApp }) => {
                     this.subComponent = <AsyncApp config={this.props.subapp} location={this.props.location} />;
-                    this.setState({ loading: false });
+                    this.setState({ loading: false, mounted: true });
                 })
                 .catch(err => {
                     console.error(err);
                     failure(err);
-                    this.subComponent = <Redirect to='/404' />
-                    this.setState({ loading: false });
+                    this.subComponent = <Redirect to='/404' />;
+                    this.setState({ loading: false, mounted: true });
                 });
     }
 
     render() {
-        if (this.state.loading)
+        if (this.state.loading || !this.state.mounted)
             return <Loading />;
 
         if (this.props.subapp) {
@@ -123,7 +161,7 @@ export class Subapp extends React.Component<any, SubappState> {
             else
                 return <Loading />
         }
-        return <Redirect to='/404' />
+        return <Redirect to='/404' />;
     }
 }
 
@@ -140,5 +178,6 @@ type SubappProps = {
 }
 
 type SubappState = {
-    loading: boolean
+    loading: boolean,
+    mounted: boolean
 }

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Icon } from '../components';
+import { Icon, grid } from '../components';
 import { fetchSubapp } from '../store/actions';
-import { mobileQuery } from '../store'
+import { mobileQuery, tabletQuery } from '../store'
 import { timeSince } from '../utils';
 
 const BlogPost = ({ image, title, description, permalink, datePublished, dateModified, keywords, style = {} }) => {
@@ -13,36 +13,37 @@ const BlogPost = ({ image, title, description, permalink, datePublished, dateMod
   let publishedStr = published.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric' });
 
   let updated = new Date(dateModified);
-  
+
   // Get Time elapsed string
   let updatedStr = timeSince(updated);
 
   return (
-    <Link to={permalink} style={{ ...styles.blogPost, ...style, backgroundImage: `url('${image}')` }}>
-      <section style={{
-        backgroundImage: 'linear-gradient(rgba(33, 37, 43, 0), rgba(33, 37, 43, .5) 40%, rgb(33, 37, 43))', 
-        width: '100%', 
-        padding: '1.5em'
+    <Link to={permalink} style={{ ...styles.blogPost }}>
+      <h2 style={{ color: '#fff', padding: '1em 0.5em 0.5em 0.5em' }}>{title}</h2>
+      <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)', padding: '0em 2em' }}>
+        <Icon type='date' style={{ marginRight: '.5em' }} />
+        {published.toLocaleDateString()} @ {publishedStr} {updatedStr ? `| Updated ${updatedStr} ago` : null}
+      </p>
+      <div style={{ padding: `1.5em ${tabletQuery ? '0' : '3em'}` }}>
+        <img src={image} style={{
+          width: '100%',
+          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.36)'
         }}>
-        <h2 style={{ color: '#fff'}}>{title}</h2>
-        <p style={{ fontSize: '.75em', color: 'rgba(255,255,255,0.8)'}}>
-          <Icon type='date' style={{marginRight: '.5em'}}/>
-          {published.toLocaleDateString()} @ {publishedStr} {updatedStr ? `| Updated ${updatedStr} ago` : null}
-          </p>
-        <p style={{lineHeight: '1.25em', color: '#fff'}}>{description}</p>
-      </section>
+        </img>
+      </div>
+      <p style={{ lineHeight: '1.25em', color: '#fff', padding: '1em 0.5em 2em 0.5em', borderBottom: '2px solid #171a1e', fontWeight: 200 }}>{description}</p>
     </Link>
   );
 }
 
-@connect(
+@(connect(
   ({ portfolio }) => ({
     portfolio
   }),
   dispatch => ({
     fetchSubapp: bindActionCreators(fetchSubapp, dispatch)
   })
-)
+) as any)
 export class Blog extends React.Component<any, any> {
 
   componentWillMount() {
@@ -52,9 +53,9 @@ export class Blog extends React.Component<any, any> {
 
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       document.title = 'Alain Galvan | Blog';
-      scrollTo(0,0);
+      scrollTo(0, 0);
     }
-  
+
   }
 
   render() {
@@ -64,14 +65,12 @@ export class Blog extends React.Component<any, any> {
     let [first, ...rest] = blog;
 
     return (
-      <div style={styles.root}>
-        <div style={{...styles.article, padding: 0}}>
-          {first ? <BlogPost style={{ height: 480, width: '100%' }} {...first} /> : null}
-          {
-            rest.map((post, key) => <BlogPost style={{ width:  mobileQuery ? '100%' : '50%' }} key={key} {...post} />)
-          }
+      <div style={styles.root as any}>
+        <div style={{ maxWidth: 1280, padding: !tabletQuery ? '1.5em' : '' }}>
+          {blog.map((post, i) => <BlogPost {...post} />)}
         </div>
-      </div>);
+      </div>
+    );
   }
 }
 
@@ -79,29 +78,13 @@ const styles = {
   root: {
     width: '100%',
     display: 'flex',
-    alignItems: 'center',
     userSelect: 'none',
     flexDirection: 'column',
     color: '#fff'
   },
-  rss: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '1em'
-  },
-  article: {
-    display: 'flex',
-    flex: '0 1 auto',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 1280
-  },
   blogPost: {
     display: 'flex',
-    height: 280,
-    alignItems: 'flex-end',
+    flexDirection: 'column',
     backgroundSize: 'cover',
     backgroundPosition: 'center'
   }

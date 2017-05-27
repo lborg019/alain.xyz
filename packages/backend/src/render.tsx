@@ -34,7 +34,14 @@ export function renderPage(req: Request, res: Response) {
 
     // Query Portfolio and grab 10 items.
     let portfolio = await portfolioCol
-      .find<PortfolioItem>({ permalink: originalUrl })
+      .find({
+        permalink: originalUrl,
+        datePublished: {
+          $lte: new Date()
+        }
+      }, {
+        file: 0
+      })
       .limit(1)
       .toArray()
       .catch(err => console.error(err));
@@ -96,7 +103,7 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
                         \`.....\`
                           \`.....\`
  ✔️ Alain.xyz
- Made with ❤️️ in Miami, Florida
+ Made with 💗 in Miami, Florida
  Check out the source @ https://github.com/alaingalvan/alain.xyz
 -->
 <!doctype html>
