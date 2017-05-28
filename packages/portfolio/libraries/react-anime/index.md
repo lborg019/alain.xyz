@@ -23,7 +23,7 @@ Lets say for example, you start at point `(0, 0)`, you go to `(100, 0)`, then be
 
 That means the velocity vector for your animation changed:
 
-\[ \nabla f \underset{Event}{\rightarrow} \nabla f' \]
+\[ \nabla f \rightarrow \nabla f' \]
 
 There's two ways you could really go about dealing with this:
 
