@@ -27,26 +27,28 @@ async function compileSubapp() {
     let config = {
       warnings: true,
       globalEvaluationScope: false,
-      format: 'commonjs',
+      format: 'cjs',
       typescriptOptions: {
-        module: 'system',
+        module: 'commonjs',
         target: 'es5',
         jsx: 'react',
         typeCheck: false,
-        tsconfig: true
+        tsconfig: true,
+        noEmitHelpers: true
       },
       packages: {
         [libname]: {
           main: 'main',
           defaultExtension: 'tsx',
           transpiler: 'plugin-typescript',
-          format: 'system',
+          format: 'cjs',
           typescriptOptions: {
-            module: 'system',
+            module: 'commonjs',
             target: 'es5',
             jsx: 'react',
             typeCheck: false,
-            tsconfig: true
+            tsconfig: true,
+            noEmitHelpers: true
           },
           externals: [
             'react',
@@ -58,11 +60,18 @@ async function compileSubapp() {
             'main'
           ],
           meta: {
+            '*.js': {
+              defaultExtension: 'js',
+              format: 'cjs'
+            },
+            '*.json': {
+              loader: 'json-plugin'
+            },
             '*.ts': {
-              'loader': 'ts'
+              loader: 'ts'
             },
             '*.tsx': {
-              'loader': 'ts'
+              loader: 'ts'
             }
           }
         }
@@ -72,11 +81,12 @@ async function compileSubapp() {
           format: 'cjs'
         },
         ts: {
-          format: 'systemjs'
+          format: 'cjs'
         }
       },
       map: {
         [libname]: relativeRoot,
+        'json-plugin': '@node/systemjs-plugin-json',
         ts: '@node/plugin-typescript',
         typescript: '@node/typescript',
         crypto: '@node/crypto',
@@ -92,17 +102,29 @@ async function compileSubapp() {
         constants: '@node/constants',
         process: '@node/process',
         util: '@node/util',
-        events: '@node/events'
+        events: '@node/events',
+        react: '@external',
+        animejs: `${relativeRoot}/node_modules/animejs/anime.js`,
+        'react-anime': `${relativeRoot}/node_modules/react-anime/dist/anime.js`
       }
 
     };
+
+    // @TODO - Add local package.json dependencies
+    /* 
+    let localPackage = require(path.join(relativeRoot, 'package.json'));
+    if (localPackage.dependencies) {
+      let deps = Object.keys(localPackage.dependencies);
+      // Get that package's package.json, get it and its dependencies recursively, put them in config.map and config.packages.
+    }
+    */
 
     console.log(`  🔨 Building Module '${libname}'\n  ... `);
 
     var builder = new Builder(config);
 
     await builder.bundle(libname, relativeRoot + '/main.js', {
-      anonymous: true,
+      anonymous: false,
       minify: true,
       mangle: false,
       globalDefs: {
@@ -117,6 +139,7 @@ async function compileSubapp() {
         'redux',
         'main',
         'plugin-typescript',
+        'systemjs-plugin-json',
         'typescript',
         'fs',
         'path'

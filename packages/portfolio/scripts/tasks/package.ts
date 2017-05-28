@@ -189,7 +189,7 @@ async function writeToDb(foil) {
     let lastPath = path.dirname(foil.file);
 
     var staticFiles = find.fileSync(lastPath)
-      .filter(f => !(f.endsWith('md') || f.endsWith('json')));
+      .filter(f => !(f.endsWith('tsx') || f.endsWith('md') || f.endsWith('json') || f.match(/node_modules/)));
 
     for (var sf of staticFiles) {
       var filePermalink = path.join(foil.permalink, path.relative(lastPath, sf)).replace(/\\/g, '/');
@@ -200,7 +200,7 @@ async function writeToDb(foil) {
 
     }
 
-    await portfolioCollection.update({ file: foil.file }, foil, { upsert: true })
+    await portfolioCollection.update({ permalink: foil.permalink }, foil, { upsert: true })
       .then(r => console.log(`Added ${foil.title} to the Database.`))
       .catch(e => console.log(e));
   });
