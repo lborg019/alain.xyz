@@ -67,7 +67,7 @@ export class Blog extends React.Component<any, any> {
     return (
       <div style={styles.root as any}>
         <div style={{ maxWidth: 1280, padding: !tabletQuery ? '1.5em' : '' }}>
-          {blog.map((post, i) => <BlogPost {...post} />)}
+          {blog.map((post, i) => <BlogPost key={i} {...post} />)}
         </div>
       </div>
     );

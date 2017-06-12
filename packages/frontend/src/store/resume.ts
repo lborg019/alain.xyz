@@ -14,7 +14,7 @@ export default {
       url: 'https://linkedin.com/in/alaingalvan'
     }, {
       name: 'facebook',
-      url: 'https://www.facebook.com/alaingalv'
+      url: 'https://www.facebook.com/agcreate'
     }, {
       name: 'artstation',
       url: 'https://www.artstation.com/artist/alaingalvan'
