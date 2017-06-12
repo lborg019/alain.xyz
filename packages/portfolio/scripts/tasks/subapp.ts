@@ -2,7 +2,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as find from 'find';
 import { gray, yellow } from 'chalk';
-import * as Builder from 'systemjs-builder';
+import * as webpack from 'webpack';
+import * as WebpackSystemRegister from 'webpack-system-register';
 
 import { database } from '../../../backend/src/db';
 import { makePermalink } from './misc';
@@ -25,127 +26,68 @@ async function compileSubapp() {
     let libname = path.join('alainxyz-subapp', relativeRoot).replace(/\\/g, '-');
 
     let config = {
-      warnings: true,
-      globalEvaluationScope: false,
-      format: 'cjs',
-      typescriptOptions: {
-        module: 'commonjs',
-        target: 'es5',
-        jsx: 'react',
-        typeCheck: false,
-        tsconfig: true,
-        noEmitHelpers: true
+      context: newRoot,
+      entry: {
+        main: './main'
       },
-      packages: {
-        [libname]: {
-          main: 'main',
-          defaultExtension: 'tsx',
-          transpiler: 'plugin-typescript',
-          format: 'cjs',
-          typescriptOptions: {
-            module: 'commonjs',
-            target: 'es5',
-            jsx: 'react',
-            typeCheck: false,
-            tsconfig: true,
-            noEmitHelpers: true
-          },
-          externals: [
+      output: {
+        path: newRoot,
+        filename: 'main.js'
+      },
+      resolve: {
+        extensions: ['.ts', '.tsx', '.js'],
+        modules: [
+          newRoot,
+          path.join(newRoot, 'node_modules'),
+          'node_modules'
+        ]
+      },
+      module: {
+        rules: [
+          {
+            test: /\.tsx?$/,
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              compilerOptions: {
+                module: 'es2015'
+              }
+            }
+          }
+        ]
+      },
+
+
+      plugins: [
+        new WebpackSystemRegister({
+          systemjsDeps: [
             'react',
             'react-dom',
             'react-router',
             'react-router-dom',
             'react-redux',
             'redux',
-            'main'
-          ],
-          meta: {
-            '*.js': {
-              defaultExtension: 'js',
-              format: 'cjs'
-            },
-            '*.json': {
-              loader: 'json-plugin'
-            },
-            '*.ts': {
-              loader: 'ts'
-            },
-            '*.tsx': {
-              loader: 'ts'
-            }
+            'main',
+          ]
+        }),
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.DefinePlugin({
+          'process.env': {
+            'NODE_ENV': JSON.stringify('production')
           }
-        }
-      },
-      meta: {
-        typescript: {
-          format: 'cjs'
-        },
-        ts: {
-          format: 'cjs'
-        }
-      },
-      map: {
-        [libname]: relativeRoot,
-        'json-plugin': '@node/systemjs-plugin-json',
-        ts: '@node/plugin-typescript',
-        typescript: '@node/typescript',
-        crypto: '@node/crypto',
-        os: '@node/os',
-        buffer: '@node/buffer',
-        stream: '@node/stream',
-        child_process: '@node/child_process',
-        assert: '@node/assert',
-        fs: '@node/fs',
-        path: '@node/path',
-        string_decoder: '@node/string_decoder',
-        vm: '@node/vm',
-        constants: '@node/constants',
-        process: '@node/process',
-        util: '@node/util',
-        events: '@node/events',
-        react: '@external',
-        animejs: `${relativeRoot}/node_modules/animejs/anime.js`,
-        'react-anime': `${relativeRoot}/node_modules/react-anime/dist/anime.js`
-      }
-
+        })]
     };
-
-    // @TODO - Add local package.json dependencies
-    /* 
-    let localPackage = require(path.join(relativeRoot, 'package.json'));
-    if (localPackage.dependencies) {
-      let deps = Object.keys(localPackage.dependencies);
-      // Get that package's package.json, get it and its dependencies recursively, put them in config.map and config.packages.
-    }
-    */
 
     console.log(`  🔨 Building Module '${libname}'\n  ... `);
 
-    var builder = new Builder(config);
+    var compiler = webpack(config);
 
-    await builder.bundle(libname, relativeRoot + '/main.js', {
-      anonymous: false,
-      minify: true,
-      mangle: false,
-      globalDefs: {
-        DEBUG: false
-      },
-      externals: [
-        'react',
-        'react-dom',
-        'react-router',
-        'react-router-dom',
-        'react-redux',
-        'redux',
-        'main',
-        'plugin-typescript',
-        'systemjs-plugin-json',
-        'typescript',
-        'fs',
-        'path'
-      ],
-      runtime: false
-    })
+    await new Promise<any>((res, rej) => compiler.run((err, stats) => {
+      if (err)
+        rej(err);
+      else
+        res(stats);
+    }))
       .then(res => console.log('  Done!\n'))
       .catch(err => console.error(err));
 

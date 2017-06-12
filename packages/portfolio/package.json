@@ -19,16 +19,17 @@
     "@types/react-redux": "^4.4.40",
     "@types/redux": "^3.6.0",
     "@types/rss": "^0.0.27",
+    "@types/webpack": "^2.2.15",
     "chalk": "^1.1.3",
     "find": "^0.2.7",
     "id3js": "^1.1.3",
     "markademic": "^0.4.0",
     "mongodb": "^2.2.26",
-    "plugin-typescript": "git+https://github.com/alaingalvan/plugin-typescript.git",
     "rss": "^1.2.2",
-    "systemjs-builder": "^0.16.4",
-    "systemjs-plugin-json": "^0.3.0",
+    "ts-loader": "^2.1.0",
     "ts-node": "^3.0.4",
-    "typescript": "^2.2.1"
+    "typescript": "2.2.1",
+    "webpack": "^2.6.1",
+    "webpack-system-register": "^1.5.0"
   }
 }
