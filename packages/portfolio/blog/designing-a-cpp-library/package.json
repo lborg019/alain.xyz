@@ -14,7 +14,7 @@
   ],
   "foil": {
     "title": "Designing a C++ Library",
-    "main": "blog/main.js",
+    "main": "../main.tsx",
     "datePublished": "2016-10-01T00:30:00.000Z"
   }
 }

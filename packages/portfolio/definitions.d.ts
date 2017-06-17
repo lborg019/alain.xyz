@@ -1,6 +1,4 @@
 declare module 'main';
-declare module 'systemjs-builder';
-declare module 'react-router-dom';
 
 declare module 'id3js' {
   type ITags = {

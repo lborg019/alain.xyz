@@ -3,8 +3,8 @@ import * as find from 'find';
 import * as fs from 'fs';
 import * as id3 from 'id3js';
 
-import { database } from '../../../backend/src/db';
-import { getAsset } from './misc';
+import { database } from '../../../../../backend/src/db';
+import { getAsset } from '../utils';
 
 
 const root = path.join(__dirname, '..', '..', 'music');

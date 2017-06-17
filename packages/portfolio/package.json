@@ -1,6 +1,6 @@
 {
   "name": "alain-xyz-portfolio",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A Repo pointing to the different items in the alain.xyz portfolio.",
   "scripts": {
     "start": "ts-node -F -D scripts/build"

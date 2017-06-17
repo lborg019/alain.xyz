@@ -17,7 +17,7 @@
   ],
   "foil": {
     "title": "Pixel Art Design for Game Development",
-    "main": "blog/main.js",
+    "main": "../main.tsx",
     "datePublished": "2016-08-28T02:34:20.509Z"
   }
 }
