@@ -14,7 +14,7 @@ import { database } from '../../../../backend/src/db';
  */
 export function getAsset(file: string, permalink: string, image = 'cover') {
   let dir = path.dirname(file);
-  let c = find.fileSync(new RegExp(image + '\.(\w*)', 'mg'), dir);
+  let c = find.fileSync(new RegExp(image + '\.(png|jpg|jpeg|gif)$', 'mg'), dir);
   return (c.length > 0) ? path.join(permalink, path.relative(dir, c[0])).replace(/\\/g, '/') : '';
 }
 
@@ -125,7 +125,7 @@ export async function writeToDb(foil) {
     let lastPath = path.dirname(foil.file);
 
     var staticFiles = find.fileSync(lastPath)
-      .filter(f => !(f.endsWith('tsx') || f.endsWith('md') || f.endsWith('json') || f.match(/node_modules/)));
+      .filter(f => !(f.endsWith('tsx') || f.endsWith('md') || f.endsWith('json') ||f.endsWith('lock') || f.match(/node_modules/)));
 
     // Add Static files to database
     for (var sf of staticFiles) {

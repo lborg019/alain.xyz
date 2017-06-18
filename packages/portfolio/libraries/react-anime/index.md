@@ -27,7 +27,7 @@ That means the velocity vector for your animation changed:
 
 There's two ways you could really go about dealing with this:
 
-1. **Naive** - Restart the animation with the new animation vector.
+1. **Naïve** - Restart the animation with the new animation vector.
 2. **Best** - You can pause the current animation and interpolate the new previous point with the new end point. The problem with this is deciding how to deal with *time*.
 
 ### React Motion

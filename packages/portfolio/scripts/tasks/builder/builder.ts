@@ -25,7 +25,6 @@ export default async function builder(loaders: Loader[]) {
 
     // Import package.json and set some defaults
     let {
-      name: permalink,
       main: file = "index.md",
       description = '',
       author = "Alain Galvan",
@@ -38,6 +37,7 @@ export default async function builder(loaders: Loader[]) {
 
       let {
         main,
+        permalink,
         title,
         datePublished,
         image,
@@ -64,7 +64,7 @@ export default async function builder(loaders: Loader[]) {
           permalink: '/' + permalink,
           image: '/' + img,
           icon: '/' + icon,
-          main: main.replace(/\\/g, '/'),
+          main:  '/' + main.replace(/\\/g, '/'),
           authors: [author]
         };
 
@@ -101,7 +101,7 @@ async function compile(loaders: Loader[], foilModule: any) {
     }, false);
 
     if (compare) {
-      return await rule.loader(foilModule);
+      foilModule = await rule.loader(foilModule);
     }
   }
 

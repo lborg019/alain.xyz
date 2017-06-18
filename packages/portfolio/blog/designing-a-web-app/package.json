@@ -1,5 +1,4 @@
 {
-  "name": "blog/designing-a-web-app",
   "description": "What does it take to develop modern web applications, what are the best practices and tools/languages you should use?",
   "main": "index.md",
   "keywords": [
@@ -13,8 +12,9 @@
     "node.js"
   ],
   "foil": {
+    "permalink": "blog/designing-a-web-app",
     "title": "Designing a Web Application",
-    "main": "../main.tsx",
+    "main": "blog/main.js",
     "datePublished": "2016-09-01T00:30:00.000Z"
   }
 }

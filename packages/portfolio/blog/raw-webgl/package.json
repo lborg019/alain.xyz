@@ -1,5 +1,4 @@
 {
-  "name": "blog/raw-webgl",
   "description": "An overview on how to make a WebGL application from a low level perspective.",
   "main": "index.md",
   "keywords": [
@@ -11,6 +10,7 @@
   ],
   "foil": {
     "title": "Raw WebGL",
+    "permalink": "blog/raw-webgl",
     "main": "blog/main.js",
     "datePublished": "2016-12-10T00:30:00.000Z",
     "references": {

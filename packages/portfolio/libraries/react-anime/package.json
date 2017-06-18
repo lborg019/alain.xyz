@@ -1,5 +1,4 @@
 {
-  "name": "libraries/react-anime",
   "description": "A super easy animation library for React built on top of anime.js.",
   "main": "index.md",
   "keywords": [
@@ -13,7 +12,8 @@
   "homepage": "https://hyperfuse.github.io/react-anime",
   "foil": {
     "title": "React Anime",
-    "main": "libraries/react-anime/main.js",
+    "permalink": "libraries/react-anime",
+    "main": "main.tsx",
     "datePublished": "2016-09-01T00:30:00.000Z",
     "badges": [
       {

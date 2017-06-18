@@ -1,5 +1,4 @@
 {
-  "name": "businesses/fig",
   "description": "An open source smart home company.",
   "main": "index.md",
   "keywords": [
@@ -10,6 +9,7 @@
   ],
   "foil": {
     "title": "Fig",
+    "permalink": "businesses/fig",
     "main": "blog/main.js",
     "datePublished": "2016-09-01T00:30:00.000Z"
   }

@@ -1,5 +1,4 @@
 {
-  "name": "research/realtime-celestial-rendering",
   "author": "Alain Galvan",
   "description": "A method of rendering starry skies in real time that doubles as indirect lighting for physically based rendering.",
   "keywords": [
@@ -16,8 +15,10 @@
   "main": "index.md",
   "foil": {
     "title": "Realtime Celestial Rendering",
+    "permalink": "research/realtime-celestial-rendering",
     "icon": "assets/icon.jpg",
-    "badges": [{
+    "badges": [
+      {
         "name": "github",
         "url": "https://github.com/OpenHID/realtime-celestial-rendering"
       },

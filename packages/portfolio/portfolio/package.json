@@ -1,9 +1,9 @@
 {
-  "name": "portfolio",
   "description": "The professional portfolio of Alain Galvan.",
   "main": "main.tsx",
   "foil": {
     "title": "Alain.xyz | Portfolio",
+    "permalink": "portfolio",
     "main": "main.tsx",
     "datePublished": "2017-05-12T00:00:00.000Z",
     "data": [

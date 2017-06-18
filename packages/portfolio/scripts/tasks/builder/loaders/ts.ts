@@ -21,20 +21,20 @@ export const ts = {
     let newMain = join(foil.permalink, foil.main.replace(/\.tsx?$/, '.js')).replace(/\\/g, '/');
 
     // Check if main file has been updated or never existed.
-    let updated = checkUpdated(file);
+    let updated = checkUpdated(newFile);
 
     if (updated) {
 
       let { dependencies, devDependencies } = require(foil.package);
       if (dependencies || devDependencies) {
         // Update dependencies through `npm i`
-        await installDependencies(join(file, '..'));
+        await installDependencies(filePath);
       }
       // Compile module with Webpack
       await compile(filePath, foil.title);
 
       // Update in Database
-      await updateInDatabase(newFile, newMain);
+      await updateInDatabase(newFile, newMain, file);
 
       let newFoil = {
         ...foil,
@@ -62,7 +62,7 @@ async function checkUpdated(path: string) {
     let collection = db.collection('redirect');
 
     let foundItems = await collection.find({
-      from: path
+      to: path
     })
       .limit(1)
       .toArray();
@@ -84,10 +84,10 @@ async function checkUpdated(path: string) {
 function installDependencies(path: string) {
   // Run yarn, install local node_modules
   return new Promise((res, rej) => {
-    exec('npm i --prefix ' + path, (err, stdout, stderr) => {
+    exec('yarn', { cwd: path }, (err, stdout, stderr) => {
       console.log('Installing dependencies at %s', path);
-      if (err || stderr)
-        rej(err || stderr);
+      if (err)
+        rej(err);
       else
         res(stdout);
     })
@@ -172,7 +172,7 @@ function compile(root: string, title: string) {
  * @param file absolute file path of module.
  * @param path website path.
  */
-function updateInDatabase(file: string, permalink: string) {
+function updateInDatabase(file: string, permalink: string, oldFile: string) {
   //index them according to their folder name. 
   return database
     .then(db => {
@@ -185,7 +185,7 @@ function updateInDatabase(file: string, permalink: string) {
       let update = {
         from: permalink,
         to: file,
-        dateModified: statSync(file).mtime
+        dateModified: statSync(oldFile).mtime
       };
 
       let options = {

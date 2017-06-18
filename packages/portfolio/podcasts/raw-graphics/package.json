@@ -1,5 +1,4 @@
 {
-  "name": "podcasts/raw-graphics",
   "author": "Alain Galvan",
   "description": "A podcast all about graphics: real time rendering, art, raytracing, gpgpu computing, and machine learning.",
   "main": "main.tsx",
@@ -14,6 +13,7 @@
   ],
   "foil": {
     "title": "Raw Graphics",
+    "permalink": "podcasts/raw-graphics",
     "datePublished": "2017-05-01T00:30:00.000Z",
     "main": "main.tsx"
   }

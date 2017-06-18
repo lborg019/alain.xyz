@@ -1,5 +1,4 @@
 {
-  "name": "blog/designing-a-cpp-library",
   "description": "What should you do to create an easy to consume C++ library?",
   "main": "index.md",
   "keywords": [
@@ -13,6 +12,7 @@
     "node.js"
   ],
   "foil": {
+    "permalink": "blog/designing-a-cpp-library",
     "title": "Designing a C++ Library",
     "main": "../main.tsx",
     "datePublished": "2016-10-01T00:30:00.000Z"

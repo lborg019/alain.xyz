@@ -1,5 +1,4 @@
 {
-  "name": "blog/raw-vulkan",
   "author": "Alain Galvan",
   "description": "An overview on how to program a Vulkan application from the ground up.",
   "keywords": [
@@ -15,6 +14,7 @@
   "main": "index.md",
   "foil": {
     "title": "Raw Vulkan",
+    "permalink": "blog/raw-vulkan",
     "main": "blog/main.js",
     "datePublished": "2016-12-15T00:30:00.000Z",
     "references": {

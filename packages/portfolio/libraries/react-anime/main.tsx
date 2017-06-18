@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Anime from 'react-anime';
 
-export default class ReactAnime  extends React.Component<any, any> {
+export default class ReactAnime extends React.Component<any, any> {
   render() {
 
     let { title, description, image, meta, datePublished, keywords, data } = this.props.config;
@@ -19,7 +19,7 @@ export default class ReactAnime  extends React.Component<any, any> {
             {mapRender([...components.line.react, ...components.line.anime])}
           </LineAnime>
         </svg>
-        <p><a href="http://npm.im/react-anime"><img alt="Npm Package" src="https://img.shields.io/npm/v/react-anime.svg?style=flat-square" /></a>
+        <p style={{ padding: '1.5em', textAlign: 'center', maxWidth: 960 }}><a href="http://npm.im/react-anime"><img alt="Npm Package" src="https://img.shields.io/npm/v/react-anime.svg?style=flat-square" /></a>
           <a href="https://opensource.org/licenses/MIT"><img src="http://img.shields.io/:license-mit-blue.svg?style=flat-square" /></a>
           <a href="https://travis-ci.org/hyperfuse/react-anime"><img alt="Unit Tests" src="https://img.shields.io/travis/hyperfuse/react-anime.svg?style=flat-square" /></a>
           <a href="https://codecov.io/gh/hyperfuse/react-anime"><img alt="Coverage Tests" src="https://img.shields.io/codecov/c/github/hyperfuse/react-anime.svg?style=flat-square" /></a>

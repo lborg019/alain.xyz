@@ -1,5 +1,4 @@
 {
-  "name": "blog/raw-directx",
   "description": "An overview of the DirectX 12 API and how to use it to build PC/Xbox games.",
   "keywords": [
     "blog",
@@ -7,6 +6,7 @@
   ],
   "foil": {
     "title": "Raw DirectX",
+    "permalink": "blog/raw-directx",
     "datePublished": "2020-02-10T00:36:34.267Z",
     "main": "blog/main.js",
     "references": [

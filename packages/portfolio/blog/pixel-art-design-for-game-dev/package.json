@@ -1,5 +1,4 @@
 {
-  "name": "blog/pixel-art-design-for-game-dev",
   "description": "Everything you need to know to get started making pixel art for indie game development.",
   "keywords": [
     "blog",
@@ -16,8 +15,9 @@
     "design"
   ],
   "foil": {
+    "permalink": "blog/pixel-art-design-for-game-dev",
     "title": "Pixel Art Design for Game Development",
-    "main": "../main.tsx",
+    "main": "blog/main.js",
     "datePublished": "2016-08-28T02:34:20.509Z"
   }
 }

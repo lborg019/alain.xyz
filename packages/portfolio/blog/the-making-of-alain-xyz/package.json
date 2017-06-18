@@ -1,5 +1,4 @@
 {
-  "name": "blog/the-making-of-alain-xyz",
   "author": "Alain Galvan",
   "description": "Thoughts and design decisions behind the making of Alain.xyz.",
   "keywords": [
@@ -12,7 +11,8 @@
   "main": "index.md",
   "foil": {
     "title": "The Making of Alain.xyz",
-    "main": "../main.tsx",
+    "permalink": "blog/the-making-of-alain-xyz",
+    "main": "blog/main.js",
     "datePublished": "2016-08-04T00:30:00.000Z"
   }
 }

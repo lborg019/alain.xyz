@@ -1,9 +1,9 @@
 {
-  "name": "research",
   "description": "The publications of Alain Galvan, Computer Graphics PhD Student.",
   "main": "main.tsx",
   "foil": {
     "title": "Alain.xyz | Research",
+    "permalink": "research",
     "main": "main.tsx",
     "datePublished": "2017-05-12T00:00:00.000Z"
   }
