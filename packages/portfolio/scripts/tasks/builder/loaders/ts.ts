@@ -3,7 +3,7 @@ import * as webpack from 'webpack';
 import * as WebpackSystemRegister from 'webpack-system-register';
 import { exec } from 'child_process';
 import { statSync } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { database } from '../../../../../backend/src/db';
 
 export const ts = {
@@ -12,10 +12,13 @@ export const ts = {
   },
   loader: async (foil) => {
 
-    let file = join(foil.package, '..', foil.main);
+    // Get file path
+    let file = join(foil.package, '..', foil.main).replace(/\\/g, '/');
+    let filePath = join(foil.package, '..').replace(/\\/g, '/');
+    let newFile = file.replace(/\.tsx?$/, '.js').replace(/\\/g, '/');
 
     // New permalink to main file.
-    let newMain = join(foil.permalink, foil.main.replace(/\.tsx?$/, '.js')).replace('\\', '/');;
+    let newMain = join(foil.permalink, foil.main.replace(/\.tsx?$/, '.js')).replace(/\\/g, '/');
 
     // Check if main file has been updated or never existed.
     let updated = checkUpdated(file);
@@ -28,10 +31,10 @@ export const ts = {
         await installDependencies(join(file, '..'));
       }
       // Compile module with Webpack
-      await compile(file, foil.title);
+      await compile(filePath, foil.title);
 
       // Update in Database
-      await updateInDatabase(file, newMain);
+      await updateInDatabase(newFile, newMain);
 
       let newFoil = {
         ...foil,
@@ -79,11 +82,10 @@ async function checkUpdated(path: string) {
  * @param path absolute path to folder of JavaScript file.
  */
 function installDependencies(path: string) {
-  console.log('installing')
   // Run yarn, install local node_modules
   return new Promise((res, rej) => {
     exec('npm i --prefix ' + path, (err, stdout, stderr) => {
-      console.log('installing at %s', path);
+      console.log('Installing dependencies at %s', path);
       if (err || stderr)
         rej(err || stderr);
       else
@@ -98,12 +100,12 @@ function installDependencies(path: string) {
 function compile(root: string, title: string) {
   console.log('compile');
   let config = {
-    context: root, // @TODO - Consider using file folder
+    context: resolve(root),
     entry: {
       main: './main'
     },
     output: {
-      path: root,
+      path: resolve(root),
       filename: 'main.js'
     },
     resolve: {

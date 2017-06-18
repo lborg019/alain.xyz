@@ -9,7 +9,7 @@
   "foil": {
     "title": "Raw OpenGL",
     "datePublished": "2020-02-10T00:36:34.267Z",
-    "main": "../main.tsx",
+    "main": "blog/main.js",
     "references": {
       "opendotgl": {
         "title": "Open.GL",

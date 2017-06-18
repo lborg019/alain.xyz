@@ -45,7 +45,7 @@ export default async function builder(loaders: Loader[]) {
       } = foil;
 
       // Check with database if the file has been modified.
-      let filePath = path.join(pack, '..', file);
+      let filePath = path.join(pack, '..', file).replace(/\\/g, '/');
 
       if (!fs.statSync(filePath).isDirectory()) {
 
@@ -64,7 +64,7 @@ export default async function builder(loaders: Loader[]) {
           permalink: '/' + permalink,
           image: '/' + img,
           icon: '/' + icon,
-          main,
+          main: main.replace(/\\/g, '/'),
           authors: [author]
         };
 
