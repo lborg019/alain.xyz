@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 
 export let md = {
     test: { file: /\.md$/ },
-    loader: foil => ({
+    loader: async foil => ({
       ...foil,
       data: markademic({
         input: readFileSync(foil.file).toString(),

@@ -15,7 +15,7 @@
   "main": "index.md",
   "foil": {
     "title": "Unreal Engine 4 - Working with 3rd Party Libraries",
-    "main": "blog/main.js",
+    "main": "../main.tsx",
     "datePublished": "2016-11-12T01:56:19.318Z"
   }
 }

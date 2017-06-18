@@ -11,7 +11,7 @@
   "main": "index.md",
   "foil": {
     "title": "Unreal Engine Architecture",
-    "main": "blog/main.js",
+    "main": "../main.tsx",
     "datePublished": "2017-02-15T00:36:34.267Z"
   }
 }

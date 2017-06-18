@@ -12,31 +12,30 @@ export const ts = {
   },
   loader: async (foil) => {
 
-    // @TODO file = join(foil.package, foil.main);
-    let file = foil.main;
+    let file = join(foil.package, '..', foil.main);
+
+    // New permalink to main file.
+    let newMain = join(foil.permalink, foil.main.replace(/\.tsx?$/, '.js')).replace('\\', '/');;
 
     // Check if main file has been updated or never existed.
     let updated = checkUpdated(file);
 
     if (updated) {
 
-      // New permalink to main file.
-      let newMain = join(foil.permalink, foil.main.replace(/\.tsx?$/, '.js'));
-
-      // Update dependencies through `npm i`
-      await installDependencies(join(file, '..'));
-
+      let { dependencies, devDependencies } = require(foil.package);
+      if (dependencies || devDependencies) {
+        // Update dependencies through `npm i`
+        await installDependencies(join(file, '..'));
+      }
       // Compile module with Webpack
       await compile(file, foil.title);
 
       // Update in Database
       await updateInDatabase(file, newMain);
 
-
-
       let newFoil = {
         ...foil,
-        newMain
+        main: newMain
       };
 
       return newFoil;
@@ -53,9 +52,8 @@ export const ts = {
  * If it doesn't exist, or its been updated, return true.
  * @param path The absolute path to the file.
  */
-async function checkUpdated(path: string): Promise<boolean> {
-
-  await database.then(async db => {
+async function checkUpdated(path: string) {
+  return await database.then(async db => {
 
     // Check redirect collection to see if file at path exists.
     let collection = db.collection('redirect');
@@ -73,32 +71,32 @@ async function checkUpdated(path: string): Promise<boolean> {
       var { mtime } = statSync(path);
       return mtime.getDate() === new Date(foundItems[0].dateModified).getDate();
     }
-
   })
-
-  return false;
-
 }
 
 /**
  * Downloads dependencies with yarn. 
  * @param path absolute path to folder of JavaScript file.
  */
-async function installDependencies(path: string) {
+function installDependencies(path: string) {
+  console.log('installing')
   // Run yarn, install local node_modules
-  return await new Promise((res, rej) =>
+  return new Promise((res, rej) => {
     exec('npm i --prefix ' + path, (err, stdout, stderr) => {
+      console.log('installing at %s', path);
       if (err || stderr)
         rej(err || stderr);
       else
         res(stdout);
-    }));
+    })
+  });
 }
 
 /**
  * Compile foil module with Webpack.
  */
 function compile(root: string, title: string) {
+  console.log('compile');
   let config = {
     context: root, // @TODO - Consider using file folder
     entry: {

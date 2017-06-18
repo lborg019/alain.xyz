@@ -19,6 +19,7 @@ export default async function builder(loaders: Loader[]) {
 
   // Find all package.json files
   let packages = find.fileSync(/\package.json$/, ROOT);
+  packages = packages.filter(cur => !cur.match(/node_modules/))
 
   for (var pack of packages) {
 
@@ -57,7 +58,7 @@ export default async function builder(loaders: Loader[]) {
           description,
           keywords,
           datePublished: new Date(datePublished),
-          dateModified: fs.statSync(file).mtime,
+          dateModified: fs.statSync(filePath).mtime,
           file: filePath,
           package: pack,
           permalink: '/' + permalink,

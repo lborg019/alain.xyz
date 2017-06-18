@@ -11,7 +11,7 @@
   "main": "main.tsx",
   "foil": {
     "title": "Vulkan by Example",
-    "main": "courses/vulkan-by-example/main.js",
+    "main": "main.tsx",
     "datePublished": "2016-05-12T00:00:00.000Z"
   }
 }
