@@ -1,5 +1,4 @@
 {
-  "name": "blog/intro-sound-programming",
   "description": "A tutorial on how to program your own synth with WebAudio.",
   "main": "index.md",
   "keywords": [
@@ -10,6 +9,7 @@
     "tutorial"
   ],
   "foil": {
+    "permalink": "blog/intro-sound-programming",
     "title": "Intro to Sound Programming",
     "main": "blog/main.js",
     "datePublished": "2017-02-05T00:30:00.000Z"

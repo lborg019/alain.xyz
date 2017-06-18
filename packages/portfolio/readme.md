@@ -52,19 +52,25 @@ If you want to add a new item to my portfolio (maybe publish a blog post), just 
 
 ```js
 {
-  "name": "raw-vulkan",
-  "description": "",
-  "main": "raw-vulkan.js",
+  "name": "npm-names-dont-matter",
   "author": "Alain Galvan",
-  "license": "MIT",
+  "description": "Thoughts and design decisions behind the making of Alain.xyz.",
+  "keywords": [
+    "blog",
+    "alain",
+    "galvan",
+    "making",
+    "of"
+  ],
+  "main": "index.md",
   // 🌟 Foil Portfolio Engine
   "foil": {
-    "badges": [],
-    "title": "Raw Vulkan",
-    "permalink": "talks/raw-vulkan"
+    "title": "The Making of Alain.xyz",
+    "permalink": "blog/the-making-of-alain-xyz",
+    "main": "blog/main.js",
+    "datePublished": "2016-08-04T00:30:00.000Z"
   }
 }
-
 ```
 
 The following is a map of how a portfolio item's package.json file maps to the database schema:

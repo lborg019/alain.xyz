@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Icon} from 'alain-xyz';
+import {Icon} from 'main';
 
 const styles = {
   root: {

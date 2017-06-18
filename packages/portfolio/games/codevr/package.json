@@ -1,5 +1,4 @@
 {
-  "name": "games/codevr",
   "description": " Program and explore real applications with virtual reality!",
   "main": "main.tsx",
   "keywords": [
@@ -7,7 +6,8 @@
   ],
   "foil": {
     "title": "CodeVR",
-    "main": "games/codevr/main.js",
+    "permalink": "games/codevr",
+    "main": "main.tsx",
     "datePublished": "2016-05-12T00:00:00.000Z"
   }
 }

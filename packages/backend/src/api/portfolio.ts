@@ -132,7 +132,8 @@ export default (req: Request, res: Response) => {
       let c = db.collection('portfolio');
 
       let projection = {
-        file: 0
+        file: 0,
+        package: 0
       }
 
       let data = c.find(query, projection)

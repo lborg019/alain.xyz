@@ -57,8 +57,10 @@ export function renderPage(req: Request, res: Response) {
 function page(req: Request, res: Response, data: PortfolioItem[]) {
 
   let meta = data.length === 1
-    ? { ...META, ...data[0] }
-    : META;
+    ? { 
+      ...META,
+      ...data[0]
+    } : META;
 
   const state = {
     portfolio: data

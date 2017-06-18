@@ -24,9 +24,9 @@ export async function clean() {
               if (/\.([A-z])*$/.test(file))
                 fs.exists(file, exists => {
                   if (!exists) {
-                    col.deleteOne({_id})
-                    .catch(err => console.error(err))
-                    .then(() => console.log('Removed ' + file));
+                    col.deleteOne({ _id })
+                      .catch(err => console.error(err))
+                      .then(() => console.log('Removed ' + file));
                   }
                 });
             }

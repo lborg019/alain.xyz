@@ -1,5 +1,4 @@
 {
-  "name": "blog/unity-engine-architecture",
   "author": "Alain Galvan",
   "description": "A high level overview of Unity 3D's Engine Architecture.",
   "keywords": [
@@ -11,6 +10,7 @@
   "main": "index.md",
   "foil": {
     "title": "Unity Engine Architecture",
+    "permalink": "blog/unity-engine-architecture",
     "main": "blog/main.js",
     "datePublished": "2017-02-10T00:36:34.267Z"
   }

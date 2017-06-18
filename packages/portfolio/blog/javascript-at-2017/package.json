@@ -1,5 +1,4 @@
 {
-  "name": "blog/javascript-at-2017",
   "description": "What are the latest updates to ECMAScript and Node.js in 2017?",
   "main": "index.md",
   "keywords": [
@@ -13,6 +12,7 @@
     "node.js"
   ],
   "foil": {
+    "permalink": "blog/javascript-at-2017",
     "title": "JavaScript @ 2017",
     "main": "blog/main.js",
     "datePublished": "2017-03-11T01:54:43.049Z"
