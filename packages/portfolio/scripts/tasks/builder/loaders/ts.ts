@@ -14,7 +14,7 @@ export const ts = {
 
     // Get file path
     let file = join(foil.package, '..', foil.main).replace(/\\/g, '/');
-    let filePath = join(foil.package, '..').replace(/\\/g, '/');
+    let filePath = join(file, '..').replace(/\\/g, '/');
     let newFile = file.replace(/\.tsx?$/, '.js').replace(/\\/g, '/');
 
     // New permalink to main file.
@@ -98,7 +98,7 @@ function installDependencies(path: string) {
  * Compile foil module with Webpack.
  */
 function compile(root: string, title: string) {
-  console.log('compile');
+
   let config = {
     context: resolve(root),
     entry: {
@@ -183,8 +183,8 @@ function updateInDatabase(file: string, permalink: string) {
       };
 
       let update = {
-        to: permalink,
-        from: file,
+        from: permalink,
+        to: file,
         dateModified: statSync(file).mtime
       };
 
