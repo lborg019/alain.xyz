@@ -124,8 +124,17 @@ export async function writeToDb(foil) {
 
     let lastPath = path.dirname(foil.file);
 
+    let ignoredTypes = [
+      'tsx',
+      'ts',
+      'scss',
+      'md',
+      'json',
+      'lock'
+    ]
+
     var staticFiles = find.fileSync(lastPath)
-      .filter(f => !(f.endsWith('tsx') || f.endsWith('md') || f.endsWith('json') ||f.endsWith('lock') || f.match(/node_modules/)));
+      .filter(f => !(ignoredTypes.reduce((prev, cur) => prev || f.endsWith(cur) ,false) || f.match(/node_modules/)));
 
     // Add Static files to database
     for (var sf of staticFiles) {

@@ -140,11 +140,15 @@ function compile(root: string, title: string) {
           'react-router',
           'react-router-dom',
           'react-redux',
+          'redux-thunk',
           'redux',
           'main',
         ]
       }),
-      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        beautify: false,
+        comments: false
+      }),
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify('production')
