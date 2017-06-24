@@ -1,4 +1,4 @@
-![Latest Cover](blog/javascript-at-2017/assets/cover.jpg)
+![Latest Cover](blog/switching-between-js-cpp-rust/assets/cover.png)
 
 # [Alain.xyz](http://alain.xyz/portfolio) Portfolio
 
