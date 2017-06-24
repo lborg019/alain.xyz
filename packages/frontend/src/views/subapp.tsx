@@ -50,9 +50,13 @@ export class Subapp extends React.Component<any, SubappState> {
             if (subapp.permalink !== location.pathname) {
                 this.querySubapp(location.pathname);
             }
-            else
+            else {
                 this.attachSubapp(subapp);
-
+                if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+                    document.title = subapp.title;
+                    scrollTo(0, 0);
+                }
+            }
         }
         else {
             this.querySubapp(location.pathname);
