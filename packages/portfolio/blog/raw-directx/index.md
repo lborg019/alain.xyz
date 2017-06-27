@@ -1,6 +1,14 @@
-DirectX is a proprietary graphics API developed by Microsoft, created out of a lack of a unified graphics API available on Windows. Over the years it's become an elegant API which microsoft maintains heavily.
+DirectX is a proprietary graphics API developed by Microsoft, created out of a lack of a unified graphics API available on Windows. Over the years it's become an elegant API which microsoft maintains heavily. Its API interface is like Vulkan without complex features like descriptor sets or caching. 
 
-DirectX 12 like Vulkan has offloaded a lot of driver managed structures to the developer, and shares a lot of the same data structures and abstractions, however it isn't as close to graphics hardware.
+DirectX is supported on:
+
+- **Windows**
+- **Xbox One**
+- **Xbox 360**
+
+DirectX 12 like Vulkan has made the developer responsible for what was originally the done by the driver, and shares a lot of the same data structures and abstractions. Data Structures such as **Swapchains**, **Pipeline State Objects**, **Render Passes**, and **Shader Modules** behave the same.
+
+Here we'll get started building a DirectX renderer and review some of the similarities and differences between DirectX and other APIs like OpenGL, Vulkan, and Metal.
 
 ## Pipeline State Objects
 
