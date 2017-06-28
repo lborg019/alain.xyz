@@ -67,9 +67,33 @@ And our program will perform the following:
 
 ## Context
 
+The OpenGL Context is the entry point to the OpenGL API. Each OpenGL platform can get access to the context by calling a platform specific function.
+
 ## Vertex Buffer Object
 
+A **Vertex Buffer Object** or **VBO** for short, is a block of memory containing vertex data. You could describe this data however you feel is best for your use case, but let's look at some examples:
+
+### Dark Souls 3
+
+The Dark Souls series organizes their Vertex Buffers as:
+
+```glsl
+struct DarkSoulsVertex
+{
+  vec3 position;
+  lowp uvec4 normal;
+  lowp uvec4 tangent;
+  lowp uvec4 blendIndices;
+  lowp uvec4 blendWeight;
+  lowp uvec4 color1;
+  lowp uvec4 color2;
+  mediump ivec2 texcoord;
+}
+```
+
 ## Index Buffer Object
+
+An **Index Buffer Object** or **IBO** is a list of vertex indicies that's used to make triangles.
 
 ## Vertex Shader
 
