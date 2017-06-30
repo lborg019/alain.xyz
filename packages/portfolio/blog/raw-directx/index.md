@@ -1,4 +1,4 @@
-DirectX is a proprietary graphics API developed by Microsoft, created out of a lack of a unified graphics API available on Windows. Over the years it's become an elegant API which microsoft maintains heavily. Its API interface is like Vulkan without complex features like descriptor sets or caching. 
+DirectX is a proprietary graphics API developed by Microsoft, created out of a lack of a unified graphics API available on Windows. Over the years it's become an elegant API which Microsoft maintains heavily. Its API interface is like Vulkan without complex features like descriptor sets or GPU memory allocation. 
 
 DirectX is supported on:
 
@@ -8,18 +8,45 @@ DirectX is supported on:
 
 DirectX 12 like Vulkan has made the developer responsible for what was originally the done by the driver, and shares a lot of the same data structures and abstractions. Data Structures such as **Swapchains**, **Pipeline State Objects**, **Render Passes**, and **Shader Modules** behave the same.
 
-Here we'll get started building a DirectX renderer and review some of the similarities and differences between DirectX and other APIs like OpenGL, Vulkan, and Metal.
+Here we'll get started building a DirectX renderer and review some of the similarities and differences between DirectX and other APIs like Vulkan, Metal, and OpenGL.
 
-## Pipeline State Objects
+## Entry Point - DXGIFactory
 
-### PSO Libraries
+| API | Structure |
+|-----|-----------|
+| DirectX | `IDXGIFactory` |
+| Vulkan | `VkInstance` |
+| Metal | `MTKView` |
+| OpenGL | Context (varies by platform) |
 
-Similar to pipeline caches, PSO libraries are a collection of statically built pipeline state objects that you can include with your binary and load as needed.
+Similar to Vulkan's `VkInstance`, Metal's `MTKView` or OpenGL's Context, DirectX begins by creating an entry point structure:
 
-## HLSL
+```cpp
+#include <d3d11.h>
+#include <D3Dcompiler.h>
 
-High Level Shader Language is the most popular shader language today, in use in Unity, Unreal Engine 4, and many other traditional game engines.
+void main()
+{
+  IDXGIFactory* factory;
+  HRESULT result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&factory));
+}
+```
 
-### Shader Model 6
+## Physical Device - IDXGIAdapter
 
-**Wave Level Operations** - Working with an array of SIMD.
+Adapters allow you to query a device's capabilities. 
+
+This is analogous to Vulkan's `VkPhysicalDevice` structure.
+
+```
+HRESULT result = factory->EnumAdapters(0, &adapter);
+```
+
+## Device - ID3D11Device & ID3D11DeviceContext
+
+```cpp
+HRESULT result = D3D11CreateDevice(
+  // ...
+);
+
+```
