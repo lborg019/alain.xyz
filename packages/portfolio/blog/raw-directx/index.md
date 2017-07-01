@@ -19,7 +19,7 @@ Here we'll get started building a DirectX renderer and review some of the simila
 | Metal | `MTKView` |
 | OpenGL | Context (varies by platform) |
 
-Similar to Vulkan's `VkInstance`, Metal's `MTKView` or OpenGL's Context, DirectX begins by creating an entry point structure:
+DirectX begins by creating an entry point structure:
 
 ```cpp
 #include <d3d11.h>
@@ -34,9 +34,14 @@ void main()
 
 ## Physical Device - IDXGIAdapter
 
-Adapters allow you to query a device's capabilities. 
+| API | Structure |
+|-----|-----------|
+| DirectX | `IDXGIAdapter` |
+| Vulkan | `VkPhysicalDevice` |
+| Metal | - |
+| OpenGL | - |
 
-This is analogous to Vulkan's `VkPhysicalDevice` structure.
+Adapters allow you to query a device's capabilities. 
 
 ```
 HRESULT result = factory->EnumAdapters(0, &adapter);
