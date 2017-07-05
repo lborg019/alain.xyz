@@ -12,13 +12,6 @@ Here we'll get started building a DirectX renderer and review some of the simila
 
 ## Entry Point - DXGIFactory
 
-| API | Structure |
-|-----|-----------|
-| DirectX | `IDXGIFactory` |
-| Vulkan | `VkInstance` |
-| Metal | `MTKView` |
-| OpenGL | Context (varies by platform) |
-
 DirectX begins by creating an entry point structure:
 
 ```cpp
@@ -34,13 +27,6 @@ void main()
 
 ## Physical Device - IDXGIAdapter
 
-| API | Structure |
-|-----|-----------|
-| DirectX | `IDXGIAdapter` |
-| Vulkan | `VkPhysicalDevice` |
-| Metal | - |
-| OpenGL | - |
-
 Adapters allow you to query a device's capabilities. 
 
 ```
@@ -48,6 +34,8 @@ HRESULT result = factory->EnumAdapters(0, &adapter);
 ```
 
 ## Device - ID3D11Device & ID3D11DeviceContext
+
+A device and device context let you create data structures and enqueue tasks.
 
 ```cpp
 HRESULT result = D3D11CreateDevice(
