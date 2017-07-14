@@ -58,3 +58,5 @@ A queue allows you to enqueue tasks for the GPU to execute. A GPU is an asynchro
 | DirectX | - |
 | Metal | - |
 | OpenGL | - |
+
+A command buffer is an asynchronous computing unit, where you describe procedures for the GPU to execute in order.
