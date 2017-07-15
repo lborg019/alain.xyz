@@ -5,6 +5,11 @@ ts-node--*/
 *.js
 *.map
 
+# Lock Files
+yarn.lock
+package-lock.json
+Cargo.lock
+
 # Logs
 logs
 *.log
