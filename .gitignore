@@ -21,6 +21,7 @@ pids
 *.seed
 *.ssh
 *.ppk
+v8-compile-cache-0/
 
 # node-waf configuration
 .lock-wscript
