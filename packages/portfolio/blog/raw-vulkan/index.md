@@ -184,7 +184,7 @@ auto instance = vk::createInstance(
 In Vulkan, you have access to all enumerable devices that support it, and can query for information like their name, the number of heaps they support, their manufacturer, etc.
 
 ```cpp
-// Initialize Devices
+// 💡 Initialize Devices
 auto physicalDevices = instance.enumeratePhysicalDevices();
 auto gpu = physicalDevices[0];
 ```
@@ -270,7 +270,7 @@ for (auto& queuefamily : gpuQueueProps)
 
 }
 
-// Create a device
+// ⚪ Create a device
 
 auto device = gpu.createDevice(
   vk::DeviceCreateInfo(
@@ -580,10 +580,10 @@ auto depthImageView = device.createImageView(
 A frame buffer in Vulkan is a container of Image Views.
 
 ```cpp
-// The swapchain handles allocating frame images.
+// ⛓️ The swapchain handles allocating frame images.
 auto swapchainImages = device.getSwapchainImagesKHR(swapchain);
 
-// Create Depth Image Data
+// ↘️ Create Depth Image Data
 auto depthImage = device.createImage(
   vk::ImageCreateInfo(
     vk::ImageCreateFlags(),
@@ -662,7 +662,7 @@ for (int i = 0; i < swapchainImages.size(); i++)
 {
   swapchainBuffers[i].image = swapchainImages[i];
 
-  // Color
+  // 🌈 Color
   swapchainBuffers[i].views[0] =
     device.createImageView(
       vk::ImageViewCreateInfo(
@@ -681,7 +681,7 @@ for (int i = 0; i < swapchainImages.size(); i++)
       )
     );
 
-  // Depth
+  // ↘️ Depth
   swapchainBuffers[i].views[1] = depthImageView;
 
   swapchainBuffers[i].frameBuffer = device.createFramebuffer(
