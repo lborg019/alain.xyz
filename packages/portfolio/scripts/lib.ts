@@ -5,7 +5,7 @@
  */
 
 import { red, cyan, green, gray } from 'chalk';
-import * as buildScripts from './tasks';
+import buildScripts from './tasks';
 
 async function main() {
 

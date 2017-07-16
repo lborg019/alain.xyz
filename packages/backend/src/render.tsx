@@ -195,9 +195,9 @@ function page(req: Request, res: Response, data: PortfolioItem[]) {
 
 const META = {
   permalink: '/',
-  title: 'Alain Galván | Graduate Graphics Researcher @ FIU',
-  description: 'The portfolio of Alain Galván, Graduate Graphics Researcher @ Florida International University.',
+  title: 'Alain Galván | Engineer @ Marmoset',
+  description: 'The portfolio of Alain Galván, Engineer @ Marmoset.',
   image: '/assets/brand/website-screenshot.jpg',
-  keywords: ['alain', 'galvan', 'miami', 'florida', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
+  keywords: ['alain', 'galvan', 'miami', 'florida', 'marmoset', 'vulkan', 'graphics', 'programmer', 'artist', 'indie', 'phd', 'tutorial', 'mathematics', 'rendering', 'demo', '3D', 'realtime', 'shader', 'raytracing', 'webgl', 'glsl'],
   authors: ['Alain Galvan']
 };

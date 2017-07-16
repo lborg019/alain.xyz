@@ -80,7 +80,7 @@ The Dark Souls series organizes their Vertex Buffers as:
 ```glsl
 struct DarkSoulsVertex
 {
-  vec3 position;
+  mediump vec3 position;
   lowp uvec4 normal;
   lowp uvec4 tangent;
   lowp uvec4 blendIndices;

@@ -65,7 +65,11 @@ const BlogPost = ({ image, title, description, permalink, datePublished, dateMod
   let updated = new Date(dateModified);
 
   return (
-    <Link to={permalink} style={{ ...styles.blogPost, ...style, backgroundImage: `url('${image}')` }}>
+    <Link to={permalink} style={({
+      ...styles.blogPost,
+      ...style,
+      backgroundImage: `url('${image}')`
+      }) as any}>
       <section style={{
         backgroundImage: 'linear-gradient(rgba(33, 37, 43, 0), rgba(33, 37, 43, .5) 40%, rgb(33, 37, 43))',
         width: '100%',
