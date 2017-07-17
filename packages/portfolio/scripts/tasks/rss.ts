@@ -17,7 +17,7 @@ export async function rssFeed() {
 
     site_url: 'https://alain.xyz/',
 
-    image_url: 'https://alain.xyz/assets/',
+    image_url: 'https://alain.xyz/assets/alaingalvan.jpg',
 
     docs: 'https://alain.xyz/',
 
@@ -43,7 +43,7 @@ export async function rssFeed() {
 
     pubDate: new Date(),
 
-    ttl: 2400
+    ttl: 1200
   };
 
   let rss = new RSS(config);
