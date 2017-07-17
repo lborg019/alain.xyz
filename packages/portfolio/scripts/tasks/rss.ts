@@ -74,8 +74,8 @@ export async function rssFeed() {
       url: 'https://alain.xyz' + item.permalink,
       date: item.datePublished,
       enclosure: {
-        url: 'https://alain.xyz' + item.cover,
-        file: 'https://alain.xyz' + item.cover
+        url: 'https://alain.xyz' + item.image,
+        file: 'https://alain.xyz' + item.image
       }
     });
   }
