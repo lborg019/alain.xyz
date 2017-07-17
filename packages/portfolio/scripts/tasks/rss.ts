@@ -72,11 +72,7 @@ export async function rssFeed() {
       title: item.title,
       description: item.description,
       url: 'https://alain.xyz' + item.permalink,
-      date: item.datePublished,
-      enclosure: {
-        url: 'https://alain.xyz' + item.image,
-        file: 'https://alain.xyz' + item.image
-      }
+      date: item.datePublished
     });
   }
 
