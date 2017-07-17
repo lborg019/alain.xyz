@@ -49,11 +49,13 @@ export async function rssFeed() {
   let rss = new RSS(config);
 
   // Populate RSS Feed
-  let data = await new Promise<any[]>((res, rej) => database
+  let alainxyzData = await new Promise<any[]>((res, rej) => database
     .then(db => {
       var col = db.collection('portfolio');
 
-      let data = col.find({})
+      let data = col.find({
+        datePublished: { $lte: new Date() }
+      })
         .limit(30)
         .sort({
           datePublished: -1
@@ -65,12 +67,16 @@ export async function rssFeed() {
         });
     }));
 
-  for (var item of data) {
+  for (var item of alainxyzData) {
     rss.item({
       title: item.title,
       description: item.description,
       url: 'https://alain.xyz' + item.permalink,
-      date: item.datePublished
+      date: item.datePublished,
+      enclosure: {
+        url: 'https://alain.xyz' + item.cover,
+        file: 'https://alain.xyz' + item.cover
+      }
     });
   }
 
