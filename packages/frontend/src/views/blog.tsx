@@ -51,18 +51,12 @@ export class Blog extends React.Component<any, any> {
       permalink: '/blog/*'
     });
 
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      document.title = 'Alain Galvan | Blog';
-      scrollTo(0, 0);
-    }
-
   }
 
   render() {
 
     let { portfolio } = this.props;
     let blog = portfolio.filter((post) => post.permalink.slice(0, 5) === '/blog');
-    let [first, ...rest] = blog;
 
     return (
       <div style={styles.root as any}>

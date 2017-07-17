@@ -1,9 +1,9 @@
 export default {
   social: [
-    /*  {
+    {
       name: 'rss',
-      url: '/rss.xml'
-    },*/ {
+      url: '/assets/rss.xml'
+    }, {
       name: 'twitter',
       url: 'https://twitter.com/alainxyz'
     }, {

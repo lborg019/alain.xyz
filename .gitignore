@@ -4,6 +4,7 @@ modules/
 ts-node--*/
 *.js
 *.map
+rss.xml
 
 # Lock Files
 yarn.lock

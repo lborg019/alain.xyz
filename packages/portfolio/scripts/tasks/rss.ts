@@ -4,6 +4,8 @@ import { writeFileSync } from 'fs';
 import { join } from 'path';
 
 export async function rssFeed() {
+  console.log('📻 Alain.xyz RSS Feeds \n');
+
   let config = {
     title: 'Alain.xyz',
 
@@ -65,10 +67,10 @@ export async function rssFeed() {
 
   for (var item of data) {
     rss.item({
-        title: item.title,
-        description: item.description,
-        url: 'https://alain.xyz' + item.permalink,
-        date: item.datePublished
+      title: item.title,
+      description: item.description,
+      url: 'https://alain.xyz' + item.permalink,
+      date: item.datePublished
     });
   }
 
@@ -77,5 +79,11 @@ export async function rssFeed() {
 
   // Place in `frontend/assets/rss.xml`
   let p = join('..', 'frontend', 'assets', 'rss.xml')
-  writeFileSync(p, xml);
+  try {
+    writeFileSync(p, xml);
+    console.log('RSS feed successfully generated. \n');
+  }
+  catch (e) {
+    console.error('Could not generate RSS Feeds! \n');
+  }
 }
