@@ -11,15 +11,11 @@ export async function rssFeed() {
 
     description: 'The portfolio of Alain Galván, Engineer @ Marmoset.',
 
-    generator: 'https://alain.xyz/',
-
-    feed_url: 'https://alain.xyz/rss',
+    feed_url: 'https://alain.xyz/assets/rss.xml',
 
     site_url: 'https://alain.xyz/',
 
-    image_url: 'https://alain.xyz/assets/alaingalvan.jpg',
-
-    docs: 'https://alain.xyz/',
+    image_url: 'https://alain.xyz/assets/brand/alaingalvan.jpg',
 
     managingEditor: 'Alain Galvan',
 
@@ -72,7 +68,10 @@ export async function rssFeed() {
       title: item.title,
       description: item.description,
       url: 'https://alain.xyz' + item.permalink,
-      date: item.datePublished
+      date: item.datePublished,
+      enclosure: {
+        url: 'https://alain.xyz' + item.image
+      }
     });
   }
 
