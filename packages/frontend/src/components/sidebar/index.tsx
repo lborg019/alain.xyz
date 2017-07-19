@@ -47,7 +47,7 @@ export class SideBar extends React.Component<any, any> {
           <LogoIcon style={styles.img} />
           <Link style={styles.logotype} to='/'>
             <h1 style={styles.h1}>Alain Galván</h1>
-            <h3 style={styles.h3}>Programmer @ Marmoset</h3>
+            <h3 style={styles.h3}>Engineer @ Marmoset</h3>
           </Link>
         </div>
         <NestedMenu location={location} />
