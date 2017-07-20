@@ -4,13 +4,18 @@ GPUs weren't always this way, originally they were a set of hardware based funct
 
 ---
 
-Let's look at what some of the similarities and differences between graphics APIs are. 
+Let's look at what some of the similarities and differences between graphics APIs are. We'll be covering the C++ APIs for:
+
+1. Vulkan
+2. Metal
+3. DirectX 11
+4. OpenGL
 
 ## Entry Point
 
 | API | Structure |
 |-----|-----------|
-| Vulkan | `VkInstance` |
+| Vulkan | `vk::Instance` |
 | DirectX | `IDXGIFactory` |
 | Metal | `MTKView` |
 | OpenGL | Context (varies by platform) |
@@ -21,7 +26,7 @@ The entry point to a graphics API generally allows you to access the API's inner
 
 | API | Structure |
 |-----|-----------|
-| Vulkan | `VkPhysicalDevice` |
+| Vulkan | `vk::PhysicalDevice` |
 | DirectX | `IDXGIAdapter` |
 | Metal | - |
 | OpenGL | - |
@@ -32,7 +37,7 @@ Physical Devices allow you to query for important device specific details such a
 
 | API | Structure |
 |-----|-----------|
-| Vulkan | `VkPhysicalDevice` |
+| Vulkan | `vk::PhysicalDevice` |
 | DirectX | `ID3D11Device` & `ID3D11DeviceContext` |
 | Metal | - |
 | OpenGL | - |
@@ -43,7 +48,7 @@ A device gives you access to the inner functions of the API, such as creating gr
 
 | API | Structure |
 |-----|-----------|
-| Vulkan | `VkQueue` |
+| Vulkan | `vk::Queue` |
 | DirectX | - |
 | Metal | - |
 | OpenGL | - |
@@ -54,9 +59,40 @@ A queue allows you to enqueue tasks for the GPU to execute. A GPU is an asynchro
 
 | API | Structure |
 |-----|-----------|
-| Vulkan | `Command Buffer` |
+| Vulkan | `vk::CommandBuffer` |
 | DirectX | - |
 | Metal | - |
 | OpenGL | - |
 
 A command buffer is an asynchronous computing unit, where you describe procedures for the GPU to execute in order.
+
+## Buffer
+
+| API | Structure |
+|-----|-----------|
+| Vulkan | `vk::Buffer` |
+| DirectX | `ID3D11Buffer` |
+| Metal | - |
+| OpenGL | - |
+
+
+A buffer generally contains data, such as vertex points, vertex colors, triangle indices, etc.
+
+```cpp
+// Vulkan
+vk::Buffer buffer = device.createBuffer(
+		vk::BufferCreateInfo(
+			vk::BufferCreateFlags(),
+			bufferSize,
+			bufferUsageFlags,
+			sharingMode,
+			queueFamilyIndices.size(),
+			queueFamilyIndices.data()
+		)
+	);
+
+// DirectX 11
+HRESULT dx11_res = device->CreateBuffer( pDesc, pInitialData, ppBuffer );
+```
+
+## Texture
