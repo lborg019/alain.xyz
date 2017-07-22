@@ -22,6 +22,20 @@ Let's look at what some of the similarities and differences between graphics API
 
 The entry point to a graphics API generally allows you to access the API's inner classes.
 
+```cpp
+// Vulkan
+vk::Instance instance = vk::createInstance(
+  vk::InstanceCreateInfo(
+    vk::InstanceCreateFlags(),
+    &appInfo,
+    layers.size(),
+    layers.data(),
+    extensions.size(),
+    extensions.data()
+  )
+);
+```
+
 ## Physical Device
 
 | API | Structure |
@@ -38,8 +52,8 @@ Physical Devices allow you to query for important device specific details such a
 | API | Structure |
 |-----|-----------|
 | Vulkan | `vk::PhysicalDevice` |
-| DirectX | `ID3D11Device` & `ID3D11DeviceContext` |
-| Metal | - |
+| DirectX | `ID3D11Device` and `ID3D11DeviceContext` |
+| Metal | `MTLDevice` |
 | OpenGL | - |
 
 A device gives you access to the inner functions of the API, such as creating graphics data structures.
@@ -50,7 +64,7 @@ A device gives you access to the inner functions of the API, such as creating gr
 |-----|-----------|
 | Vulkan | `vk::Queue` |
 | DirectX | - |
-| Metal | - |
+| Metal | `MTLCommandQueue` |
 | OpenGL | - |
 
 A queue allows you to enqueue tasks for the GPU to execute. A GPU is an asynchronous compute device, so the idea here is to always keep it busy while having control over when items are added to the queue. 
@@ -60,11 +74,22 @@ A queue allows you to enqueue tasks for the GPU to execute. A GPU is an asynchro
 | API | Structure |
 |-----|-----------|
 | Vulkan | `vk::CommandBuffer` |
-| DirectX | - |
-| Metal | - |
+| DirectX | `ID3D11DeviceContext` |
+| Metal | `MTLRenderCommandEncoder` |
 | OpenGL | - |
 
 A command buffer is an asynchronous computing unit, where you describe procedures for the GPU to execute in order.
+
+## Command List
+
+| API | Structure |
+|-----|-----------|
+| Vulkan | `vk::SubmitInfo` |
+| DirectX | `ID3D11CommandList` |
+| Metal | - |
+| OpenGL | - |
+
+Commands are pushed in batches to the GPU in grouping structures called **Command Lists**.
 
 ## Buffer
 
@@ -72,8 +97,8 @@ A command buffer is an asynchronous computing unit, where you describe procedure
 |-----|-----------|
 | Vulkan | `vk::Buffer` |
 | DirectX | `ID3D11Buffer` |
-| Metal | - |
-| OpenGL | - |
+| Metal | ` MTLBuffer` |
+| OpenGL | `GLuint` |
 
 
 A buffer generally contains data, such as vertex points, vertex colors, triangle indices, etc.
