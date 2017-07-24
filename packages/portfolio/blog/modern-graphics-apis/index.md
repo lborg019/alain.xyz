@@ -10,6 +10,8 @@ Let's look at what some of the similarities and differences between graphics API
 2. DirectX 12
 3. Metal (Objective C++)
 
+You could then go on to build a cross platform rendering API such as the one I've developed [Mag](https://github.com/alaingalvan/mag), a cross platform API for Vulkan, DirectX, and Metal.
+
 ## Entry Point
 
 | API | Structure |
@@ -58,13 +60,11 @@ vk::Instance instance = vk::createInstance(
 
 ```cpp
 // ❎ DirectX
-#include <d3d11.h>
+#include <d3d112.h>
 
 IDXGIFactory* factory;
 HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&factory) );
 ```
-
-
 
 ```mm
 // 🤖 Metal
@@ -82,7 +82,7 @@ HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&factory) );
 | DirectX | - |
 | Metal | `CAMetalLayer` |
 
-A window surface allows you to bind all draw calls to an OS specific window.
+A window **Surface** allows you to bind all draw calls to an OS specific window.
 
 ## Physical Device
 
@@ -92,11 +92,7 @@ A window surface allows you to bind all draw calls to an OS specific window.
 | DirectX | `IDXGIAdapter` |
 | Metal | `MTLDevice` |
 
-Physical Devices allow you to query for important device specific details such as memory size and feature support. 
-
-```cpp
-
-```
+**Physical Devices** allow you to query for important device specific details such as memory size and feature support. 
 
 ## Device
 
@@ -106,7 +102,7 @@ Physical Devices allow you to query for important device specific details such a
 | DirectX | `ID3D12Device` |
 | Metal | `MTLDevice` |
 
-A device gives you access to the inner functions of the API, such as creating graphics data structures.
+A **Device** gives you access to the inner functions of the API, such as creating graphics data structures.
 
 ```cpp
 // ❎ DirectX
@@ -126,7 +122,7 @@ id<MTLDevice> device = MTLCreateSystemDefaultDevice();
 | DirectX |`ID3D12CommandQueue` |
 | Metal | `MTLCommandQueue` |
 
-A queue allows you to enqueue tasks for the GPU to execute. A GPU is an asynchronous compute device, so the idea here is to always keep it busy while having control over when items are added to the queue. 
+A **Queue** allows you to enqueue tasks for the GPU to execute. A GPU is an asynchronous compute device, so the idea here is to always keep it busy while having control over when items are added to the queue. 
 
 ## Swapchain
 
@@ -151,7 +147,7 @@ HRESULT res = CreateSwapChainForHwnd(device, hwnd, desc, fullscreenDesc, outputR
 | DirectX | `ID3D12GraphicsCommandList` |
 | Metal | `MTLRenderCommandEncoder` |
 
-A command buffer is an asynchronous computing unit, where you describe procedures for the GPU to execute in order.
+A **Command Buffer** is an asynchronous computing unit, where you describe procedures for the GPU to execute in order.
 
 ## Command List
 
@@ -159,23 +155,52 @@ A command buffer is an asynchronous computing unit, where you describe procedure
 |-----|-----------|
 | Vulkan | `vk::SubmitInfo` |
 | DirectX | `ID3D12CommandList[]` |
-| Metal | - |
+| Metal | `MTLCommandBuffer` |
 
 Commands are pushed in batches to the GPU in grouping structures called **Command Lists**.
+
+## Frame Buffer
+
+| API | Structure |
+|-----|-----------|
+| Vulkan | `vk::Framebuffer` |
+| DirectX | `ID3D12Resource` |
+| Metal | `MTLResource` |
+
+
+## Render Pass
+
+| API | Structure |
+|-----|-----------|
+| Vulkan | `vk::RenderPass` |
+| DirectX | - |
+| Metal | `MTLRenderPassDescriptor` |
+
+
+## Attachments
+
+## Shaders
+
+| API | Structure |
+|-----|-----------|
+| Vulkan | `vk::Shader` |
+| DirectX | `ID3DBlob` |
+| Metal | - |
+
 
 ## Buffer
 
 | API | Structure |
 |-----|-----------|
 | Vulkan | `vk::Buffer` |
-| DirectX | `ID3D11Buffer` |
+| DirectX | `ID3D12Resource` |
 | Metal | ` MTLBuffer` |
 
 
-A buffer generally contains data, such as vertex points, vertex colors, triangle indices, etc.
+A **Buffer** generally contains data, such as vertex points, vertex colors, triangle indices, etc.
 
 ```cpp
-// Vulkan
+// 🌋 Vulkan
 vk::Buffer buffer = device.createBuffer(
 		vk::BufferCreateInfo(
 			vk::BufferCreateFlags(),
@@ -186,9 +211,6 @@ vk::Buffer buffer = device.createBuffer(
 			queueFamilyIndices.data()
 		)
 	);
-
-// DirectX 11
-HRESULT dx11_res = device->CreateBuffer( pDesc, pInitialData, ppBuffer );
 ```
 
 ## Textures
@@ -196,21 +218,27 @@ HRESULT dx11_res = device->CreateBuffer( pDesc, pInitialData, ppBuffer );
 | API | Structure |
 |-----|-----------|
 | Vulkan | `vk::Texture` |
-| DirectX | `ID3D11Texture2D` |
+| DirectX | `ID3D12Resource` |
 | Metal | `MTLTexture` |
+
+A **Texture** is a buffer of data that is stored in texture memory on the GPU. 
 
 ## Samplers
 
 | API | Structure |
 |-----|-----------|
-| Vulkan | `vk::Pipeline` |
-| DirectX | `ID3D11SamplerState` |
+| Vulkan | `vk::Sampler` |
+| DirectX | `D3D12_STATIC_SAMPLER_DESC` |
 | Metal | `MTLSamplerState` |
+
+A **Sampler** is a set of parameters for querying (sampling) a texture.
 
 ## Pipeline State Objects
 
 | API | Structure |
 |-----|-----------|
-| Vulkan | `vk::Pipeline` |
+| Vulkan | `vk::GraphicsPipeline` |
 | DirectX | `D3D12PipelineState` |
 | Metal | `MTLRenderPipelineState` |
+
+A **Pipline State Object (PSO)** is the state of the graphics pipeline on a given draw call. 
