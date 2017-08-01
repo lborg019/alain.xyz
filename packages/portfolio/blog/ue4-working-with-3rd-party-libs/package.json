@@ -1,5 +1,5 @@
 {
-  "author": "Alain Galvan",
+  "authors": ["Alain Galvan", "Lukas Borges"],
   "description": "A tutorial on how to use 3rd party libraries in Unreal Engine 4.",
   "keywords": [
     "blog",
